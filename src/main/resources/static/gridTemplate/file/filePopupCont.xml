@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="Y"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="N"/>
+        <rowSelection value="Y"/>
+        <gridfitStyle value="even"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="파일아이디" field="fileCd" type="char" maxLength="10" width="60" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="파일순번" field="fileOdrg" type="int" maxLength="2" width="20" textAlignment="right" required="Y" Pk="Y" readOnly="Y" digit="2" place="0" hidden="Y"/>
+    <column name="파일명" field="fileNm" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="N"/>
+    <column name="파일크기" field="fileSize" type="int" maxLength="10" width="100" textAlignment="right" required="Y" defaultValue="0" digit="10" place="0" hidden="Y"/>
+    <column name="파일크기" field="fileSizeText" type="char" maxLength="10" width="100" textAlignment="right" required="Y" defaultValue="0"  hidden="N"/>
+    <column name="저장파일명" field="saveNm" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="파일확장자" field="fileExtNm" type="char" maxLength="20" width="60" textAlignment="left" required="N" hidden="Y"/>
+    <column name="파일유형" field="mimeTypeNm" type="char" maxLength="100" width="100" textAlignment="left" required="N" hidden="Y"/>
+    <column name="업로드일시" field="amdDt" type="datetime" width="100" textAlignment="center" required="Y" hidden="Y"/>
+    <column name="상태" field="fileStatus" type="html" htmlCallback="getFileStatusString" width="50" textAlignment="center"  hidden="N"/>
+    <column name="파일변경" displayName="파일변경" field="btnChange" type="button" width="50" textAlignment="center"  hidden="N"/>
+    <column name="아이디" field="id" type="int" width="50" textAlignment="center"  hidden="Y"/>
+</grid>

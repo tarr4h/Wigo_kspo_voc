@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmXlsDnldHstDao">
+    <sql id="sqlPkConditions">
+                WHERE DNLD_HST_CD       =       #{dnldHstCd}
+    </sql>
+    <sql id="sqlCols">
+                      DNLD_HST_CD                    /*다운로드이력코드        */
+                    , MENU_CD                    /*메뉴코드        */
+                    , DNLD_NM                    /*다운로드명        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="dnldHstCd != null and dnldHstCd != ''">
+            <choose>
+                <when test="dnldHstCd instanceof String">
+                              AND A.DNLD_HST_CD       =       #{dnldHstCd}
+                </when>
+                <otherwise>
+                    AND A.DNLD_HST_CD       IN
+                    <foreach item="item" index="index" collection="dnldHstCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuCd != null and menuCd != ''">
+            <choose>
+                <when test="menuCd instanceof String">
+                              AND A.MENU_CD           =       #{menuCd}
+                </when>
+                <otherwise>
+                    AND A.MENU_CD           IN
+                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="dnldNm != null and dnldNm != ''">
+                      AND A.DNLD_NM           =       #{dnldNm}
+        </if>
+        <if test="strtDt != null and strtDt != ''">
+                      AND A.REG_DT      >=       TO_DATE(#{strtDt},'YYYYMMDD')
+        </if>
+        <if test="endDt != null and endDt != ''">
+                      AND TO_DATE(#{endDt},'YYYYMMDD') + 1 > A.REG_DT
+        </if>
+        <if test="empId != null and empId != ''">
+                      AND A.AMDR_ID LIKE  #{empId} || '%'
+        </if>
+        <if test="menuNmLike != null and menuNmLike != ''">
+                      AND B.MENU_NM LIKE '%' || #{menuNmLike} || '%'
+        </if>
+        <if test="dnldNmLike != null and dnldNmLike != ''">
+                      AND A.DNLD_NM LIKE '%' || #{dnldNmLike} || '%'
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                  FROM CRM_XLS_DNLD_HST A
+                  LEFT JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmXlsDnldHstVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT A.DNLD_HST_CD                    /*다운로드이력코드        */
+                    , A.MENU_CD                    /*메뉴코드        */
+                    , A.DNLD_NM                    /*다운로드명        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , B.MENU_NM
+                    , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
+                          FROM CRM_MENU_BAS
+                         WHERE 1=1
+                         START WITH MENU_CD = A.MENU_CD 
+                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH 
+                 FROM CRM_XLS_DNLD_HST A
+                 LEFT JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmXlsDnldHstVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_XLS_DNLD_HST
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_XLS_DNLD_HST (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       FN_CRM_AUTO_SEQ('XDH')
+                     , #{menuCd}
+                     , #{dnldNm}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_XLS_DNLD_HST
+                  SET MENU_CD             =         #{menuCd}
+                    , DNLD_NM             =         #{dnldNm}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_XLS_DNLD_HST
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

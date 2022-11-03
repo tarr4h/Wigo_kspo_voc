@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <gridfitStyle value="even"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="배치아이디" field="batId" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
+    <column name="배치명" field="batNm" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="N"/>
+    <column name="실행명" field="batObjNm" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="N"/>
+    <column name="크론" field="batCron" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="N"/>
+    <column name="배치유형" field="batObjType" type="combo" rootCodeId="040" upCodeId="040" codeLevel="2"  maxLength="3" width="80" textAlignment="left" required="Y" hidden="N"/>
+    <column name="사용여부" field="useYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="설명" field="batDesc" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="N"/>
+    <column name="실행하기" field="btnExecute" type="button" width="80" textAlignment="center" required="N" hidden="N"/>
+</grid>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N" />
+        <rollbackable value="N" />
+        <appendable value="N" />
+        <readOnly value="Y" />
+        <showCheckbox value="Y" />
+        <showNumber value="Y" />
+        <showStateBar value="N" />
+        <showHeaderSum value="N" />
+        <showFooter value="N" />
+        <insertable value="N" />
+        <editable value="Y" />
+        <rowSelection value="Y" />
+        <gridfitStyle value="evenFill" />
+        <columnMove value="N" />
+        <setSort value="none" />
+    </meta>
+    <column name="사용자아이디" field="userCd" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y" />
+    <column name="로그인아이디" field="loginId" type="char" maxLength="20" width="80" textAlignment="left" required="N" readOnly="Y" hidden="N" />
+    <column name="사용자명" field="userNm" type="char" maxLength="100" width="80" textAlignment="left" required="Y" hidden="N" />
+    <column name="사용자이메일" field="emailAddr" type="char" maxLength="100" width="80" textAlignment="left" required="N" hidden="N" />
+    <column name="전화번호" field="mphonNo" type="char" maxLength="11" width="80" textAlignment="left" required="N" hidden="Y" />
+    <column name="그룹아이디" field="grpCd" type="char" maxLength="20" width="80" textAlignment="left" readOnly="Y" hidden="Y"/>
+    <column name="상태" field="delYn" type="combo" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="N" codeId="S030" readOnly="Y" hidden="N"/>
+</grid>

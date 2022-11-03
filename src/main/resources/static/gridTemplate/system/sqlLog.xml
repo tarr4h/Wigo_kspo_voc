@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="Y"/>
+        <showCheckbox value="N"/>
+        <showNumber value="Y"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="로그아이디" field="logId" type="char" maxLength="30" width="20" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="로그유형" field="logType" type="char" maxLength="10" width="20" textAlignment="center" required="Y" hidden="N"/>
+    <column name="실행  SQL" field="logSql" type="char" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="사용자" field="userId" type="char" maxLength="20" width="20" textAlignment="center" required="N" hidden="N"/>
+    <column name="시작시간" field="strDt" type="datetime" maxLength="17" width="30" textAlignment="left" required="Y" hidden="N"/>
+    <column name="종료시간" field="endDt" type="datetime" maxLength="17" width="30" textAlignment="left" required="Y" hidden="N"/>
+    <column name="실행시간(ms)" field="execTime" type="int" maxLength="10" width="80" textAlignment="right" required="Y" digit="10" place="0" hidden="Y"/>
+    <column name="메뉴" field="menuId" type="char" maxLength="20" width="30" textAlignment="center" required="N" hidden="N"/>
+    <column name="URL" field="reqUrl" type="char" maxLength="1000" width="200" textAlignment="left" required="N" hidden="N"/>
+    <column name="컨트롤러" field="ctrMethod" type="char" maxLength="1000" width="200" textAlignment="left" required="N" hidden="Y"/>
+    <column name="서비스" field="svcMethod" type="char" maxLength="1000" width="200" textAlignment="left" required="N" hidden="N"/>
+    <column name="다오" field="daoMethod" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="Mapper" field="sqlMapper" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="N"/>
+    <column name="접속아이피" field="logIp" type="char" maxLength="1000" width="200" textAlignment="center" required="Y" hidden="Y"/>
+    <column name="실행쿼리" field="btnDetail" type="button" width="20" textAlignment="center" required="N" hidden="N"/>
+    
+<!--     <column name="등록자" field="insId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="N"/> -->
+<!--     <column name="등록일" field="insDt" type="date" width="80" textAlignment="center" required="N" hidden="N"/> -->
+<!--     <column name="수정자" field="updId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="N"/> -->
+<!--     <column name="수정일" field="updDt" type="date" width="80" textAlignment="center" required="N" hidden="N"/> -->
+</grid>

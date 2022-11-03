@@ -1,0 +1,37 @@
+---
+layout: default
+---
+<script type="text/javascript">
+$(function(){
+
+   var $widget = $("select").multiselect(), state = true;
+   $("#toggle-disabled").click(function(){
+      state = !state;
+      $widget.multiselect(state ? 'disable' : 'enable');
+   });
+
+});
+</script>
+
+<h2>Enable/Disable Widget</h2>
+<p>Programmatically calling the disable and enable methods.</p>
+<pre class="prettyprint">
+var $widget = $("select").multiselect(), 
+    state = true;
+
+$("#toggle-disabled").click(function(){
+   state = !state;
+   $widget.multiselect(state ? 'disable' : 'enable');
+});
+</pre>
+
+
+<select name="example-disabled" disabled="disabled" multiple="multiple" size="5">
+<option value="option1">Option 1</option>
+<option value="option2">Option 2</option>
+<option value="option3">Option 3</option>
+<option value="option4">Option 4</option>
+<option value="option5">Option 5</option>
+</select>
+
+<p style="margin-top:5px"><button type="button" name="toggle" id="toggle-disabled">Toggle Disabled</button></p>

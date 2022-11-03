@@ -1,0 +1,569 @@
+@charset "utf-8";
+
+
+/*tree*/
+.folder_Top {background:url('../images/terminal.png') left top no-repeat !important;}
+.folder_m {background:url('../images/folder.png') left top no-repeat !important;}
+.folder_menu {background:url('../images/layout_header.png') left top no-repeat !important;}
+.folder_Tab {background:url('../images/tabnavigator.png') left top no-repeat  !important;}
+.folder_function {background:url('../images/widgets.png') left top no-repeat !important;}
+.folder_Pop {background:url('../images/application_double.png') left top no-repeat  !important;}
+.folder_Module {background:url('../images/accordion.png') left top no-repeat !important;}
+
+
+/*title*/
+.headingBox h2+.selectBox {
+	margin-left: 5px;
+}
+.headingBox h3+.description {
+	overflow: hidden;
+	height: 0px;
+	padding: 0 10px;
+	transition: all .5s;
+    -webkit-transition:all .5s;
+    -moz-transition:all .5s;	
+}
+.headingBox h3.active+.description {
+	height: auto;
+	padding: 15px 0px 0px 23px;
+	line-height: 18px;
+	color: #666666;
+   	font-size: 1em;
+   	font-weight: normal;
+   	transition: all .5s;
+    -webkit-transition:all .5s;
+    -moz-transition:all .5s;
+}
+/*location*/
+.location{
+	float: right;
+}
+.location li{
+	float:left;
+	line-height:14px;
+}
+.location li a{
+	font-size:11px;
+}
+.location li:before{
+	content:">";
+	padding: 0 3px 0 5px;
+	font-size: 8px;
+    vertical-align: top;
+}
+.location li:first-child:before{
+	content:" ";
+	padding: 0 2px;
+}
+.location li:first-child {
+	padding-left:10px; 
+}
+
+/* quickTask */
+.quickTask {
+	position: relative;
+	padding-top: 12px;
+	padding-right: 100px;
+}
+.quickTask ul {
+	display: inline-block;
+}
+.quickTask ul li {
+	position: relative;
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-align: center;
+}
+.quickTask ul li a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	line-height: 20px;
+	color: #333;
+	font-weight: 700;
+}
+.quickTask ul li .badge {
+	position: absolute;
+	top: -13px;
+	right: -5px;
+	display: inline-block;
+	min-width: 20px;
+	line-height: 20px;
+	padding: 0px 5px;
+	-webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+	color: #fff;
+	font-size: 0.85em;
+	font-weight: normal;
+}
+.btnInclub {
+	position: absolute;
+	top: -4px;
+	right: 0;
+}
+#inclubCnt {
+	display: inline-block;
+	margin-top: -2px;
+}
+
+/*웹모듈 셋팅*/
+.designSetting {
+	overflow: auto;
+	width: 100%;
+	margin-bottom: 15px;
+	border: solid 1px #a6a6a6;
+	background: #ffffff;
+}
+.step, .setting, .screen, .webModule {
+	float: left;
+}
+.step {
+	width: 15%;
+}
+.step li {
+	height: 40px;
+	line-height: 40px;
+	padding: 0 20px;
+	border-bottom: 1px solid #dddddd;
+}
+.step li.active {
+	line-height: 38px;
+    font-weight: 700;
+	background-color: #16a69d;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2cbeb7', endColorstr='#16a69d', GradientType=0);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2cbeb7), to(#16a69d));
+    background-image: -webkit-linear-gradient(top, #2cbeb7, #16a69d);
+    background-image: -o-linear-gradient(top, #2cbeb7, #16a69d);
+    background-image: -moz-linear-gradient(top, #2cbeb7, #16a69d);
+	background-image: linear-gradient(to bottom, #2cbeb7, #16a69d);
+}
+.step li.active a {
+	color: #fff;
+}
+.setting {
+	width: 85%;
+	border-left: 1px solid #cccccc;
+}
+.setting.type2 {
+	width: 85%;
+	border-left: 1px solid #cccccc;
+	padding: 20px;
+}
+.setting .boardList, .setting .boardView, .setting .boardWrite, 
+.setting .ui-jqgrid, .setting .ui-widget-content {
+	border: none;
+	margin-bottom: 0; 
+}
+.setting.type2 .boardList, .setting.type2 .boardView, .setting.type2 .boardWrite, 
+.setting.type2 .ui-jqgrid, .setting.type2 .ui-widget-content {
+	border: 1px solid #a6a6a6; 
+}
+.setting.type2 .boardList, .setting.type2 .boardView, .setting.type2 .boardWrite {
+	margin-top: 10px; 
+}
+.setting .boardList, .setting .boardView, .setting .boardWrite {
+	border-bottom: 1px solid #bbbbbb;
+}
+.setting .boardList+.btnArea , .setting .boardView+.btnArea, .setting .boardWrite+.btnArea {
+	margin-top: 15px;
+}
+
+.screen {
+	width: 80%;
+	border-right: 1px solid #cccccc;
+}
+.screen > p, .webModule > p {
+	display: block;
+	height: 40px;
+	line-height: 40px;
+    padding: 0 5px;
+    border-bottom: 1px solid #bbbbbb;
+    webkit-box-shadow: inset 0 0 0 1px #ffffff;
+    -moz-box-shadow: inset 0 0 0 1px #ffffff;
+    box-shadow: inset 0 0 0 1px #ffffff;
+	text-align: center;
+	color: #666666;
+	font-weight: 700;
+    text-shadow: 0 1px 0 #ffffff;
+	background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(top, #f3f3f3, #eaeaea);
+    background-image: -ms-linear-gradient(top, #f3f3f3, #eaeaea);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f3f3f3), to(#eaeaea));
+    background-image: -webkit-linear-gradient(top, #f3f3f3, #eaeaea);
+    background-image: -o-linear-gradient(top, #f3f3f3, #eaeaea);
+    background-image: linear-gradient(top, #f3f3f3, #eaeaea);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3f3f3', endColorstr='#eaeaea', GradientType=0);
+	
+}
+.screen .layout {
+	overflow: auto;
+	min-height: 660px;
+	margin: 10px;
+	border: 1px solid #a6a6a6;
+}
+.screen .layout .imageBox {
+	position: relative;
+	background: #ffffff;
+}
+.screen .layout .textBox {
+	text-align: center;
+	display:table;
+	width: 100%;
+	height: 100%;
+}
+.screen .layout .textBox > div {
+	display:table-cell;
+	line-height: 28px;
+    font-size: 1.84em;
+    color: #384452;
+}
+.screen .layout .imageBox button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.screen .layout .imageBox img {
+	width: 100%;
+}
+.screen .layout img {
+	width: 100%;
+}
+.layout #header.gate, .layout #header.main, .layout #header.sub {
+	background: #e8f4fd;
+}
+.layout #footer.gate, .layout #footer.main, .layout #footer.sub {
+	background: #eef6e5;
+}
+.layout #sub .lnb {
+	background: #fffde5;
+}
+.layout #sub .contentsWrap {
+	background: #fff3f1;
+}
+.layout #gate #cntnr1, .layout #gate #cntnr2, .layout #gate #cntnr3, .layout #gate #cntnr4, .layout #gate #cntnr5,
+.layout #main #cntnr1, .layout #main #cntnr2, .layout #main #cntnr3, .layout #main #cntnr4, .layout #main #cntnr5, 
+.layout #main #cntnr6, .layout #main #cntnr7, .layout #main #cntnr8, .layout #main #cntnr9, .layout #main #cntnr10 {
+	background: #fff3f1;
+}
+.layout #sub .lnb.active,
+.layout #header.gate.active, .layout #header.main.active, .layout #header.sub.active,
+.layout #footer.gate.active, .layout #footer.main.active, .layout #footer.sub.active,
+.layout #gate #cntnr1.active, .layout #gate #cntnr2.active, .layout #gate #cntnr3.active, .layout #gate #cntnr4.active, .layout #gate #cntnr5.active,
+.layout #main #cntnr1.active, .layout #main #cntnr2.active, .layout #main #cntnr3.active, .layout #main #cntnr4.active, .layout #main #cntnr5.active,
+.layout #main #cntnr6.active, .layout #main #cntnr7.active, .layout #main #cntnr8.active, .layout #main #cntnr9.active, .layout #main #cntnr10.active {
+    border: 3px solid #1cb4ab;
+}
+.webModule {
+	width: 20%;
+	border-left: 1px solid #cccccc;
+    margin-left: -1px;
+}
+.webModule ul {
+	overflow-y: scroll;
+	height: 1000px;
+	padding: 10px;
+}
+.webModule ul li {
+	width: 100%;
+	border: 1px solid #a6a6a6;
+	margin-bottom: 10px;
+}
+.webModule ul li img {
+	width: 100%;
+}
+
+
+
+/* popup */
+
+.popup .box .boxLeft, .popup .box .boxRight, .popup .box .boxCenter { /* sms발송 */
+	min-height: auto;
+}
+.popup .box, .popup .box .numList+.btnArea, .popup .box .boardView {
+	margin: 0;	
+}
+.popup .box .numList {
+    overflow-y: scroll;
+	height: 358px;
+	margin-bottom: 8px;
+	padding: 10px 0;
+	border: 1px solid #cccccc;
+}
+.popup .box .numList li {
+	padding: 0 15px;
+	line-height: 26px;	
+}
+.popup .box .numList li.active {
+	background: #e5e5e5;
+}
+.popup .box .numList+.btnArea .floatLeft em:first-child {
+	padding-left: 15px;
+	background: url('../images/user.png') left 2px no-repeat;
+}
+.popup .box .numList+.btnArea .floatLeft em:first-child span {
+    display: inline-block;
+    margin-top: -1px;
+	color: #f90504;
+}
+.popup .sms {
+	height: 453px;
+	background: url('../images/bg_sms.png') center center no-repeat;
+}
+.popup .sms .textArea {
+	position: relative;
+	width: 210px;
+    margin: 0 auto;
+    padding-top: 74px;
+}
+.popup .sms .textArea textarea {
+    overflow: auto;
+    height: 246px;
+    padding: 8px 10px 30px 10px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+    background: #ffffff;
+}
+.popup .sms .textArea span {
+	position: absolute;	
+	right: 15px;
+	bottom: 15px;
+}
+.popup .sms .inputArea {
+	width: 210px;
+	height: 60px;
+    margin: 0 auto;
+    padding: 15px 10px;
+	background: #f0f0f0;
+}
+.popup .sms .inputArea input {
+	width: 100%;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+    background: #ffffff;
+}
+.popup .sms .btnSend {
+	width: 100px;
+	height: 37px;
+	margin-top: 18px;
+	border: 1px solid #4b4b4b;
+	-webkit-border-radius: 18px;
+	-moz-border-radius: 18px;
+	border-radius: 18px;
+	color: #dddddd;
+	font-size: 1.15em;
+	background: #2c2c2c;
+}
+.popup .sms .btnSend:hover {
+	border: 1px solid #ffffff;
+	color: #ffffff;
+}
+.popup .sms .btnSend:after {
+	content: " ";
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-left: 5px;
+	vertical-align: middle;
+	background: url('../images/btn_send.png') 0 0 no-repeat;
+}
+.popup .sms .btnSend:hover:after {
+	background: url('../images/btn_send_hover.png') 0 0 no-repeat;
+}
+.pwModify h4 {
+	margin-bottom: 15px;
+}
+.pwModify .boardView {
+	margin-top: 15px;
+}
+.pwModify .boardView:first-child td {
+	text-align: center;
+}
+.pwModify .boardView:first-child td:first-child {
+	border-right: 1px solid #dddddd;
+}
+
+/* 문제 미리보기  */
+.test {
+	padding: 20px 20px 20px 20px;
+    margin-bottom: 15px;
+	border: solid 1px; 
+}
+.test dt {
+    display: block;
+    padding-top: 20px;
+    border-top: solid 1px;
+    font-weight: 700;
+}
+.test dt:first-child {
+    padding-top: 0px;
+    border-top: none;
+}
+.test dt p {
+	margin-top: 5px;
+	margin-left: 10px;
+	font-weight: 400;
+}
+.test dd {
+    margin-left: 15px;
+    margin-top: 20px;
+	padding-right: 15px;
+}
+.test dd input[type="text"] {
+	width: 100%;
+}
+.test dd p {
+    margin-top: 5px;
+}
+.test dd.answer {
+    padding-bottom: 20px;	
+}
+.test dd.answer .explain {
+    margin-top: 10px;
+}
+.test dd.answer .explain .btnView:after {
+	content: " ▼";
+	font-size: 0.9em;
+}
+.test dd.answer .explain.active .btnView:after {	
+	content: " ▲";
+	font-size: 0.9em;
+}
+.test dd.answer .explain .content {
+	display: none;
+	margin-top: 5px;
+	padding: 15px 20px 15px 20px;
+}
+
+/* 수납확인서  */
+.receipt {
+	padding-bottom: 30px;
+}
+.receipt h4 {
+	margin-top: 10px;	
+}
+.receipt th {
+	padding: 0 0 0 20px;
+}
+.receipt th > h5 {
+	margin-left: -20px;
+	border-bottom: none;
+}
+.receipt th > h5:before {
+	content: "◎";
+	padding-right: 5px;
+}
+.receipt td span {
+	margin-left: 15px;
+}
+.receipt td > .boardView th, 
+.receipt td > .boardView td {
+	padding: 0px 10px 0px 10px;
+	border-left: solid 1px #dddddd;
+	text-align: center;
+}
+.receipt td > .boardView tr:first-child th:first-child,
+.receipt td > .boardView td:first-child {
+	border-left: none;
+}
+.receipt td.alignRight {
+	padding: 10px 20px 0 0;
+}
+.receipt td.alignRight .btnArea {
+	margin-top: 20px;
+}
+.receipt td.address {
+	padding-bottom: 120px;
+	border-top: none;
+	line-height: 30px;
+	background: url('/images/common/home/alpaco/img_stamp_alpaco.png') center bottom no-repeat;
+}
+
+/* tree 뎁스 */
+.tree .oneDepth,
+.tree .twoDepth {
+	display: inline-block;
+	line-height: 18px;
+	padding: 0 5px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+    vertical-align: -4px;
+	color: #ffffff;
+}
+.tree .oneDepth {
+	background: #5a7191;
+}
+.tree .twoDepth {
+	background: #83a6de;
+}
+
+
+/* html guide */
+.htmlGuide {
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+.htmlGuide > strong {
+	display: block;
+	padding: 0 20px;
+	line-height: 40px;
+	border-bottom: 1px solid #ccc;
+	font-size: 15px;
+	background: #e5e7e9;
+}
+
+.htmlGuide > .conBox {
+	margin: 0;
+	padding: 20px;
+	line-height: 22px;
+}
+.htmlGuide > .conBox > strong {
+	position: relative;
+	display: block;
+	margin: 20px 0 5px;
+	padding-left: 10px;
+	font-size: 14px;
+}
+.htmlGuide > .conBox > strong:first-child {
+	margin-top: 0;
+}
+.htmlGuide > .conBox > strong:before {
+	content:" ";
+	position: absolute;
+	top: 9px;
+	left: 0;
+	display: block;
+	width: 3px;
+	height: 3px;
+	background: #f27800;
+}
+.htmlGuide > .conBox > p + p {
+	margin-top: 10px;
+}
+.htmlGuide > .conBox > ol {
+	margin-left: 23px;
+}
+.htmlGuide > .conBox > ol li {
+	padding-left: 7px;
+    border-left: 2px solid #6ce26c;
+    list-style: decimal-leading-zero outside none;
+}
+
+.htmlGuide > .conBox > ol li.one {padding-left: 27px;}
+.htmlGuide > .conBox > ol li.two {padding-left: 47px;}
+.htmlGuide > .conBox > ol li.three {padding-left: 67px;}
+.htmlGuide > .conBox > ol li.four {padding-left: 87px;}
+.htmlGuide > .conBox > ol li.five {padding-left: 107px;}
+.htmlGuide > .conBox > ol li.six {padding-left: 127px;}
+.htmlGuide > .conBox > ol li.seven {padding-left: 147px;}
+
