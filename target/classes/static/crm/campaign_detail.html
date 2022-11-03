@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+
+<div class="mPopup1">
+    
+    <!-- header -->
+    <div class="title">
+        <h1>캠페인 상세</h1>
+        <a href="javascript:window.close();" class="close">팝업 닫기</a>
+    </div>
+    <!-- //header -->
+
+    <!-- cont -->
+    <div class="cont">
+        
+        <div class="gTitle1 line">
+            <h3 class="mTitle1">기본정보</h3>
+            <div class="gRt">
+                <a href="#" class="mBtn1 lWhite">승인</a>
+                <a href="#" class="mBtn1 lWhite">중지</a>
+                <a href="#" class="mBtn1 gray">승인요청</a>
+                <a href="#" class="mBtn1 gray">중지요청</a>
+                <a href="#" class="mBtn1 primary">정보수정</a>
+            </div>
+        </div>
+        <!-- board -->
+        <div class="mBoard2">
+            <table>
+                <caption>기본정보</caption>
+                <colgroup>
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="6%">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="11%">
+                    <col width="8%">
+                    <col width="*">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="8%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="left"><span class="iMust">캠페인 코드</span></th>
+                        <td colspan="3">
+                            <input type="text" class="it must" title="캠페인 코드" value="PM20200001">
+                        </td>
+                        <th scope="row" class="left">캠페인 명</th>
+                        <td colspan="3">
+                            <input type="text" class="it" title="캠페인 명">
+                        </td>
+                        <th scope="row" class="left">캠페인 유형</th>
+                        <td colspan="3">
+                            <div class="mFlex2">
+                                <span class="flex">
+                                    <input type="text" class="it" title="캠페인 유형" value="타켓/설문">
+                                </span>
+                                <a href="#" class="mBtn1 m lWhite">버튼</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="left">캠페인 형태</th>
+                        <td colspan="3">
+                            <select class="select" title="캠페인 형태">
+                                <option>반응형/원타임</option>
+                            </select>
+                        </td>
+                        <th scope="row" class="left">주문 채널</th>
+                        <td colspan="3" class="left">
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="POS" checked="checked">
+                                <span class="label">POS</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="온라인 웹">
+                                <span class="label">온라인 웹</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="올라인 앱">
+                                <span class="label">올라인 앱</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="HP">
+                                <span class="label">HP</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="HC">
+                                <span class="label">HC</span>
+                            </label>
+                        </td>
+                        <th scope="row" class="left">캠페인 상태</th>
+                        <td colspan="3">
+                            <select class="select" title="캠페인 상태">
+                                <option>진행중</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="left">캠페인 기간</th>
+                        <td colspan="3">
+                            <div class="mDate1">
+                                <input type="text" class="it date" title="기간 시작일" value="2022-01-01">
+                                <span class="bar">~</span>
+                                <input type="text" class="it date" title="기간 마지막일" value="2022-01-03">
+                            </div>
+                        </td>
+                        <th scope="row" class="left">피로도 정책</th>
+                        <td>
+                            <select class="select" title="피로도 정책">
+                                <option>진행중</option>
+                            </select>
+                        </td>
+                        <th scope="row" class="left">전체 예산</th>
+                        <td>
+                            <div class="mFlex2">
+                                <span class="flex">
+                                    <input type="text" class="it right" title="전체 예산" value="10,000,000">
+                                </span>
+                                <span class="bar">원</span>
+                            </div>
+                        </td>
+                        <th scope="row" class="left">2차 캠페인</th>
+                        <td colspan="3">
+                            <div class="mFlex2">
+                                <span class="flex">
+                                    <input type="text" class="it" title="2차 캠페인" value="PM20200001">
+                                </span>
+                                <a href="#" class="mBtn1 m lWhite">버튼</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="left">반복 월</th>
+                        <td>
+                            <select class="select" title="반복 월">
+                                <option>1월</option>
+                                <option>2월</option>
+                                <option>3월</option>
+                                <option>4월</option>
+                                <option>5월</option>
+                                <option>6월</option>
+                                <option>7월</option>
+                                <option>8월</option>
+                                <option>9월</option>
+                                <option>10월</option>
+                                <option>11월</option>
+                                <option selected="selected">12월</option>
+                            </select>
+                        </td>
+                        <th scope="row" class="left">반복 일</th>
+                        <td>
+                            <select class="select" title="반복 일">
+                                <option>1일</option>
+                                <option>2일</option>
+                                <option>3일</option>
+                                <option>4일</option>
+                                <option>5일</option>
+                                <option>6일</option>
+                                <option>7일</option>
+                                <option>8일</option>
+                                <option>9일</option>
+                                <option>10일</option>
+                                <option>11일</option>
+                                <option>12일</option>
+                                <option>13일</option>
+                                <option>14일</option>
+                                <option>15일</option>
+                                <option>16일</option>
+                                <option>17일</option>
+                                <option>18일</option>
+                                <option>19일</option>
+                                <option>20일</option>
+                                <option>21일</option>
+                                <option>22일</option>
+                                <option>23일</option>
+                                <option>24일</option>
+                                <option>25일</option>
+                                <option>26일</option>
+                                <option>27일</option>
+                                <option>28일</option>
+                                <option selected="selected">29일</option>
+                                <option>30일</option>
+                            </select>
+                        </td>
+                        <th scope="row" class="left">반복 요일</th>
+                        <td colspan="3" class="left">
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="월" checked="checked">
+                                <span class="label">월</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="화">
+                                <span class="label">화</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="수">
+                                <span class="label">수</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="목">
+                                <span class="label">목</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="금">
+                                <span class="label">금</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="토">
+                                <span class="label">토</span>
+                            </label>
+                            <label class="mCheckbox1">
+                                <input type="checkbox" title="일">
+                                <span class="label">일</span>
+                            </label>
+                        </td>
+                        <th scope="row" class="left">반복주기</th>
+                        <td>
+                            <select class="select" title="반복주기">
+                                <option>1회</option>
+                            </select>
+                        </td>
+                        <th scope="row" class="left">발송 시간</th>
+                        <td>
+                            <select class="select" title="반복주기">
+                                <option>1회</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //board -->
+        
+        <div class="gTitle1 line">
+            <h3 class="mTitle1">캠페인 대상</h3>
+            <div class="gRt">
+                <a href="#" class="mBtn1 gray">캠페인 대상군 추가</a>
+            </div>
+        </div>
+        <!-- list -->
+        <div class="mList1">
+            <ul>
+                <li>
+                    <div class="tit">혜택</div>
+                    <div class="txt">
+                        <div class="txtBg">포인트 <em>5000 쿠폰</em></div>
+                    </div>
+                    <a href="#" class="bt">선택</a>
+                </li>
+                <li>
+                    <div class="tit">일반회원</div>
+                    <div class="txt">
+                        <div class="txtBg">
+                            매출액 100만원 이하 
+                            <br>최근 12개월 이내 구매 
+                            <br>(1,500명)
+                        </div>
+                    </div>
+                    <a href="#" class="bt">선택</a>
+                </li>
+                <li>
+                    <div class="tit">발송채널</div>
+                    <div class="txt">
+                        <div class="txtBg">
+                            <select class="select" title="발송채널">
+                                <option>알림톡</option>
+                            </select>
+                        </div>
+                    </div>
+                    <a href="#" class="bt">선택</a>
+                </li>
+                <li>
+                    <div class="tit">발송 컨텐츠</div>
+                    <div class="txt">
+                        <div class="txtBg">
+                            <select class="select" title="발송 컨텐츠">
+                                <option>회원가입</option>
+                            </select>
+                        </div>
+                    </div>
+                    <a href="#" class="bt">선택</a>
+                </li>
+            </ul>
+        </div>
+        <!-- //list -->
+        
+    </div>
+    <!-- //cont -->
+	
+</div>
+
+</body>
+</html>

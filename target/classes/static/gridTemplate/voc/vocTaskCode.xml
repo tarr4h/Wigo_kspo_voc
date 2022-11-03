@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="N"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <gridfitStyle value="even"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+<!--        <headerRows value="1"/>-->
+    </meta>
+        <column name="시퀀스" field="taskSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="TASK명" field="taskNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
+        <column name="처리기한" field="deadline" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="담당부서ID" field="dutyDept" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="담당자ID" field="dutyEmp" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="담당부서명" field="dutyDeptNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="부서변경" field="chngDept" type="button" width="5" textAlignment="center" hidden="N"/>
+        <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="담당자변경" field="chngEmp" type="button" width="5" textAlignment="center" hidden="N"/>
+        <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="권한변경" field="chngRole" type="button" width="5" textAlignment="center" hidden="N"/>
+        <column name="변경가능여부" field="chngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
+        <column name="자동적용여부" field="autoApplyYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
+        <column name="수정자" field="modUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="수정일시" field="modDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+</grid>

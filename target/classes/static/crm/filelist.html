@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7]><html class="lt-ie10 lt-ie9 lt-ie8 ie6" lang="ko-KR"><![ingif]-->
+<!--[if IE 7]><html class="lt-ie10 lt-ie9 lt-ie8 ie7" lang="ko-KR"><![ingif]-->
+<!--[if IE 8]><html class="lt-ie10 lt-ie9 ie8" lang="ko-KR"><![ingif]-->
+<!--[if IE 9]><html class="lt-ie10 ie9" lang="ko-KR"><![ingif]-->
+<!--[if !IE]><!--><html lang="ko-KR"><!--<![ingif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+	<title>파일리스트</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<style>
+		*{-webkit-text-size-adjust:none;}
+		@import url('css/fonts.css');
+		html,body{width:100%;height:100%; min-width:800px;}
+		html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, ul, li, fieldset, form, label, leging, table, caption, tbody, tfoot, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video{margin:0; padding:0; outline:0; font-family:"Noto Sans KR", "맑은 고딕", "돋움", dotum, sans-serif; font-size:12px; color:#555;font-weight:normal; /*vertical-align:baseline;*/}
+		body{line-height:1.2em; border:0;}
+		strong, em, span, wbr, a{display:inline-block;}
+		span{margin:0; padding:0; outline:0;}
+		hr{display:none}
+		ol, ul, ,dl, dt, dd{list-style:none outside none; padding:0; margin:0;}
+		fieldset, img, table, caption, tbody, tfoot, thead, tr, th, td, button, hr{border:0;}
+		address, caption, cite, code, dfn, em, strong, th, var{font-style: normal;}
+		img{vertical-align:middle;}
+		a{cursor:pointer; text-decoration:none; color:#666;}
+		table{border-collapse:collapse;}
+		#wrap{padding:12px;}
+		#header{margin-bottom:20px;}
+		#header::after{content:''; clear:both; display:block;}
+		#header>h1{float:left; font-size:28px; color:#1a1a1a; padding-top:15px;}
+		#header>div{float:right;}
+		#header>div>p{font-size:11px; color:#888; text-align:right;}
+		div.box{border:1px solid #dedede; background:#f1f1f1; padding:12px 14px; margin-bottom:10px;}
+		h3{font-size:14px; color:#333; margin-bottom:13px;}
+		h4{font-size:14px; color:#333; margin:25px 0 8px 5px;}
+		ol.atten>li{margin-bottom:8px; padding:0; line-height:160%;}
+		ol.atten>li:last-child{margin-bottom:0;}
+		table.htmllist th,table.htmllist td{border:1px solid #ccc;}
+		table.htmllist .line th,
+		table.htmllist .line td{border-top-width:2px;}
+		table.htmllist tr:first-child td{text-align:center; font-weight:500; border-bottom:1px solid #111 !important; height:30px; color:#000 !important; font-size:12px !important;}
+		table.htmllist th{padding:5px 6px; text-align:left; border-bottom:2px solid #4e80e8 !important; height:32px; background-color:#f3f4f8;}
+		table.htmllist th.depth2{padding: 2px 18px; text-align:left; border-bottom:1px solid #333 !important; height:30px; font-size: 12px; background-color: #fff}
+		table.htmllist td{padding:5px 6px;height:;}
+		table.htmllist td:first-child{text-align:center;}
+		table.htmllist td:last-child{color:#888; font-size:12px;}
+		table.htmllist td>a{display:block; width:100%; height:26px; line-height:26px; text-align:center; color:#fff; font-size:11px; font-weight:bold; vertical-align:middle; background-color:#5183eb; border:1px solid #3f6fd3; border-radius:3px;}
+		table.htmllist td>a:hover{background-color:#3f6fd3; line-height:28px;}
+		table.htmllist tr:hover>td{background-color:#fffad2;}
+		table.htmllist tr td{background-color:#eee;}
+		table.htmllist tr.done td{background-color:#fff;}
+		table.htmllist tr.v4.done td{background-color:#000;color:#fff;}
+		table.htmllist td.ing{text-align:center; font-size:12;}
+		table.htmllist td.end{text-align:center; font-size:12; font-weight:bold; background-color:#b8bbbf; color:#1a1a1a;}
+		/* .total{padding:10px 5px 20px} */
+		.total .tit_txt{padding-left:10px;margin-left:10px;border-left:1px solid #ddd;}
+		.total h3 + .tit_txt{padding-left:0;margin-left:0;border-left:none;}
+		.total_page_num{font-size:18px;color:#5183eb;}
+		.cntTotal{position:absolute;top:-9999px;left:-9999px;}
+	</style>
+</head>
+
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1>파일리스트 <span class="cntTotal">(<span class="total"></span>pages)</span></h1>
+	</div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="htmllist">
+		<thead>
+			<tr class="head">
+				<td>No</td>
+				<td>1depth</td>
+				<td>2depth</td>
+				<td>3depth</td>
+				<td>4depth</td>
+				<td>FileName</td>
+				<td>일정</td>
+				<td>View</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><th colspan="11">파일리스트</th></tr>
+			<tr class="v3 done">
+				<td></td>
+				<td>로그인</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>login.html</td>
+				<td></td>
+				<td><a href="login.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td>모달 팝업</td>
+				<td>카드를 발급 하시겠습니까?</td>
+				<td></td>
+				<td></td>
+				<td>popup01.html</td>
+				<td></td>
+				<td><a href="popup01.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td></td>
+				<td>정상 입력 되었습니다.</td>
+				<td></td>
+				<td></td>
+				<td>popup02.html</td>
+				<td></td>
+				<td><a href="popup02.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td></td>
+				<td>정확하게 입력해 주세요.</td>
+				<td></td>
+				<td></td>
+				<td>popup03.html</td>
+				<td></td>
+				<td><a href="popup03.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td></td>
+				<td>시스템 내부 장애가 발생했습니다. 잠시 후에 접속하시기 바랍니다.</td>
+				<td></td>
+				<td></td>
+				<td>popup04.html</td>
+				<td></td>
+				<td><a href="popup04.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td>오류 페이지</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>error.html</td>
+				<td></td>
+				<td><a href="error.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td>인트로</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>intro.html</td>
+				<td></td>
+				<td><a href="intro.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v1 done">
+				<td></td>
+				<td>메인</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>main.html</td>
+				<td></td>
+				<td><a href="main.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 done">
+				<td></td>
+				<td>frame page</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>frame.html</td>
+				<td></td>
+				<td><a href="frame.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 done">
+				<td></td>
+				<td>캠페인</td>
+				<td>기획관리</td>
+				<td></td>
+				<td></td>
+				<td>campaign_plan.html</td>
+				<td></td>
+				<td><a href="campaign_plan.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 done">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>결과없음</td>
+				<td></td>
+				<td>campaign_plan_nodata.html</td>
+				<td></td>
+				<td><a href="campaign_plan_nodata.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 done">
+				<td></td>
+				<td></td>
+				<td>유형관리</td>
+				<td></td>
+				<td></td>
+				<td>campaign_type.html</td>
+				<td></td>
+				<td><a href="campaign_type.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 done">
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td></td>
+				<td>campaign_detail.html</td>
+				<td></td>
+				<td><a href="campaign_detail.html" target="_blank" target="_blank" onclick='window.open("campaign_detail.html", "miniplayer", "width=1200, height=670, toolbar=no, menubar=no, scrollbars=no, resizable=no");return false;'>View</a></td>
+			</tr>
+			<tr class="v4 done">
+				<td></td>
+				<td>쿠폰 마스터</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>coupon.html</td>
+				<td></td>
+				<td><a href="coupon.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v4 done">
+				<td></td>
+				<td></td>
+				<td>상세</td>
+				<td></td>
+				<td></td>
+				<td>coupon_detail.html</td>
+				<td></td>
+				<td><a href="coupon_detail.html" target="_blank" target="_blank" onclick='window.open("coupon_detail.html", "miniplayer", "width=1200, height=670, toolbar=no, menubar=no, scrollbars=no, resizable=no");return false;'>View</a></td>
+			</tr>
+			<tr class="v3 done">
+				<td></td>
+				<td>통합고객목록</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>guest_list.html</td>
+				<td></td>
+				<td><a href="guest_list.html" target="_blank">View</a></td>
+			</tr>
+			<!--
+			<tr class="v2 ">
+				<td></td>
+				<td>CRM</td>
+				<td>상세페이지</td>
+				<td></td>
+				<td></td>
+				<td>crm_detail.html</td>
+				<td></td>
+				<td><a href="crm_detail.html" target="_blank">View</a></td>
+			</tr>
+			<tr class="v2 ">
+				<td></td>
+				<td></td>
+				<td>페이징</td>
+				<td></td>
+				<td></td>
+				<td>crm_paging.html</td>
+				<td></td>
+				<td><a href="crm_paging.html" target="_blank">View</a></td>
+			</tr>
+			-->
+		</tbody>
+	</table>
+	
+</div>
+
+<script>
+	var totalPageNum = 0;
+	$('tbody').each(function(idx){	
+		var titTxt = $('tbody').eq(idx).find('th').text();
+		$('.total').append('<span class="tit_txt">' + titTxt + ': </span>')	
+		$(this).find('tr').each(function(i){
+			$(this).find('td:first-child').text(i);
+			num = $(this).filter(':last-child').find('td:first-child').text();
+		});
+		$('.total').append('<strong>' + num + '</strong>');
+		totalPageNum += parseInt(num);
+	});
+	$('.total h3').append('<strong class="total_page_num">' + totalPageNum + '</strong>');
+
+	var totalPage = 0;
+	$(".cnt").each(function(){
+		$(this).children("em").text( $(this).parent().parent().parent().children("tr").length-1 )
+		totalPage = totalPage + $(this).parent().parent().parent().children("tr").length-1
+	});
+
+	$(".total").text( totalPage );
+
+</script>
+
+</body>
+</html>

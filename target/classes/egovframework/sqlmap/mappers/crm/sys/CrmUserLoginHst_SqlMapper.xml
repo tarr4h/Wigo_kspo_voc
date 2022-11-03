@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmUserLoginHstDao">
+    <sql id="sqlPkConditions">
+                WHERE USER_CD           =       #{userCd}
+                  AND LOGIN_DT          =       #{loginDt}
+    </sql>
+    <sql id="sqlCols">
+                      USER_CD                    /*사용자코드        */
+                    , LOGIN_DT                    /*로그인일시        */
+                    , LOGIN_IP_ADDR                    /*로그인IP주소        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE A.USER_CD = B.USER_CD
+                  AND A.USER_CD = C.EMP_ID(+)
+                  AND C.ORG_ID  = D.ORG_ID(+)
+        <if test="userCd != null and userCd != ''">
+            <choose>
+                <when test="userCd instanceof String">
+                              AND B.USER_CD           =       #{userCd}
+                </when>
+                <otherwise>
+                    AND B.USER_CD           IN
+                    <foreach item="item" index="index" collection="userCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="loginDt != null and loginDt != ''">
+                      AND A.LOGIN_DT          =       #{loginDt}
+        </if>
+        <if test="loginIpAddr != null and loginIpAddr != ''">
+                      AND A.LOGIN_IP_ADDR     =       #{loginIpAddr}
+        </if>
+        <if test="strtDt != null and strtDt != ''">
+                      AND A.LOGIN_DT      >=       TO_DATE(#{strtDt},'YYYYMMDD')
+        </if>
+        <if test="endDt != null and endDt != ''">
+                      AND TO_DATE(#{endDt},'YYYYMMDD') + 1 > A.LOGIN_DT
+        </if>
+        <if test="loginIdLike != null and loginIdLike != ''">
+                      AND B.LOGIN_ID         LIKE   '%' ||  #{loginIdLike} ||'%'
+        </if>
+        <if test="userNmLike != null and userNmLike != ''">
+                      AND B.USER_NM          LIKE   '%' ||  #{userNmLike} ||'%'
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_USER_LOGIN_HST A
+                    , CRM_USER_BAS B
+                    , CRM_EMP_BAS C
+                    , CRM_ORG_BAS D
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmUserLoginHstVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT A.USER_CD                    /*사용자코드        */
+                    , A.LOGIN_DT                    /*로그인일시        */
+                    , A.LOGIN_IP_ADDR                /*로그인IP주소        */
+                    , B.LOGIN_ID
+                    , B.USER_NM
+                    , B.USER_GNDR_CD
+                    , B.USER_BIRTHDAY
+                    , C.EMP_GRADE_CD
+                    , D.ORG_NM
+                 FROM CRM_USER_LOGIN_HST A
+                    , CRM_USER_BAS B
+                    , CRM_EMP_BAS C
+                    , CRM_ORG_BAS D
+        <include refid="sqlConditions"/>
+               ORDER BY A.LOGIN_DT DESC
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmUserLoginHstVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_USER_LOGIN_HST
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_USER_LOGIN_HST (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{userCd}
+                     , #{loginDt}
+                     , #{loginIpAddr}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_USER_LOGIN_HST
+                  SET LOGIN_IP_ADDR       =         #{loginIpAddr}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_USER_LOGIN_HST
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

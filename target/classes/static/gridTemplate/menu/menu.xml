@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="메뉴코드" field="menuCd" type="char" maxLength="20" width="60" textAlignment="center" required="Y" Pk="Y" hidden="N"/>
+    <column name="메뉴명" field="menuNm" type="char" maxLength="1000" width="150" textAlignment="left" required="Y" hidden="N"/>
+    <column name="메뉴URL" field="menuUrl" type="char" maxLength="1000" width="100" textAlignment="left" required="N" hidden="N"/>
+    <column name="메뉴설명" field="menuExpln" type="char" maxLength="4000" width="200" textAlignment="left" required="N" hidden="N"/>
+    <column name="최상위메뉴코드" field="topMenuCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="부모메뉴코드" field="prntsMenuCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="메뉴레벨번호" field="menuLvlNo" type="int" maxLength="3" width="60" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
+    <column name="메뉴순번" field="menuOdrg" type="int" maxLength="3" width="80" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
+    <column name="메뉴아이콘코드" field="menuIconCd" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="메뉴권한여부" field="menuAuthYn" type="checkbox" maxLength="1" width="60" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="메뉴노출여부" field="menuShowYn" type="checkbox" maxLength="1" width="60" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="메뉴팝업여부" field="menuPopupYn" type="checkbox" maxLength="1" width="60" textAlignment="center" required="Y" defaultValue="N" hidden="Y"/>
+    <column name="메뉴팝업가로길이" field="menuPopupWdthLen" type="int" maxLength="5" width="60" textAlignment="right" required="N" digit="5" place="0" hidden="Y"/>
+    <column name="메뉴팝업세로길이" field="menuPopupVrtcLen" type="int" maxLength="5" width="60" textAlignment="right" required="N" digit="5" place="0" hidden="Y"/>
+    
+    <column name="변경로그여부" field="chngLogYn" type="checkbox" maxLength="1" width="60" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부" field="useYn" type="checkbox" maxLength="1" width="60" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="등록자ID" field="regrId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="등록일시" field="regDt" type="date" width="80" textAlignment="center" required="Y" defaultValue="SYSDATE" hidden="Y"/>
+    <column name="수정자ID" field="amdrId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="수정일시" field="amdDt" type="date" width="80" textAlignment="center" required="Y" defaultValue="SYSDATE" hidden="Y"/>
+    <column name="그룹" field="btnGroup" type="button" width="80" required="N" hidden="N" />
+</grid>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmComnCdBaseDao">
+    <sql id="sqlPkConditions">
+                WHERE COMN_CD           =       #{comnCd}
+                  AND TOP_COMN_CD       =       #{topComnCd}
+    </sql>
+    <sql id="sqlCols">
+                      COMN_CD                    /*공통코드        */
+                    , TOP_COMN_CD                    /*최상위공통코드        */
+                    , COMN_CD_LVL_NO                    /*공통코드레벨번호        */
+                    , COMN_CD_ODRG                    /*공통코드순번        */
+                    , PRNTS_COMN_CD                    /*부모공통코드        */
+                    , COMN_CD_NM                    /*공통코드명        */
+                    , USE_YN                    /*사용여부        */
+                    , RFRN_1_COMN_CD                    /*참조1공통코드        */
+                    , RFRN_2_COMN_CD                    /*참조2공통코드        */
+                    , RFRN_3_COMN_CD                    /*참조3공통코드        */
+                    , RFRN_4_COMN_CD                    /*참조4공통코드        */
+                    , RFRN_5_COMN_CD                    /*참조5공통코드        */
+                    , RFRN_6_COMN_CD                    /*참조6공통코드        */
+                    , RFRN_7_COMN_CD                    /*참조7공통코드        */
+                    , RFRN_8_COMN_CD                    /*참조8공통코드        */
+                    , RFRN_9_COMN_CD                    /*참조9공통코드        */
+                    , COMN_CD_1_USE_YN                    /*공통코드1사용여부        */
+                    , COMN_CD_2_USE_YN                    /*공통코드2사용여부        */
+                    , COMN_CD_3_USE_YN                    /*공통코드3사용여부        */
+                    , COMN_CD_4_USE_YN                    /*공통코드4사용여부        */
+                    , COMN_CD_5_USE_YN                    /*공통코드5사용여부        */
+                    , COMN_CD_6_USE_YN                    /*공통코드6사용여부        */
+                    , COMN_CD_7_USE_YN                    /*공통코드7사용여부        */
+                    , COMN_CD_8_USE_YN                    /*공통코드8사용여부        */
+                    , COMN_CD_9_USE_YN                    /*공통코드9사용여부        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="comnCd != null and comnCd != ''">
+            <choose>
+                <when test="comnCd instanceof String">
+                              AND COMN_CD           =       #{comnCd}
+                </when>
+                <otherwise>
+                    AND COMN_CD           IN
+                    <foreach item="item" index="index" collection="comnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="topComnCd != null and topComnCd != ''">
+            <choose>
+                <when test="topComnCd instanceof String">
+                              AND TOP_COMN_CD       =       #{topComnCd}
+                </when>
+                <otherwise>
+                    AND TOP_COMN_CD       IN
+                    <foreach item="item" index="index" collection="topComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="comnCdLvlNo != null and comnCdLvlNo != ''">
+                      AND COMN_CD_LVL_NO    =       #{comnCdLvlNo}
+        </if>
+        <if test="comnCdOdrg != null and comnCdOdrg != ''">
+                      AND COMN_CD_ODRG      =       #{comnCdOdrg}
+        </if>
+        <if test="prntsComnCd != null and prntsComnCd != ''">
+            <choose>
+                <when test="prntsComnCd instanceof String">
+                              AND PRNTS_COMN_CD     =       #{prntsComnCd}
+                </when>
+                <otherwise>
+                    AND PRNTS_COMN_CD     IN
+                    <foreach item="item" index="index" collection="prntsComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="comnCdNm != null and comnCdNm != ''">
+                      AND COMN_CD_NM        =       #{comnCdNm}
+        </if>
+        <if test="comnCdNmLike != null and comnCdNmLike != ''">
+                      AND COMN_CD_NM        LIKE     '%' ||  #{comnCdNmLike} || '%'
+        </if>
+        <if test="comnCdLike != null and comnCdLike != ''">
+                      AND COMN_CD       LIKE      #{comnCdLike} || '%'
+        </if>
+        
+        <if test="useYn != null and useYn != ''">
+                      AND USE_YN            =       #{useYn}
+        </if>
+        <if test="rfrn1ComnCd != null and rfrn1ComnCd != ''">
+            <choose>
+                <when test="rfrn1ComnCd instanceof String">
+                              AND RFRN_1_COMN_CD    =       #{rfrn1ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_1_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn1ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn2ComnCd != null and rfrn2ComnCd != ''">
+            <choose>
+                <when test="rfrn2ComnCd instanceof String">
+                              AND RFRN_2_COMN_CD    =       #{rfrn2ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_2_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn2ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn3ComnCd != null and rfrn3ComnCd != ''">
+            <choose>
+                <when test="rfrn3ComnCd instanceof String">
+                              AND RFRN_3_COMN_CD    =       #{rfrn3ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_3_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn3ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn4ComnCd != null and rfrn4ComnCd != ''">
+            <choose>
+                <when test="rfrn4ComnCd instanceof String">
+                              AND RFRN_4_COMN_CD    =       #{rfrn4ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_4_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn4ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn5ComnCd != null and rfrn5ComnCd != ''">
+            <choose>
+                <when test="rfrn5ComnCd instanceof String">
+                              AND RFRN_5_COMN_CD    =       #{rfrn5ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_5_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn5ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn6ComnCd != null and rfrn6ComnCd != ''">
+            <choose>
+                <when test="rfrn6ComnCd instanceof String">
+                              AND RFRN_6_COMN_CD    =       #{rfrn6ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_6_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn6ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn7ComnCd != null and rfrn7ComnCd != ''">
+            <choose>
+                <when test="rfrn7ComnCd instanceof String">
+                              AND RFRN_7_COMN_CD    =       #{rfrn7ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_7_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn7ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn8ComnCd != null and rfrn8ComnCd != ''">
+            <choose>
+                <when test="rfrn8ComnCd instanceof String">
+                              AND RFRN_8_COMN_CD    =       #{rfrn8ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_8_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn8ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="rfrn9ComnCd != null and rfrn9ComnCd != ''">
+            <choose>
+                <when test="rfrn9ComnCd instanceof String">
+                              AND RFRN_9_COMN_CD    =       #{rfrn9ComnCd}
+                </when>
+                <otherwise>
+                    AND RFRN_9_COMN_CD    IN
+                    <foreach item="item" index="index" collection="rfrn9ComnCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="comnCd1UseYn != null and comnCd1UseYn != ''">
+                      AND COMN_CD_1_USE_YN  =       #{comnCd1UseYn}
+        </if>
+        <if test="comnCd2UseYn != null and comnCd2UseYn != ''">
+                      AND COMN_CD_2_USE_YN  =       #{comnCd2UseYn}
+        </if>
+        <if test="comnCd3UseYn != null and comnCd3UseYn != ''">
+                      AND COMN_CD_3_USE_YN  =       #{comnCd3UseYn}
+        </if>
+        <if test="comnCd4UseYn != null and comnCd4UseYn != ''">
+                      AND COMN_CD_4_USE_YN  =       #{comnCd4UseYn}
+        </if>
+        <if test="comnCd5UseYn != null and comnCd5UseYn != ''">
+                      AND COMN_CD_5_USE_YN  =       #{comnCd5UseYn}
+        </if>
+        <if test="comnCd6UseYn != null and comnCd6UseYn != ''">
+                      AND COMN_CD_6_USE_YN  =       #{comnCd6UseYn}
+        </if>
+        <if test="comnCd7UseYn != null and comnCd7UseYn != ''">
+                      AND COMN_CD_7_USE_YN  =       #{comnCd7UseYn}
+        </if>
+        <if test="comnCd8UseYn != null and comnCd8UseYn != ''">
+                      AND COMN_CD_8_USE_YN  =       #{comnCd8UseYn}
+        </if>
+        <if test="comnCd9UseYn != null and comnCd9UseYn != ''">
+                      AND COMN_CD_9_USE_YN  =       #{comnCd9UseYn}
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_COMN_CD_BAS
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_COMN_CD_BAS
+        <include refid="sqlConditions"/>
+               ORDER BY COMN_CD_LVL_NO
+                      , TOP_COMN_CD
+                      , COMN_CD_ODRG
+                      , COMN_CD
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_COMN_CD_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_COMN_CD_BAS (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{comnCd}
+                     , NVL(#{topComnCd},#{comnCd})
+                     , NVL(#{comnCdLvlNo},1)
+                     , NVL(#{comnCdOdrg},DECODE(#{prntsComnCd},NULL, NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM CRM_COMN_CD_BAS WHERE COMN_CD_LVL_NO = 1),1), NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM CRM_COMN_CD_BAS WHERE PRNTS_COMN_CD = #{prntsComnCd}),1) ) )
+                     , #{prntsComnCd}
+                     , #{comnCdNm}
+                     , NVL(#{useYn},'Y')
+                     , #{rfrn1ComnCd}
+                     , #{rfrn2ComnCd}
+                     , #{rfrn3ComnCd}
+                     , #{rfrn4ComnCd}
+                     , #{rfrn5ComnCd}
+                     , #{rfrn6ComnCd}
+                     , #{rfrn7ComnCd}
+                     , #{rfrn8ComnCd}
+                     , #{rfrn9ComnCd}
+                     , #{comnCd1UseYn}
+                     , #{comnCd2UseYn}
+                     , #{comnCd3UseYn}
+                     , #{comnCd4UseYn}
+                     , #{comnCd5UseYn}
+                     , #{comnCd6UseYn}
+                     , #{comnCd7UseYn}
+                     , #{comnCd8UseYn}
+                     , #{comnCd9UseYn}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_COMN_CD_BAS
+                  SET COMN_CD_ODRG        =         NVL(#{comnCdOdrg},COMN_CD_ODRG)
+                    , COMN_CD_NM          =         #{comnCdNm}
+                    , USE_YN              =         #{useYn}
+                    , RFRN_1_COMN_CD      =         #{rfrn1ComnCd}
+                    , RFRN_2_COMN_CD      =         #{rfrn2ComnCd}
+                    , RFRN_3_COMN_CD      =         #{rfrn3ComnCd}
+                    , RFRN_4_COMN_CD      =         #{rfrn4ComnCd}
+                    , RFRN_5_COMN_CD      =         #{rfrn5ComnCd}
+                    , RFRN_6_COMN_CD      =         #{rfrn6ComnCd}
+                    , RFRN_7_COMN_CD      =         #{rfrn7ComnCd}
+                    , RFRN_8_COMN_CD      =         #{rfrn8ComnCd}
+                    , RFRN_9_COMN_CD      =         #{rfrn9ComnCd}
+                    , COMN_CD_1_USE_YN    =         #{comnCd1UseYn}
+                    , COMN_CD_2_USE_YN    =         #{comnCd2UseYn}
+                    , COMN_CD_3_USE_YN    =         #{comnCd3UseYn}
+                    , COMN_CD_4_USE_YN    =         #{comnCd4UseYn}
+                    , COMN_CD_5_USE_YN    =         #{comnCd5UseYn}
+                    , COMN_CD_6_USE_YN    =         #{comnCd6UseYn}
+                    , COMN_CD_7_USE_YN    =         #{comnCd7UseYn}
+                    , COMN_CD_8_USE_YN    =         #{comnCd8UseYn}
+                    , COMN_CD_9_USE_YN    =         #{comnCd9UseYn}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <update id="updateSeq">
+    UPDATE CRM_COMN_CD_BAS
+       SET COMN_CD_ODRG          =          #{comnCdOdrg}   
+         , AMDR_ID             =          #{regrId}     
+         , AMD_DT             =          SYSDATE
+     <include refid="sqlPkConditions" />
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_COMN_CD_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+     <delete id="deleteChildren">
+               DELETE FROM CRM_COMN_CD_BAS
+                WHERE PRNTS_COMN_CD = #{comnCd}
+                  AND TOP_COMN_CD = #{topComnCd}
+    </delete>  
+    
+    
+    <sql id="sqlCode" >
+        SELECT <include refid="sqlCols"/>
+                 FROM CRM_COMN_CD_BAS
+         WHERE  1=1
+         <choose>
+            <when test="codeName !=null and codeName !=''" >
+            AND COMN_CD = #{codeCd}
+            AND PRNTS_COMN_CD = #{uprCodeCd}   
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="codeCd != null and codeCd != ''">
+           AND TOP_COMN_CD = #{codeCd}
+           AND COMN_CD_LVL_NO = 2
+                    </when>
+                    <otherwise>
+           AND COMN_CD_LVL_NO = 1
+                    </otherwise>
+                </choose>   
+            
+            </otherwise>
+         </choose>
+         
+         <if test="useYn != null and useYn != ''">
+           AND USE_YN = #{useYn} 
+         </if>     
+         <if test="useYn1 != null and useYn1 != ''">
+           AND COMN_CD_1_USE_YN = #{useYn1} 
+         </if>   
+         <if test="useYn2 != null and useYn2 != ''">
+           AND COMN_CD_2_USE_YN = #{useYn2} 
+         </if>
+         <if test="useYn3 != null and useYn3 != ''">
+           AND COMN_CD_3_USE_YN = #{useYn3} 
+         </if>
+         <if test="useYn4 != null and useYn4 != ''">
+           AND COMN_CD_4_USE_YN = #{useYn4} 
+         </if>
+         <if test="useYn5 != null and useYn5 != ''">
+           AND COMN_CD_5_USE_YN = #{useYn5} 
+         </if>
+         <if test="useYn6 != null and useYn6 != ''">
+           AND COMN_CD_6_USE_YN = #{useYn6} 
+         </if>
+         <if test="useYn7 != null and useYn7 != ''">
+           AND COMN_CD_7_USE_YN = #{useYn7} 
+         </if>
+         <if test="useYn8 != null and useYn8 != ''">
+           AND COMN_CD_8_USE_YN = #{useYn8} 
+         </if>
+         <if test="useYn9 != null and useYn9 != ''">
+           AND COMN_CD_9_USE_YN = #{useYn9} 
+         </if>
+         <if test="comnCdNm != null and comnCdNm != ''">
+                      AND COMN_CD_NM        =       #{comnCdNm}
+        </if>
+        <if test="comnCdNmLike != null and comnCdNmLike != ''">
+                      AND COMN_CD_NM        LIKE     '%' ||  #{comnCdNmLike} || '%'
+        </if>
+        <if test="comnCdLike != null and comnCdLike != ''">
+                      AND COMN_CD       LIKE      #{comnCdLike} || '%'
+        </if>
+        
+               ORDER BY COMN_CD_LVL_NO
+                      , TOP_COMN_CD
+                      , COMN_CD_ODRG
+                      , COMN_CD
+    </sql>
+     <sql id="sqlSystemCd">
+        SELECT MENU_CD COMN_CD
+             , MENU_NM COMN_CD_NM
+          FROM CRM_MENU_BAS
+         WHERE  1=1 
+           AND MENU_LVL_NO = 1
+           AND USE_YN = 'Y'
+         ORDER BY MENU_ODRG
+             , MENU_CD
+    </sql>
+    
+    <sql id="sqlGroupCd">
+        SELECT GRP_CD COMN_CD
+             , GRP_NM COMN_CD_NM
+          FROM CRM_GRP_BAS
+         WHERE  1=1 
+         ORDER BY GRP_NM
+             , GRP_CD
+    </sql>
+    
+    <select id="selectCodeCombo" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
+    <choose>
+            <when test="codeType =='systemCd' ">
+               <include refid="sqlSystemCd" />
+            </when>
+            <when test="codeType =='groupCd' ">
+               <include refid="sqlGroupCd" />
+            </when>
+            
+            <otherwise>
+                <include refid="sqlCode"/>
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

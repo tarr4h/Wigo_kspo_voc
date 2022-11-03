@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmApiInfoBaseDao">
+    <sql id="sqlPkConditions">
+                WHERE API_CD            =       #{apiCd}
+    </sql>
+    <sql id="sqlCols">
+                      API_CD                    /*API코드        */
+                    , SYS_CD                    /*시스템코드        */
+                    , API_URL                    /*APIURL        */
+                    , CALL_MTHD_CD                    /*호출메쏘드코드        */
+                    , API_AUTH_YN                    /*API권한여부        */
+                    , USE_YN                    /*사용여부        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="apiCd != null and apiCd != ''">
+            <choose>
+                <when test="apiCd instanceof String">
+                              AND API_CD            =       #{apiCd}
+                </when>
+                <otherwise>
+                    AND API_CD            IN
+                    <foreach item="item" index="index" collection="apiCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="sysCd != null and sysCd != ''">
+            <choose>
+                <when test="sysCd instanceof String">
+                              AND SYS_CD            =       #{sysCd}
+                </when>
+                <otherwise>
+                    AND SYS_CD            IN
+                    <foreach item="item" index="index" collection="sysCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="apiUrl != null and apiUrl != ''">
+                      AND API_URL           =       #{apiUrl}
+        </if>
+        <if test="apiUrlLike != null and apiUrlLike != ''">
+                      AND API_URL           LIKE   '%'  ||  #{apiUrlLike} || '%'
+        </if>
+        
+        <if test="callMthdCd != null and callMthdCd != ''">
+            <choose>
+                <when test="callMthdCd instanceof String">
+                              AND CALL_MTHD_CD      =       #{callMthdCd}
+                </when>
+                <otherwise>
+                    AND CALL_MTHD_CD      IN
+                    <foreach item="item" index="index" collection="callMthdCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="apiAuthYn != null and apiAuthYn != ''">
+                      AND API_AUTH_YN       =       #{apiAuthYn}
+        </if>
+        <if test="useYn != null and useYn != ''">
+                      AND USE_YN            =       #{useYn}
+        </if>
+        <if test="reqUrl != null and reqUrl != '' " >
+                    AND USE_YN = 'Y'
+<!--                     AND API_URL LIKE  '%'  ||  #{reqUrl} -->
+                    AND API_URL =  #{reqUrl}
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM API_INFO_BAS
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmApiInfoBaseVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM API_INFO_BAS
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmApiInfoBaseVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM API_INFO_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO API_INFO_BAS (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       NVL(#{apiCd},FN_CRM_AUTO_SEQ('API'))
+                     , #{sysCd}
+                     , #{apiUrl}
+                     , #{callMthdCd}
+                     , #{apiAuthYn}
+                     , #{useYn}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE API_INFO_BAS
+                  SET SYS_CD              =         #{sysCd}
+                    , API_URL             =         #{apiUrl}
+                    , CALL_MTHD_CD        =         #{callMthdCd}
+                    , API_AUTH_YN         =         #{apiAuthYn}
+                    , USE_YN              =         #{useYn}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM API_INFO_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

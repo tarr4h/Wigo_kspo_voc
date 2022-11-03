@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<script type="text/javascript">
+$(function(){
+
+	$("#test-1").multiselect({
+		openEffect: ["bounce", 200],
+		closeEffect: ["explode", 1000]
+	});
+	
+	$("#test-2").multiselect({
+		openEffect: "bounce",
+		closeEffect: "explode"
+	});
+
+});
+</script>
+<body onload="prettyPrint();">
+
+<h2>Show/hide with Animation</h2>
+<p>Using animations with the openEffect and closeEffect parameters.  Either pass an array with the effect name and the speed, an object of animation parameters, or just specify the name of an effect.  If you don't specify a speed, the default of 400ms will be used.</p>
+
+<h3>Specifying different show and hide speeds</h3>
+<pre class="prettyprint">
+$("#test-1").multiselect({
+   openEffect: ["bounce", 200],
+   closeEffect: ["explode", 1000]
+});
+</pre>
+<select id="test-1" multiple="multiple" size="5">
+<option value="option1">Option 1</option>
+<option value="option2">Option 2</option>
+<option value="option3">Option 3</option>
+<option value="option4">Option 4</option>
+<option value="option5">Option 5</option>
+</select>
+
+<h3>Only passing the name of an effect</h3>
+<pre class="prettyprint">
+$("#test-2").multiselect({
+   openEffect: "bounce",
+   closeEffect: "explode"
+});
+</pre>
+<select id="test-2" multiple="multiple" size="5">
+<option value="option1">Option 1</option>
+<option value="option2">Option 2</option>
+<option value="option3">Option 3</option>
+<option value="option4">Option 4</option>
+<option value="option5">Option 5</option>
+</select>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+<!--        <headerRows value="2"/> -->
+    </meta>
+    <column name="코드아이디" field="codeCd" type="char" maxLength="100" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="N" hidden="N"/>
+    <column name="대분류" field="rtCodeCd" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="Y" />
+    <column name="코드분류" field="codeLevel" type="combo" codeId="020" maxLength="10" width="80" textAlignment="center" required="Y" readOnly="Y" hidden="Y"/>
+    <column name="코드순번" field="codeSeq" type="int" maxLength="3" width="80" textAlignment="center" required="Y" digit="3" place="0" hidden="N"/>
+    <column name="상위코드" field="uprCodeCd" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y" readOnly="Y" />
+    <column name="코드명" field="codeNm" type="char" maxLength="100" width="200" textAlignment="left" required="Y" hidden="N"/>
+    <column name="사용여부" field="useYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+<!--         <group name="참조코드" direction="H" title="참조코드" > -->
+    
+    <column name="참조코드명1" field="refId1" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명2" field="refId2" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명3" field="refId3" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명4" field="refId4" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명5" field="refId5" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명6" field="refId6" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명7" field="refId7" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명8" field="refId8" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조코드명9" field="refId9" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+<!--     </group> -->
+<!--     <group name="사용여부" direction="H" title="사용여부" > -->
+    <column name="사용여부1" field="useYn1" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부2" field="useYn2" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부3" field="useYn3" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부4" field="useYn4" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부5" field="useYn5" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부6" field="useYn6" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부7" field="useYn7" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부8" field="useYn8" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="사용여부9" field="useYn9" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="생성자" field="insId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="Y" readOnly="Y" />
+    <column name="생성일" field="insDt" type="datetime" width="80" textAlignment="center" required="Y" hidden="Y" readOnly="Y" />
+    <column name="수정자" field="updId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="Y" readOnly="Y" />
+    <column name="수정일" field="updDt" type="datetime" width="80" textAlignment="center" required="Y" hidden="Y" readOnly="Y" />
+<!--     </group> -->
+</grid>

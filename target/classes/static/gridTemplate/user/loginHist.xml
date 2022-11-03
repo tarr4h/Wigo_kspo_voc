@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="Y"/>
+        <showCheckbox value="N"/>
+        <showNumber value="Y"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="로그인일시" field="loginDt" type="datetime" width="100" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
+    <column name="조직명" field="orgNm" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="N"/>
+    <column name="사번" field="userCd" type="char" maxLength="20" width="20" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
+    <column name="직위" field="empGradeCd" type="combo" codeId="C030" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
+    <column name="로그인ID" field="loginId" type="char" maxLength="100" width="20" textAlignment="center" required="N"  hidden="N"/>
+    <column name="사용자명" field="userNm" type="char" maxLength="100" width="50" textAlignment="center" required="N" hidden="N"/>
+    <column name="성별" field="userGndrCd" type="combo" maxLength="3" width="80" textAlignment="center" required="N" codeId="S040" hidden="Y"/>
+    <column name="생년월일" field="userBirthday" type="date" maxLength="8" width="80" textAlignment="center" required="N" hidden="Y"/>
+    <column name="로그인IP주소" field="loginIpAddr" type="char" maxLength="100" width="100" textAlignment="center" required="N" hidden="N"/>
+</grid>
