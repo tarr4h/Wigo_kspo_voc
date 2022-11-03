@@ -39,8 +39,8 @@ import java.util.Vector;
 * @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
  */
 
-//public interface EzPropertyService extends EgovPropertyService {
-public interface EzPropertyService {
+//public interface EzPropertyService {
+public interface EzPropertyService extends EgovPropertyService {
 
     /**
      * boolean 타입의 프로퍼티 값 얻기

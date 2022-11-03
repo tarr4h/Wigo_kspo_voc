@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
 	<aop:config>
-		<aop:pointcut id="serviceMethod" expression="execution(* egovframework..impl.*Impl.*(..))" />
+		<aop:pointcut id="serviceMethod" expression="execution(* com.egov..service.*Service.*(..))" />
 
 		<aop:aspect ref="exceptionTransfer">
 			<aop:after-throwing throwing="exception" pointcut-ref="serviceMethod" method="transfer" />
@@ -43,7 +43,7 @@
 		</property>
 		<property name="patterns">
 			<list>
-				<value>**service.impl.*</value>
+				<value>**service.*</value>
 			</list>
 		</property>
 		<property name="handlers">
