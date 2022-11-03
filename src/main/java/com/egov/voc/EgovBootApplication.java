@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource({"classpath:/egovframework/springmvc/dispatcher-servlet.xml","classpath*:/egovframework/spring/context-*.xml"}) // PropertyService가 eGovFrame 상속에서 문제가 있음..
+@ImportResource({"classpath:/egovframework/springmvc/dispatcher-servlet.xml","classpath*:/egovframework/spring/context-*.xml"}) // PropertyService가 eGovFrame 상속에서 문제가 있음..!
 @Import(EgovBootInitialization.class)
 public class EgovBootApplication {
 
