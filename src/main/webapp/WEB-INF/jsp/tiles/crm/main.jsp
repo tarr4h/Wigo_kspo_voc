@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>MR.VOC</title>
+<title>VOC</title>
 <tiles:insertTemplate template="header.jsp" />
 </head>
 
@@ -31,7 +31,7 @@
 		<h1>
 			<a href="/" style="color: #f8f8f8;">
 <%--				<img src="/static/crm/images/logo.png" alt="CERAGEM 통합고객">--%>
-				KSPO VOC
+				VOC
 			</a>
 		</h1>
 		<!-- gnb -->

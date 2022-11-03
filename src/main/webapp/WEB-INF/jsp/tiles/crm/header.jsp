@@ -14,7 +14,7 @@
 <c:set var="rightBoxHeight4" value="694px" scope="request"/>
 <c:set var="rightBoxHeight5" value="775px" scope="request"/>
 
- <title>MR.VOC</title>
+ <title>VOC</title>
 <%-- favicon --%>
 <link rel="shortcut icon" href="/static/crm/images/favicon.ico">
 <!-- library -->

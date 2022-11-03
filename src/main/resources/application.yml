@@ -27,6 +27,7 @@ spring:
     username: newVoc
     password: newVoc
 
+
   jade:
     token-url: https://cerahr.ceragem.com:9950/restful/getToken
     rest-url: https://cerahr.ceragem.com:9950/restful

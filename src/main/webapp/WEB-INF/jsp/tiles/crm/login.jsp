@@ -8,7 +8,7 @@
 <html lang="ko">
 <head>
 
-	<title>KSPO VOC</title>
+	<title>VOC</title>
 	<tiles:insertTemplate template="header.jsp" />
 </head>
 
@@ -22,7 +22,7 @@
                 <legend>로그인</legend>
                 <h1>
 <%--                    <img src="/static/crm/images/logo_login.png" alt="Create Well Life CERAGEM 통함 CRM">--%>
-                    KSPO VOC
+                    VOC
                 </h1>
                 <dl>
                     <dt>아이디</dt>

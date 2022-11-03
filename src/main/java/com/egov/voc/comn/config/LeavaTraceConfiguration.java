@@ -31,16 +31,18 @@ public class LeavaTraceConfiguration {
         return defaultTraceHandleManager;
     }
 
-    @Bean
+    @Bean(name = "antPathMater")
     public AntPathMatcher antPathMatcher() {
-        AntPathMatcher antPathMatcher = new AntPathMatcher();
-        return antPathMatcher;
+//        AntPathMatcher antPathMatcher = new AntPathMatcher();
+//        return antPathMatcher;
+        return new AntPathMatcher();
     }
 
     @Bean
     public DefaultTraceHandler defaultTraceHandler() {
-        DefaultTraceHandler defaultTraceHandler = new DefaultTraceHandler();
-        return defaultTraceHandler;
+//        DefaultTraceHandler defaultTraceHandler = new DefaultTraceHandler();
+//        return defaultTraceHandler;
+        return new DefaultTraceHandler();
     }
 
 }
