@@ -270,3 +270,10 @@ $RECYCLE.BIN/
 **.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,macos,windows,intellij
+!/boot-example.iml
+!/eGovFrame.iml
+!/.classpath
+!/.project
+!/.idea/
+
+!/.settings/
