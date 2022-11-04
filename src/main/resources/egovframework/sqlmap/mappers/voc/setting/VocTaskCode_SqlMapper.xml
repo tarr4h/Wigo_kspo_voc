@@ -3,7 +3,7 @@
 <mapper namespace="com.egov.voc.kspo.setting.dao.VocTaskCodeSettingDao">
 
 
-    <select id="selectTaskCodeList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
+    <select id="selectList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
         select
             task_seq,
             task_nm,
@@ -13,6 +13,9 @@
             nvl(duty_role, '-') dutyRole,
             chng_yn,
             auto_apply_yn,
+            auto_apply_all_yn,
+            auto_apply_prcd_seq,
+            auto_apply_prcd_nm,
             mod_dt,
             mod_usr,
             nvl(duty_dept_nm, '-') dutyDeptNm,
@@ -23,9 +26,9 @@
             1
     </select>
 
-    <insert id="insertCode">
+    <insert id="insert">
         insert into voc_task_bas
-        (task_seq, task_nm, deadline, duty_dept, duty_emp, duty_role, chng_yn, auto_apply_yn, mod_dt, mod_usr, duty_dept_nm, duty_emp_nm)
+        (task_seq, task_nm, deadline, duty_dept, duty_emp, duty_role, chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_dept_nm, duty_emp_nm)
         values(
                   concat('TB', lpad(seq_voc_task_bas.nextval, 8, 0)),
                   #{taskNm},
@@ -35,6 +38,9 @@
                   #{dutyRole},
                   #{chngYn},
                   #{autoApplyYn},
+                  #{autoApplyAllYn},
+                  #{autoApplyPrcdSeq},
+                  #{autoApplyPrcdNm},
                   sysdate,
                   #{loginUsr},
                   #{dutyDeptNm},
@@ -42,7 +48,7 @@
               )
     </insert>
 
-    <update id="saveRows">
+    <update id="update">
         <foreach collection="rows" item="item" open="DECLARE BEGIN" close=";END;" separator=";">
             update voc_task_bas
             set
@@ -57,7 +63,7 @@
         </foreach>
     </update>
 
-    <delete id="deleteRows">
+    <delete id="delete">
         delete from voc_task_bas
         where
         task_seq in
@@ -76,4 +82,13 @@
         where
             task_seq = #{targetInfo.taskSeq}
     </update>
+
+    <select id="selectAvailablePrcdList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            *
+        from
+            voc_procedure_bas
+        where
+            task_yn = 'Y'
+    </select>
 </mapper>

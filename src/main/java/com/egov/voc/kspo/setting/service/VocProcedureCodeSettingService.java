@@ -8,6 +8,7 @@ import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         return dao;
     }
 
-    public List<VocProcedureCodeVo> selectProcedureCodeList(EzMap param) {
+    public <T> List<T> selectProcedureCodeList(EzMap param) {
         return dao.selectList(param);
     }
 
@@ -49,9 +50,7 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         return super.delete(param);
     }
 
-    @SuppressWarnings("unchecked")
     public Object chngProcedureDuty(Map<String, Object> param) {
-        log.debug("param = {}", param);
         return dao.chngProcedureDuty(param);
     }
 

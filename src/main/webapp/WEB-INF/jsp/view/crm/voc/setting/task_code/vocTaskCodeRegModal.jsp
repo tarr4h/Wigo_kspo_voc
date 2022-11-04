@@ -202,6 +202,31 @@
             </div>
         </div>
         <div class="form_row">
+            <div class="form_row_left">
+                <span class="form_row_title">전체절차 자동적용 여부</span>
+            </div>
+            <div class="form_row_right">
+                <div class="radio_wrapper">
+                    <label>적용</label>
+                    <input type="radio" name="autoApplyAllYn" class="form_row_radio" value="Y">
+                </div>
+                <div class="radio_wrapper">
+                    <label>미적용</label>
+                    <input type="radio" name="autoApplyAllYn" class="form_row_radio" value="N">
+                </div>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_left">
+                <span class="form_row_title">자동적용 대상절차</span>
+            </div>
+            <div class="form_row_right">
+                <input type="text" name="autoApplyPrcdNm" class="form_row_input_short">
+                <input type="text" name="autoApplyPrcdSeq" class="form_row_dpn">
+                <button type="button" class="form_row_button" data-event="prcdSearch">조회</button>
+            </div>
+        </div>
+        <div class="form_row">
             <button type="button" id="regForm" class="form_register_btn">등록</button>
         </div>
 <%--        <div class="form_row">--%>
@@ -226,6 +251,7 @@
         switch(type){
             case 'orgSearch' : openComnModal('vocOrgSearchModal', 950, 650);break;
             case 'empSearch' : openComnModal('vocEmpSearchModal', 950, 650);break;
+            case 'prcdSearch' : openModal('vocPrcdBasSearchModal', 900, 600);break;
         }
     });
 
@@ -256,6 +282,10 @@
         })
     }
 
+    function openModal(pageNm, width, height){
+        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        Utilities.openModal(url, width, height);
+    }
 
     function openComnModal(pageNm, width, height){
         let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;

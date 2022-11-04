@@ -33,25 +33,24 @@ public class VocTaskCodeSettingController {
     @PostMapping(value = "selectTaskCodeList")
     public @ResponseBody Object selectTaskCodeList(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocTaskCodeVo> list = service.selectTaskCodeList(param);
-        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        List<EzMap> list = service.selectTaskCodeList(param);
         page.setTotalRecordCount(list.size());
-        return Utilities.getGridData(convertList, page);
+        return Utilities.getGridData(list, page);
     }
 
     @PostMapping(value = "insertCode")
-    public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param){
-        return service.insertCode(param);
+    public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param) throws Exception {
+        return service.insert(param);
     }
 
     @PostMapping(value = "saveRows")
-    public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param){
-        return service.saveRows(param);
+    public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param) throws Exception {
+        return service.update(param);
     }
 
     @PostMapping(value = "deleteRows")
-    public @ResponseBody Object deleteRos(@RequestBody Map<String, Object> param){
-        return service.deleteRows(param);
+    public @ResponseBody Object deleteRos(@RequestBody Map<String, Object> param) throws Exception {
+        return service.delete(param);
     }
 
     @PostMapping(value = "chngTaskDuty")
@@ -93,7 +92,13 @@ public class VocTaskCodeSettingController {
         return VocUtils.getOrgGrid(param);
     }
 
-
+    @PostMapping(value = "availablePrcdGrid")
+    public @ResponseBody Object availablePrcdGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<EzMap> list = service.selectAvailablePrcdList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
 
 
 }

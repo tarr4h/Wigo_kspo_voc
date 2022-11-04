@@ -19,6 +19,9 @@ public class VocTaskCodeVo extends BaseVo {
     private String dutyRole;
     private String chngYn;
     private String autoApplyYn;
+    private String autoApplyAllYn;
+    private String autoApplyPrcdSeq;
+    private String autoApplyPrcdNm;
     private String modDt;
     private String modUsr;
 }

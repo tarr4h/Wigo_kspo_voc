@@ -34,10 +34,11 @@ public class VocProcedureCodeSettingController {
     @PostMapping(value = "selectProcedureCodeList")
     public @ResponseBody Object selectProcedureCodeList(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocProcedureCodeVo> list = service.selectProcedureCodeList(param);
-        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+//        List<VocProcedureCodeVo> list = service.selectProcedureCodeList(param);
+//        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        List<EzMap> list = service.selectProcedureCodeList(param);
         page.setTotalRecordCount(list.size());
-        return Utilities.getGridData(convertList, page);
+        return Utilities.getGridData(list, page);
     }
 
     @PostMapping(value = "insert")

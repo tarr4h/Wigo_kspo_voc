@@ -25,7 +25,6 @@ public class VocComnAspect {
     @SuppressWarnings("unchecked")
     @Before(value = "execution(* com.egov.voc.kspo..*Dao.*(..))")
     public void beforeSetLoginUsr(JoinPoint jp){
-        log.debug("*** set param loginUsr ***");
         Object[] args = jp.getArgs();
         for(Object arg : args){
             if(arg instanceof EzMap){

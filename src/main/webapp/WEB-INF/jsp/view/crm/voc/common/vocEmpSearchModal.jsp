@@ -130,7 +130,7 @@
                 <div class="tree_wrapper">
                     <div id="orgTree"
                          data-type="tree"
-                         data-get-url="<c:url value='${urlPrefix }/getOrgTree'/>${urlSuffix}"
+                         data-get-url="<c:url value='${urlPrefix }/getOrgTree${urlSuffix}'/>"
                          data-change-seq="Y"
                          style="width:100%;height:380px;overflow:auto;"
                     >
@@ -174,6 +174,15 @@
 
 <script>
     // opener에 empSearchCallback()을 만들어 놓기~
+
+    // orgTree정보 제거
+    $(() => {
+        let opnr = Utilities.getOpener();
+        let opnrPrgmId = opnr._PROGRAM_ID;
+        let strgKey = opnrPrgmId + 'orgTree';
+
+        window.localStorage.removeItem(strgKey);
+    });
 
     // event listener
     $('#close_btn').on('click', function(){
