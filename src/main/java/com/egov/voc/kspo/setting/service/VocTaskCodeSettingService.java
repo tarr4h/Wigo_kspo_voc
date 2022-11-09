@@ -56,4 +56,13 @@ public class VocTaskCodeSettingService extends AbstractCrmService {
     public <T> List<T> selectAvailablePrcdList(EzMap param) {
         return dao.selectAvailablePrcdList(param);
     }
+
+    public List<EzMap> selectAppliedPrcd(EzMap param) {
+        return dao.selectAppliedPrcd(param);
+    }
+
+    public Object updateAutoApplyPrcd(EzMap param) {
+        return dao.updateAutoApplyPrcd(param);
+    }
+
 }

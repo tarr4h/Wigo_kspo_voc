@@ -42,32 +42,60 @@
 </div>
 
 <div class="mBox1">
+    <h3 class="mTitle1">선택된 절차</h3>
+    <div class="grid_wrapper">
+        <div id="divGrid2"
+             data-get-url="<c:url value='${urlPrefix}/appliedPrcdGrid${urlSuffix}'/>"
+             data-grid-id="appliedPrcdGrid"
+             data-type="grid"
+             data-grid-callback="onGridLoad"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBasSearch.xml${urlSuffix}'/>"
+             style="width:100%;height:150px;"
+        >
+        </div>
+    </div>
+
     <h3 class="mTitle1">선택 가능한 절차 목록</h3>
     <div class="grid_wrapper">
-      <div id="divGrid1"
-           data-get-url="<c:url value='${urlPrefix}/availablePrcdGrid${urlSuffix}'/>"
-           data-grid-id="availablePrcdGrid"
-           data-type="grid"
-           data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBasSearch.xml${urlSuffix}'/>"
-           style="width:100%;height:400px;"
-      >
-      </div>
+        <div id="divGrid1"
+             data-get-url="<c:url value='${urlPrefix}/availablePrcdGrid${urlSuffix}'/>"
+             data-grid-id="availablePrcdGrid"
+             data-type="grid"
+             data-grid-callback="onGridLoad"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBasSearch.xml${urlSuffix}'/>"
+             style="width:100%;height:300px;"
+        >
+        </div>
     </div>
-    <button>등록</button>
 </div>
 
 
 
 <script>
-    $(() => {
-        setTimeout(() => {
-            let param = {};
-            availablePrcdGrid.loadUrl('', param);
-        }, 300);
-    })
+    function onGridLoad(){
+        let param = {};
+        param.prcdSeq = '${param.prcdSeq}';
+        appliedPrcdGrid.loadUrl('', param);
+        availablePrcdGrid.loadUrl('', param);
+    }
+
 
     // evente listener
     $('#close_btn').on('click', function(){
         Utilities.closeModal();
     });
+
+    function onGridButtonClicked(gridView, row, col, json) {
+        let prcdNm = json.prcdNm;
+        let prcdSeq = json.prcdSeq;
+
+        let param = {
+            prcdNm,
+            prcdSeq
+        };
+
+        let opnr = Utilities.getOpener();
+        opnr.prcdSearchCallback(param);
+        Utilities.closeModal();
+    }
 </script>

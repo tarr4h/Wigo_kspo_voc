@@ -116,11 +116,9 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-        setTimeout(() => {
-            loadGrid();
-        }, 300)
-    });
+    function onGridLoad(){
+        loadGrid();
+    }
 
     // event listener
     $('.func_btn').on('click', function(){

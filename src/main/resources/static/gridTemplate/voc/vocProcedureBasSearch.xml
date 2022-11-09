@@ -5,7 +5,7 @@
         <rollbackable value="N"/>
         <appendable value="N"/>
         <readOnly value="N"/>
-        <showCheckbox value="Y"/>
+        <showCheckbox value="N"/>
         <showNumber value="N"/>
         <showStateBar value="N"/>
         <showHeaderSum value="N"/>
@@ -26,4 +26,5 @@
         <column name="담당부서명" field="dutyDeptNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="선택" field="selectPrcd" type="button" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
 </grid>

@@ -49,7 +49,7 @@ public class VocTaskCodeSettingController {
     }
 
     @PostMapping(value = "deleteRows")
-    public @ResponseBody Object deleteRos(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object deleteRows(@RequestBody Map<String, Object> param) throws Exception {
         return service.delete(param);
     }
 
@@ -92,6 +92,14 @@ public class VocTaskCodeSettingController {
         return VocUtils.getOrgGrid(param);
     }
 
+    @PostMapping(value = "appliedPrcdGrid")
+    public @ResponseBody Object appliedPrcdGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<EzMap> list = service.selectAppliedPrcd(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
+
     @PostMapping(value = "availablePrcdGrid")
     public @ResponseBody Object availablePrcdGrid(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
@@ -100,5 +108,9 @@ public class VocTaskCodeSettingController {
         return Utilities.getGridData(list, page);
     }
 
+    @PostMapping(value = "updateAutoApplyPrcd")
+    public @ResponseBody Object updateAutoApplyPrcd(@RequestBody EzMap param){
+        return service.updateAutoApplyPrcd(param);
+    }
 
 }

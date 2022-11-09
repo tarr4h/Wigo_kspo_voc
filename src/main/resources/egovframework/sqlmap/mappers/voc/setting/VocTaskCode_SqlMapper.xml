@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.egov.voc.kspo.setting.dao.VocTaskCodeSettingDao">
 
+    <sql id="prcdCols">
+        prcd_seq,
+        prcd_nm,
+        nvl(duty_dept_nm, '-') dutyDeptNm,
+        nvl(duty_emp_nm, '-') dutyEmpNm,
+        nvl(duty_role, '-') dutyRole
+    </sql>
 
     <select id="selectList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
         select
@@ -56,6 +63,11 @@
                 deadline = #{item.deadline},
                 chng_yn = #{item.chngYn},
                 auto_apply_yn = #{item.autoApplyYn},
+                auto_apply_all_yn = #{item.autoApplyAllYn},
+                <if test='item.autoApplyYn.equals("N") or item.autoApplyAllYn.equals("Y")'>
+                    auto_apply_prcd_seq = null,
+                    auto_apply_prcd_nm = null,
+                </if>
                 mod_dt = sysdate,
                 mod_usr = #{loginUsr}
             where
@@ -83,12 +95,36 @@
             task_seq = #{targetInfo.taskSeq}
     </update>
 
+    <select id="selectAppliedPrcd" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            <include refid="prcdCols"/>
+        from
+            voc_procedure_bas
+        where
+            prcd_seq = #{prcdSeq}
+    </select>
+
     <select id="selectAvailablePrcdList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
         select
-            *
+            <include refid="prcdCols"/>
         from
             voc_procedure_bas
         where
             task_yn = 'Y'
+            <if test="prcdSeq != null and prcdSeq != ''">
+                and
+                prcd_seq != #{prcdSeq}
+            </if>
     </select>
+
+    <update id="updateAutoApplyPrcd">
+        update
+            voc_task_bas
+        set
+            auto_apply_all_yn = 'N',
+            auto_apply_prcd_nm = #{prcdNm},
+            auto_apply_prcd_seq = #{prcdSeq}
+        where
+            task_seq = #{taskSeq}
+    </update>
 </mapper>

@@ -76,12 +76,10 @@
 </div>
 
 <script>
-    $(() => {
-        setTimeout(() => {
-            let param = {};
-            procedureCdGrid.loadUrl('', param);
-        }, 300);
-    })
+    function onGridLoad(){
+        let param = {};
+        procedureCdGrid.loadUrl('', param);
+    }
 
     // event listener
     $('.func_btn').on('click', function(){
