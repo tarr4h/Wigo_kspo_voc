@@ -2,6 +2,7 @@ package com.egov.voc.kspo.setting.model;
 
 
 import com.egov.voc.base.common.model.AbstractTreeVo;
+import com.egov.voc.base.common.model.BaseVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ public class VocManagementCodeVo extends AbstractTreeVo {
     private String managementCd;
     private String topCd;
     private String prntsCd;
+    private String topComnCd;
+    private String comnCd;
     private int odrg;
     private int lvl;
     private String codeNm;

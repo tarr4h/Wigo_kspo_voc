@@ -41,6 +41,7 @@
     .register_title{
         font-size: 15px;
         margin-right: 10px;
+        margin-left: 10px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -52,6 +53,11 @@
         width: 210px;
         border: 1px solid gray;
         text-align: center;
+    }
+    .register_select{
+        border: 1px solid gray;
+        min-width: 100px;
+        color: #686868;
     }
     .register_btn{
         border: 1px solid gray;
@@ -94,6 +100,9 @@
 <div class="register_wrapper">
     <div class="register_title">등록 그룹명</div>
     <input type="text" class="register_input" id="codeNm">
+    <div class="register_title">적용 구분</div>
+    <select id="comnCd" class="register_select">
+    </select>
     <button id="register_btn" class="register_btn func_btn" data-event="add">등록</button>
 </div>
 
@@ -120,16 +129,38 @@
         loadGrid();
     }
 
+    function onGridDataLoaded(){
+        selectComnCdList();
+    }
+
     // event listener
     $('.func_btn').on('click', function(){
         let type = $(this).data('event');
         switch(type){
             case 'add' : regCode(); break;
-            case 'save' : ; saveRows(); break;
+            case 'save' : saveRows(); break;
             case 'delete' : deleteRows(); break;
             case 'close' : Utilities.closeModal(); break;
         }
     });
+
+    /**
+     * 적용 구분 option에 들어갈 공통코드(VOC분류코드 사용구분 - VOC010) 조회
+     */
+    function selectComnCdList(){
+        let param = {
+            topComnCd : 'VOC010'
+        };
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/selectComnCdList${urlSuffix}"/>',
+            data: param,
+            success(res){
+                $('#comnCd').append(res);
+            },
+            error: console.log
+        });
+    }
 
     function loadGrid(){
         let param = {
@@ -141,13 +172,17 @@
 
     function regCode(){
         let codeNm = $("#codeNm").val();
+        let comnCd = $("#comnCd").val();
+        let topComnCd = $("#comnCd").find('option:selected').data('top-comn-cd');
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/insertVocManagementCode${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                codeNm
+                codeNm,
+                comnCd,
+                topComnCd
             }),
             success(res){
                 alert(res.msg);
@@ -169,7 +204,7 @@
         let rows = managementCdGrid.getCheckedJson();
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/deleteManagementCodeList${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify(
@@ -178,6 +213,8 @@
             success(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert(`\${res}건이 삭제되었습니다.`);
+                    let opnr = Utilities.getOpener();
+                    opnr.location.reload();
                     location.reload();
                 } else {
                     alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status}`);
@@ -191,7 +228,7 @@
         let rows = managementCdGrid.getJsonRows();
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/updateManagementCodeList${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data: JSON.stringify({
@@ -200,6 +237,8 @@
             success(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('저장되었습니다.');
+                    let opnr = Utilities.getOpener();
+                    opnr.location.reload();
                     location.reload();
                 } else {
                     alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status})`);

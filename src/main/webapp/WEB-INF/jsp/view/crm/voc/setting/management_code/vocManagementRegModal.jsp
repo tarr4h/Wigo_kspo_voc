@@ -85,6 +85,8 @@
 
 <script>
     let prntsCd = '${param.prntsCd}';
+    let topComnCd;
+    let comnCd;
 
     $(() => {
         getPrntsInfo();
@@ -108,6 +110,8 @@
             contentType : 'application/json',
             data : JSON.stringify({
                 prntsCd,
+                topComnCd,
+                comnCd,
                 codeNm
             }),
             success(res){
@@ -134,6 +138,8 @@
             },
             success(res){
                 $("#prntsCd").text(res.codeNm);
+                topComnCd = res.topComnCd;
+                comnCd = res.comnCd;
             },
             error: console.log
         });

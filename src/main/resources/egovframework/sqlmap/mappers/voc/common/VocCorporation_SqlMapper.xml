@@ -24,5 +24,23 @@
             </if>
     </select>
 
+    <select id="selectComnCdList" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
+        select
+            *
+        from
+            crm_comn_cd_bas
+        where
+            top_comn_cd = #{topComnCd}
+            and
+            comn_cd != #{topComnCd}
+            <if test="existCd != null and !existCd.isEmpty()">
+                and
+                comn_cd not in
+                <foreach collection="existCd" item="item" separator="," open="(" close=")">
+                    #{item.comnCd}
+                </foreach>
+            </if>
+    </select>
+
 
 </mapper>

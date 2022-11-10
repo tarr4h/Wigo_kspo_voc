@@ -110,15 +110,15 @@
 
     // event listener
     $('.func_btn').on('click', function(){
-        if(selectedCd == null){
+        let event = $(this).data('event');
+        if(selectedCd == null && event !== 'manage_grp'){
             return false;
         };
-        let event = $(this).data('event');
         switch(event){
             case 'save' : saveRows(); break;
             case 'add'  : openRegModal('vocManagementRegModal', 500, 180, selectedCd); break;
             case 'delete' : deleteRows(); break;
-            case 'manage_grp' : openRegModal('vocManagementManageGrpModal', 800, 600); break;
+            case 'manage_grp' : openRegModal('vocManagementManageGrpModal', 900, 600); break;
         }
     });
 
@@ -167,7 +167,7 @@
     }
 
     function openRegModal(pageNm, width, height, prntsCd){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}?prntsCd=\${prntsCd}`;
+        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}` + "?prntsCd=" + prntsCd;
         Utilities.openModal(url, width, height);
     }
 

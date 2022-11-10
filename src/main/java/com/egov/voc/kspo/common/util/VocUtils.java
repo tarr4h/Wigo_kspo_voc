@@ -1,4 +1,4 @@
-package com.egov.voc.kspo.common;
+package com.egov.voc.kspo.common.util;
 
 
 import com.egov.voc.base.common.model.AbstractTreeVo;
@@ -78,5 +78,9 @@ public class VocUtils extends BaseUtilities {
         log.debug("returnMap = {}", returnMap);
 
         return returnMap;
+    }
+
+    public static Object selectComnCdList(Map<String, Object> param){
+        return corpService.selectComnCdList(param);
     }
 }

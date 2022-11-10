@@ -127,6 +127,15 @@
     <div class="form_wrapper">
         <div class="form_row">
             <div class="form_row_left">
+                <span class="form_row_title">절차구분</span>
+            </div>
+            <div class="form_row_right">
+                <select name="comnCd" class="form_row_input">
+                </select>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_left">
                 <span class="form_row_title">절차명</span>
             </div>
             <div class="form_row_right">
@@ -138,7 +147,7 @@
                 <span class="form_row_title">처리기한</span>
             </div>
             <div class="form_row_right">
-                <input type="number" name="deadline" class="form_row_input">
+                <input type="number" name="deadline" class="form_row_input" value="1">
             </div>
         </div>
         <div class="form_row">
@@ -182,7 +191,7 @@
                 </div>
                 <div class="radio_wrapper">
                     <label>불가</label>
-                    <input type="radio" name="chngYn" class="form_row_radio" value="N">
+                    <input type="radio" name="chngYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -197,7 +206,7 @@
                 </div>
                 <div class="radio_wrapper">
                     <label>미사용</label>
-                    <input type="radio" name="regUseYn" class="form_row_radio" value="N">
+                    <input type="radio" name="regUseYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -207,12 +216,12 @@
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
-                    <label>가능</label>
+                    <label>사용</label>
                     <input type="radio" name="recUseYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
-                    <label>불가</label>
-                    <input type="radio" name="recUseYn" class="form_row_radio" value="N">
+                    <label>미사용</label>
+                    <input type="radio" name="recUseYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -227,7 +236,7 @@
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="regCompulsoryYn" class="form_row_radio" value="N">
+                    <input type="radio" name="regCompulsoryYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -242,7 +251,7 @@
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="recCompulsoryYn" class="form_row_radio" value="N">
+                    <input type="radio" name="recCompulsoryYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -257,7 +266,7 @@
                 </div>
                 <div class="radio_wrapper">
                     <label>미적용</label>
-                    <input type="radio" name="taskYn" class="form_row_radio" value="N">
+                    <input type="radio" name="taskYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -274,6 +283,10 @@
 </form>
 
 <script>
+    $(() => {
+        selectComnCdList();
+    });
+
     // evente listener
     $('#close_btn').on('click', function(){
         Utilities.closeModal();
@@ -289,13 +302,36 @@
         }
     });
 
-
     // func
+    /**
+     * 절차 구분 option에 들어갈 공통코드(VOC절차코드 - VOC020) 조회 후 append
+     */
+    function selectComnCdList(){
+        let param = {
+            topComnCd : 'VOC020'
+        };
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/selectComnCdList${urlSuffix}"/>',
+            data: param,
+            success(res){
+                $('select[name="comnCd"]').append(res);
+            },
+            error: console.log
+        });
+    }
+
     function regProcedureCode(){
         let form = $('#regPrcdFrm');
         let disabled = form.find(':input:disabled').removeAttr('disabled');
         let formArr = form.serializeArray();
-        console.log('formArr : ', formArr);
+
+        let topComnCd = {
+            name : 'topComnCd',
+            value : $('select[name="comnCd"]').find('option:selected').data('top-comn-cd')
+        };
+        formArr.push(topComnCd);
+
         disabled.attr('disabled','disabled');
 
         $.ajax({

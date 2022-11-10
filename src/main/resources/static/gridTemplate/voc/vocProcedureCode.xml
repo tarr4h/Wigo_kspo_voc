@@ -20,6 +20,9 @@
     </meta>
         <column name="시퀀스" field="prcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="절차명" field="prcdNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
+        <column name="최상단 공통코드" field="topComnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="공통코드명" field="comnCd" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="공통코드" field="comnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한" field="deadline" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당부서ID" field="dutyDept" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당자ID" field="dutyEmp" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>

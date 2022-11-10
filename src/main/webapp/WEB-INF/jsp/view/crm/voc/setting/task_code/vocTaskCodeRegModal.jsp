@@ -138,7 +138,7 @@
                 <span class="form_row_title">처리기한</span>
             </div>
             <div class="form_row_right">
-                <input type="number" name="deadline" class="form_row_input">
+                <input type="number" name="deadline" class="form_row_input" value="1">
             </div>
         </div>
         <div class="form_row">
@@ -318,7 +318,6 @@
         let form = $('#regTaskFrm');
         let disabled = form.find('input:disabled').removeAttr('disabled');
         let formArr = form.serializeArray();
-        console.log('formArr : ', formArr);
         disabled.attr('disabled','disabled');
 
         $.ajax({
@@ -346,7 +345,6 @@
      * @param data
      */
     function orgSearchCallback(data){
-        console.log('org data : ', data);
         $('input[name="dutyDeptNm"]').val(data.orgNm);
         $('input[name="dutyDept"]').val(data.orgId);
     }

@@ -4,7 +4,7 @@ package com.egov.voc.kspo.setting.controller;
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.common.VocUtils;
+import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.kspo.setting.service.VocProcedureCodeSettingService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,14 +31,24 @@ public class VocProcedureCodeSettingController {
         return Utilities.getProperty("tiles.crm") + "voc/setting/procedure_code/vocProcedureCodeSetting";
     }
 
-    @PostMapping(value = "selectProcedureCodeList")
-    public @ResponseBody Object selectProcedureCodeList(@RequestBody EzMap param){
+    @PostMapping(value = "selectProcedureCodeGrid")
+    public @ResponseBody Object selectProcedureCodeGrid(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-//        List<VocProcedureCodeVo> list = service.selectProcedureCodeList(param);
-//        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         List<EzMap> list = service.selectProcedureCodeList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
+    }
+
+    @GetMapping(value = "selectProcedureCodeList")
+    public @ResponseBody Object selectProcedureCodeList(@RequestParam Map<String, Object> param){
+        return service.selectProcedureCodeList(param);
+    }
+
+    @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
+    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
+        List<VocProcedureCodeVo> list = service.selectProcedureCodeList(param);
+        param.put("existCd", list);
+        return VocUtils.selectComnCdList(param);
     }
 
     @PostMapping(value = "insert")

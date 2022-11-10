@@ -1,18 +1,14 @@
 package com.egov.voc.kspo.setting.service;
 
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.kspo.common.VocUtils;
+import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
-import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +24,7 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         return dao;
     }
 
-    public <T> List<T> selectProcedureCodeList(EzMap param) {
+    public <T> List<T> selectProcedureCodeList(Map<String, Object> param) {
         return dao.selectList(param);
     }
 
@@ -53,6 +49,5 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
     public Object chngProcedureDuty(Map<String, Object> param) {
         return dao.chngProcedureDuty(param);
     }
-
 
 }

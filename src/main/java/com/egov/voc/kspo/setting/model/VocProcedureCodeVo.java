@@ -11,6 +11,8 @@ public class VocProcedureCodeVo extends BaseVo {
 
     private String prcdSeq;
     private String prcdNm;
+    private String topComnCd;
+    private String comnCd;
     private int deadline;
     private String dutyDept;
     private String dutyDeptNm;

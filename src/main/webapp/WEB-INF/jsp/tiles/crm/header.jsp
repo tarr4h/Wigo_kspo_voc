@@ -84,6 +84,9 @@
 <script src="<c:url value='/static/js/ez-tree.js?reqrend=${reqrend}'/>"></script>
 <script src="<c:url value='/static/js/ez-attachfile.js?reqrend=${reqrend}'/>"></script>
 
+<%-- voc --%>
+<link rel="stylesheet" href="<c:url value='/static/css/voc/voc.css'/>" />
+
 
 <script type="text/javascript">
 

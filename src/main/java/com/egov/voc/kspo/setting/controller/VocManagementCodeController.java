@@ -3,6 +3,7 @@ package com.egov.voc.kspo.setting.controller;
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.service.VocManagementCodeService;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,13 @@ public class VocManagementCodeController {
         return service.vocManagementCode(map);
     }
 
+    @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
+    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
+        List<VocManagementCodeVo> existCdList = service.vocManagementCodeList(param);
+        param.put("existCd", existCdList);
+        return VocUtils.selectComnCdList(param);
+    }
+
     @PostMapping(value = "insert")
     public @ResponseBody Object insert(@RequestBody EzMap param){
         return service.insert(param);
@@ -66,8 +74,6 @@ public class VocManagementCodeController {
 
     @GetMapping(value = { "openModal/{pageNm}"})
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
-        log.debug("pageNm = {}", pageNm);
-        log.debug("param = {}", param);
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.crm.blank") + "voc/setting/management_code/" + pageNm;

@@ -65,7 +65,7 @@
     </div>
     <div class="grid_wrapper">
         <div id="divGrid1"
-             data-get-url="<c:url value='${urlPrefix}/selectProcedureCodeList${urlSuffix}'/>"
+             data-get-url="<c:url value='${urlPrefix}/selectProcedureCodeGrid${urlSuffix}'/>"
              data-grid-id="procedureCdGrid"
              data-type="grid"
              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureCode.xml${urlSuffix}'/>"
