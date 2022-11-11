@@ -96,23 +96,38 @@
         }
     });
 
-    /**
-     * grid 버튼 클릭 이벤트
-     * @param gridView
-     * @param row
-     * @param col
-     * @param json
-     */
-    function onGridButtonClicked(gridView, row, col, json) {
-        let target;
 
-        switch(col){
-            case 'chngDept': openComnModal('vocOrgSearchModal', 950, 650); target = 'duty_dept'; break;
-            case 'chngEmp' : openComnModal('vocEmpSearchModal', 950, 650); target = 'duty_emp'; break;
-            case 'chngRole' : break;
-            case 'autoApplySetting' : openPrcdBasSearchModal(json); target = 'autoApplySetting'; break;
+    /**
+     * grid 더블클릭 이벤트
+     * @param gridView
+     * @param rowIndex
+     * @param columnName
+     */
+    function onGridCellDblClick(gridView,rowIndex, columnName){
+        let target;
+        let row = gridView.getJsonRow(rowIndex);
+
+        switch(columnName){
+            case 'dutyOrgNm': openComnModal('vocOrgSearchModal', 950, 650); target = 'duty_org'; break;
+            case 'dutyEmpNm' : openComnModal('vocEmpSearchModal', 950, 650); target = 'duty_emp'; break;
+            case 'dutyRole' : break;
+            case 'autoApplySetting' : openPrcdBasSearchModal(row); target = 'autoApplySetting'; break;
         };
 
+        if(target != null){
+            let param = {
+                taskSeq : row.taskSeq,
+                col : target
+            };
+            window.localStorage.setItem('vocTaskCodeSettingDblClickVal', JSON.stringify(param));
+        };
+    }
+
+    function onGridButtonClicked(gridView, row, col,json){
+        let target;
+        switch(col){
+            case 'autoApplySetting' : openPrcdBasSearchModal(json); target = 'autoApplySetting'; break;
+        }
         if(target != null){
             let param = {
                 taskSeq : json.taskSeq,
@@ -120,7 +135,7 @@
             };
             window.localStorage.setItem('vocTaskCodeSettingSelectedBtnVal', JSON.stringify(param));
         };
-    };
+    }
 
 
     ////////////////// 기능 ////////////////////
@@ -235,7 +250,7 @@
      * @param data
      */
     function orgSearchCallback(data){
-        let jsonStorage = window.localStorage.getItem('vocTaskCodeSettingSelectedBtnVal');
+        let jsonStorage = window.localStorage.getItem('vocTaskCodeSettingDblClickVal');
         let parsingStorage = JSON.parse(jsonStorage);
 
         let param = {
@@ -250,7 +265,7 @@
      * @param data
      */
     function empSearchCallback(data){
-        let jsonStorage = window.localStorage.getItem('vocTaskCodeSettingSelectedBtnVal');
+        let jsonStorage = window.localStorage.getItem('vocTaskCodeSettingDblClickVal');
         let parsingStorage = JSON.parse(jsonStorage);
 
         let param = {

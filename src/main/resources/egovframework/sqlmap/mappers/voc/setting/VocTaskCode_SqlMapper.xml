@@ -5,7 +5,8 @@
     <sql id="prcdCols">
         prcd_seq,
         prcd_nm,
-        nvl(duty_dept_nm, '-') dutyDeptNm,
+        deadline,
+        nvl(duty_org_nm, '-') dutyOrgNm,
         nvl(duty_emp_nm, '-') dutyEmpNm,
         nvl(duty_role, '-') dutyRole
     </sql>
@@ -15,7 +16,7 @@
             task_seq,
             task_nm,
             deadline,
-            nvl(duty_dept, '-') dutyDept,
+            nvl(duty_org, '-') dutyOrg,
             nvl(duty_emp, '-') dutyEmp,
             nvl(duty_role, '-') dutyRole,
             chng_yn,
@@ -25,7 +26,7 @@
             auto_apply_prcd_nm,
             mod_dt,
             mod_usr,
-            nvl(duty_dept_nm, '-') dutyDeptNm,
+            nvl(duty_org_nm, '-') dutyOrgNm,
             nvl(duty_emp_nm, '-') dutyEmpNm
         from
             voc_task_bas
@@ -35,12 +36,12 @@
 
     <insert id="insert">
         insert into voc_task_bas
-        (task_seq, task_nm, deadline, duty_dept, duty_emp, duty_role, chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_dept_nm, duty_emp_nm)
+        (task_seq, task_nm, deadline, duty_org, duty_emp, duty_role, chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_org_nm, duty_emp_nm)
         values(
                   concat('TB', lpad(seq_voc_task_bas.nextval, 8, 0)),
                   #{taskNm},
                   #{deadline},
-                  #{dutyDept},
+                  #{dutyOrg},
                   #{dutyEmp},
                   #{dutyRole},
                   #{chngYn},
@@ -50,7 +51,7 @@
                   #{autoApplyPrcdNm},
                   sysdate,
                   #{loginUsr},
-                  #{dutyDeptNm},
+                  #{dutyOrgNm},
                   #{dutyEmpNm}
               )
     </insert>

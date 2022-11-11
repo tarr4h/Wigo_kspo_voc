@@ -134,15 +134,17 @@
         chngProcedureDuty(parsingStorage, param);
     }
 
-    function onGridButtonClicked(gridView, row, col, json) {
+    function onGridCellDblClick(gridView,rowIndex,columnName,colIndex,fieldIndex){
         let target;
-        switch(col){
-            case 'chngDept': openComnModal('vocOrgSearchModal', 950, 650); target = 'duty_dept'; break;
-            case 'chngEmp' : openComnModal('vocEmpSearchModal', 950, 650); target = 'duty_emp'; break;
-            case 'chngRole' : break;
+        switch(columnName){
+            case 'dutyOrgNm': openComnModal('vocOrgSearchModal', 950, 650); target = 'duty_org'; break;
+            case 'dutyEmpNm' : openComnModal('vocEmpSearchModal', 950, 650); target = 'duty_emp'; break;
+            case 'dutyRole' : break;
         }
+
+        let row = gridView.getJsonRow(rowIndex);
         let param = {
-            prcdSeq : json.prcdSeq,
+            prcdSeq : row.prcdSeq,
             col : target
         };
         window.localStorage.setItem('vocProcedureCodeSettingSelectedBtnVal', JSON.stringify(param));

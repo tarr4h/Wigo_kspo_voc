@@ -51,6 +51,36 @@
             prcd_seq
     </select>
 
+    <select id="selectMaxPrcdSeq" resultType="String">
+        select
+            max(mc_prcd_seq)
+        from
+            voc_procedure
+    </select>
 
+    <select id="selectMaxDirCd" resultType="String">
+        select
+            max(dir_cd)
+        from
+            voc_dir_cd
+    </select>
 
+    <insert id="insertDirCd">
+        insert into VOC_DIR_CD
+            (DIR_CD)
+        values
+            (#{dirCd})
+    </insert>
+
+    <insert id="insertDirMcMapping">
+        insert into VOC_DIR_MC_MAPPING
+            (DIR_CD, MANAGEMENT_CD)
+        values
+            (#{dirCd}, #{managementCd})
+    </insert>
+
+    <insert id="insertProcedure">
+        insert into VOC_PROCEDURE
+        ()
+    </insert>
 </mapper>

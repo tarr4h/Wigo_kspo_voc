@@ -3,6 +3,7 @@ package com.egov.voc.kspo.setting.controller;
 
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,32 @@ public class VocRegProcedureSettingController {
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.crm.blank") + "voc/setting/procedure_setting/" + pageNm;
+    }
+
+    @GetMapping(value = { "openComnModal/{pageNm}"})
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+        model.addAttribute("param", param);
+        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
+    }
+
+    @PostMapping(value = "getOrgTree")
+    public @ResponseBody Object getOrgTree(@RequestBody Map<String, Object> param){
+        return VocUtils.getOrgTree(param);
+    }
+
+    @GetMapping(value = "selectOrgList")
+    public @ResponseBody Object selectOrgList(@RequestParam Map<String, Object> param){
+        return VocUtils.selectOrgList(param);
+    }
+
+    @PostMapping(value = "getEmpGrid")
+    public @ResponseBody Object getEmpGrid(@RequestBody EzMap param){
+        return VocUtils.getEmpGrid(param);
+    }
+
+    @PostMapping(value = "getOrgGrid")
+    public @ResponseBody Object getOrgGrid(@RequestBody EzMap param){
+        return VocUtils.getOrgGrid(param);
     }
 
     /**

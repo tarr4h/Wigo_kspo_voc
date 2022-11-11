@@ -137,7 +137,7 @@
 
        switch(evt){
            case 'save' : ; break;
-           case 'add' : openRegModal('vocRegProcedureModal_reg', 900, 341); break;
+           case 'add' : openRegModal('vocRegProcedureModal_reg', 900, 450); break;
            case 'delete' : ; break;
        };
     });

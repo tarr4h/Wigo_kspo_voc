@@ -9,7 +9,7 @@
             TOP_COMN_CD,
             COMN_CD,
             DEADLINE,
-            nvl(DUTY_DEPT, '-') dutyDept,
+            nvl(DUTY_ORG, '-') dutyOrg,
             nvl(DUTY_EMP, '-') dutyEmp,
             nvl(DUTY_ROLE, '-') dutyRole,
             CHNG_YN,
@@ -20,7 +20,7 @@
             TASK_YN,
             MOD_DT,
             MOD_USR,
-            nvl(DUTY_DEPT_NM, '-') dutyDeptNm,
+            nvl(DUTY_ORG_NM, '-') dutyOrgNm,
             nvl(DUTY_EMP_NM, '-') dutyEmpNm
         from
             voc_procedure_bas
@@ -30,14 +30,14 @@
 
     <insert id="insert">
         insert into voc_procedure_bas
-        (PRCD_SEQ, PRCD_NM, TOP_COMN_CD, COMN_CD, DEADLINE, DUTY_DEPT, DUTY_EMP, DUTY_ROLE, CHNG_YN, REG_USE_YN,
-         REC_USE_YN, REG_COMPULSORY_YN, REC_COMPULSORY_YN, TASK_YN, MOD_DT, MOD_USR, DUTY_DEPT_NM, DUTY_EMP_NM)
+        (PRCD_SEQ, PRCD_NM, TOP_COMN_CD, COMN_CD, DEADLINE, DUTY_ORG, DUTY_EMP, DUTY_ROLE, CHNG_YN, REG_USE_YN,
+         REC_USE_YN, REG_COMPULSORY_YN, REC_COMPULSORY_YN, TASK_YN, MOD_DT, MOD_USR, DUTY_ORG_NM, DUTY_EMP_NM)
         values (concat('PB', lpad(seq_voc_procedure_bas.nextval, 8, 0)),
                 #{prcdNm},
                 #{topComnCd},
                 #{comnCd},
                 #{deadline},
-                #{dutyDept},
+                #{dutyOrg},
                 #{dutyEmp},
                 #{dutyRole},
                 #{chngYn},
@@ -48,7 +48,7 @@
                 #{taskYn},
                 sysdate,
                 #{loginUsr},
-                #{dutyDeptNm},
+                #{dutyOrgNm},
                 #{dutyEmpNm})
     </insert>
 

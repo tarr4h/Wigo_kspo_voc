@@ -13,9 +13,12 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
+.mBox1{
+    border-bottom: none;
+}
 .procedure_list{
     width: 100%;
-    height: 250px;
+    height: 200px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -43,11 +46,33 @@
 .procedure_box input[type="checkbox"]{
     height: 30%;
 }
+
+.org_mapping{
+    height: 50px;
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.org_mapping input{
+    height: 30px;
+    width: 200px;
+    border: 1px solid gray;
+    margin-right: 10px;
+}
+.org_mapping button{
+    border: 1px solid gray;
+    width: 50px;
+    font-size: 12px;
+}
+
 .reg_btn{
     width: 100%;
-    height: 50px;
+    height: 53px;
     border: 1px solid gray;
 }
+
 </style>
 
 <div class="v_modal_header">
@@ -56,8 +81,20 @@
 </div>
 
 <div class="content_wrapper">
-    <div class="procedure_list">
-
+    <div class="mBox1">
+        <div class="gTitle1">
+            <h3 class="mTitle1">절차 선택</h3>
+        </div>
+        <div class="procedure_list"></div>
+    </div>
+    <div class="mBox1">
+        <div class="gTitle1">
+            <h3 class="mTitle1">부서 지정</h3>
+        </div>
+        <div class="org_mapping">
+            <input type="text" id="orgNm" data-org-id="">
+            <button id="orgSearch">검색</button>
+        </div>
     </div>
 </div>
 
@@ -72,7 +109,18 @@
       Utilities.closeModal();
   });
 
+  $('#orgSearch').on('click', function(){
+     openComnModal('vocOrgSearchModal', 950, 650);
+  });
+
   function regPrcd(){
+      let deptId = $('#orgNm').data('org-id');
+      if(deptId == null || deptId === ''){
+          alert('부서 지정은 필수입니다.');
+          $('#deptNm').focus();
+          return false;
+      };
+
       let managementCd = '${param.managementCd}';
       let selectedPrcd = $('input[type="checkbox"]:checked');
 
@@ -87,7 +135,8 @@
           contentType: 'application/json',
           data: JSON.stringify({
               arr,
-              managementCd
+              managementCd,
+              deptId
           }),
           success(res){
               console.log(res);
@@ -154,6 +203,29 @@
               error: console.log
           })
       })
+  }
+
+  /**
+   * 부서 검색 callback
+   * @param data
+   */
+  function orgSearchCallback(data){
+      console.log(data);
+      let orgId = data.orgId;
+      let orgNm = data.orgNm;
+
+      $('#orgNm').val(orgNm).data('org-id', orgId);
+  }
+
+  /**
+   * 공통 모달 open
+   * @param pageNm
+   * @param width
+   * @param height
+   */
+  function openComnModal(pageNm, width, height){
+      let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+      Utilities.openModal(url, width, height);
   }
 
 </script>

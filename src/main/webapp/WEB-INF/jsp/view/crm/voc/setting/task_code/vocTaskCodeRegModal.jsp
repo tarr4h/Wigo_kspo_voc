@@ -83,6 +83,17 @@
         text-align: center;
         border: 1px solid #201f1f73;
     }
+    .form_row_input_quater{
+        width: 20%;
+        height: 50%;
+        text-align: center;
+        border: 1px solid #201f1f73;
+    }
+    .quater_note_right{
+        padding-top: 4px;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
     .form_row_button{
         border: 1px solid #201f1f73;
         width: 9%;
@@ -138,7 +149,9 @@
                 <span class="form_row_title">처리기한</span>
             </div>
             <div class="form_row_right">
-                <input type="number" name="deadline" class="form_row_input" value="1">
+                <input type="number" name="deadlineDate" class="form_row_input_quater" value="0"><span class="quater_note_right">일</span>
+                <input type="number" name="deadlineHour" class="form_row_input_quater" value="0"><span class="quater_note_right">시간</span>
+                <input type="number" name="deadlineMinute" class="form_row_input_quater" value="0"><span class="quater_note_right">분</span>
             </div>
         </div>
         <div class="form_row">
@@ -146,8 +159,8 @@
                 <span class="form_row_title">담당부서</span>
             </div>
             <div class="form_row_right">
-                <input type="text" name="dutyDeptNm" class="form_row_input_short" disabled>
-                <input type="text" name="dutyDept" class="form_row_dpn">
+                <input type="text" name="dutyOrgNm" class="form_row_input_short" disabled>
+                <input type="text" name="dutyOrg" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="orgSearch">조회</button>
             </div>
         </div>
@@ -332,6 +345,14 @@
                     alert('등록되었습니다.');
                     Utilities.getOpener().location.reload();
                     Utilities.closeModal();
+                } else if(res === 998){
+                    alert('적용대상 절차의 처리기한이 현재 task의 처리기한보다 낮습니다.' +
+                        '\n(task의 처리기한은 절차의 처리기한을 초과할 수 없습니다.');
+                    $('input[name="deadline"]').focus();
+                } else if(res === 999){
+                    alert('전체절차 중 현재 설정한 처리기한보다 낮은 처리기한의 절차가 존재합니다.' +
+                        '\n(전체절차 자동적용 시 task의 처리기한은 절차의 처리기한을 초과할 수 없습니다.)');
+                    $('input[name="deadline"]').focus();
                 }
             },
             error: console.log
@@ -345,8 +366,8 @@
      * @param data
      */
     function orgSearchCallback(data){
-        $('input[name="dutyDeptNm"]').val(data.orgNm);
-        $('input[name="dutyDept"]').val(data.orgId);
+        $('input[name="dutyOrgNm"]').val(data.orgNm);
+        $('input[name="dutyOrg"]').val(data.orgId);
     }
 
     /**

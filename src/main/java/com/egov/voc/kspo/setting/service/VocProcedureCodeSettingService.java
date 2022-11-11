@@ -31,8 +31,7 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
     @SuppressWarnings("unchecked")
     @Override
     public int insert(Object param) throws Exception {
-        List<Map<String, Object>> formArr = (List<Map<String, Object>>) ((Map<String, Object>) param).get("formArr");
-        param = VocUtils.formSerializeArrayToMap(formArr);
+        param = VocUtils.setCodeSettingParam(param);
         return super.insert(param);
     }
 

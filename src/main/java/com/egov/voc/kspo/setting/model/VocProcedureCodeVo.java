@@ -2,6 +2,7 @@ package com.egov.voc.kspo.setting.model;
 
 
 import com.egov.voc.base.common.model.BaseVo;
+import com.egov.voc.kspo.common.util.VocUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,8 @@ public class VocProcedureCodeVo extends BaseVo {
     private String topComnCd;
     private String comnCd;
     private int deadline;
-    private String dutyDept;
-    private String dutyDeptNm;
+    private String dutyOrg;
+    private String dutyOrgNm;
     private String dutyEmp;
     private String dutyEmpNm;
     private String dutyRole;
@@ -27,4 +28,10 @@ public class VocProcedureCodeVo extends BaseVo {
     private String taskYn;
     private String modDt;
     private String modUsr;
+
+
+
+    public String getDeadlineConvert() {
+        return VocUtils.convertDeadline(deadline);
+    }
 }

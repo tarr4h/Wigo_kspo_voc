@@ -117,8 +117,8 @@
                     <h3 class="mTitle1">부서 검색</h3>
                 </div>
                 <div class="search_wrapper">
-                    <input type="text" id="deptInput" class="org_search_input">
-                    <button id="deptSearch" class="org_search_btn">검색</button>
+                    <input type="text" id="orgInput" class="org_search_input">
+                    <button id="orgSearch" class="org_search_btn">검색</button>
                 </div>
                 <div class="search_result_wrapper">
                 </div>
@@ -188,8 +188,8 @@
     $('#close_btn').on('click', function(){
         Utilities.closeModal();
     });
-    $('#deptSearch').on('click', function(){
-        let keyword = $('#deptInput').val();
+    $('#orgSearch').on('click', function(){
+        let keyword = $('#orgInput').val();
         selectOrgList(keyword);
     });
     $('.search_result_wrapper').on('click', '.resultOrgRow', function(){

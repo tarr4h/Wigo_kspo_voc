@@ -360,6 +360,7 @@ function createGridObject(grd) {
 					upCodeId : col.upCodeId,
 					codeLevel : col.codeLevel
 				};
+
 				var data = Utilities.getObject(_code_url, param, true);
 				var labels = [];
 				var values = [];

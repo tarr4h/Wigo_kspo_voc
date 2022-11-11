@@ -129,8 +129,8 @@
             <div class="org_emp_list">
                 <h3 class="mTitle1">검색으로 찾기</h3>
                 <div class="search_org">
-                    <input type="text" id="deptInput"/>
-                    <button id="deptSearch">검색</button>
+                    <input type="text" id="orgInput"/>
+                    <button id="orgSearch">검색</button>
                 </div>
                 <div class="grid_wrapper">
                     <div id="divGrid1"
@@ -162,7 +162,7 @@
 </div>
 
 <script>
-    // opener에 orgSearchCallback()을 만들어 놓기~
+    // opener에 orgSearchCallback(data)을 만들어 놓기~
 
     // orgTree정보 제거
     $(() => {
@@ -177,8 +177,8 @@
     $('#close_btn').on('click', function(){
         Utilities.closeModal();
     });
-    $('#deptSearch').on('click', function(){
-        let keyword = $('#deptInput').val();
+    $('#orgSearch').on('click', function(){
+        let keyword = $('#orgInput').val();
         loadGrid(keyword);
     });
 

@@ -16,7 +16,7 @@ public interface VocTaskCodeSettingDao extends ICrmDao {
 
     int chngTaskDuty(Map<String, Object> param);
 
-    <T> List<T> selectAvailablePrcdList(EzMap param);
+    <T> List<T> selectAvailablePrcdList(Map<String, Object> param);
 
     int updateAutoApplyPrcd(EzMap param);
 
