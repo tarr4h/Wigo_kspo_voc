@@ -18,4 +18,8 @@ public interface VocCorporationDao extends ICrmDao {
     List<CrmEmpBaseVo> selectEmpList(EzMap param);
 
     List<CrmComnCdBaseVo> selectComnCdList(Map<String, Object> param);
+
+    CrmOrgBaseVo selectOrg(String orgId);
+
+    CrmEmpBaseVo selectEmp(String empId);
 }

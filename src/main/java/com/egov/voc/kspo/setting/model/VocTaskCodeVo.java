@@ -5,9 +5,11 @@ import com.egov.voc.base.common.model.BaseVo;
 import com.egov.voc.kspo.common.util.VocUtils;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
+@Slf4j
 public class VocTaskCodeVo extends BaseVo {
 
     private String taskSeq;
@@ -28,6 +30,8 @@ public class VocTaskCodeVo extends BaseVo {
 
 
     public String getDeadlineConvert() {
+        log.debug("deadline = {}", deadline);
+
         return VocUtils.convertDeadline(deadline);
     }
 }

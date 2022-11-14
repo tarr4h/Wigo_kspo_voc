@@ -35,10 +35,29 @@ public class VocUtils extends BaseUtilities {
     }
 
 
+
     @PostConstruct
     public void init() throws Exception{
         super.init();
         corpService = this.cpService;
+    }
+
+    public static String getOrgNm(String orgId) {
+        CrmOrgBaseVo org = corpService.selectOrg(orgId);
+        if(org == null){
+            return "-";
+        } else {
+            return org.getOrgNm();
+        }
+    }
+
+    public static String getEmpNm(String empId) {
+        CrmEmpBaseVo emp = corpService.selectEmp(empId);
+        if(emp == null){
+            return "-";
+        } else {
+            return emp.getEmpNm();
+        }
     }
 
     public static EzMap getEmpGrid(EzMap param) {
@@ -121,5 +140,6 @@ public class VocUtils extends BaseUtilities {
         }
         return sb.toString();
     }
+
 
 }

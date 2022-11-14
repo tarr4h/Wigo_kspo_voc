@@ -40,6 +40,15 @@
             prnts_cd is not null
     </select>
 
+    <select id="selectPrcdBas" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            *
+        from
+            voc_procedure_bas
+        where
+            prcd_seq = #{prcdSeq}
+    </select>
+
     <select id="selectPrcdBasList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
         select
             *
@@ -92,7 +101,7 @@
 
     <insert id="insertProcedure">
         insert into voc_procedure
-        (MC_PRCD_SEQ, PRNTS_SEQ, PRCD_SEQ, PRCD_NM, DEADLINE, DUTY_ORG, DUTY_EMP, VOC_ROLE, REG_USR)
+        (MC_PRCD_SEQ, PRNTS_SEQ, PRCD_SEQ, PRCD_NM, DEADLINE, DUTY_ORG, DUTY_EMP, DUTY_ROLE, REG_USR)
         values
         (
             #{mcPrcdSeq},
@@ -100,7 +109,7 @@
             #{prcdSeq},
             (select prcd_nm from voc_procedure_bas where prcd_seq = #{prcdSeq}),
             (select deadline from voc_procedure_bas where prcd_seq = #{prcdSeq}),
-            (select duty_org from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            #{dutyOrg},
             (select duty_emp from voc_procedure_bas where prcd_seq = #{prcdSeq}),
             (select duty_role from voc_procedure_bas where prcd_seq = #{prcdSeq}),
             #{regUsr}
@@ -118,5 +127,43 @@
         </foreach>
         select * from dual
     </update>
+
+    <select id="selectDirCd" resultType="string">
+        select
+            dir_cd
+        from
+            voc_dir_mc_mapping
+        where
+            <if test="managementCd != null and !managementCd.equals('')">
+                management_cd = #{managementCd}
+            </if>
+    </select>
+
+    <select id="selectProcedureList" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
+        select
+            mc_prcd_seq,
+            prnts_seq,
+            prcd_seq,
+            prcd_nm,
+            deadline,
+            duty_org,
+            duty_emp,
+            nvl(duty_role, '-') dutyRole,
+            reg_usr,
+            reg_dt
+        from
+            voc_procedure
+        where
+            mc_prcd_seq in (
+                    select
+                        mc_prcd_seq
+                    from
+                        voc_procedure_dir_conn
+                    where
+                        dir_cd = #{dirCd}
+                )
+        order by
+            1
+    </select>
 
 </mapper>

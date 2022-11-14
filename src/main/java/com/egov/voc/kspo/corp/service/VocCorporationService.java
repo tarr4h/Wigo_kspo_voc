@@ -46,4 +46,11 @@ public class VocCorporationService extends AbstractCrmService {
         return sb;
     }
 
+    public CrmOrgBaseVo selectOrg(String orgId) {
+        return dao.selectOrg(orgId);
+    }
+
+    public CrmEmpBaseVo selectEmp(String empId) {
+        return dao.selectEmp(empId);
+    }
 }

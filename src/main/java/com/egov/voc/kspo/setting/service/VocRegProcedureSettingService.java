@@ -14,6 +14,7 @@ import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.parameters.P;
@@ -52,7 +53,6 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         // 1. 경로코드 생성 및 등록(voc_dir_cd)
         String maxDirCd = dao.selectMaxDirCd();
         String dirCd = CodeGeneration.generateCode(maxDirCd, CodeGeneration.DIRCD);
-        log.debug("dirCd = {}", dirCd);
         param.put("dirCd", dirCd);
         dao.insertDirCd(param);
 
@@ -62,17 +62,21 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         // 3. 담당부서 등록(voc_dir_org_mapping)
         dao.insertDirOrgMapping(param);
 
-        // 4. 분류코드별 절차 등록(voc_procedure)
-            // 경로-절차 매핑을 위해 mcPrcdSeq 보관 리스트
-            List<String> mcPrcdSeqList = new ArrayList<>();
+        // 경로-절차 매핑을 위해 mcPrcdSeq 보관 리스트
+        List<String> mcPrcdSeqList = new ArrayList<>();
 
+        // 주처리부서 찾기
+        List<Map<String, Object>> orgList = (List<Map<String, Object>>) param.get("orgList");
+        orgList.removeIf(value -> value.get("primaryOrgYn").equals("N"));
+        String primaryOrg = orgList.get(0).get("orgId").toString();
+
+        // 4. 분류코드별 절차 등록(voc_procedure)
         List<String> prcdArr = (List<String>) param.get("prcdArr");
         String foreSeq = null;
         for(int i = 0; i < prcdArr.size(); i++){
             String prcdSeq = prcdArr.get(i);
             String maxMcPrcdSeq = dao.selectMaxMcPrcdSeq();
             String mcPrcdSeq = CodeGeneration.generateCode(maxMcPrcdSeq, CodeGeneration.PROCEDURE);
-            log.debug("mcPrcdSeq = {}", mcPrcdSeq);
 
             VocProcedureVo prcd = new VocProcedureVo();
             prcd.setPrcdSeq(prcdSeq);
@@ -80,7 +84,14 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
             if(i > 0){
                 prcd.setPrntsSeq(foreSeq);
             }
-            log.debug("prcd = {}", prcd);
+
+            // 참조 prcd의 담당부서/담당자/적용권한이 없다면 분류코드 담당부서를 SET
+            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcdSeq);
+            if(prcdBas.getDutyEmp() == null && prcdBas.getDutyOrg() == null && prcdBas.getDutyRole() == null){
+                prcd.setDutyOrg(primaryOrg);
+            } else {
+                prcd.setDutyOrg(prcdBas.getDutyOrg());
+            }
 
             dao.insertProcedure(prcd);
 
@@ -95,7 +106,8 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     }
 
     public <T> List<T> selectProcedureList(EzMap param) {
-//        return dao.selectProcedureList(param);
-        return null;
+        String dirCd = dao.selectDirCd(param);
+        param.put("dirCd", dirCd);
+        return dao.selectProcedureList(param);
     }
 }
