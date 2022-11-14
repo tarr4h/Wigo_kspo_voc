@@ -27,12 +27,12 @@
 }
 .procedure_box{
     border: 1px solid gray;
-    height: 100px;
-    width: 80px;
+    height: 130px;
+    width: 100px;
     text-align: center;
 }
 .box_title{
-    height: 50%;
+    min-height: 40%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -40,11 +40,11 @@
     justify-content: center;
 }
 .compulsory_info{
-    height: 20%;
+    min-height: 30%;
     text-align: center;
 }
 .procedure_box input[type="checkbox"]{
-    height: 30%;
+    min-height: 40%;
 }
 
 .org_mapping{
@@ -55,8 +55,15 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+.org_mapping span{
+    width: 88px;
+    height: 32px;
+    font-size: 14px;
+    padding-top: 5px;
+    font-weight: 600;
+}
 .org_mapping input{
-    height: 30px;
+    height: 32px;
     width: 200px;
     border: 1px solid gray;
     margin-right: 10px;
@@ -64,7 +71,13 @@
 .org_mapping button{
     border: 1px solid gray;
     width: 50px;
+    height: 32px;
     font-size: 12px;
+}
+.org_wrapper{
+    height: 130px;
+    overflow: auto;
+    margin-top: 20px;
 }
 
 .reg_btn{
@@ -90,10 +103,18 @@
     <div class="mBox1">
         <div class="gTitle1">
             <h3 class="mTitle1">부서 지정</h3>
+            <div class="gRt">
+                <a class="mBtn1" id="addSubOrgBtn">부처리부서 추가</a>
+            </div>
         </div>
-        <div class="org_mapping">
-            <input type="text" id="orgNm" data-org-id="">
-            <button id="orgSearch">검색</button>
+        <div class="org_wrapper">
+            <div class="org_mapping">
+                <span class="org_mapping_title">주처리부서</span>
+                <input type="text" id="orgNm" data-org-id="" data-primary-org="Y" disabled>
+                <button id="orgSearch">검색</button>
+            </div>
+            <div class="sub_org_list">
+            </div>
         </div>
     </div>
 </div>
@@ -101,6 +122,10 @@
 <button class="reg_btn" onclick="regPrcd();">등록</button>
 
 <script>
+  let orgTarget = null;
+  const primaryOrg = 'primaryOrg';
+  const subOrg = 'subOrg';
+
   $(() => {
     setPrcdBasList();
   });
@@ -110,23 +135,57 @@
   });
 
   $('#orgSearch').on('click', function(){
+      orgTarget = primaryOrg;
      openComnModal('vocOrgSearchModal', 950, 650);
   });
 
+  $('#addSubOrgBtn').on('click', function (){
+      orgTarget = subOrg;
+      openComnModal('vocOrgSearchModal', 950, 650);
+  });
+
+  $('.org_wrapper').on('click', '.deleteOrgMapping', function(){
+      if(confirm('제거하시겠습니까?')){
+        $(this).parent().remove();
+      }
+  });
+
+  /**
+   * 저장
+   * @returns {boolean}
+   */
   function regPrcd(){
-      let deptId = $('#orgNm').data('org-id');
-      if(deptId == null || deptId === ''){
-          alert('부서 지정은 필수입니다.');
-          $('#deptNm').focus();
+      let orgList = [];
+
+      let primaryOrg = $('#orgNm');
+      let primaryId = primaryOrg.data('org-id');
+      if(primaryId == null || primaryId === ''){
+          alert('주처리 부서 지정은 필수입니다.');
+          $('#orgId').focus();
           return false;
-      };
+      }
+
+      let primaryOrgPr = {
+          orgId : primaryId,
+          primaryOrgYn : primaryOrg.data('primary-org')
+      }
+      orgList.push(primaryOrgPr);
+
+      let subOrgArr = $('.subOrgNm');
+      $.each(subOrgArr, (i, e) => {
+          let subOrgPr = {
+              orgId : $(e).data('org-id'),
+              primaryOrgYn : $(e).data('primary-org')
+          };
+          orgList.push(subOrgPr);
+      });
 
       let managementCd = '${param.managementCd}';
       let selectedPrcd = $('input[type="checkbox"]:checked');
 
-      let arr = [];
+      let prcdArr = [];
       $.each(selectedPrcd, (i, e) => {
-         arr.push($(e).val());
+         prcdArr.push($(e).val());
       });
 
       $.ajax({
@@ -134,12 +193,18 @@
           method: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
-              arr,
+              prcdArr,
               managementCd,
-              deptId
+              orgList
           }),
-          success(res){
-              console.log(res);
+          success(res, status, jqXHR){
+              if(jqXHR.status === 200){
+                  alert(`해당 코드에 \${res}건의 절차가 등록되었습니다.`);
+
+                  let opnr = Utilities.getOpener();
+                  opnr.location.reload();
+                  Utilities.closeModal();
+              }
           },
           error: console.log
       });
@@ -165,13 +230,14 @@
 
   /**
    * prcd 목록 코드를 화면에 append
+   *  - 필수여부값에 따라서 checkbox 선택제어, 상태명 표기
    * @returns {Promise<void>}
    */
   async function setPrcdBasList(){
       let list = await selectPrcdBasList();
 
       $.each(list, (i, e) => {
-          let convertCompulsoryYn = e.regCompulsoryYn === 'Y' ? '필수입니다.' : '선택입니다.';
+          let convertCompulsoryYn = e.regCompulsoryYn === 'Y' ? '필수' : '선택';
           let compulsoryOpt = e.regCompulsoryYn === 'Y' ? 'checked disabled' : '';
 
           let box = `
@@ -206,15 +272,55 @@
   }
 
   /**
+   * 부처리부서 영역 추가
+   */
+  function addSubOrg(orgNm, orgId){
+      let component = `
+            <div class="org_mapping">
+                <span>부처리부서</span>
+                <input type="text" class="subOrgNm" data-org-id="\${orgId}" data-primary-org="N" value="\${orgNm}" disabled>
+                <button class="deleteOrgMapping">삭제</button>
+            </div>
+      `;
+      $('.sub_org_list').append(component);
+  }
+
+  /**
    * 부서 검색 callback
    * @param data
    */
   function orgSearchCallback(data){
-      console.log(data);
+      let primaryOrgTarget = $('#orgNm');
+      let subOrgTarget = $('.subOrgNm');
+
       let orgId = data.orgId;
       let orgNm = data.orgNm;
 
-      $('#orgNm').val(orgNm).data('org-id', orgId);
+      if(orgId === primaryOrgTarget.data('org-id')){
+          alert('주처리 부서로 등록된 부서입니다.');
+          openComnModal('vocOrgSearchModal', 950, 650);
+          return false;
+      }
+      if(subOrgTarget.length !== 0){
+          let chk = 0;
+          $.each(subOrgTarget, (i, e) => {
+             if($(e).data('org-id') === orgId){
+                 alert('부처리 부서로 등록된 부서입니다.');
+                 chk++;
+             }
+          });
+          if(chk > 0) {
+              openComnModal('vocOrgSearchModal', 950, 650);
+              return false;
+          }
+      }
+
+      if(orgTarget === primaryOrg){
+          primaryOrgTarget.val(orgNm).data('org-id', orgId);
+      } else if(orgTarget === subOrg){
+          addSubOrg(orgNm, orgId);
+      }
+      orgTarget = null;
   }
 
   /**

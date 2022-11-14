@@ -30,7 +30,7 @@
         <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="담당변경가능여부" field="chngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
+        <column name="담당변경가능여부" field="dutyChngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
         <column name="VOC등록 사용여부" field="regUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
         <column name="VOC접수 사용여부" field="recUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
         <column name="VOC등록 필수여부" field="regCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>

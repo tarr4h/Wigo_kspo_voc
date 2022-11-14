@@ -19,7 +19,7 @@
             nvl(duty_org, '-') dutyOrg,
             nvl(duty_emp, '-') dutyEmp,
             nvl(duty_role, '-') dutyRole,
-            chng_yn,
+            duty_chng_yn,
             auto_apply_yn,
             auto_apply_all_yn,
             auto_apply_prcd_seq,
@@ -36,7 +36,7 @@
 
     <insert id="insert">
         insert into voc_task_bas
-        (task_seq, task_nm, deadline, duty_org, duty_emp, duty_role, chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_org_nm, duty_emp_nm)
+        (task_seq, task_nm, deadline, duty_org, duty_emp, duty_role, duty_chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_org_nm, duty_emp_nm)
         values(
                   concat('TB', lpad(seq_voc_task_bas.nextval, 8, 0)),
                   #{taskNm},
@@ -44,7 +44,7 @@
                   #{dutyOrg},
                   #{dutyEmp},
                   #{dutyRole},
-                  #{chngYn},
+                  #{dutyChngYn},
                   #{autoApplyYn},
                   #{autoApplyAllYn},
                   #{autoApplyPrcdSeq},
@@ -62,7 +62,7 @@
             set
                 task_nm = #{item.taskNm},
                 deadline = #{item.deadline},
-                chng_yn = #{item.chngYn},
+                duty_chng_yn = #{item.dutyChngYn},
                 auto_apply_yn = #{item.autoApplyYn},
                 auto_apply_all_yn = #{item.autoApplyAllYn},
                 <if test='item.autoApplyYn.equals("N") or item.autoApplyAllYn.equals("Y")'>

@@ -45,7 +45,7 @@
         padding-top: 5px;
     }
     .v_area_section{
-        border: 1px solid gray;
+        /*border: 1px solid gray;*/
         height: 100%;
         width: 100%;
         /*margin-right: 5px;*/
@@ -74,13 +74,17 @@
         width: 48px;
         font-size: 12px;
     }
+
+    /*  grid  */
+    #procedureGrid_wrap_top{
+        padding-top: 16px;
+    }
 </style>
 
 <div class="gLeft" data-has-size="Y">
     <div class="mBox1">
         <div class="gTitle1">
             <h3 class="mTitle1">VOC 등록절차 분류코드 목록</h3>
-            <button class="gRt tree_btn func_btn" data-event="manage_grp">분류코드 설정</button>
         </div>
         <div id="divTree"
             data-type="tree"
@@ -112,6 +116,14 @@
                     <button class="v_section_btn" data-target="procedure" data-event="add">추가</button>
                     <button class="v_section_btn" data-target="procedure" data-event="delete">삭제</button>
                 </div>
+                <div id="divGrid1"
+                     data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
+                     data-grid-id="procedureGrid"
+                     data-type="grid"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedure.xml${urlSuffix}'/>"
+                     style="width:100%;height:530px;"
+                >
+                </div>
             </div>
 <%--            <div class="v_area_section" id="section2">--%>
 <%--                <div class="v_section_title">--%>
@@ -137,11 +149,39 @@
 
        switch(evt){
            case 'save' : ; break;
-           case 'add' : openRegModal('vocRegProcedureModal_reg', 900, 450); break;
+           case 'add' : openRegModal('vocRegProcedureModal_reg', 900, 550); break;
            case 'delete' : ; break;
        };
     });
 
+    /**
+     * tree 선택 시 해당 node의 procedure 목록 호출
+     * @param data
+     * @param node
+     * @param tree
+     */
+    function onTreeSelect(data,node,tree){
+        let managementCd = data.id;
+        let param = {
+            managementCd
+        };
+
+        let gridId = 'procedureGrid';
+        loadGrid(gridId, param);
+    }
+
+    /**
+     * 요청 grid의 url 호출
+     * @param gridId
+     * @param param
+     */
+    function loadGrid(gridId, param){
+        $.each(window.gridArray, (i, e) => {
+            if(e.gridId === gridId){
+                e.loadUrl('', param);
+            }
+        });
+    }
 
     /**
      * 등록/수정 영역 삭제

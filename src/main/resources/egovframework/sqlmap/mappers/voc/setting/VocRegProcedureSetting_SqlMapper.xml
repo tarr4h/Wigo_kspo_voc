@@ -51,7 +51,7 @@
             prcd_seq
     </select>
 
-    <select id="selectMaxPrcdSeq" resultType="String">
+    <select id="selectMaxMcPrcdSeq" resultType="String">
         select
             max(mc_prcd_seq)
         from
@@ -79,8 +79,44 @@
             (#{dirCd}, #{managementCd})
     </insert>
 
+    <update id="insertDirOrgMapping">
+        insert all
+        <foreach collection="orgList" item="org" separator=" ">
+            into voc_dir_org_mapping
+            (DIR_CD, PRIMARY_ORG_YN, ORG_ID)
+            values
+            (#{dirCd}, #{org.primaryOrgYn}, #{org.orgId})
+        </foreach>
+        select * from dual
+    </update>
+
     <insert id="insertProcedure">
-        insert into VOC_PROCEDURE
-        ()
+        insert into voc_procedure
+        (MC_PRCD_SEQ, PRNTS_SEQ, PRCD_SEQ, PRCD_NM, DEADLINE, DUTY_ORG, DUTY_EMP, VOC_ROLE, REG_USR)
+        values
+        (
+            #{mcPrcdSeq},
+            #{prntsSeq},
+            #{prcdSeq},
+            (select prcd_nm from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            (select deadline from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            (select duty_org from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            (select duty_emp from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            (select duty_role from voc_procedure_bas where prcd_seq = #{prcdSeq}),
+            #{regUsr}
+        )
     </insert>
+
+    <update id="insertProcedureDirConn">
+        insert all
+        <foreach collection="mcPrcdSeqList" item="mcPrcdSeq" separator=" ">
+            into voc_procedure_dir_conn
+            (DIR_CD, MC_PRCD_SEQ)
+            values(
+                   #{dirCd}, #{mcPrcdSeq}
+            )
+        </foreach>
+        select * from dual
+    </update>
+
 </mapper>
