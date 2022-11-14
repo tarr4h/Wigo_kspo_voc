@@ -20,7 +20,7 @@ public class VocProcedureCodeVo extends BaseVo {
     private String dutyEmp;
     private String dutyEmpNm;
     private String dutyRole;
-    private String chngYn;
+    private String dutyChngYn;
     private String regUseYn;
     private String recUseYn;
     private String regCompulsoryYn;

@@ -156,10 +156,25 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
+                <span class="form_row_title">담당 변경적용 가능여부</span>
+            </div>
+            <div class="form_row_right">
+                <div class="radio_wrapper">
+                    <label>가능</label>
+                    <input type="radio" name="dutyChngYn" class="form_row_radio" value="Y">
+                </div>
+                <div class="radio_wrapper">
+                    <label>불가</label>
+                    <input type="radio" name="dutyChngYn" class="form_row_radio" value="N" checked>
+                </div>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_left">
                 <span class="form_row_title">담당부서</span>
             </div>
             <div class="form_row_right">
-                <input type="text" name="dutyOrgNm" class="form_row_input_short" disabled>
+                <input type="text" name="dutyOrgNm" class="form_row_input_short duty_validate" disabled>
                 <input type="text" name="dutyOrg" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="orgSearch">조회</button>
             </div>
@@ -169,7 +184,7 @@
                 <span class="form_row_title">담당자</span>
             </div>
             <div class="form_row_right">
-                <input type="text" name="dutyEmpNm" class="form_row_input_short" disabled>
+                <input type="text" name="dutyEmpNm" class="form_row_input_short duty_validate" disabled>
                 <input type="text" name="dutyEmp" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="empSearch">조회</button>
             </div>
@@ -179,24 +194,9 @@
                 <span class="form_row_title">적용권한</span>
             </div>
             <div class="form_row_right">
-                <input type="text" name="dutyRoleNm" class="form_row_input_short">
+                <input type="text" name="dutyRoleNm" class="form_row_input_short duty_validate">
                 <input type="text" name="dutyRole" class="form_row_dpn">
                 <button type="button" class="form_row_button">조회</button>
-            </div>
-        </div>
-        <div class="form_row">
-            <div class="form_row_left">
-                <span class="form_row_title">담당 변경적용 가능여부</span>
-            </div>
-            <div class="form_row_right">
-                <div class="radio_wrapper">
-                    <label>가능</label>
-                    <input type="radio" name="chngYn" class="form_row_radio" value="Y">
-                </div>
-                <div class="radio_wrapper">
-                    <label>불가</label>
-                    <input type="radio" name="chngYn" class="form_row_radio" value="N" checked>
-                </div>
             </div>
         </div>
         <div class="form_row" id="autoApplyYn">
@@ -325,9 +325,41 @@
     }
 
     /**
+     * 권한변경 가능여부에 따라 담당부서/담당자/적용권한 등록여부 체크 및 결과값 반환
+     * @returns {boolean}
+     */
+    function validateDuty(){
+        let dutyChngYn = $('input[name="dutyChngYn"]:checked').val();
+        if(dutyChngYn === 'Y'){
+            return true;
+        }
+
+        let dutyValidate = $('.duty_validate');
+        let chk = 0;
+
+        $.each(dutyValidate, (i, e) => {
+            if($(e).val() === '' || $(e).val() == null){
+                chk++;
+            }
+        });
+
+        if(chk === dutyValidate.length){
+            alert('권한변경 불가인 경우, 담당부서/담당자/적용권한 중 최소 1개는 등록되어야 합니다.');
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    /**
      * task 코드 insert
      */
     function regTaskCode(){
+        if(!validateDuty()){
+            return false;
+        }
+
         let form = $('#regTaskFrm');
         let disabled = form.find('input:disabled').removeAttr('disabled');
         let formArr = form.serializeArray();

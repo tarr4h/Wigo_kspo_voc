@@ -40,6 +40,14 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         return super.update(param);
     }
 
+    /**
+     * 절차 row 삭제
+     *  - 해당 절차가 task의 자동적용으로 설정되어 있다면, trigger를 통해 update됩니다.
+     *  - 트리거명 : voc_procedure_bas_trig
+     * @param param
+     * @return
+     * @throws Exception
+     */
     @Override
     public int delete(Object param) throws Exception {
         return super.delete(param);

@@ -17,13 +17,18 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     List<? extends BaseVo> selectPrcdBasList(Map<String, Object> param);
 
-    String selectMaxPrcdSeq();
+    String selectMaxMcPrcdSeq();
 
     String selectMaxDirCd();
 
-    void insertDirCd(EzMap dirCd);
+    int insertDirCd(EzMap dirCd);
 
-    void insertDirMcMapping(EzMap param);
+    int insertDirMcMapping(EzMap param);
 
-    void insertProcedure(VocProcedureVo prcd);
+    int insertProcedure(VocProcedureVo prcd);
+
+    int insertDirOrgMapping(Map<String, Object> param);
+
+    int insertProcedureDirConn(Map<String, Object> param);
+
 }

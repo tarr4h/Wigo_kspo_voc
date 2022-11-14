@@ -9,7 +9,8 @@ spring:
       max-request-size: 10GB
   nas:
 #    path: /Users/taewoohan/WorkFolder/test/
-    path: /Users/taewoohan/WorkFolder/eGovFrame/eGovFrame_boot/attach
+#    path: /Users/taewoohan/WorkFolder/eGovFrame/eGovFrame_boot/attach
+    path: C:\\tarr4h\\intelliJ\\attach
     url: https://files.ceragem.com/crm/
   jwt:
     secret: 1qaz@WSX

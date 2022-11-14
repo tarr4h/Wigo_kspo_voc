@@ -1,6 +1,7 @@
 package com.egov.voc.kspo.setting.model;
 
 import com.egov.voc.base.common.model.BaseVo;
+import com.egov.voc.comn.util.Utilities;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,4 +21,8 @@ public class VocProcedureVo extends BaseVo {
     private String dutyRole;
     private String regUsr;
     private String regDt;
+
+    public String getRegUsr() {
+        return Utilities.getLoginUserCd();
+    }
 }
