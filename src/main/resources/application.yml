@@ -10,6 +10,7 @@ spring:
   nas:
 #    path: /Users/taewoohan/WorkFolder/test/
 #    path: /Users/taewoohan/WorkFolder/eGovFrame/eGovFrame_boot/attach
+    # test
     path: C:\\tarr4h\\intelliJ\\attach
     url: https://files.ceragem.com/crm/
   jwt:

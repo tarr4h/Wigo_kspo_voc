@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-.pmd
+.pmd!/src/main/resources/application.yml
