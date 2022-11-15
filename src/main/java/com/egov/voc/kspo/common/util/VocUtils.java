@@ -42,6 +42,18 @@ public class VocUtils extends BaseUtilities {
         corpService = this.cpService;
     }
 
+    public static void setOrgInfoToMap(EzMap org) {
+        String orgId = (String) org.get("orgId");
+        CrmOrgBaseVo orgVo = corpService.selectOrg(orgId);
+
+        EzMap orgMap = (EzMap) Utilities.beanToMap(orgVo);
+        org.putAll(orgMap);
+    }
+
+    public static CrmOrgBaseVo selectOrg(String orgId){
+        return corpService.selectOrg(orgId);
+    }
+
     public static String getOrgNm(String orgId) {
         CrmOrgBaseVo org = corpService.selectOrg(orgId);
         if(org == null){

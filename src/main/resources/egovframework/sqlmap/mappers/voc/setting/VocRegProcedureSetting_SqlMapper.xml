@@ -88,16 +88,13 @@
             (#{dirCd}, #{managementCd})
     </insert>
 
-    <update id="insertDirOrgMapping">
-        insert all
-        <foreach collection="orgList" item="org" separator=" ">
-            into voc_dir_org_mapping
-            (DIR_CD, PRIMARY_ORG_YN, ORG_ID)
-            values
-            (#{dirCd}, #{org.primaryOrgYn}, #{org.orgId})
-        </foreach>
-        select * from dual
-    </update>
+    <insert id="insertDirOrgMapping">
+        insert
+        into voc_dir_org_mapping
+        (DIR_CD, PRIMARY_ORG_YN, ORG_ID)
+        values
+        (#{dirCd}, #{primaryOrgYn}, #{orgId})
+    </insert>
 
     <insert id="insertProcedure">
         insert into voc_procedure
@@ -150,11 +147,12 @@
             duty_emp,
             nvl(duty_role, '-') dutyRole,
             reg_usr,
-            reg_dt
+            reg_dt,
+            (select task_yn from voc_procedure_bas where prcd_seq = vp.prcd_seq) taskYn
         from
-            voc_procedure
+            voc_procedure vp
         where
-            mc_prcd_seq in (
+            vp.mc_prcd_seq in (
                     select
                         mc_prcd_seq
                     from
@@ -165,5 +163,41 @@
         order by
             1
     </select>
+
+    <select id="selectDutyOrgList" resultType="EzMap">
+        select
+            *
+        from
+            voc_dir_org_mapping
+        where
+            dir_cd = #{dirCd}
+        order by
+            2 desc, 3
+    </select>
+
+    <delete id="deleteDirOrg">
+        delete from voc_dir_org_mapping
+        where
+            dir_cd = #{dirCd}
+            and
+            <if test="orgList != null and !orgList.isEmpty()">
+                org_id in
+                <foreach collection="orgList" item="org" separator="," open="(" close=")">
+                    #{org.orgId}
+                </foreach>
+            </if>
+    </delete>
+
+    <update id="updateDirOrg">
+        <foreach collection="orgList" item="org" separator=";" open="DECLARE BEGIN" close="; END;">
+            update voc_dir_org_mapping
+            set
+                primary_org_yn = #{org.primaryOrgYn}
+            where
+                dir_cd = #{dirCd}
+                and
+                org_id = #{org.orgId}
+        </foreach>
+    </update>
 
 </mapper>

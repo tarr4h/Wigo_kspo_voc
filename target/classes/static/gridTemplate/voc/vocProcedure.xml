@@ -32,4 +32,5 @@
         <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="등록자" field="regUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="TASK관리" field="taskYn" type="button" width="10" textAlignment="center" showButtonByValue="Y" hidden="N"/>
 </grid>

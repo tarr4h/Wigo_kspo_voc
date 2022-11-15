@@ -9,6 +9,7 @@ import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
 import lombok.extern.slf4j.Slf4j;
+import oracle.ucp.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,7 +80,6 @@ public class VocRegProcedureSettingController {
         return service.selectPrcdBasList(param);
     }
 
-
     @PostMapping(value = "insertProcedure")
     public @ResponseBody Object insertProcedure(@RequestBody EzMap param){
         return service.insertProcedure(param);
@@ -92,5 +92,43 @@ public class VocRegProcedureSettingController {
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selctDutyOrgGrid")
+    public @ResponseBody Object selectDutyOrgGrid(@RequestBody EzMap param) throws Exception{
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<EzMap> list = service.selectDutyOrgList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
+
+    @PostMapping(value = "insertDirOrg")
+    public @ResponseBody Object insertDirOrg(@RequestBody EzMap param) {
+        return service.insertDirOrg(param);
+    }
+
+    @GetMapping(value = "selectDirCd")
+    public @ResponseBody Object selectDirCd(@RequestParam Map<String, Object> param){
+        return service.selectDirCd(param);
+    }
+
+    @GetMapping(value = "selectDutyOrgList")
+    public @ResponseBody Object selectDutyOrgList(@RequestParam Map<String, Object> param){
+        return service.selectDutyOrgList(param);
+    }
+
+    @PostMapping(value = "deleteDirOrg")
+    public @ResponseBody Object deleteDirOrg(@RequestBody EzMap param){
+        return service.deleteDirOrg(param);
+    }
+
+    @PostMapping(value = "updateDirOrg")
+    public @ResponseBody Object updateDirOrg(@RequestBody EzMap param){
+        return service.updateDirOrg(param);
+    }
+
+    @GetMapping(value = "selectPrcdBas")
+    public @ResponseBody Object selectPrcdBas(@RequestParam Map<String, Object> param){
+        return service.selectPrcdBas(param);
     }
 }

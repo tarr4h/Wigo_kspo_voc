@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class VocProcedureVo extends BaseVo {
+public class VocProcedureVo extends VocProcedureCodeVo {
 
     private String mcPrcdSeq;
     private String prntsSeq;
@@ -34,7 +34,13 @@ public class VocProcedureVo extends BaseVo {
         return VocUtils.getEmpNm(dutyEmp);
     }
 
+    @Override
     public String getDeadlineConvert(){
         return VocUtils.convertDeadline(deadline);
+    }
+
+    @Override
+    public String getTaskYn() {
+        return super.getTaskYn();
     }
 }

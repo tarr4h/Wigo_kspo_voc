@@ -25,7 +25,7 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     String selectMaxDirCd();
 
-    int insertDirCd(EzMap dirCd);
+    int insertDirCd(EzMap param);
 
     int insertDirMcMapping(EzMap param);
 
@@ -35,7 +35,13 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     int insertProcedureDirConn(Map<String, Object> param);
 
-    String selectDirCd(EzMap param);
+    String selectDirCd(Map<String, Object> param);
 
     <T> List<T> selectProcedureList(EzMap param);
+
+    List<EzMap> selectDutyOrgList(Map<String, Object> param);
+
+    int deleteDirOrg(EzMap param);
+
+    int updateDirOrg(EzMap param);
 }
