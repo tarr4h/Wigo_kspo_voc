@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmGrpOrgRelDao">
+    <sql id="sqlPkConditions">
+                WHERE GRP_CD            =       #{grpCd}
+                  AND ORG_ID            =       #{orgId}
+    </sql>
+    <sql id="sqlCols">
+                      GRP_CD                    /*그룹코드        */
+                    , ORG_ID                    /*조직ID        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="grpCd != null and grpCd != ''">
+            <choose>
+                <when test="grpCd instanceof String">
+                              AND A.GRP_CD            =       #{grpCd}
+                </when>
+                <otherwise>
+                    AND A.GRP_CD            IN
+                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="orgId != null and orgId != ''">
+                      AND A.ORG_ID            =       #{orgId}
+        </if>
+         <if test="exGrpCd != null and exGrpCd != ''">
+           AND ORG_ID NOT IN (SELECT ORG_ID FROM CRM_GRP_ORG_REL WHERE GRP_CD = #{exGrpCd})
+         </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+               SELECT COUNT(1)
+                 FROM CRM_GRP_ORG_REL A
+                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmGrpOrgRelVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT A.GRP_CD                    /*그룹코드        */
+                    , A.ORG_ID                    /*조직ID        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , B.GRP_NM
+                    , C.ORG_NM
+                 FROM CRM_GRP_ORG_REL A
+                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+        <include refid="sqlConditions"/>
+               ORDER BY C.ORG_NM
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmGrpOrgRelVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_GRP_ORG_REL
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_GRP_ORG_REL (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{grpCd}
+                     , #{orgId}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_GRP_ORG_REL
+                  SET AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_GRP_ORG_REL
+        <include refid="sqlPkConditions"/>
+    </delete>
+    <delete id="deleteGrpCd">
+               DELETE FROM CRM_GRP_ORG_REL
+                WHERE GRP_CD            =       #{grpCd}
+    </delete>
+    
+</mapper>

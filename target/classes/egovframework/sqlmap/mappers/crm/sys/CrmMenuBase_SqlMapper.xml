@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.sys.dao.CrmMenuBaseDao">
+    <sql id="sqlPkConditions">
+                WHERE MENU_CD           =       #{menuCd}
+    </sql>
+    <sql id="sqlCols">
+                      MENU_CD                    /*메뉴코드        */
+                    , MENU_NM                    /*메뉴명        */
+                    , MENU_URL                    /*메뉴URL        */
+                    , TOP_MENU_CD                    /*최상위메뉴코드        */
+                    , PRNTS_MENU_CD                    /*부모메뉴코드        */
+                    , MENU_LVL_NO                    /*메뉴레벨번호        */
+                    , MENU_ODRG                    /*메뉴순번        */
+                    , MENU_ICON_CD                    /*메뉴아이콘코드        */
+                    , MENU_AUTH_YN                    /*메뉴권한여부        */
+                    , MENU_SHOW_YN                    /*메뉴노출여부        */
+                    , MENU_POPUP_YN                    /*메뉴팝업여부        */
+                    , MENU_POPUP_WDTH_LEN                    /*메뉴팝업가로길이        */
+                    , MENU_POPUP_VRTC_LEN                    /*메뉴팝업세로길이        */
+                    , MENU_EXPLN                    /*메뉴설명        */
+                    , CHNG_LOG_YN                    /*변경로그여부        */
+                    , USE_YN                    /*사용여부        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="menuCd != null and menuCd != ''">
+            <choose>
+                <when test="menuCd instanceof String">
+                              AND MENU_CD           =       #{menuCd}
+                </when>
+                <otherwise>
+                    AND MENU_CD           IN
+                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuNm != null and menuNm != ''">
+                      AND MENU_NM           =       #{menuNm}
+        </if>
+        <if test="menuNmLike != null and menuNmLike != ''">
+                      AND MENU_NM          LIKE   '%' ||  #{menuNmLike} ||'%'
+        </if>
+        <if test="menuUrl != null and menuUrl != ''">
+                      AND MENU_URL          =       #{menuUrl}
+        </if>
+        <if test="topMenuCd != null and topMenuCd != ''">
+            <choose>
+                <when test="topMenuCd instanceof String">
+                              AND TOP_MENU_CD       =       #{topMenuCd}
+                </when>
+                <otherwise>
+                    AND TOP_MENU_CD       IN
+                    <foreach item="item" index="index" collection="topMenuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="prntsMenuCd != null and prntsMenuCd != ''">
+            <choose>
+                <when test="prntsMenuCd instanceof String">
+                              AND PRNTS_MENU_CD     =       #{prntsMenuCd}
+                </when>
+                <otherwise>
+                    AND PRNTS_MENU_CD     IN
+                    <foreach item="item" index="index" collection="prntsMenuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuLvlNo != null and menuLvlNo != ''">
+                      AND MENU_LVL_NO       =       #{menuLvlNo}
+        </if>
+        <if test="menuOdrg != null and menuOdrg != ''">
+                      AND MENU_ODRG         =       #{menuOdrg}
+        </if>
+        <if test="menuIconCd != null and menuIconCd != ''">
+            <choose>
+                <when test="menuIconCd instanceof String">
+                              AND MENU_ICON_CD      =       #{menuIconCd}
+                </when>
+                <otherwise>
+                    AND MENU_ICON_CD      IN
+                    <foreach item="item" index="index" collection="menuIconCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuAuthYn != null and menuAuthYn != ''">
+                      AND MENU_AUTH_YN      =       #{menuAuthYn}
+        </if>
+        <if test="menuShowYn != null and menuShowYn != ''">
+                      AND MENU_SHOW_YN      =       #{menuShowYn}
+        </if>
+        <if test="menuPopupYn != null and menuPopupYn != ''">
+                      AND MENU_POPUP_YN     =       #{menuPopupYn}
+        </if>
+        <if test="menuPopupWdthLen != null and menuPopupWdthLen != ''">
+                      AND MENU_POPUP_WDTH_LEN=       #{menuPopupWdthLen}
+        </if>
+        <if test="menuPopupVrtcLen != null and menuPopupVrtcLen != ''">
+                      AND MENU_POPUP_VRTC_LEN=       #{menuPopupVrtcLen}
+        </if>
+        <if test="menuExpln != null and menuExpln != ''">
+                      AND MENU_EXPLN        =       #{menuExpln}
+        </if>
+        <if test="chngLogYn != null and chngLogYn != ''">
+                      AND CHNG_LOG_YN       =       #{chngLogYn}
+        </if>
+        <if test="useYn != null and useYn != ''">
+                      AND USE_YN            =       #{useYn}
+        </if>
+        <if test="exGrpCd != null and exGrpCd != ''">
+           AND MENU_CD NOT IN (SELECT MENU_CD FROM CRM_GRP_MENU_REL WHERE GRP_CD = #{exGrpCd})
+           AND MENU_URL IS NOT NULL
+           AND MENU_LVL_NO > 1
+           AND MENU_AUTH_YN = 'Y'
+         </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_MENU_BAS
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.egov.voc.sys.model.CrmMenuVo">
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                    , 'Y' MENU_REG_AUTH_YN
+                    , 'Y' MENU_READ_AUTH_YN
+                    , 'Y' MENU_AMD_AUTH_YN
+                    , 'Y' MENU_DEL_AUTH_YN
+                    , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
+                          FROM CRM_MENU_BAS
+                         WHERE 1=1
+                         START WITH MENU_CD = A.MENU_CD 
+                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                 FROM CRM_MENU_BAS A
+        <include refid="sqlConditions"/>
+                ORDER BY MENU_LVL_NO
+                    , MENU_ODRG
+                    , MENU_CD
+        <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.egov.voc.sys.model.CrmMenuVo">
+               SELECT <include refid="sqlCols"/>
+                    , 'Y' MENU_REG_AUTH_YN
+                    , 'Y' MENU_READ_AUTH_YN
+                    , 'Y' MENU_AMD_AUTH_YN
+                    , 'Y' MENU_DEL_AUTH_YN
+                 FROM CRM_MENU_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_MENU_BAS (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{menuCd}
+                     , #{menuNm}
+                     , #{menuUrl}
+                     , #{topMenuCd}
+                     , #{prntsMenuCd}
+                     , #{menuLvlNo}
+                     , #{menuOdrg}
+                     , #{menuIconCd}
+                     , #{menuAuthYn}
+                     , #{menuShowYn}
+                     , #{menuPopupYn}
+                     , #{menuPopupWdthLen}
+                     , #{menuPopupVrtcLen}
+                     , #{menuExpln}
+                     , NVL(#{chngLogYn},'N')
+                     , #{useYn}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_MENU_BAS
+                  SET MENU_NM             =         #{menuNm}
+                    , MENU_URL            =         #{menuUrl}
+                    , MENU_ICON_CD        =         #{menuIconCd}
+                    , MENU_AUTH_YN        =         #{menuAuthYn}
+                    , MENU_SHOW_YN        =         #{menuShowYn}
+                    , MENU_POPUP_YN       =         #{menuPopupYn}
+                    , MENU_POPUP_WDTH_LEN =         #{menuPopupWdthLen}
+                    , MENU_POPUP_VRTC_LEN =         #{menuPopupVrtcLen}
+                    , MENU_EXPLN          =         #{menuExpln}
+                    , CHNG_LOG_YN         =         #{chngLogYn}
+                    , USE_YN              =         #{useYn}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <update id="updateSeq">
+               UPDATE CRM_MENU_BAS
+                  SET MENU_ODRG           =         #{menuOdrg}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_MENU_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+    
+    
+    <select id="selectMaxInfo" resultType="com.egov.voc.sys.model.CrmMenuVo">
+             SELECT MAX(MENU_CD) MENU_CD
+                  , MAX(MENU_ODRG) MENU_ODRG 
+               FROM CRM_MENU_BAS  
+              WHERE 1=1
+         <choose>
+            <when test="menuCd == '0000000000'">
+                AND MENU_LVL_NO = 1
+            </when>
+            <when test="menuCd != null and menuCd != ''">
+                AND PRNTS_MENU_CD = #{menuCd}
+            </when>
+            <otherwise>
+                AND MENU_LVL_NO = 1
+            </otherwise>
+         </choose>
+    </select>
+    <select id="selectTreeList" resultType="com.egov.voc.sys.model.CrmMenuVo">
+        SELECT  MENU_CD
+             , MENU_NM
+             , MENU_URL
+             , PRNTS_MENU_CD
+             , TOP_MENU_CD
+             , MENU_LVL_NO
+             , MENU_ODRG
+             , MENU_SHOW_YN
+             , MENU_ICON_CD
+             , MENU_AUTH_YN
+             , MENU_POPUP_YN
+             , MENU_POPUP_WDTH_LEN
+             , MENU_POPUP_VRTC_LEN
+             , MENU_EXPLN
+             , USE_YN
+             , REGR_ID
+             , REG_DT
+             , AMDR_ID
+             , AMD_DT
+             , CHNG_LOG_YN
+             , 'Y' MENU_REG_AUTH_YN
+             , 'Y' MENU_READ_AUTH_YN
+             , 'Y' MENU_AMD_AUTH_YN
+             , 'Y' MENU_DEL_AUTH_YN
+          FROM CRM_MENU_BAS A
+        <include refid="sqlConditions"/>
+        ORDER BY MENU_ODRG
+               , MENU_CD
+    </select>
+    
+    <select id="selectUserMenuList" resultType="com.egov.voc.sys.model.CrmMenuVo">
+    WITH GRP_USR AS
+    (   SELECT GRP_CD, USER_CD
+          FROM CRM_GRP_USER_REL
+            UNION ALL
+        SELECT GRP_CD, EMP_ID
+          FROM  CRM_GRP_EMP_REL
+         UNION ALL
+        SELECT GRP_CD, EMP_ID 
+          FROM ( SELECT A.ORG_ID
+                      , B.GRP_CD 
+                    FROM CRM_ORG_BAS A
+                       , CRM_GRP_ORG_REL B
+                   START WITH B.ORG_ID = A.ORG_ID
+                CONNECT BY PRIOR   A.ORG_ID = A.UP_ORG_ID ) A 
+             , CRM_EMP_BAS B 
+         WHERE A.ORG_ID = B.ORG_ID )
+         SELECT    A.*
+               , B.MENU_REG_AUTH_YN
+               , B.MENU_READ_AUTH_YN
+               , B.MENU_AMD_AUTH_YN
+               , B.MENU_DEL_AUTH_YN
+        FROM    ( 
+                SELECT A.MENU_CD
+                     , A.MENU_NM
+                     , A.MENU_URL
+                     , A.PRNTS_MENU_CD
+                     , A.TOP_MENU_CD
+                     , A.MENU_LVL_NO
+                     , A.MENU_ODRG
+                     , A.MENU_SHOW_YN
+                     , A.MENU_ICON_CD
+                     , A.MENU_AUTH_YN
+                     , A.MENU_POPUP_YN
+                     , A.MENU_POPUP_WDTH_LEN
+                     , A.MENU_POPUP_VRTC_LEN
+                     , A.MENU_EXPLN
+                     , A.USE_YN
+                     , A.REGR_ID
+                     , A.REG_DT
+                     , A.AMDR_ID
+                     , A.AMD_DT
+                     , A.CHNG_LOG_YN
+                     , DECODE(B.MENU_CD , NULL,'N','Y') WDGT_YN
+                  FROM CRM_MENU_BAS A
+                   LEFT JOIN CRM_USER_WDGT_BAS B ON A.MENU_CD = B.MENU_CD AND B.USER_CD = #{userCd}
+                 WHERE TOP_MENU_CD          =           #{topMenuCd}
+                   AND USE_YN                =           'Y'
+                   AND (  A.MENU_AUTH_YN = 'N' 
+                       OR A.MENU_CD IN (SELECT MENU_CD FROM CRM_GRP_MENU_REL WHERE GRP_CD IN (SELECT GRP_CD FROM GRP_USR WHERE USER_CD = #{userCd}))
+                       OR A.MENU_URL IS NULL 
+                       OR A.MENU_LVL_NO = 1
+                       )
+                  ) A , (
+                      SELECT   MAX (MENU_REG_AUTH_YN)     MENU_REG_AUTH_YN
+                            , MAX (MENU_READ_AUTH_YN)     MENU_READ_AUTH_YN
+                           , MAX (MENU_AMD_AUTH_YN)     MENU_AMD_AUTH_YN
+                           , MAX (MENU_DEL_AUTH_YN)     MENU_DEL_AUTH_YN
+                            , MENU_CD
+                        FROM GRP_USR GU
+                           , CRM_GRP_MENU_REL GM
+                       WHERE GU.GRP_CD = GM.GRP_CD AND GU.USER_CD = #{userCd}
+                       GROUP BY MENU_CD
+                  ) B
+                  WHERE A.MENU_CD = B.MENU_CD(+)
+                 ORDER BY A.TOP_MENU_CD, A.MENU_LVL_NO, A.MENU_ODRG
+    </select>
+    <select id="selectChildrenCount" resultType="int">
+            SELECT COUNT(1) 
+              FROM CRM_MENU_BAS
+             WHERE PRNTS_MENU_CD = #{menuCd}
+    </select>
+</mapper>

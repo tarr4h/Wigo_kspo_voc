@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>    
+	<definition name="_crm_main_index" template="/WEB-INF/jsp/tiles/crm/index.jsp" />
+	<definition name="_crm_index_type2" template="/WEB-INF/jsp/tiles/crm/index_type2.jsp" />
+<definition name="_crm_blank_index" template="/WEB-INF/jsp/tiles/crm/blank.jsp" />
+<definition name="_crm_blank_body_index" template="/WEB-INF/jsp/tiles/crm/blankBody.jsp" />
+
+    
+    <definition name="error" extends="_crm_blank_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/crm/error/error.jsp" type="template" />
+    </definition>    
+
+    <definition name="crm/blank/*/**" extends="_crm_blank_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/crm/{1}/{2}.jsp" type="template" />
+    </definition>
+    <definition name="crm/blankBody/*/**" extends="_crm_blank_body_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/crm/{1}/{2}.jsp" type="template" />
+    </definition>
+    
+    <definition name="crm/*/**" extends="_crm_main_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/crm/{1}/{2}.jsp" type="template" />
+    </definition>
+    <definition name="crm/type2/*/**" extends="_crm_index_type2">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/crm/{1}/{2}.jsp" type="template" />
+    </definition>
+    
+    <definition name="main" template="/WEB-INF/jsp/tiles/crm/main.jsp" />
+    <definition name="login" template="/WEB-INF/jsp/tiles/crm/login.jsp" />
+
+</tiles-definitions>

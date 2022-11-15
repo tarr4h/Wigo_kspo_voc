@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao">
+
+    <select id="selectList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            PRCD_SEQ,
+            PRCD_NM,
+            TOP_COMN_CD,
+            COMN_CD,
+            DEADLINE,
+            nvl(DUTY_ORG, '-') dutyOrg,
+            nvl(DUTY_EMP, '-') dutyEmp,
+            nvl(DUTY_ROLE, '-') dutyRole,
+            DUTY_CHNG_YN,
+            REG_USE_YN,
+            REC_USE_YN,
+            REG_COMPULSORY_YN,
+            REC_COMPULSORY_YN,
+            TASK_YN,
+            MOD_DT,
+            MOD_USR,
+            nvl(DUTY_ORG_NM, '-') dutyOrgNm,
+            nvl(DUTY_EMP_NM, '-') dutyEmpNm
+        from
+            voc_procedure_bas
+        order by
+            1
+    </select>
+
+    <insert id="insert">
+        insert into voc_procedure_bas
+        (PRCD_SEQ, PRCD_NM, TOP_COMN_CD, COMN_CD, DEADLINE, DUTY_ORG, DUTY_EMP, DUTY_ROLE, DUTY_CHNG_YN, REG_USE_YN,
+         REC_USE_YN, REG_COMPULSORY_YN, REC_COMPULSORY_YN, TASK_YN, MOD_DT, MOD_USR, DUTY_ORG_NM, DUTY_EMP_NM)
+        values (concat('PB', lpad(seq_voc_procedure_bas.nextval, 8, 0)),
+                #{prcdNm},
+                #{topComnCd},
+                #{comnCd},
+                #{deadline},
+                #{dutyOrg},
+                #{dutyEmp},
+                #{dutyRole},
+                #{dutyChngYn},
+                #{regUseYn},
+                #{recUseYn},
+                #{regCompulsoryYn},
+                #{recCompulsoryYn},
+                #{taskYn},
+                sysdate,
+                #{loginUsr},
+                #{dutyOrgNm},
+                #{dutyEmpNm})
+    </insert>
+
+    <update id="update">
+        <foreach collection="rows" item="item" open="DECLARE BEGIN" close=";END;" separator=";">
+            update voc_procedure_bas
+            set
+                prcd_nm = #{item.prcdNm},
+                deadline = #{item.deadline},
+                duty_chng_yn = #{item.dutyChngYn},
+                reg_use_yn = #{item.regUseYn},
+                rec_use_yn = #{item.recUseYn},
+                reg_compulsory_yn = #{item.regCompulsoryYn},
+                rec_compulsory_yn = #{item.recCompulsoryYn},
+                task_yn = #{item.taskYn},
+                mod_dt = sysdate,
+                mod_usr = #{loginUsr}
+            where
+                prcd_seq = #{item.prcdSeq}
+        </foreach>
+    </update>
+
+    <delete id="delete">
+        delete from voc_procedure_bas
+        where
+            prcd_seq in
+            <foreach collection="rows" item="item" open="(" close=")" separator=",">
+                #{item.prcdSeq}
+            </foreach>
+    </delete>
+
+    <update id="chngProcedureDuty">
+        update voc_procedure_bas
+        set
+            ${targetInfo.col} = #{chngMap.id},
+            ${targetInfo.col}_nm = #{chngMap.nm},
+            mod_dt = sysdate,
+            mod_usr = #{loginUsr}
+        where
+            prcd_seq = #{targetInfo.prcdSeq}
+    </update>
+
+</mapper>

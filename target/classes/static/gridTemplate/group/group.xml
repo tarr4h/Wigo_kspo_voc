@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <gridfitStyle value="evenFill"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="그룹아이디" field="grpCd" type="char" maxLength="10" width="30" textAlignment="left" required="Y" Pk="Y"  hidden="N"/>
+    <column name="그룹명" field="grpNm" type="char" maxLength="100" width="100" textAlignment="left" required="Y" hidden="N"/>
+</grid>
