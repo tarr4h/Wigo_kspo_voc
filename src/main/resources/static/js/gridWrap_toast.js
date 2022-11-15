@@ -141,13 +141,16 @@ tui.Grid.applyTheme('crm',{
           cell: {
             normal: {
               background: '#fbfbfb',
-              border: '#ccc',
+              // border: '#ccc',
+              border: '#c1c1c1',
               text : '#333333',
               showVerticalBorder: true
             },
             header: {
-              background: '#94a9b463',
-              border: '#ccc',
+              background: '#5789a363',
+              // background: '#ffeded',
+              // border: '#ccc',
+              border: '#a39e9e',
               text : '#333333',
               showVerticalBorder: true
             },
