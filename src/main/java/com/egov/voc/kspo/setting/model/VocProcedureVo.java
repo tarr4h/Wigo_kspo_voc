@@ -2,13 +2,14 @@ package com.egov.voc.kspo.setting.model;
 
 import com.egov.voc.base.common.model.BaseVo;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.util.VocUtils;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
+@Slf4j
 public class VocProcedureVo extends BaseVo {
 
     private String mcPrcdSeq;
@@ -24,5 +25,16 @@ public class VocProcedureVo extends BaseVo {
 
     public String getRegUsr() {
         return Utilities.getLoginUserCd();
+    }
+    public String getDutyOrgNm(){
+        return VocUtils.getOrgNm(dutyOrg);
+    }
+
+    public String getDutyEmpNm(){
+        return VocUtils.getEmpNm(dutyEmp);
+    }
+
+    public String getDeadlineConvert(){
+        return VocUtils.convertDeadline(deadline);
     }
 }
