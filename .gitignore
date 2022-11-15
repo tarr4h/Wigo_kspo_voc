@@ -26,4 +26,3 @@ build/
 !**/src/test/**/build/
 ### VS Code ###.vscode/
 .pmd
-application.yml
