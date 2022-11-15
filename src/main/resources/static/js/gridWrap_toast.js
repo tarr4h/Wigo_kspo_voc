@@ -147,7 +147,7 @@ tui.Grid.applyTheme('crm',{
               showVerticalBorder: true
             },
             header: {
-              background: '#5789a363',
+              background: '#d9dee0',
               // background: '#ffeded',
               // border: '#ccc',
               border: '#a39e9e',

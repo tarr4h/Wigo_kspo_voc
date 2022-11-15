@@ -317,7 +317,7 @@ border-color : #AAAAAA
 	text-align : left;
 }
 .gridViewChecked {	
-	background-color : #FFF1E8 !important;
+	background-color : #ebebeb !important;
 }
   .gridView {
   	text-align:center;

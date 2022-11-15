@@ -53,25 +53,27 @@
         justify-content: space-around;
         padding-top: 5px;
     }
+    .v_area_wrapper div:last-child{
+        margin-right: 0;
+    }
     .v_area_section{
         border: 1px solid gray;
         height: 100%;
         width: 100%;
         padding: 5px;
-        /*margin-right: 5px;*/
+        margin-right: 5px;
         /*margin-left: 5px;*/
     }
     .v_section_title{
         height: 30px;
-        display: flex;
-        align-content: center;
-        flex-wrap: wrap;
-        flex-direction: row;
     }
     .v_title_sm{
-        margin-left: 10px;
-        font-size: 13px;
-        font-weight: 500;
+        margin-left: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 4px;
+        color: #1c1c1c;
+        display: inline-block;
     }
     .v_section_btn_wrapper{
         float: right;
@@ -79,12 +81,23 @@
         height: 30px;
     }
 
+    .sec_remove_btn{
+        float: right;
+        border: none;
+        background: none;
+        margin-right: 5px;
+        font-weight: 500;
+    }
+
     /*  grid  */
+    #orgGrid_wrap_top{
+        padding-top: 33px;
+    }
     #procedureGrid_wrap_top{
         padding-top: 18px;
     }
-    #orgGrid_wrap_top{
-        padding-top: 33px;
+    #taskGrid_wrap_top{
+        padding-top: 18px;
     }
 </style>
 
@@ -113,7 +126,7 @@
             <button class="mBtn1 func_btn" data-target="org" data-event="delete">삭제</button>
         </div>
         <div class="duty_org_setting_wrapper">
-            <div id="divGrid2"
+            <div id="divGrid1"
                  data-get-url="<c:url value='${urlPrefix}/selctDutyOrgGrid${urlSuffix}'/>"
                  data-grid-id="orgGrid"
                  data-type="grid"
@@ -138,7 +151,7 @@
                     <button class="mBtn1 func_btn" data-target="procedure" data-event="add">추가</button>
                     <button class="mBtn1 func_btn" data-target="procedure" data-event="delete">삭제</button>
                 </div>
-                <div id="divGrid1"
+                <div id="divGrid2"
                      data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
                      data-grid-id="procedureGrid"
                      data-type="grid"
@@ -147,18 +160,46 @@
                 >
                 </div>
             </div>
-<%--            <div class="v_area_section" id="section2">--%>
-<%--                <div class="v_section_title">--%>
-<%--                    <h3>단위2</h3>--%>
-<%--                </div>--%>
-<%--                <button class="sec_remove_btn">닫기</button>--%>
-<%--            </div>--%>
-<%--            <div class="v_area_section" id="section3">--%>
-<%--                <div class="v_section_title">--%>
-<%--                    <h3>단위3</h3>--%>
-<%--                </div>--%>
-<%--                <button class="sec_remove_btn">닫기</button>--%>
-<%--            </div>--%>
+
+            <div class="v_area_section" id="section2" style="display: none;">
+                <div class="v_section_title">
+                    <h3 class="v_title_sm">task등록/수정</h3>
+                    <button class="sec_remove_btn">X</button>
+                </div>
+                <div class="v_section_btn_wrapper">
+                    <button class="mBtn1 func_btn" data-target="task" data-event="save" onclick="showActivitySection()">저장</button>
+                    <button class="mBtn1 func_btn" data-target="task" data-event="add">추가</button>
+                    <button class="mBtn1 func_btn" data-target="task" data-event="delete">삭제</button>
+                </div>
+                <div id="divGrid3"
+                     data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
+                     data-grid-id="taskGrid"
+                     data-type="grid"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTask.xml${urlSuffix}'/>"
+                     style="width:100%;height:420px;"
+                >
+                </div>
+            </div>
+
+            <div class="v_area_section" id="section3" style="display: none;">
+                <div class="v_section_title">
+                    <h3 class="v_title_sm">ACVITIVY등록/수정</h3>
+                    <button class="sec_remove_btn">X</button>
+                </div>
+                <div class="v_section_btn_wrapper">
+                    <button class="mBtn1 func_btn" data-target="activity" data-event="save">저장</button>
+                    <button class="mBtn1 func_btn" data-target="activity" data-event="add">추가</button>
+                    <button class="mBtn1 func_btn" data-target="activity" data-event="delete">삭제</button>
+                </div>
+                <div id="divGrid4"
+                     data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
+                     data-grid-id="activityGrid"
+                     data-type="grid"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTask.xml${urlSuffix}'/>"
+                     style="width:100%;height:420px;"
+                >
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -183,13 +224,7 @@
        }
     });
 
-    /**
-     * 등록/수정 영역 삭제
-     */
-    $('.sec_remove_btn').on('click', function(){
-        let sectionId = $(this).parent().prop('id');
-        $('#' + sectionId).remove();
-    });
+
 
     /**
      * tree 선택 시 해당 node의 procedure 목록 호출
@@ -215,9 +250,46 @@
      * @param json
      */
     async function onGridButtonClicked(gridView, row, col, json){
+        console.log('gridView : ', gridView);
+        let gridId = gridView.gridId;
 
-
+        switch(gridId){
+            case 'procedureGrid' : showTaskSecetion(); break;
+            case 'taskGrid' : ; break;
+            case 'activityGrid' : ; break;
+        }
     }
+
+    function showActivitySection(){
+        $("#section3").show();
+        $(".v_area_section:nth-child(1)").css('width', '20%');
+        $(".v_area_section:nth-child(2)").css('width', '25%');
+        $(".v_area_section:nth-child(3)").css('width', '55%');
+    }
+
+    /**
+     * task 등록/수정 영역을 보여주고 나머지 섹션의 길이 변경.
+     */
+    function showTaskSecetion(){
+        $("#section2").show();
+        $(".v_area_section:nth-child(1)").css('width', '30%');
+        $(".v_area_section:nth-child(2)").css('width', '70%');
+    }
+
+    /**
+     * 등록/수정 영역 삭제
+     */
+    $('.sec_remove_btn').on('click', function(){
+        let sectionId = $(this).parent().parent().prop('id');
+        $('#' + sectionId).hide().next().hide();
+
+        if(sectionId === 'section3'){
+            $(".v_area_section:nth-child(1)").css('width', '30%');
+            $(".v_area_section:nth-child(2)").css('width', '70%');
+        } else if (sectionId === 'section2'){
+            $(".v_area_section:nth-child(1)").css('width', '100%');
+        }
+    });
 
     /**
      * procedure bas 조회

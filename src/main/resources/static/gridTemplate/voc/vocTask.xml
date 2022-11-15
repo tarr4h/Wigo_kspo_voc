@@ -13,22 +13,24 @@
         <insertable value="N"/>
         <editable value="Y"/>
         <rowSelection value="N"/>
-<!--        <autoColumnWidth value="Y"/>-->
+        <gridfitStyle value="even"/>
         <columnMove value="N"/>
+        <setSort value="none"/>
+<!--        <headerRows value="1"/>-->
     </meta>
         <column name="시퀀스" field="mcPrcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="상위시퀀스" field="prntsSeq" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="Y"/>
         <column name="절차시퀀스" field="prcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="절차명" field="prcdNm" type="combo" codeId="VOC020" maxLength="1000" width="80" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="TASK명" field="prcdNm" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="공통코드" field="comnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한(분)" field="deadline" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="처리기한" field="deadlineConvert" type="char" maxLength="1000" width="80" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="처리기한" field="deadlineConvert" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당부서ID" field="dutyOrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당자ID" field="dutyEmp" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="40" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="40" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="40" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="적용권한" field="dutyRole" type="char" maxLength="50" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="등록자" field="regUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="TASK관리" field="taskYn" type="button" width="40" textAlignment="center" showButtonByValue="Y" hidden="N"/>
+        <column name="ACTIVITY관리" field="activity" type="button" width="10" textAlignment="center" hidden="N"/>
 </grid>
