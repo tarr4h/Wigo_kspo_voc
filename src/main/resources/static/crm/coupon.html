@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+
+<div id="wrapIframe" class="closed"> <!-- 고객정보 닫힘 -->
+		
+	<div class="mGrid1">
+		<!-- right -->
+		<div class="gRight">
+
+			<!-- sort -->
+			<div class="mSort2">
+				<ul>
+					<li class="wAuto">
+						<div class="tit">쿠폰마스터</div>
+						<div class="txt">
+                            <div class="mFlex2">
+								<span class="flex"><input type="text" class="it w185" title="쿠폰마스터"></span>
+                                <span class="button">
+                                    <a href="#" class="mBtn1">검색</a>
+                                </span>
+							</div>
+						</div>
+					</li>
+				</ul>
+                <div class="button posRt"> <!-- 우측 정렬 : class="posRt" -->
+                    <a href="#" class="mBtn1 gray">정책 API 반영</a>
+                    <a href="#" class="mBtn1 gray">회원쿠폰발급</a>
+                    <a href="#" class="mBtn1 gray">쿠폰발급</a>
+                </div>
+			</div>
+			<!-- //sort -->
+
+            <!-- grid -->
+            <div class="mGrid2">
+                <!-- left -->
+                <div class="lt">
+
+                    <!-- box -->
+                    <div class="mBox1 p24 pt28 h717"> 
+                        <!-- 
+                            class="pt28" : padding-top="28"
+                            class="h717" : height="717"
+                        -->
+                        <div class="gTitle1 line">
+                            <h3 class="mTitle1">발급정책</h3>
+                        </div>
+                        <div class="mBoard2">
+                            <table>
+                                <caption>발급정책</caption>
+                                <colgroup>
+                                    <col width="11%">
+                                    <col width="20%">
+                                    <col width="11%">
+                                    <col width="20%">
+                                    <col width="11%">
+                                    <col width="*">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="left">쿠폰분류</th>
+                                        <td>
+                                            <select class="select" title="쿠폰분류">
+                                                <option>선택</option>
+                                            </select>
+                                        </td>
+                                        <th scope="row" class="left">쿠폰대상</th>
+                                        <td>
+                                            <select class="select" title="쿠폰대상">
+                                                <option>선택</option>
+                                            </select>
+                                        </td>
+                                        <th scope="row" class="left">쿠폰유형</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <input type="text" class="it" title="쿠폰유형" value="음료쿠폰">
+                                                </span>
+                                                <a href="#" class="mBtn1 m lWhite">중복체크</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">쿠폰 마스터명</th>
+                                        <td colspan="3">
+                                            <input type="text" class="it" title="쿠폰 마스터명" value="회원가입 축하쿠폰 ( 멤버십 전용)">
+                                        </td>
+                                        <th scope="row" class="left">발행기간</th>
+                                        <td>
+											<div class="mDate1">
+												<input type="text" class="it date" title="발행기간 시작일" value="2022-01-01">
+												<span class="bar">~</span>
+												<input type="text" class="it date" title="발행기간 마지막일" value="2022-01-03">
+											</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">쿠폰사용기간</th>
+                                        <td colspan="3">
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <select class="select" title="발급 후 설정">
+                                                        <option>발급 후 설정</option>
+                                                    </select>
+                                                </span>
+                                                <input type="text" class="it center w35" title="일" value="30">
+                                                <span class="bar2">일</span>
+                                                <div class="mDate1">
+                                                    <input type="text" class="it date" title="발행기간 시작일" value="2022-01-01">
+                                                    <span class="bar">~</span>
+                                                    <input type="text" class="it date" title="발행기간 마지막일" value="2022-01-03">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th scope="row" class="left">쿠폰사용시점</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <select class="select" title="쿠폰사용시점">
+                                                        <option>발급 후 즉시</option>
+                                                    </select>
+                                                </span>
+                                                <input type="text" class="it center w35" title="일" value="30">
+                                                <span class="bar2">일</span>
+                                                <span class="mCheckbox1">
+                                                    <input type="checkbox" title="선물가능" checked="checked">
+                                                    <label class="label">선물가능</label>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">적용회원등급</th>
+                                        <td colspan="3" class="left">
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="VIP" checked="checked">
+                                                <span class="label">VIP</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="골드" checked="checked">
+                                                <span class="label">골드</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="실버" checked="checked">
+                                                <span class="label">실버</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="브론즈">
+                                                <span class="label">브론즈</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="일반">
+                                                <span class="label">일반</span>
+                                            </label>
+                                        </td>
+                                        <th scope="row" class="left">발급 횟수</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <select class="select" title="발급 횟수">
+                                                        <option>무제한/회원당</option>
+                                                    </select>
+                                                </span>
+                                                <span class="flex w1">
+                                                    <input type="text" class="it right w50" title="횟수" value="5">
+                                                    <span class="bar2">회</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">최대 사용 매수</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <input type="text" class="it right" title="최대 사용 매수" value="5,000,000">
+                                                </span>
+                                                <span class="bar2">매</span>
+                                            </div>
+                                        </td>
+                                        <th scope="row" class="left">최대 발급 매수</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <input type="text" class="it right" title="최대 발급 매수" value="5,000,000">
+                                                </span>
+                                                <span class="bar2">매</span>
+                                            </div>
+                                        </td>
+                                        <th scope="row" class="left">등록일</th>
+                                        <td>
+                                            <div class="mFlex2">
+                                                <span class="flex">
+                                                    <input type="text" class="it" title="등록일" value="2022-01-01">
+                                                </span>
+                                                <span class="flex w1">
+                                                    <input type="text" class="it" title="부서/이름" value="CRM/홍길동">
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="gTitle1 line">
+                            <h3 class="mTitle1">사용정책</h3>
+                        </div>
+                        <div class="mBoard2">
+                            <table>
+                                <caption>사용정책</caption>
+                                <colgroup>
+                                    <col width="11%">
+                                    <col width="11%">
+                                    <col width="25%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="*">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" rowspan="5" valign="top">
+                                            <div class="mTxt1">
+                                                <div class="t">앱 정보 안내</div>
+                                                <div class="c">
+                                                    <div>회원가입 <br>축하쿠폰 <br>( 멤버십 전용)</div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="row" class="left">쿠폰사용방식</th>
+                                        <td class="left">
+                                            <select class="select" title="쿠폰사용방식">
+                                                <option>결재/수동</option>
+                                            </select>
+                                        </td>
+                                        <th scope="row" class="left">쿠폰종류</th>
+                                        <td class="left" colspan="2">
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radioCoupon1" title="금액할인" checked="checked">
+                                                <span class="label">금액할인</span>
+                                            </label>
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radioCoupon1" title="정률할인">
+                                                <span class="label">정률할인</span>
+                                            </label>
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radioCoupon1" title="제품증정">
+                                                <span class="label">제품증정</span>
+                                            </label>
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radioCoupon1" title="체험쿠폰">
+                                                <span class="label">체험쿠폰</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">적용금액</th>
+                                        <td class="left">
+                                            <input type="text" class="it right w60" title="적용금액" value="4,000">
+                                            <span class="bar2">원/%</span>
+                                            <a href="#" class="mBtn1 m lWhite">적립</a>
+                                            <a href="#" class="mBtn1 m lPink">할인</a>
+                                        </td>
+                                        <th scope="row" class="left">적용잔수</th>
+                                        <td class="left" colspan="2">
+                                            <div class="mFlex2">
+                                                <span class="flex w1">
+                                                    <input type="text" class="it right w60" title="적용잔수" value="1">
+                                                    <span class="bar2">잔</span>
+                                                </span>
+                                                <span class="flex">
+                                                    <input type="text" class="it" title="일반전화" value="증정제품">
+                                                </span>
+                                                <a href="#" class="mBtn1 m lWhite">버튼</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">최소구매금액</th>
+                                        <td class="left">
+                                            <input type="text" class="it right w60" title="최소구매금액" value="6,000">
+                                            <span class="bar2">원</span>
+                                        </td>
+                                        <th scope="row" class="left">사용요일</th>
+                                        <td class="left" colspan="2">
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="월" checked="checked">
+                                                <span class="label">월</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="화" checked="checked">
+                                                <span class="label">화</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="수" checked="checked">
+                                                <span class="label">수</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="목">
+                                                <span class="label">목</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="금">
+                                                <span class="label">금</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="토">
+                                                <span class="label">토</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="일">
+                                                <span class="label">일</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">최대할인율</th>
+                                        <td class="left">
+                                            <input type="text" class="it right w60" title="최대할인율" value="20">
+                                            <span class="bar2">%</span>
+                                        </td>
+                                        <th scope="row" class="left">사용시간</th>
+                                        <td class="left" colspan="2">
+                                            <select class="select wAuto" title="시간">
+                                                <option>00</option>
+                                            </select>
+                                            <span class="bar2">시</span>
+                                            <select class="select wAuto" title="분">
+                                                <option>00</option>
+                                            </select>
+                                            <span class="bar2">분</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="left">사용채널</th>
+                                        <td class="left" colspan="2">
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="웰카페" checked="checked">
+                                                <span class="label">웰카페</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="웹" checked="checked">
+                                                <span class="label">웹</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="앱" checked="checked">
+                                                <span class="label">앱</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="HP">
+                                                <span class="label">HP</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="HC">
+                                                <span class="label">HC</span>
+                                            </label>
+                                        </td>
+                                        <th scope="row" class="left">중복여부</th>
+                                        <td class="left">
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="중복불가" checked="checked">
+                                                <span class="label">중복불가</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="중복허용" checked="checked">
+                                                <span class="label">중복허용</span>
+                                            </label>
+                                            <label class="mCheckbox1">
+                                                <input type="checkbox" title="중복간 허용" checked="checked">
+                                                <span class="label">중복간 허용</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+
+                        <div class="gTitle1 line">
+                            <h3 class="mTitle1">정산정책</h3>
+                        </div>
+                        <div class="mBoard2">
+                            <table>
+                                <caption>정산정책</caption>
+                                <colgroup>
+                                    <col width="11%">
+                                    <col width="20%">
+                                    <col width="11%">
+                                    <col width="*">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="left">정산방법</th>
+                                        <td class="left">
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radio3" title=정액" checked="checked">
+                                                <span class="label">정액</span>
+                                            </label>
+                                            <label class="mRadio1 type2 fs12">
+                                                <input type="radio" name="radio3" title="정률">
+                                                <span class="label">정률</span>
+                                            </label>
+                                        </td>
+                                        <th scope="row" class="left">정산금액</th>
+                                        <td class="left">
+                                            <input type="text" class="it right w80" title="정산금액" value="4000">
+                                            <span class="tx">원/%</span>
+                                            <span class="txtRed">* 본사부담분</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                    <!-- //box -->
+
+                </div>
+                <!-- //left -->
+                <!-- right -->
+                <div class="rt">
+                    
+                    <!-- tab -->
+                    <div class="mTab1 jsTab1">
+                        <ul>
+                            <li><a href="#">적용매장</a></li>
+                            <li><a href="#">적용상품</a></li>
+                            <li class="active"><a href="#">적용채널</a></li>
+                            <li><a href="#">발행쿠폰</a></li>
+                        </ul>
+                    </div>
+                    <!-- //tab -->
+
+                    <!-- box -->
+                    <div class="mBox1 p24">
+                        <!-- grid-right -->
+                        <div class="mGrid2 type2"> <!-- prev/next button : class="type2" -->
+                            <!-- left -->
+                            <div class="lt">
+                                <h3 class="mTitle1">전체채널 목록</h3>
+                                <!-- board -->
+                                <div class="mBoard1 mCustomScrollbar pType1"> 
+                                    <!--
+                                        class="hSortRow3"   => 상단 검색이 3줄 일 경우
+                                        class="pType1"      => td height="30px"
+                                    -->
+                                    <table>
+                                        <caption>캠페인 목록</caption>
+                                        <colgroup>
+                                            <col span="2" width="10%">
+                                            <col width="25%">
+                                            <col width="*">
+                                            <col width="25%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">NO</th>
+                                                <th scope="col">
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">전체선택</span>
+                                                    </label>
+                                                </th>
+                                                <th scope="col">채널코드</th>
+                                                <th scope="col">채널명</th>
+                                                <th scope="col">등록일</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">선택</span>
+                                                    </label>
+                                                </td>
+                                                <td>MEM APP</td>
+                                                <td>멤버십  앱</td>
+                                                <td>2022-12-12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">선택</span>
+                                                    </label>
+                                                </td>
+                                                <td>MEM APP</td>
+                                                <td>멤버십  앱</td>
+                                                <td>2022-12-12</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- //board -->
+                                <!-- paging -->
+                                <div class="mPag1 pType1"> <!--  -->
+                                    <div class="mCount1">총 <strong>5</strong>건</div>
+                                    <span title="처음 리스트" class="first">처음으로</span>
+                                    <span title="이전 리스트" href="###" class="prev">이전</span>
+                                    <!-- able 버튼
+                                        <a title="처음 리스트" href="###" class="first">처음으로</a>
+                                        <a title="이전 리스트" href="###" class="prev">이전</a>
+                                    -->
+                                    <a title="현재페이지" href="###" class="active">1</a>
+                                    <a title="2 페이지" href="###">2</a>
+                                    <a title="3 페이지" href="###">3</a>
+                                    <a title="4 페이지" href="###">4</a>
+                                    <a title="5 페이지" href="###">5</a>
+                                    <a title="6 페이지" href="###">6</a>
+                                    <a title="다음 리스트" href="###" class="next">다음</a>
+                                    <a title="마지막 리스트" href="###" class="last">마지막으로</a>
+                                    <!-- disabled 버튼
+                                        <span title="다음 리스트" class="next">다음</span>
+                                        <span title="마지막 리스트" class="last">마지막으로</span>
+                                    -->
+                                    <select class="select posRt" title="갯수선택"> <!-- 우측 정렬 : class="posRt"-->
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                    </select>
+                                </div>
+                                <!-- //paging -->
+                            </div>
+                            <!-- //left -->
+                            <!-- prev/next -->
+                            <div class="mPn1">
+                                <a href="#" class="prev">왼쪽으로 이동</a>
+                                <a href="#" class="next">오른쪽으로 이동</a>
+                            </div>
+                            <!-- //prev/next -->
+                            <!-- right -->
+                            <div class="rt">
+                                <h3 class="mTitle1">적용채널 목록</h3>
+                                <!-- board -->
+                                <div class="mBoard1 mCustomScrollbar pType1"> 
+                                    <!--
+                                        class="hSortRow3"   => 상단 검색이 3줄 일 경우
+                                        class="pType1"      => td height="30px"
+                                    -->
+                                    <table>
+                                        <caption>캠페인 목록</caption>
+                                        <colgroup>
+                                            <col span="2" width="10%">
+                                            <col width="25%">
+                                            <col width="*">
+                                            <col width="25%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">NO</th>
+                                                <th scope="col">
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">전체선택</span>
+                                                    </label>
+                                                </th>
+                                                <th scope="col">채널코드</th>
+                                                <th scope="col">채널명</th>
+                                                <th scope="col">등록일</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">선택</span>
+                                                    </label>
+                                                </td>
+                                                <td>MEM APP</td>
+                                                <td>멤버십  앱</td>
+                                                <td>2022-12-12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>
+                                                    <label class="mCheckbox1 notext">
+                                                        <input type="checkbox" name="" title="선택">
+                                                        <span class="label">선택</span>
+                                                    </label>
+                                                </td>
+                                                <td>MEM APP</td>
+                                                <td>멤버십  앱</td>
+                                                <td>2022-12-12</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- //board -->
+                                <!-- paging -->
+                                <div class="mPag1 pType1"> <!--  -->
+                                    <div class="mCount1">총 <strong>5</strong>건</div>
+                                    <span title="처음 리스트" class="first">처음으로</span>
+                                    <span title="이전 리스트" href="###" class="prev">이전</span>
+                                    <a title="현재페이지" href="###" class="active">1</a>
+                                    <span title="다음 리스트" class="next">다음</span>
+                                    <span title="마지막 리스트" class="last">마지막으로</span>
+                                    <select class="select posRt" title="갯수선택"> <!-- 우측 정렬 : class="posRt"-->
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                    </select>
+                                </div>
+                                <!-- //paging -->
+                            </div>
+                            <!-- //right -->
+                        </div>
+                        <!-- //grid-right -->
+                    </div>
+                    <!-- //box -->
+
+                </div>
+                <!-- //right -->
+            </div>
+            <!-- //grid -->
+
+			
+
+		</div>
+		<!-- //right -->
+	</div>
+	
+</div>
+
+</body>
+</html>

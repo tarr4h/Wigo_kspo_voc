@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+
+<div id="wrapIframe">
+		
+	<div class="mGrid1 type2"> <!-- class="type2" => left width="263px" -->
+        <!-- left -->
+        <div class="gLeft">
+
+            <!-- 캠페인 유형관리 -->
+            <div class="mBox1">
+                <!-- title -->
+                <div class="gTitle1">
+                    <h3 class="mTitle1">캠페인 유형관리</h3>
+                </div>
+                <!-- //title -->
+                <!-- list -->
+                <div class="mDir1 mCustomScrollbar">
+                    <div class="dep1">캠페인 유형</div>
+                    <ul>
+                        <li class="dep2">
+                            <a href="#">고객신규가입</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">기획전초대</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">이벤트안내</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">교차판매</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">라이프사이클</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2 active"> <!-- 활성화 -->
+                            <a href="#">Text</a>
+                            <ul>
+                                <li class="dep3">
+                                    <a href="#">Text</a>
+                                    <ul>
+                                        <li class="dep4"><a href="#">Text</a></li>
+                                        <li class="dep4"><a href="#">text</a></li>
+                                        <li class="dep4"><a href="#">text</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">Text</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                        <li class="dep2">
+                            <a href="#">Text</a>
+                            <ul>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                                <li class="dep3"><a href="#">text</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //list -->
+            </div>
+            <!-- //캠페인 유형관리 -->
+            
+        </div>
+        <!-- //left -->
+		<!-- right -->
+		<div class="gRight">
+
+			<!-- sort -->
+			<div class="mSort2">
+				<ul>
+					<li class="w32per">
+						<div class="tit">사용여부</div>
+						<div class="txt">
+							<div class="mFlex2">
+								<span class="flex">
+                                    <select class="select" title="사용여부">
+                                        <option></option>
+                                    </select>
+                                </span>
+                                <span class="button">
+                                    <a href="#" class="mBtn1">검색</a>
+                                </span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- //sort -->
+
+			<!-- box -->
+			<div class="mBox1 p24">
+				
+				<div class="gTitle1">
+					<h3 class="mTitle1">유형관리 목록</h3>
+					<div class="gRt">
+						<a href="#" class="mBtn1 gray">엑셀다운로드</a>
+					</div>
+				</div>
+				<!-- board -->
+				<div class="mBoard1 mCustomScrollbar hSortRow1 pType1"> 
+                    <!--
+                        class="hSortRow1"   => 상단 검색이 1줄 일 경우
+                        class="pType1"      => td height="30px"
+                    -->
+					<table>
+						<caption>캠페인 목록</caption>
+						<colgroup>
+							<col width="3%">
+							<col width="5%">
+							<col width="10%">
+							<col width="*">
+							<col span="3" width="12%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">NO</th>
+								<th scope="col">구분</th>
+								<th scope="col">유형Code</th>
+								<th scope="col">유형명</th>
+								<th scope="col">사용</th>
+								<th scope="col">형태</th>
+								<th scope="col">등록일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>캠페인</td>
+								<td>PR001</td>
+								<td class="left">기념일</td>
+								<td>
+                                    <select class="select" title="사용">
+                                        <option>사용</option>
+                                    </select>
+                                </td>
+								<td>
+                                    <select class="select" title="형태">
+                                        <option>원샷</option>
+                                    </select>
+                                </td>
+								<td>2022-11-01</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>캠페인</td>
+								<td>PR001</td>
+								<td class="left">기념일</td>
+								<td>
+                                    <select class="select" title="사용">
+                                        <option>사용</option>
+                                    </select>
+                                </td>
+								<td>
+                                    <select class="select" title="형태">
+                                        <option>원샷</option>
+                                    </select>
+                                </td>
+								<td>2022-11-01</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>캠페인</td>
+								<td>PR001</td>
+								<td class="left">기념일</td>
+								<td>
+                                    <select class="select" title="사용">
+                                        <option>사용</option>
+                                    </select>
+                                </td>
+								<td>
+                                    <select class="select" title="형태">
+                                        <option>원샷</option>
+                                    </select>
+                                </td>
+								<td>2022-11-01</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>캠페인</td>
+								<td>PR001</td>
+								<td class="left">기념일</td>
+								<td>
+                                    <select class="select" title="사용">
+                                        <option>사용</option>
+                                    </select>
+                                </td>
+								<td>
+                                    <select class="select" title="형태">
+                                        <option>원샷</option>
+                                    </select>
+                                </td>
+								<td>2022-11-01</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>캠페인</td>
+								<td>PR001</td>
+								<td class="left">기념일</td>
+								<td>
+                                    <select class="select" title="사용">
+                                        <option>사용</option>
+                                    </select>
+                                </td>
+								<td>
+                                    <select class="select" title="형태">
+                                        <option>원샷</option>
+                                    </select>
+                                </td>
+								<td>2022-11-01</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- //board -->
+				<!-- paging -->
+				<div class="mPag1">
+					<div class="mCount1">총 <strong>5</strong>건</div>
+
+					<span title="처음 리스트" class="first">처음으로</span>
+					<span title="이전 리스트" href="###" class="prev">이전</span>
+					<!-- able 버튼
+						<a title="처음 리스트" href="###" class="first">처음으로</a>
+						<a title="이전 리스트" href="###" class="prev">이전</a>
+					-->
+					<a title="현재페이지" href="###" class="active">1</a>
+					<a title="2 페이지" href="###">2</a>
+					<a title="3 페이지" href="###">3</a>
+					<a title="4 페이지" href="###">4</a>
+					<a title="5 페이지" href="###">5</a>
+					<a title="6 페이지" href="###">6</a>
+					<a title="다음 리스트" href="###" class="next">다음</a>
+					<a title="마지막 리스트" href="###" class="last">마지막으로</a>
+					<!-- disabled 버튼
+						<span title="다음 리스트" class="next">다음</span>
+						<span title="마지막 리스트" class="last">마지막으로</span>
+					-->
+					<select class="select" title="갯수선택">
+						<option>10</option>
+						<option>20</option>
+						<option>30</option>
+					</select>
+				</div>
+				<!-- //paging -->
+			</div>
+			<!-- //box -->
+
+		</div>
+		<!-- //right -->
+	</div>
+	
+</div>
+
+</body>
+</html>

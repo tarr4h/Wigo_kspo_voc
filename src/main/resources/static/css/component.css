@@ -1,0 +1,1201 @@
+@charset "utf-8";
+
+/* CSS 초기화 */
+*, html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	box-sizing: border-box;
+	outline: 0;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, canvas {
+	display: block;
+}
+nav ul, li, ul, ol {
+	list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+address {
+	font-style: normal;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+caption, legend, .caption {
+	visibility: hidden;
+	position: absolute;
+	left: -9999em;
+	width: 1px;
+	height: 1px;
+	background: none;
+	font-size: 0;
+	line-height: 0;
+	text-indent: -9999em;
+}
+body {
+	color: #333333;
+	font-size: 13px;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+img {
+    border: none;
+    vertical-align: middle;
+}
+button {
+	cursor: pointer;
+}
+
+/* header */
+#header{
+	position: relative;
+	z-index: 15;
+}
+#header .component1 { /* header-component1(관리자) */
+	position: relative;
+}
+#header .component1 .logo,
+#header .component1 .logo:focus {
+	float: left;
+}
+#header .component1 .logo h1 a {
+	display:block;
+	height: 58px;
+	padding: 13px 20px;
+}
+#header .component1 .logo h1 a img {
+	max-width: 100%;
+	max-height: 100%;
+}
+#header .component1 .userInfo {
+	float: right;
+	height: 58px;
+	padding-top: 13px;
+	padding-right: 20px;
+	text-align: right;
+}
+#header .component1 .userInfo .frmSelect {
+	float: right;
+	padding-top: 3px;
+	padding-left: 10px;
+}
+#header .component1 .userInfo .selectBox {
+	vertical-align: middle;
+}
+#header .component1 .userInfo .user {
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 12px;
+	padding-left: 14px;
+	line-height: 32px;
+	vertical-align: middle;
+	font-size: 13px;
+	font-weight: bold;
+}
+#header .component1 .userInfo .btnLogout {
+	min-width: 96px;
+	height: 32px;
+	border-radius: 16px;
+    font-size: 13px;
+	font-weight: bold;
+}
+
+#header .component1 .userInfo .btnLogout:before {
+	content: " ";
+	display: inline-block;
+	width: 11px;
+	height: 12px;
+	margin-right: 5px;
+	vertical-align: -1px;
+}
+
+
+#header .component1 .gnb {
+	clear: both;
+	display: block;
+	/* height: 49px; */
+	height: 48px;
+	padding-left: 20px;
+}
+#header .component1 .gnb li {
+	float: left;
+	position: relative;
+}
+#header .component1 .gnb li a {
+	display: block;
+    height: 48px;
+	line-height: 48px;
+	padding: 0 35px;
+    letter-spacing: -1px;
+    font-size: 16px;
+    font-weight: bold;
+	color:#333333;
+}
+#header .component1 .gnb li .twoDepth {
+    display: none;
+	position: absolute;
+	width: 180px;
+    left: 50%;
+	top: 47px;
+	margin-left: -90px;
+	padding: 0px 0 0px;
+    text-align: left;
+    z-index: 101;
+}
+#header .component1 .gnb li .twoDepth:before {
+	content: " ";
+	position: absolute;
+	top: -9px;
+	left: 50%;
+	width: 17px;
+	height: 9px;
+	margin-left: -9px;
+	background: url('../images/header_component1_icon_drop.png') center center no-repeat;
+	z-index: 12;
+}
+#header .component1 .gnb li .twoDepth:after {
+	content: " ";
+	position: absolute;
+	top: -2px;
+	left: -1px;
+	display: block;
+	width: 180px;
+	z-index: 11;
+}
+
+#header .component1 .gnb > li:first-child .twoDepth {
+	left: 0;
+	margin-left: 0;
+}
+#header .component1 .gnb > li:first-child .twoDepth:before {
+	margin-left: -28px;
+}
+
+#header .component1 .gnb > li:hover .twoDepth,
+#header .component1 .gnb > li:focus .twoDepth {
+    display: block;
+}
+#header .component1 .gnb li .twoDepth li {
+	float: none;
+}
+#header .component1 .gnb li .twoDepth a {
+	height: auto;
+	line-height: 28px;
+	padding: 0 15px;
+	font-size: 13px;
+	font-weight: 700;
+}
+#header .component1 .gnb li .threeDepth li:first-child {
+	padding-top: 0px;
+}
+
+#header .component1 .gnb li .threeDepth li:last-child {
+	padding-bottom: 0px;
+}
+
+#header .component1 .gnb li .threeDepth li{
+/* 	padding: 4px 0; */
+	background: #f2f4f6;
+}
+#header .component1 .gnb li .threeDepth li > a {
+	font-weight: 400;
+}
+#header .component1 .gnb li .twoDepth a:hover,
+#header .component1 .gnb li .twoDepth a:focus {
+	color: #fff;
+	background: #f27800;
+}
+
+
+#header .component2 > .box {/* header-component2 */
+    clear: both;
+    position: relative;
+	margin: 0 auto;
+	width: 1000px;
+	height: 80px;
+}
+#header .component2 .logo {
+	float: left;
+	display: inline-block;
+	width: 160px;
+	height: 80px;
+	line-height: 80px;
+}
+#header .component2 .logo > a {
+	display: block;
+}
+#header .component2 .logo > a > img {
+	max-width: 100%;
+}
+#header .component2 .search {
+	display: inline-block;
+	width: 360px;
+	margin-top: 22px;
+	margin-left: 90px;
+}
+#header .component2 .search label {
+    display: block;
+	width: 0px;
+	height: 0px;
+    font-size: 0;
+}
+#header .component2 .search input {
+	float: left;
+	width: 320px;
+	height: 36px;
+	border: solid 2px #4693db;
+	font-size: 1.15em;
+	color: #292f37 !important;
+	background: #ffffff;
+}
+#header .component2 .search button {
+	float: left;
+	display: inline-block;
+	min-width: inherit;
+	width: 40px;
+	height: 36px;
+	margin-left: 0;
+	padding: 0;
+	text-indent: -999999px;
+	background: #4693db url('/images/component/icon_search.png') center center no-repeat;
+}
+
+#header .component2 .box .loginBox {
+}
+#header .component2 .box .loginBox .link {
+	position: absolute;
+	top: 10px;
+	right: 0;
+	height: 20px;
+	line-height: 20px;
+}
+#header .component2 .box .loginBox .login {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    height: 35px;
+    line-height: 35px;
+}
+#header .component2 .box .loginBox .link li,
+#header .component2 .box .loginBox .login li {
+	float: left;
+	display: inline-block;
+}
+#header .component2 .box .loginBox .link li:before {
+    content: "|";
+    line-height: 12px;
+    display: inline-block;
+    color: #464b52;
+    font-size: 0.92em;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+#header .component2 .box .loginBox .link li:first-child:before {
+    content: " ";
+}
+#header .component2 .box .loginBox .link li a {
+    letter-spacing: -0.5px;
+    font-size: 0.92em;
+}
+#header .component2 .box .loginBox .login li {
+	margin-left: 5px;
+}
+#header .component2 .box .loginBox .login li:first-child {
+	margin-left: 0px;
+}
+#header .component2 .box .loginBox .login input {
+	width: 120px;
+	height: 25px;
+    padding: 4px 8px;
+	line-height: 18px;
+	border: none;
+	background: #f3f4f4;
+}
+#header .component2 .box .loginBox button {
+    display: inline-block;
+    min-width: 60px;
+    width: 60px;
+    height: 25px;
+    line-height: 23px;
+    padding: 0;
+    border: 1px solid #004686;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: 400;
+    background: #004686;
+}
+#header .component2 .box .loginBox .login button:hover {
+	border: 1px solid #004686;
+	color: #004686;
+	background: #ffffff;
+}
+#header .component2 .userInfo {
+	position: absolute;
+	top: 15px;
+	right: 0;
+	height: 65px;
+	line-height: 65px;
+}
+#header .component2 .userInfo li {
+	float: left;
+}
+#header .component2 .userInfo li:first-child {
+	padding-right: 15px;
+}
+#header .component2 .userInfo li:first-child + li > strong {
+	overflow: hidden;
+	display: inline-block;
+	max-width: 80px;
+	height: 20px;
+	line-height: 18px;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	color: #0c50a1;
+}
+#header .component2 .userInfo li a {
+	vertical-align: 0;
+}
+#header .component2 .userInfo li:first-child + li + li a:before {
+	content: "|";
+    line-height: 12px;
+    display: inline-block;
+    color: #999999;
+    font-size: 0.92em;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+#header .component2 .userInfo li a .badge {
+	display: inline-block;
+    height: 18px;
+    margin-top: -1px;
+    margin-left: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+	color: #ffffff;
+	font-size: 0.92em;
+	line-height: 16px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+	background: #f2444a;
+}
+#header .component2 .userInfo li .btnLogout {
+    margin-left: 15px;
+}
+#header .component2 .gnbWrap {
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #e7e9ea;
+	border-bottom: 2px solid #4693db;
+}
+#header .component2 .allMenu {
+	display: none;
+}
+#header .component2 .gnbWrap .gnb {
+	margin: 0 auto;
+	width: 1000px;
+}
+#header .component2 .gnbWrap .gnb > li {
+	float: left;
+	width: 250px;
+}
+#header .component2 .gnbWrap .gnb > li > a {
+	display: block;
+	width: 251px;
+	height: 49px;
+	margin-left:-1px;
+    border-bottom: 2px solid #4693db;
+	line-height: 50px;
+	text-align: center;
+	color: #292f37;
+	font-size: 1.38em;
+	font-weight: 700;
+}
+#header .component2 .gnbWrap .gnb > li:first-child > a {
+	width: 250px;
+	margin-left: 0;
+}
+#header .component2 .gnbWrap .gnb > li:hover > a {
+	color: #4693db;
+}
+#header .component2 .gnbWrap .gnb > li .twoDepth {
+    display: none;
+    position: absolute;
+    width: 250px;
+    height: 345px;
+    margin-top: 0px;
+    padding-top: 17px;
+    border-right: 1px solid #e7e9ea;
+    border-bottom: 1px solid #8e9599;
+    background: #ffffff;
+    z-index: 999;
+}
+#header .component2 .gnbWrap .gnb:hover .twoDepth {
+	display: block;
+}
+#header .component2 .gnbWrap .gnb > li:hover .twoDepth {
+	display: block;
+	background: #f9f9f9;
+}
+#header .component2 .gnbWrap .gnb > li:first-child .twoDepth {
+	border-left: 1px solid #8e9599;
+}
+#header .component2 .gnbWrap .gnb > li+li+li+li .twoDepth {
+    border-right: 1px solid #8e9599;
+}
+#header .component2 .gnbWrap .gnb > li .twoDepth li a {
+	display: block;
+	height:28px;
+	line-height: 28px;
+	padding: 0 30px;
+}
+#header .component2 .gnbWrap .gnb > li .twoDepth li a:hover {
+    margin-left: -1px;
+    padding: 0 31px;
+	color: #ffffff;
+	background: #72b4f2;
+}
+#header .component2 .gnbWrap .gnb > li .threeDepth li a {
+	color: #7f868b;
+	padding: 0 40px;
+}
+#header .component2 .gnbWrap .gnb > li .threeDepth li a:hover {
+	padding: 0 41px;
+}
+
+@media screen and (max-width: 1023px) {
+	#header .component2 {
+		position: relative;
+	}
+	#header .component2 > .box {
+	    width: 100%;
+	    height: 48px;
+	    text-align: center;
+	    border-bottom: 2px solid #4693db;
+	}
+	#header .component2 .logo {
+	    float: inherit;
+	    width: 100%;
+	    height: 48px;
+		line-height: 48px;
+	}
+	#header .component2 .logo a {
+		display: block;
+		width: 85px;
+		margin: 0 auto;
+	}
+	#header .component2 .logo a img {
+		width: 100%;
+	}
+	#header .component2 .search {
+		display: none;
+	}
+	#header .component2 .box .loginBox {
+		padding-top: 0;
+		width: auto;
+	}
+	#header .component2 .box .loginBox >a,
+	#header .component2 .box .loginBox .link,
+	#header .component2 .box .loginBox .login,
+	#header .component2 .box .loginBox .userInfo li {
+		display: none;
+	}
+	#header .component2 .box .loginBox .userInfo li+li+li+li {
+		display: block;
+	}
+	#header .component2 .box .loginBox .userInfo .btnLogout {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: block;
+		min-width: 0;
+		width: 48px;
+		height: 48px;
+		border: none;
+		text-indent: -999999px;
+		background: url('../images/btn_mobile_logout.png') center center no-repeat;
+		background-size: 18px 18px;
+	}
+	#header .component2 .userInfo {
+		top: 0;
+	}
+	#header .component2 .allMenu {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		min-width: 0;
+		width: 48px;
+		height: 48px;
+		padding: 0;
+		text-indent: -999999px;
+		background: url('../images/btn_mobile_menu.png') center center no-repeat;
+		background-size: 18px 14px;
+	}
+	#header .component2 .gnbWrap {
+		position: absolute;
+		width: 70%;
+		top: 0;
+		left: -100%;
+		background: none;
+		z-index: 9999;
+		transition: all .5s;
+		-webkit-transition: all .5s;
+		-moz-transition: all .5s;
+	}
+	#header .component2 .gnbWrap.active {
+		left: 0;
+		transition: all .5s;
+		-webkit-transition: all .5s;
+		-moz-transition: all .5s;
+	}
+	#header .component2 .gnbWrap .gnb {
+		overflow: auto;
+		width: 100%;
+		border-right: 1px solid #cccccc;
+		background: #ffffff;
+	}
+	#header .component2 .gnbWrap .gnb > li {
+		width: 100%;
+	}
+	#header .component2 .gnbWrap .gnb > li > a {
+		border-top: 1px solid #cccccc;
+	}
+	#header .component2 .gnbWrap .gnb > li > a,
+	#header .component2 .gnbWrap .gnb > li:first-child > a {
+		color: #333333;
+		width: 100%;
+	}
+/* 	#header .component2 .gnbWrap .gnb > li:hover > a {
+		color: #0c4da2;
+		background: #ffffff;
+	} */
+	#header .component2 .gnbWrap .gnb > li .twoDepth {
+		padding-top: 0;
+	}
+	#header .component2 .gnbWrap .gnb > li .twoDepth,
+	#header .component2 .gnbWrap .gnb > li:first-child .twoDepth,
+	#header .component2 .gnbWrap .gnb > li+li+li+li .twoDepth {
+		display: block;
+		position:inherit;
+		width: 100%;
+		height: auto;
+		border: none;
+	}
+}
+
+/* lnb */
+.lnb .component1 {
+	background: #f5f5f5;
+}
+.lnb .component1 li > a { /* lnb-component1 */
+	line-height: 22px;
+	border-bottom: 1px solid #dddddd;
+}
+.lnb .component1 > ul > li:first-child {
+	min-height: 127px;
+	line-height: 127px;
+	border-bottom: 1px solid #dddddd;
+	text-align: center;
+	color: #1d69cc;
+	font-size: 2.15em; /* 28/13 */
+	font-weight: 700;
+}
+.lnb .component1 li > a {
+	display: block;
+	padding: 14px 30px;
+	color: #61696f;
+	font-size: 1.15em;
+}
+.lnb .component1 li > a:hover,
+.lnb .component1 li.active > a {
+	color: #0c50a1;
+	font-weight: 700;
+}
+.lnb .component1 li .twoDepth li a {
+	padding: 11px 30px 11px 40px;
+	font-size: 1em;
+	background: #eeeeee;
+}
+
+/* hihrd - lnb */
+.lnb .component2 h2 {
+    padding: 50px 0 15px;
+    margin-bottom: 20px;
+    line-height: 1;
+    border-bottom: 3px solid #77a4d8;
+    color: #225fa4;
+    font-size: 1.84em; /* 24/13 */
+    font-weight: 700;
+}
+.lnb .component2 > ul {
+    margin-bottom: 30px;
+    border: solid 1px #dedede;
+    border-top: none;
+}
+.lnb .component2 ul li a {
+    display: block;
+    padding: 15px 35px 15px 20px;
+    line-height: 20px;
+    border-top: solid 1px #dedede;
+    font-size: 1.15em;
+    font-weight: 700;
+}
+.lnb .component2 > ul > li .twoDepth li a {
+    padding: 15px 35px 15px 30px;
+    color: #5e5e5e;
+    font-size: 1em;
+}
+.lnb .component2 ul li a:hover,
+.lnb .component2 ul li.active a,
+.lnb .component2 > ul > li .twoDepth li a:hover,
+.lnb .component2 > ul > li .twoDepth li.active a {
+    color: #4587d1;
+}
+.lnb .component2 ul li.oneDepth > a {
+    background: url('/images/component/lnb_component2_close.png') right 20px no-repeat;
+}
+.lnb .component2 ul li.oneDepth.open > a {
+    background: url('/images/component/lnb_component2_open.png') right 20px no-repeat;
+}
+
+.lnb .component2 .customer {
+	padding: 20px 20px 20px 20px;
+    border: 1px solid #dedede;
+}
+.lnb .component2 .customer .title {
+    color: #5e5e5e;
+    font-size: 1.38em;
+}
+.lnb .component2 .customer p {
+	line-height: 20px;
+}
+.lnb .component2 .customer  p span {
+	font-weight: 400;
+}
+.lnb .component2 .customer p.tel strong.tel {
+	display: block;
+	margin: 20px 0 10px 0;
+	line-height: 1;
+	font-size: 2.5em;
+	font-weight: 700;
+	letter-spacing: -1px;
+	color: #2c2c2c;
+	cursor: default;
+}
+.lnb .component2 .customer p > strong {
+	color: #f68b1f;
+}
+.lnb .component2  .customer .btnArea {
+	margin-top: 10px;
+	text-align: center;
+}
+.lnb .component2  .customer .btnArea > a {
+	display: block;
+    min-width: 180px;
+    height: 32px;
+    margin-top: 10px;
+    margin-left: 0;
+    padding: 0 0;
+    line-height: 30px;
+    color: #4587d1;
+	border: 1px solid #77a4d8;
+	background: #f0f6fb;
+}
+
+.lnb .component2 .banner a {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #b1ccea;
+}
+.lnb .component2 .banner a:hover {
+    border: 1px solid #77a4d8;
+    color: #2c2c2c;
+}
+
+
+
+.lnb .component3 { /* 관리자 */
+
+}
+.lnb .component3 > strong {
+	position: relative;
+	display: block;
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: bold;
+	background: #474e59;
+}
+.lnb .component3 > strong:before{
+	content: " ";
+	position: absolute;
+	top: 0;
+	right: -1px;
+	height: 70px;
+	border-right: 1px solid #474e59;
+}
+.lnb .component3 > ul > li {
+	border-bottom: 1px solid #e1e5e8;
+}
+
+.lnb .component3 li a {
+	display: block;
+	padding: 11px 20px;
+	line-height: 18px;
+	font-size: 13px;
+	font-weight: bold;
+}
+.lnb .component3 li.twoDepth > a {
+	background:  url('../images/lnb_component3_twoDepth_close.png') 161px center no-repeat;
+	color:#333333;
+}
+.lnb .component3 li.twoDepth.open > a {
+	background:  url('../images/lnb_component3_twoDepth_open.png') 161px center no-repeat;
+}
+.lnb .component3 li.twoDepth.active > a {
+	background:  url('../images/lnb_component3_twoDepth_close_active.png') 161px center no-repeat;
+}
+.lnb .component3 li.twoDepth.active.open > a {
+	background:  url('../images/lnb_component3_twoDepth_open_active.png') 161px center no-repeat;
+}
+.lnb .component3 .threeDepth {
+	display: none;
+	padding-bottom: 12px;
+}
+.lnb .component3 li.twoDepth.open .threeDepth {
+	display: block;
+}
+.lnb .component3 .threeDepth li a {
+	padding: 5px 20px 5px 25px;
+	font-weight: normal;
+	color:#333333;
+}
+.lnb .component3 li.active {
+	background: #ffffff;
+}
+.lnb .component3 li a:hover,
+.lnb .component3 li.twoDepth.active > a:hover,
+.lnb .component3 li.active > a {
+	color: #f27800;
+}
+.lnb .component3 li.twoDepth.active > a {
+	color: #333;
+}
+
+/* footer */
+#footer {
+	clear: both;
+}
+#footer .component1 { /* footer-component1 */
+	position: relative;
+	background: #292f37;
+}
+#footer .component1 .link {
+	min-height: 40px;
+	line-height: 40px;
+	background: #343a41;
+}
+#footer .component1 .link ul {
+	overflow: auto;
+	margin: 0 auto;
+	width: 1000px;
+}
+#footer .component1 .link ul li {
+	float: left;
+}
+#footer .component1 .link ul li:before {
+    content: "|";
+    display: inline-block;
+    margin-right: 11px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    line-height: 12px;
+    color: #5b6369;
+    font-size: 1em;
+}
+#footer .component1 .link ul li:first-child:before {
+	display: none;
+}
+#footer .component1 .link ul li a {
+    display: inline-block;
+	color: #ffffff;
+}
+#footer .component1 .link ul li a > i {
+	color: #ffffff;
+    font-style: normal;
+}
+#footer .component1 .link ul li a:hover, #footer .component1 .link ul li a:hover > i {
+    color: #bddfff;
+}
+#footer .component1 .address {
+	width: 1000px;
+	margin: 0 auto;
+	padding: 25px 0;
+}
+#footer .component1 .address p,
+#footer .component1 .address span {
+	line-height: 22px;
+	color: #8e9599;
+	font-size: 0.92em;
+}
+#footer .component1 .address span a {
+	color: #8e9599;
+}
+#footer .component1 .address span:before {
+	content: "|";
+    display: inline-block;
+    margin-right: 11px;
+    padding-left: 8px;
+    line-height: 12px;
+    color: #5b6269;
+    font-size: 0.92em;
+}
+#footer .component1 .address span:first-child:before {
+	display: none;
+}
+#footer .component1 .btnTop {
+	position: absolute;
+    top: -45px;
+    left: 50%;
+    margin-left: 455px;
+    min-width: 45px;
+    height: 45px;
+    padding: 19px 0 0 0;
+    color: #ffffff;
+    font-size: 0.92em;
+    background: #0057a8 url('/images/component/footer_component1_btn_top.png') center 11px no-repeat;
+}
+#footer .component1 .btnTop:hover {;
+    border: 1px solid #0057a8;
+    color: #0057a8;
+    background: #ffffff url('/images/template2/resp/blue/button/btn_top_active.png') center 11px no-repeat;
+}
+
+#footer .component2 { /* footer-component2 */
+	position: relative;
+	padding: 40px 0;
+	background: #333333;
+}
+#footer .component2 > .footerWrap {
+	overflow: auto;
+	margin: 0 auto;
+	width: 1000px;
+}
+#footer .component2 .logo {
+	float: left;
+	width: 240px;
+}
+#footer .component2 .footerWrap .box {
+	float: left;
+	width: 760px;
+}
+#footer .component2 .footerWrap .box .link {
+	overflow: auto;
+	margin-bottom: 28px;
+}
+#footer .component2 .footerWrap .box  .link li {
+	float: left;
+}
+#footer .component2 .footerWrap .box .link li a {
+	color: #cccccc;
+}
+#footer .component2 .footerWrap .box .link li a:hover {
+	color: #ffffff;
+}
+#footer .component2 .footerWrap .box .link li:before {
+	content: "|";
+    display: inline-block;
+    margin-right: 11px;
+    padding-left: 15px;
+	line-height: 12px;
+	color: #cccccc;
+    font-size: 0.92em;
+}
+#footer .component2 .footerWrap .box .link li:first-child:before {
+	display: none;
+}
+#footer .component2 .footerWrap .box p {
+	line-height: 16px;
+	color: #999999;
+}
+#footer .component2 .footerWrap .box span {
+	display: inline-block;
+	margin-right: 8px;
+	color: #999999;
+}
+#footer .component2 .footerWrap .box span > a {
+	color: #999999;
+}
+#footer .component2 .btnTop {
+	position: absolute;
+    top: -45px;
+    left: 50%;
+    margin-left: 455px;
+    min-width: 45px;
+    height: 45px;
+    padding: 19px 0 0 0;
+    color: #ffffff;
+    font-size: 0.92em;
+    background: #61696f url('/images/component/footer_component1_btn_top.png') center 11px no-repeat;
+}
+#footer .component2 .btnTop:hover {
+    border: 1px solid #61696f;
+    color: #61696f;
+    background: #ffffff url('/images/template3/resp/blue/button/btn_top_active.png') center 11px no-repeat;
+}
+
+@media screen and (max-width: 1023px) {
+
+	/*footer*/
+	#footer {
+		position: inherit;
+		bottom: inherit;
+	}
+	#footer .component1 .link {
+		min-height: 26px;
+	    line-height: 26px;
+	    padding-left: 15px;
+	}
+	#footer .component1 .link ul {
+		width: 100%;
+	}
+	#footer .component1 .link ul li:before {
+	    margin-bottom: 0;
+        margin-right: 6px;
+        padding-left: 10px;
+	}
+	#footer .component1 .address {
+		width: 100%;
+	    padding: 15px 20px;
+	}
+	#footer .component1 .address p, #footer .component1 .address span {
+		line-height: 16px;
+	}
+	#footer .component1 .btnTop {
+	    left: inherit;
+	    margin-left: 0;
+    	right: 20px;
+	}
+	#footer .component2 {
+	    padding: 15px 0 20px;
+	}
+	#footer .component2 > .footerWrap {
+		width: 100%;
+	}
+	#footer .component2 .logo {
+		display: none;
+	}
+	#footer .component2 .footerWrap .box {
+		width: 100%;
+		padding: 0 3.5% 0 3.5%;
+	}
+	#footer .component2 .footerWrap .box .link {
+		margin-bottom: 15px;
+	}
+	#footer .component2 .footerWrap .box .link li:nth-child(2),
+	#footer .component2 .footerWrap .box .link li:nth-child(3) {
+		display: none;
+	}
+	#footer .component2 .footerWrap .box .link li:before {
+		margin-right: 6px;
+    	padding-left: 9px;
+	}
+	#footer .component2 .btnTop {
+	    left: inherit;
+	    margin-left: 0;
+    	right: 20px;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	#footer .component1 .link {
+	    padding-left: 0;
+	}
+	#footer .component1 .link ul {
+		margin: 0;
+   		padding: 0px 20px;
+	}
+	#footer .component1 .link ul li:nth-child(2),
+	#footer .component1 .link ul li:nth-child(3) {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	#footer .component2 .footerWrap .box .link li:before  {
+	    margin-right: 2px;
+    	padding-left: 7px;
+	}
+}
+
+
+/* webModule */
+.webModule1 .visual { /* visual */
+	position: relative;
+	height: 500px;
+}
+.webModule1 .visual .title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 1068px;
+	margin-left: -534px;
+	padding-left: 85px;
+}
+.webModule1 .visual .title strong {
+	display: inline-block;
+    vertical-align: top;
+}
+.webModule1 .visual .title p {
+	display: inline-block;
+    margin: 21px 0 0 12px;
+	font-size: 40px;
+	letter-spacing: -0.5px;
+}
+
+.webModule2 .loginBox { /* loginBox */
+	overflow: auto;
+	position: relative;
+}
+.webModule2 .loginBox ul {
+	position: relative;
+    width: 380px;
+    margin: 50px auto;
+}
+.webModule2 .loginBox li:first-child {
+	margin-bottom: 5px;
+	padding-left: 80px;
+	line-height: 48px;
+	font-size: 3.07em;
+	font-weight: 800;
+}
+.webModule2 .loginBox li label {
+	width: 75px;
+	padding-right: 15px;
+	text-align: right;
+	font-size: 1.15em;
+	font-weight: 700;
+}
+.webModule2 .loginBox li input {
+	width: 225px;
+	margin: 4px 0 4px 0;
+}
+.webModule2 .loginBox li .btnLogin {
+	position: absolute;
+	right: 0;
+	bottom: 4px;
+	width: 64px;
+	height: 64px;
+	line-height: 1;
+    padding-top: 18px;
+}
+.webModule2 .loginBox li .btnLogin:before {
+	content: " ";
+	position: absolute;
+	top: 14px;
+    left: 50%;
+	display: block;
+	margin-left: -7px;
+	width: 13px;
+	height: 14px;
+	background: url('../images/btn_login.png');
+}
+
+
+.webModule3 .loginBox { /* loginBox */
+	overflow: auto;
+	position: relative;
+	border: 1px solid #aaa;
+	border-radius: 6px;
+	background: #fff;
+	margin-top: 65px;
+	padding: 20px 0px 40px 0px;
+	width: 650px;
+	margin: auto;
+	margin-top: 10%;
+}
+.webModule3 .loginBox ul {
+	position: relative;
+    width: 380px;
+    margin: 50px auto;
+}
+.webModule3 .loginBox li:first-child {
+	margin-bottom: 5px;
+	padding-left: 80px;
+	line-height: 48px;
+	font-size: 3.07em;
+	font-weight: 800;
+}
+.webModule3 .loginBox li label {
+	width: 75px;
+	padding-right: 15px;
+	text-align: right;
+	font-size: 1.15em;
+	font-weight: 700;
+}
+.webModule3 .loginBox li input {
+	width: 225px;
+	margin: 4px 0 4px 0;
+}
+.webModule3 .loginBox li .btnLogin {
+	position: absolute;
+	right: 0;
+	bottom: 4px;
+	width: 64px;
+	height: 64px;
+	line-height: 1;
+    padding-top: 18px;
+}
+.webModule3 .loginBox li .btnLogin:before {
+	content: " ";
+	position: absolute;
+	top: 14px;
+    left: 50%;
+	display: block;
+	margin-left: -7px;
+	width: 13px;
+	height: 14px;
+	background: url('../images/btn_login.png');
+}
+
+.webModule3 .loginBox li:first-child {
+	color: #333;
+}
+.webModule3 .loginBox li label {
+	color: #333;
+}
+.webModule3 .loginBox li .btnLogin {
+	color: #ffffff;
+	border: 1px solid #ed5f00;
+	background: #f27800;
+}
+.webModule3 .loginBox li .btnLogin:hover,
+.webModule3 .loginBox li .btnLogin:focus {
+	border: 1px solid #d74600;
+	background: #dd5e00;
+}
+.dim {
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/bg_dimmed.png') repeat;
+    z-index: 99;
+}
