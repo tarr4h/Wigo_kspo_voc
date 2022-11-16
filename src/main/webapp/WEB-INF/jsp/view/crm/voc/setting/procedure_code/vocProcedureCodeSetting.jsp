@@ -78,7 +78,7 @@
 <script>
     function onGridLoad(){
         let param = {};
-        procedureCdGrid.loadUrl('', param);
+        window['procedureCdGrid'].loadUrl('', param);
     }
 
     // event listener
