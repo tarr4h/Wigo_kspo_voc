@@ -18,11 +18,11 @@
         <setSort value="none"/>
 <!--        <headerRows value="1"/>-->
     </meta>
-        <column name="시퀀스" field="mcPrcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="상위시퀀스" field="prntsSeq" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="절차시퀀스" field="prcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="TASK명" field="prcdNm" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="공통코드" field="comnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="시퀀스" field="mcTaskSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="절차시퀀스" field="mcPrcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="TASK시퀀스" field="taskSeq" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="TASK명" field="taskNm" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="우선순위" field="odrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="처리기한(분)" field="deadline" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한" field="deadlineConvert" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당부서ID" field="dutyOrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>

@@ -9,7 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 public enum CodeGeneration {
 
     DIRCD("DI", 10),
-    PROCEDURE("PB", 10);
+    PROCEDURE("PB", 10),
+    TASK("TK", 10);
 
 
     private String preFix;

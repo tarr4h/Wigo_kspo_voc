@@ -1,6 +1,7 @@
 package com.egov.voc.kspo.aop;
 
 
+import com.egov.voc.base.common.model.BaseVo;
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;

@@ -3,8 +3,7 @@ package com.egov.voc.kspo.setting.dao;
 import com.egov.voc.base.common.model.BaseVo;
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.base.common.model.ITreeVo;
-import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.kspo.setting.model.*;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.mapper.CrmMapper;
 import org.apache.poi.ss.formula.functions.T;
@@ -29,7 +28,7 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     int insertDirMcMapping(EzMap param);
 
-    int insertProcedure(VocProcedureVo prcd);
+    int insertProcedure(Map<String, Object> prcd);
 
     int insertDirOrgMapping(Map<String, Object> param);
 
@@ -44,4 +43,14 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
     int deleteDirOrg(EzMap param);
 
     int updateDirOrg(EzMap param);
+
+    <T> List<T> selectTaskBasList(EzMap param);
+
+    String selectMaxMcTaskSeq();
+
+    int insertTask(Map<String, Object> taskMap);
+
+    <T> List<T> selectTaskList(EzMap param);
+
+    <T> List<T> selectActivityList(EzMap param);
 }

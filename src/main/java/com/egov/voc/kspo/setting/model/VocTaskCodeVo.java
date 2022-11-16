@@ -20,6 +20,7 @@ public class VocTaskCodeVo extends BaseVo {
     private String dutyEmp;
     private String dutyEmpNm;
     private String dutyRole;
+    private String useYn;
     private String dutyChngYn;
     private String autoApplyYn;
     private String autoApplyAllYn;
@@ -30,8 +31,6 @@ public class VocTaskCodeVo extends BaseVo {
 
 
     public String getDeadlineConvert() {
-        log.debug("deadline = {}", deadline);
-
         return VocUtils.convertDeadline(deadline);
     }
 }

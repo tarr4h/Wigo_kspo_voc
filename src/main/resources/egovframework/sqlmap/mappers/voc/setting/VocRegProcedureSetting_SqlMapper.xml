@@ -38,6 +38,8 @@
             </if>
             and
             prnts_cd is not null
+        order by
+            MANAGEMENT_CD
     </select>
 
     <select id="selectPrcdBas" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
@@ -60,11 +62,43 @@
             prcd_seq
     </select>
 
+    <select id="selectTaskBasList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
+        select
+            *
+        from
+            voc_task_bas
+        where
+            <if test="autoApplyAllYn != null and !autoApplyAllYn.equals('')">
+                AUTO_APPLY_ALL_YN = #{autoApplyAllYn}
+            </if>
+            <if test="autoApplyPrcdSeq != null and !autoApplyPrcdSeq.equals('')">
+                or
+                AUTO_APPLY_PRCD_SEQ = #{autoApplyPrcdSeq}
+            </if>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                task_seq not in (
+                        select
+                            task_seq
+                        from
+                            voc_task
+                        where
+                            mc_prcd_seq = #{mcPrcdSeq}
+                )
+            </if>
+    </select>
+
     <select id="selectMaxMcPrcdSeq" resultType="String">
         select
             max(mc_prcd_seq)
         from
             voc_procedure
+    </select>
+
+    <select id="selectMaxMcTaskSeq" resultType="String">
+        select
+            max(mc_task_seq)
+        from
+            voc_task
     </select>
 
     <select id="selectMaxDirCd" resultType="String">
@@ -109,7 +143,7 @@
             #{dutyOrg},
             (select duty_emp from voc_procedure_bas where prcd_seq = #{prcdSeq}),
             (select duty_role from voc_procedure_bas where prcd_seq = #{prcdSeq}),
-            #{regUsr}
+            #{loginUsr}
         )
     </insert>
 
@@ -164,6 +198,45 @@
             1
     </select>
 
+    <select id="selectTaskList" resultType="com.egov.voc.kspo.setting.model.VocTaskVo">
+        select
+            mc_task_seq,
+            mc_prcd_seq,
+            task_seq,
+            task_nm,
+            odrg,
+            deadline,
+            duty_org,
+            duty_emp,
+            duty_role,
+            reg_usr,
+            reg_dt
+        from
+            voc_task
+        <where>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                mc_prcd_seq = #{mcPrcdSeq}
+            </if>
+        </where>
+        order by
+            odrg
+    </select>
+
+    <select id="selectActivityList" resultType="com.egov.voc.kspo.setting.model.VocTaskVo">
+        select
+            act_seq,
+            mc_task_seq,
+            func_cd,
+            act_nm
+        from
+            voc_activity
+        <where>
+            <if test="mcTaskSeq != null and !mcTaskSeq.equals('')">
+                mc_task_seq = #{mcTaskSeq}
+            </if>
+        </where>
+    </select>
+
     <select id="selectDutyOrgList" resultType="EzMap">
         select
             *
@@ -199,5 +272,24 @@
                 org_id = #{org.orgId}
         </foreach>
     </update>
+
+    <insert id="insertTask">
+        insert into voc_task
+        (MC_TASK_SEQ, MC_PRCD_SEQ, TASK_SEQ, ODRG, TASK_NM, DEADLINE, DUTY_ORG, DUTY_EMP, DUTY_ROLE, REG_USR)
+        values
+            (
+                #{mcTaskSeq},
+                #{mcPrcdSeq},
+                #{taskSeq},
+                #{odrg},
+                #{taskNm},
+                #{deadline},
+                #{dutyOrg},
+                #{dutyEmp},
+                #{dutoRole},
+                #{loginUsr}
+            )
+    </insert>
+
 
 </mapper>

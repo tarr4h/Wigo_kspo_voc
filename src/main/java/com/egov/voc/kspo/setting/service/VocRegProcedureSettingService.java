@@ -3,13 +3,13 @@ package com.egov.voc.kspo.setting.service;
 
 import com.egov.voc.base.common.model.AbstractTreeVo;
 import com.egov.voc.base.common.model.EzMap;
+import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocRegProcedureSettingDao;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 
-import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.kspo.setting.model.*;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmOrgBaseVo;
 import com.egov.voc.sys.service.AbstractCrmService;
@@ -54,7 +54,8 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
     @SuppressWarnings("unchecked")
     public Object insertProcedure(EzMap param) {
-        // 1. 경로코드 생성 및 등록(voc_dir_cd)
+        // 1. 경로코드 조회(voc_dir_cd)
+        log.debug("******* select dirCd *******");
         String dirCd = dao.selectDirCd(param);
         param.put("dirCd", dirCd);
 
@@ -62,11 +63,14 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         List<String> mcPrcdSeqList = new ArrayList<>();
 
         // 주처리부서 찾기
+        log.debug("******* find dutyOrg *******");
         List<EzMap> orgList = dao.selectDutyOrgList(param);
         orgList.removeIf(value -> value.get("primaryOrgYn").equals("N"));
         String primaryOrg = orgList.get(0).get("orgId").toString();
+        log.debug("******* find dutoOrg END *******");
 
         // 4. 분류코드별 절차 등록(voc_procedure)
+        log.debug("******* insert procedure *******");
         List<String> prcdArr = (List<String>) param.get("prcdArr");
         String foreSeq = null;
         for(int i = 0; i < prcdArr.size(); i++){
@@ -89,15 +93,38 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
                 prcd.setDutyOrg(prcdBas.getDutyOrg());
             }
 
-            dao.insertProcedure(prcd);
+            dao.insertProcedure(Utilities.beanToMap(prcd));
+
+            // 절차가 task허용 & 자동적용 절차가 있다면 insert
+            if(prcdBas.getTaskYn().equals("Y")){
+                log.debug("******* insert task *******");
+                param.put("autoApplyAllYn", "Y");
+                param.put("autoApplyPrcdSeq", prcdSeq);
+                List<VocTaskCodeVo> taskList = dao.selectTaskBasList(param);
+
+                for(VocTaskCodeVo task : taskList){
+                    EzMap taskMap = (EzMap) Utilities.beanToMap(task);
+                    String maxMcTaskSeq = dao.selectMaxMcTaskSeq();
+                    String mcTaskSeq = CodeGeneration.generateCode(maxMcTaskSeq, CodeGeneration.TASK);
+
+                    taskMap.put("mcPrcdSeq", mcPrcdSeq);
+                    int odrg = dao.selectTaskList(taskMap).size() + 1;
+                    taskMap.put("odrg", odrg);
+                    taskMap.put("mcTaskSeq", mcTaskSeq);
+
+                    dao.insertTask(taskMap);
+                }
+                log.debug("******* insert task END ********");
+            }
 
             mcPrcdSeqList.add(mcPrcdSeq);
             foreSeq = mcPrcdSeq;
+            log.debug("******** insert procedure END *******");
         }
 
         // 5. 분류코드별 절차 매핑(voc_procedure_dir_conn)
+        log.debug("******* insert procedure_dir_conn *******");
         param.put("mcPrcdSeqList", mcPrcdSeqList);
-
         return dao.insertProcedureDirConn(param);
     }
 
@@ -168,5 +195,37 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
     public Object selectPrcdBas(Map<String, Object> param) {
         return dao.selectPrcdBas(param);
+    }
+
+    public List<VocTaskVo> selectTaskList(EzMap param) {
+        return dao.selectTaskList(param);
+    }
+
+    public List<VocActivityVo> selectActivityList(EzMap param) {
+        return dao.selectActivityList(param);
+    }
+
+    public <T> List<T> selectTaskBasList(EzMap param) {
+        return dao.selectTaskBasList(param);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Object insertTask(EzMap param) {
+        String mcPrcdSeq = (String) param.get("mcPrcdSeq");
+        List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
+        log.debug("mcPrcdSeq = {}", mcPrcdSeq);
+        log.debug("tasklist = {}", taskList);
+
+        int result = 0;
+        for(Map<String, Object> task : taskList){
+            String maxMcTaskSeq = dao.selectMaxMcTaskSeq();
+            String mcTaskSeq = CodeGeneration.generateCode(maxMcTaskSeq, CodeGeneration.TASK);
+            int odrg = dao.selectTaskList(param).size() + 1;
+            task.put("mcTaskSeq", mcTaskSeq);
+            task.put("mcPrcdSeq", mcPrcdSeq);
+            task.put("odrg", odrg);
+            result += dao.insertTask(task);
+        }
+        return result;
     }
 }

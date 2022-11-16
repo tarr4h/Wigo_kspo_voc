@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: taewoohan
+  User: tarr4h
   Date: 2022/11/10
   Time: 4:09 PM
   To change this template use File | Settings | File Templates.
@@ -56,7 +56,7 @@
 </style>
 
 <div class="v_modal_header">
-    <h3>분류코드 등록모달</h3>
+    <h3>절차 등록</h3>
     <button id="close_btn">X</button>
 </div>
 

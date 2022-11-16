@@ -5,8 +5,7 @@ import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.util.VocUtils;
-import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.kspo.setting.model.*;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
 import lombok.extern.slf4j.Slf4j;
 import oracle.ucp.proxy.annotation.Post;
@@ -85,6 +84,11 @@ public class VocRegProcedureSettingController {
         return service.insertProcedure(param);
     }
 
+    @PostMapping(value = "insertTask")
+    public @ResponseBody Object insertTask(@RequestBody EzMap param){
+        return service.insertTask(param);
+    }
+
     @PostMapping(value = {"selectProcedureGrid"})
     public @ResponseBody Object selectProcedureGrid(@RequestBody EzMap param) throws Exception {
         EzPaginationInfo page = param.getPaginationInfo();
@@ -94,10 +98,36 @@ public class VocRegProcedureSettingController {
         return Utilities.getGridData(convertList, page);
     }
 
+    @PostMapping(value = "selectTaskGrid")
+    public @ResponseBody Object selectTaskGrid(@RequestBody EzMap param) throws Exception {
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocTaskVo> list = service.selectTaskList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selectActivityGrid")
+    public @ResponseBody Object selectActivityGrid(@RequestBody EzMap param) throws Exception {
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocActivityVo> list = service.selectActivityList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
     @PostMapping(value = "selctDutyOrgGrid")
     public @ResponseBody Object selectDutyOrgGrid(@RequestBody EzMap param) throws Exception{
         EzPaginationInfo page = param.getPaginationInfo();
         List<EzMap> list = service.selectDutyOrgList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
+
+    @PostMapping(value = "selectTaskBasSearchGrid")
+    public @ResponseBody Object selectTaskBasSearchGrid(@RequestBody EzMap param) throws Exception{
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<EzMap> list = service.selectTaskBasList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }

@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: taewoohan
+  User: tarr4h
   Date: 2022/10/20
   Time: 1:16 PM
   To change this template use File | Settings | File Templates.
@@ -99,6 +99,9 @@
     #taskGrid_wrap_top{
         padding-top: 18px;
     }
+    #activityGrid_wrap_top{
+        padding-top: 18px;
+    }
 </style>
 
 <div class="gLeft" data-has-size="Y">
@@ -167,12 +170,12 @@
                     <button class="sec_remove_btn">X</button>
                 </div>
                 <div class="v_section_btn_wrapper">
-                    <button class="mBtn1 func_btn" data-target="task" data-event="save" onclick="showActivitySection()">저장</button>
-                    <button class="mBtn1 func_btn" data-target="task" data-event="add">추가</button>
+                    <button class="mBtn1 func_btn" data-target="task" data-event="save">저장</button>
+                    <button class="mBtn1 func_btn" data-target="task" data-event="add" data-procedure="">추가</button>
                     <button class="mBtn1 func_btn" data-target="task" data-event="delete">삭제</button>
                 </div>
                 <div id="divGrid3"
-                     data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
+                     data-get-url="<c:url value='${urlPrefix}/selectTaskGrid${urlSuffix}'/>"
                      data-grid-id="taskGrid"
                      data-type="grid"
                      data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTask.xml${urlSuffix}'/>"
@@ -188,14 +191,14 @@
                 </div>
                 <div class="v_section_btn_wrapper">
                     <button class="mBtn1 func_btn" data-target="activity" data-event="save">저장</button>
-                    <button class="mBtn1 func_btn" data-target="activity" data-event="add">추가</button>
+                    <button class="mBtn1 func_btn" data-target="activity" data-event="add" data-task="">추가</button>
                     <button class="mBtn1 func_btn" data-target="activity" data-event="delete">삭제</button>
                 </div>
                 <div id="divGrid4"
-                     data-get-url="<c:url value='${urlPrefix}/selectProcedureGrid${urlSuffix}'/>"
+                     data-get-url="<c:url value='${urlPrefix}/selectActivityGrid${urlSuffix}'/>"
                      data-grid-id="activityGrid"
                      data-type="grid"
-                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTask.xml${urlSuffix}'/>"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocActivity.xml${urlSuffix}'/>"
                      style="width:100%;height:420px;"
                 >
                 </div>
@@ -212,9 +215,18 @@
        if(target === 'procedure'){
            switch(evt){
                case 'save' : ; break;
-               case 'add' : openRegModal('vocRegProcedureModal_reg', 900, 447); break;
+               case 'add' : openProcedureRegModal(900, 447); break;
                case 'delete' : ; break;
            }
+       } else if(target === 'task'){
+            switch(evt){
+                case 'save' : ; break;
+                case 'add' : openTaskRegModal($(this).data('procedure'), 900, 531); break;
+            }
+       } else if(target === 'activity'){
+            switch(evt){
+                case 'add' : openActivityRegModal($(this).data('task'), 900, 600); break;
+            }
        } else if(target === 'org'){
            switch(evt){
                case 'save' : updateDirOrg(); break;
@@ -223,7 +235,6 @@
            }
        }
     });
-
 
 
     /**
@@ -238,6 +249,10 @@
             managementCd
         };
 
+        $(".v_area_section:nth-child(1)").css('width', '100%');
+        $(".v_area_section:nth-child(2)").hide();
+        $(".v_area_section:nth-child(3)").hide();
+
         loadGrid('procedureGrid', param);
         loadGrid('orgGrid', param);
     }
@@ -250,30 +265,49 @@
      * @param json
      */
     async function onGridButtonClicked(gridView, row, col, json){
-        console.log('gridView : ', gridView);
         let gridId = gridView.gridId;
+        console.log('onGridButtonClick json : ', json);
 
         switch(gridId){
-            case 'procedureGrid' : showTaskSecetion(); break;
-            case 'taskGrid' : ; break;
+            case 'procedureGrid' : showTaskSecetion(json.mcPrcdSeq);break;
+            case 'taskGrid' : showActivitySection(json.mcTaskSeq); break;
             case 'activityGrid' : ; break;
         }
     }
 
-    function showActivitySection(){
-        $("#section3").show();
-        $(".v_area_section:nth-child(1)").css('width', '20%');
-        $(".v_area_section:nth-child(2)").css('width', '25%');
-        $(".v_area_section:nth-child(3)").css('width', '55%');
+
+
+    /**
+     * activity 등록/수정 영역을 보여주고 나머지 섹션의 길이 변경.
+     * task section add버튼 data-procedure attribute에 선택한 prcdSeq를 설정
+     */
+    function showActivitySection(mcTaskSeq){
+        $('.func_btn[data-target="activity"][data-event="add"]').data('task', mcTaskSeq);
+
+        let param = {
+            mcTaskSeq
+        };
+        window['activityGrid'].loadUrl('', param);
+
+        $(".v_area_section:nth-child(3)").show().css('width', '47%');
+        $(".v_area_section:nth-child(1)").css('width', '13%');
+        $(".v_area_section:nth-child(2)").css('width', '40%');
     }
 
     /**
      * task 등록/수정 영역을 보여주고 나머지 섹션의 길이 변경.
      */
-    function showTaskSecetion(){
-        $("#section2").show();
+    function showTaskSecetion(mcPrcdSeq){
+        $('.func_btn[data-target="task"][data-event="add"]').data('procedure', mcPrcdSeq);
+
+        let param = {
+            mcPrcdSeq
+        };
+        window['taskGrid'].loadUrl('', param);
+
+        $(".v_area_section:nth-child(2)").show().css('width', '70%');
         $(".v_area_section:nth-child(1)").css('width', '30%');
-        $(".v_area_section:nth-child(2)").css('width', '70%');
+
     }
 
     /**
@@ -363,6 +397,10 @@
         })
     }
 
+    /**
+     * 부서 update/delete 시 parameter 세팅
+     * @returns {Promise<string>}
+     */
     async function setDirOrgListParam(){
         let managementCd = $('#divTree').getSelectedNode().id;
         let dirCd = await selectDirCd(managementCd);
@@ -376,6 +414,10 @@
         return param;
     }
 
+    /**
+     * 부서 update
+     * @returns {Promise<void>}
+     */
     async function updateDirOrg(){
         let param = await setDirOrgListParam();
 
@@ -455,13 +497,40 @@
     }
 
     /**
+     * activity 등록 모달 open
+     * @param mcTaskSeq
+     * @param width
+     * @param height
+     */
+    function openActivityRegModal(mcTaskSeq, width, height){
+        let pageNm = 'vocRegActivityModal';
+
+        let url = '<c:url value="${urlPrefix}/openModal${urlSuffix}"/>/' + pageNm + "?mcTaskSeq=" + mcTaskSeq;
+        Utilities.openModal(url, width, height);
+    }
+
+    /**
+     * TASK 등록 모달 open
+     * @param mcPrcdSeq
+     * @param width
+     * @param height
+     */
+    function openTaskRegModal(mcPrcdSeq, width, height){
+        let pageNm = 'vocRegTaskModal';
+
+        let url = '<c:url value="${urlPrefix}/openModal${urlSuffix}"/>/' + pageNm + "?mcPrcdSeq=" + mcPrcdSeq;
+        Utilities.openModal(url, width, height);
+    };
+
+    /**
      * 절차 등록 모달 open
      *  - 담당부서 등록되어있지 않은 경우 return false
      * @param pageNm
      * @param width
      * @param height
      */
-    async function openRegModal(pageNm, width, height){
+    async function openProcedureRegModal(width, height){
+        let pageNm = 'vocRegProcedureModal';
         let treeNode = $('#divTree').getSelectedNode();
         let managementCd = treeNode.managementCd;
 

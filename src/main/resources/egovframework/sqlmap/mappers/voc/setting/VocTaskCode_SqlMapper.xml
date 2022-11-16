@@ -19,6 +19,7 @@
             nvl(duty_org, '-') dutyOrg,
             nvl(duty_emp, '-') dutyEmp,
             nvl(duty_role, '-') dutyRole,
+            use_yn,
             duty_chng_yn,
             auto_apply_yn,
             auto_apply_all_yn,
@@ -62,6 +63,7 @@
             set
                 task_nm = #{item.taskNm},
                 deadline = #{item.deadline},
+                use_yn = #{item.useYn},
                 duty_chng_yn = #{item.dutyChngYn},
                 auto_apply_yn = #{item.autoApplyYn},
                 auto_apply_all_yn = #{item.autoApplyAllYn},
