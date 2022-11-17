@@ -53,4 +53,14 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
     <T> List<T> selectTaskList(EzMap param);
 
     <T> List<T> selectActivityList(EzMap param);
+
+    <T> List<T> selectActivityFuncBasList(EzMap param);
+
+    int insertActivity(Map<String, Object> param);
+
+    String selectMaxActSeq();
+
+    int deleteActivity(EzMap param);
+
+    int deleteTask(EzMap param);
 }

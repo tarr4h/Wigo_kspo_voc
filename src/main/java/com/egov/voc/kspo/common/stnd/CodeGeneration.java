@@ -10,7 +10,8 @@ public enum CodeGeneration {
 
     DIRCD("DI", 10),
     PROCEDURE("PB", 10),
-    TASK("TK", 10);
+    TASK("TK", 10),
+    ACTIVITY("AT", 10);
 
 
     private String preFix;
@@ -54,4 +55,5 @@ public enum CodeGeneration {
 
         return sb.toString();
     }
+
 }

@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.egov.voc.kspo.setting.dao.VocRegProcedureSettingDao">
 
+    <resultMap type="com.egov.voc.kspo.setting.model.VocActivityVo" id="VocActivityVo">
+        <result property="explanation"  column="EXPLANATION"  jdbcType="CLOB" javaType="java.lang.String" />
+    </resultMap>
+
     <sql id="vocManagementCodeCols">
         MANAGEMENT_CD,
         TOP_CD,
@@ -87,6 +91,22 @@
             </if>
     </select>
 
+    <select id="selectActivityFuncBasList" resultType="EzMap">
+        select
+            *
+        from
+            voc_activity_func_bas
+        where
+            func_cd not in (
+                select
+                    func_cd
+                from
+                    voc_activity
+                where
+                    mc_task_seq = #{mcTaskSeq}
+            )
+    </select>
+
     <select id="selectMaxMcPrcdSeq" resultType="String">
         select
             max(mc_prcd_seq)
@@ -99,6 +119,13 @@
             max(mc_task_seq)
         from
             voc_task
+    </select>
+
+    <select id="selectMaxActSeq" resultType="String">
+        select
+            max(act_seq)
+        from
+            voc_activity
     </select>
 
     <select id="selectMaxDirCd" resultType="String">
@@ -222,12 +249,13 @@
             odrg
     </select>
 
-    <select id="selectActivityList" resultType="com.egov.voc.kspo.setting.model.VocTaskVo">
+    <select id="selectActivityList" resultMap="VocActivityVo">
         select
             act_seq,
             mc_task_seq,
             func_cd,
-            act_nm
+            act_nm,
+            explanation
         from
             voc_activity
         <where>
@@ -235,6 +263,8 @@
                 mc_task_seq = #{mcTaskSeq}
             </if>
         </where>
+        order by
+            1
     </select>
 
     <select id="selectDutyOrgList" resultType="EzMap">
@@ -291,5 +321,33 @@
             )
     </insert>
 
+    <insert id="insertActivity">
+        insert into voc_activity
+        (ACT_SEQ, MC_TASK_SEQ, FUNC_CD, ACT_NM, EXPLANATION)
+        values(
+               #{actSeq},
+               #{mcTaskSeq},
+               #{funcCd},
+               #{actNm},
+               #{explanation}
+              )
+    </insert>
 
+    <delete id="deleteActivity">
+        delete from voc_activity
+        where
+            act_seq in
+            <foreach collection="actList" item="act" open="(" close=")" separator=",">
+                #{act.actSeq}
+            </foreach>
+    </delete>
+
+    <delete id="deleteTask">
+        delete from voc_task
+        where
+        mc_task_seq in
+        <foreach collection="taskList" item="task" open="(" close=")" separator=",">
+            #{task.mcTaskSeq}
+        </foreach>
+    </delete>
 </mapper>

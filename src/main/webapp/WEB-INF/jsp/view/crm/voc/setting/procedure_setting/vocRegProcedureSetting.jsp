@@ -222,10 +222,12 @@
             switch(evt){
                 case 'save' : ; break;
                 case 'add' : openTaskRegModal($(this).data('procedure'), 900, 531); break;
+                case 'delete' : deleteTask(); break;
             }
        } else if(target === 'activity'){
             switch(evt){
-                case 'add' : openActivityRegModal($(this).data('task'), 900, 600); break;
+                case 'add' : openActivityRegModal($(this).data('task'), 900, 740); break;
+                case 'delete' : deleteActivity(); break;
             }
        } else if(target === 'org'){
            switch(evt){
@@ -266,16 +268,60 @@
      */
     async function onGridButtonClicked(gridView, row, col, json){
         let gridId = gridView.gridId;
-        console.log('onGridButtonClick json : ', json);
-
         switch(gridId){
             case 'procedureGrid' : showTaskSecetion(json.mcPrcdSeq);break;
             case 'taskGrid' : showActivitySection(json.mcTaskSeq); break;
-            case 'activityGrid' : ; break;
         }
     }
 
+    /**
+     * grid에서 선택된 task 삭제
+     *  - 이하 activity 삭제
+     */
+    function deleteTask(){
+        let grid = window['taskGrid'];
+        let taskList = grid.getCheckedJson();
 
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/deleteTask${urlSuffix}"/>',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                taskList
+            }),
+            success(res, status, jqXHR){
+                if(jqXHR.status === 200){
+                    alert(res + '건이 삭제되었습니다.');
+                    grid.reload();
+                }
+            },
+            error: console.log
+        });
+    }
+
+    /**
+     * grid에서 선택된 activity 삭제
+     */
+    function deleteActivity(){
+        let grid = window['activityGrid'];
+        let actList = grid.getCheckedJson();
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/deleteActivity${urlSuffix}"/>',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                actList
+            }),
+            success(res, status, jqXHR){
+                if(jqXHR.status === 200){
+                    alert(res + '건이 삭제되었습니다.');
+                    grid.reload();
+                }
+            },
+            error: console.log
+        });
+    }
 
     /**
      * activity 등록/수정 영역을 보여주고 나머지 섹션의 길이 변경.

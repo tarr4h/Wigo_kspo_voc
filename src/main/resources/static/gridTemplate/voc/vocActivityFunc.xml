@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="N"/>
+        <showNumber value="N"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <gridfitStyle value="even"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+<!--        <headerRows value="1"/>-->
+    </meta>
+        <column name="기능CD" field="funcCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="기능명" field="funcNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="호출모달" field="reqFuncModalNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="선택" field="select" type="button" width="10" textAlignment="center" hidden="N"/>
+</grid>

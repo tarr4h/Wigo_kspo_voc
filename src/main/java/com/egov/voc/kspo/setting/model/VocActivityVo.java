@@ -11,4 +11,5 @@ public class VocActivityVo {
     private String mcTaskSeq;
     private String funcCd;
     private String actNm;
+    private String explanation;
 }

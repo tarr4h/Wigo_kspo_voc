@@ -89,6 +89,11 @@ public class VocRegProcedureSettingController {
         return service.insertTask(param);
     }
 
+    @PostMapping(value = "deleteTask")
+    public @ResponseBody Object deleteTask(@RequestBody EzMap param){
+        return service.deleteTask(param);
+    }
+
     @PostMapping(value = {"selectProcedureGrid"})
     public @ResponseBody Object selectProcedureGrid(@RequestBody EzMap param) throws Exception {
         EzPaginationInfo page = param.getPaginationInfo();
@@ -114,6 +119,15 @@ public class VocRegProcedureSettingController {
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selectActivityFuncBasGrid")
+    public @ResponseBody Object selectActivityFuncBasGrid(@RequestBody EzMap param) throws Exception{
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocActivityVo> list = service.selectActivityFuncBasList(param);
+//        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
     }
 
     @PostMapping(value = "selctDutyOrgGrid")
@@ -160,5 +174,15 @@ public class VocRegProcedureSettingController {
     @GetMapping(value = "selectPrcdBas")
     public @ResponseBody Object selectPrcdBas(@RequestParam Map<String, Object> param){
         return service.selectPrcdBas(param);
+    }
+
+    @PostMapping(value = "insertActivity")
+    public @ResponseBody Object insertActivity(@RequestBody EzMap param) {
+        return service.insertActivity(param);
+    }
+
+    @PostMapping(value = "deleteActivity")
+    public @ResponseBody Object deleteActivity(@RequestBody EzMap param){
+        return service.deleteActivity(param);
     }
 }
