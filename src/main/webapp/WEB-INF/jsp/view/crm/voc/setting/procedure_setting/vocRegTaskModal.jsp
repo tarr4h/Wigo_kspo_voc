@@ -74,11 +74,12 @@
             data: param,
             success(res, status, jqXHR){
                 if(jqXHR.status === 200){
-                    alert(res + '건이 등록되었습니다.');
-                    let opnr = Utilities.getOpener();
-                    opnr.window['taskGrid'].reload();
-
-                    Utilities.closeModal();
+                    alert(res.msg);
+                    if(res.result > 0){
+                        let opnr = Utilities.getOpener();
+                        opnr.window['taskGrid'].reload();
+                        Utilities.closeModal();
+                    }
                 }
             },
             error: console.log

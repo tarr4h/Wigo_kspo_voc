@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -206,20 +207,46 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
     @SuppressWarnings("unchecked")
     public Object insertTask(EzMap param) {
+        Map<String, Object> returnMap = new HashMap<>();
+        String msg = "";
+        int result = 0;
+
         String mcPrcdSeq = (String) param.get("mcPrcdSeq");
+        VocProcedureVo prcd = dao.selectProcedure(param);
+        int prcdDeadline = prcd.getDeadline();
+
         List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
 
-        int result = 0;
+        // deadline 초과여부 확인
+        int taskDeadlineSum = 0;
+        // 1. 신규등록 task list
         for(Map<String, Object> task : taskList){
-            String maxMcTaskSeq = dao.selectMaxMcTaskSeq();
-            String mcTaskSeq = CodeGeneration.generateCode(maxMcTaskSeq, CodeGeneration.TASK);
-            int odrg = dao.selectTaskList(param).size() + 1;
-            task.put("mcTaskSeq", mcTaskSeq);
-            task.put("mcPrcdSeq", mcPrcdSeq);
-            task.put("odrg", odrg);
-            result += dao.insertTask(task);
+            taskDeadlineSum += VocUtils.parseIntObject(task.get("deadline"));
         }
-        return result;
+        // 2. 기존 등록 task list
+        List<VocTaskVo> foreTaskList = dao.selectTaskList(param);
+        for(VocTaskVo foreTask : foreTaskList){
+            taskDeadlineSum += foreTask.getDeadline();
+        }
+
+        if(taskDeadlineSum > prcdDeadline){
+            msg = "task 처리기한의 합이 절차의 처리기한보다 큽니다.";
+        } else {
+            for(Map<String, Object> task : taskList){
+                String mcTaskSeq = CodeGeneration.generateCode(dao.selectMaxMcTaskSeq(), CodeGeneration.TASK);
+
+                task.put("mcTaskSeq", mcTaskSeq);
+                task.put("mcPrcdSeq", mcPrcdSeq);
+                task.put("odrg", dao.selectTaskList(param).size() + 1);
+
+                result += dao.insertTask(task);
+            }
+            msg = result + "건이 등록되었습니다.";
+        }
+
+        returnMap.put("msg", msg);
+        returnMap.put("result", result);
+        return returnMap;
     }
 
     public <T> List<T> selectActivityFuncBasList(EzMap param) {
@@ -238,10 +265,68 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         return dao.deleteActivity(param);
     }
 
+    @SuppressWarnings("unchecked")
     public Object deleteTask(EzMap param) {
-        List<Map<String, Object>> list = (List<Map<String, Object>>) param.get("taskList");
-//        Utilities.convertMapList(list);
-//        return dao.deleteTask(param);
-        return null;
+        List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
+        // task에 속한 activity 삭제
+        for(Map<String, Object> task : taskList){
+            List<VocActivityVo> actList = dao.selectActivityList(task);
+            task.put("actList", actList);
+            dao.deleteActivity(task);
+        }
+        return dao.deleteTask(param);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Object deleteProcedure(EzMap param) {
+        Map<String, Object> returnMap = new HashMap<>();
+        StringBuilder msg = new StringBuilder();
+        boolean result = true;
+
+        List<Map<String, Object>> prcdList = (List<Map<String, Object>>) param.get("prcdList");
+        // 필수 절차가 포함되어있는지 확인
+        for(int i = 0; i < prcdList.size(); i++){
+            Map<String, Object> prcd = prcdList.get(i);
+            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcd);
+            if(prcdBas.getRegCompulsoryYn().equals("Y")){
+                if(result){
+                    result = false;
+                    msg.append("필수 절차는 삭제하실 수 없습니다.\n[");
+                }
+                msg.append(prcdBas.getPrcdNm()).append(", ");
+            }
+        }
+        if(!result){
+            msg.delete(msg.length() - 2, msg.length());
+            msg.append("] 절차를 제외하고 다시 시도해주세요.");
+            returnMap.put("msg", msg.toString());
+            returnMap.put("result", false);
+            return returnMap;
+        }
+
+
+        // 1. procedure에 속한 task 조회
+        for(Map<String, Object> prcd : prcdList){
+            List<VocTaskVo> taskList = dao.selectTaskList(prcd);
+
+            if(!taskList.isEmpty()){
+                // 2. task에 속한 activity 조회
+                for(VocTaskVo task : taskList){
+                    List<VocActivityVo> actList = dao.selectActivityList(Utilities.beanToMap(task));
+
+                    if(!actList.isEmpty()){
+                        // 3. activity 삭제
+                        param.put("actList", actList);
+                        dao.deleteActivity(param);
+                    }
+                }
+                // 4. task 삭제
+                param.put("taskList", taskList);
+                dao.deleteTask(param);
+            }
+        }
+
+        // 4. procedure 삭제
+        return dao.deleteProcedure(param);
     }
 }

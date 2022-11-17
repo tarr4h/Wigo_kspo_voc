@@ -216,7 +216,7 @@
            switch(evt){
                case 'save' : ; break;
                case 'add' : openProcedureRegModal(900, 447); break;
-               case 'delete' : ; break;
+               case 'delete' : deleteProcedure(); break;
            }
        } else if(target === 'task'){
             switch(evt){
@@ -272,6 +272,34 @@
             case 'procedureGrid' : showTaskSecetion(json.mcPrcdSeq);break;
             case 'taskGrid' : showActivitySection(json.mcTaskSeq); break;
         }
+    }
+
+    /**
+     * grid에서 선택된 procedure 삭제
+     *  - 이하 task, activity 삭제
+     */
+    function deleteProcedure(){
+        let grid = window['procedureGrid'];
+        let prcdList = grid.getCheckedJson();
+
+        console.log('prcdLIst : ', prcdList);
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteProcedure${urlSuffix}"/>',
+            method : 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                prcdList
+            }),
+            success(res, status, jqXHR){
+                console.log(res);
+                if(jqXHR.status === 200){
+                    if(!res.result){
+                        alert(res.msg);
+                    }
+                }
+            },
+            error: console.log
+        })
     }
 
     /**

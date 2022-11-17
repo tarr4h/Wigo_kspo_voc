@@ -84,6 +84,11 @@ public class VocRegProcedureSettingController {
         return service.insertProcedure(param);
     }
 
+    @PostMapping(value = "deleteProcedure")
+    public @ResponseBody Object deleteProcedure(@RequestBody EzMap param){
+        return service.deleteProcedure(param);
+    }
+
     @PostMapping(value = "insertTask")
     public @ResponseBody Object insertTask(@RequestBody EzMap param){
         return service.insertTask(param);

@@ -35,7 +35,7 @@ public class Utilities extends BaseUtilities {
 	private static EzPropertyServiceImpl propertiesService;
 	@Autowired
 	CrmCommonService commService;
-	@Resource(name = "propertiesService") // 인텔리제이 버그같음. 패키지명 수정 후 발생
+	@Resource(name = "propertiesService") // intellij issue : removing the Spring facet (File->Project Structure) and leaving it to just show "Detection".
 	EzPropertyServiceImpl ezProperties;
 
 	@PostConstruct

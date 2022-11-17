@@ -50,9 +50,9 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     int insertTask(Map<String, Object> taskMap);
 
-    <T> List<T> selectTaskList(EzMap param);
+    <T> List<T> selectTaskList(Map<String, Object> param);
 
-    <T> List<T> selectActivityList(EzMap param);
+    <T> List<T> selectActivityList(Map<String, Object> param);
 
     <T> List<T> selectActivityFuncBasList(EzMap param);
 
@@ -60,7 +60,11 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     String selectMaxActSeq();
 
-    int deleteActivity(EzMap param);
+    int deleteActivity(Object param);
 
     int deleteTask(EzMap param);
+
+    <T> T selectProcedure(EzMap param);
+
+    int deleteProcedure(EzMap param);
 }

@@ -197,6 +197,18 @@
             </if>
     </select>
 
+    <select id="selectProcedure" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
+        select
+            *
+        from
+            voc_procedure
+        <where>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                mc_prcd_seq = #{mcPrcdSeq}
+            </if>
+        </where>
+    </select>
+
     <select id="selectProcedureList" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
         select
             mc_prcd_seq,
@@ -345,9 +357,18 @@
     <delete id="deleteTask">
         delete from voc_task
         where
-        mc_task_seq in
-        <foreach collection="taskList" item="task" open="(" close=")" separator=",">
-            #{task.mcTaskSeq}
-        </foreach>
+            mc_task_seq in
+            <foreach collection="taskList" item="task" open="(" close=")" separator=",">
+                #{task.mcTaskSeq}
+            </foreach>
+    </delete>
+
+    <delete id="deleteProcedure">
+        delete from voc_procedure
+        where
+            mc_prcd_seq in
+            <foreach collection="prcdList" item="prcd" open="(" close=")" separator=",">
+                #{prcd.mcPrcdSeq}
+            </foreach>
     </delete>
 </mapper>
