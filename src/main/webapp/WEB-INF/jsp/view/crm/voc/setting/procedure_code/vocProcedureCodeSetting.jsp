@@ -111,6 +111,39 @@
         })
     }
 
+    function updateDeadline(param){
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/updateDeadline${urlSuffix}"/>',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(param),
+            success(res){
+                console.log(res);
+            },
+            error: console.log
+        })
+
+    }
+
+    /**
+     * 처리기한 callback
+     *  - data : {deadlineDate, deadlineHour, deadlineMinute)}
+     * @param data
+     */
+    function deadlineModifyCallback(data){
+        let jsonStorage = window.localStorage.getItem('vocProcedureCodeSettingSelectedBtnVal');
+        let parsingJson = JSON.parse(jsonStorage);
+
+        let param = data;
+        param.prcdSeq = parsingJson.prcdSeq;
+        param.deadline = parsingJson.deadline_convert;
+        updateDeadline(param);
+    }
+
+    /**
+     * 부서조회 callback
+     * @param data
+     */
     function orgSearchCallback(data){
         let jsonStorage = window.localStorage.getItem('vocProcedureCodeSettingSelectedBtnVal');
         let parsingStorage = JSON.parse(jsonStorage);
@@ -122,6 +155,10 @@
         chngProcedureDuty(parsingStorage, param);
     }
 
+    /**
+     * 직원조회 callback
+     * @param data
+     */
     function empSearchCallback(data){
         let jsonStorage = window.localStorage.getItem('vocProcedureCodeSettingSelectedBtnVal');
         let parsingStorage = JSON.parse(jsonStorage);
@@ -140,6 +177,7 @@
             case 'dutyOrgNm': openComnModal('vocOrgSearchModal', 950, 650); target = 'duty_org'; break;
             case 'dutyEmpNm' : openComnModal('vocEmpSearchModal', 950, 650); target = 'duty_emp'; break;
             case 'dutyRole' : break;
+            case 'deadlineConvert' : openComnModal('vocDeadlineModifyModal', 600, 200); target = 'deadline_convert'; break;
         }
 
         let row = gridView.getJsonRow(rowIndex);

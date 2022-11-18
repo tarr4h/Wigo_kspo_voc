@@ -1,14 +1,19 @@
 package com.egov.voc.kspo.setting.service;
 
 
+import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
+import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
+import com.egov.voc.kspo.setting.model.VocTaskCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +27,10 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
     @Override
     public ICrmDao getDao() {
         return dao;
+    }
+
+    public <T> T select(Map<String, Object> param){
+        return dao.select(param);
     }
 
     public <T> List<T> selectProcedureCodeList(Map<String, Object> param) {
@@ -57,4 +66,66 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         return dao.chngProcedureDuty(param);
     }
 
+    public Object updateDeadline(Map<String, Object> param) {
+        Map<String, Object> returnMap = new HashMap<>();
+        VocUtils.sumUpDeadline(param);
+
+        int deadline = VocUtils.parseIntObject(param.get("deadline"));
+        VocProcedureCodeVo prcd = dao.select(param);
+
+
+        int taskDeadlineSum = 0;
+        List<VocTaskCodeVo> taskList = dao.selectTaskList(param);
+
+        // 1. taskList가 존재하지 않는다면 : 변경
+        if(taskList.size() == 0){
+            dao.updateDeadline(param);
+            returnMap.put("msg", "변경되었습니다.");
+            returnMap.put("result", true);
+            return returnMap;
+        }
+
+        // 전체적용 task deadline의 합 구하기
+        List<VocTaskCodeVo> autoApplyAllList = new ArrayList<>(taskList);
+        autoApplyAllList.removeIf(task -> task.getAutoApplyAllYn().equals("N"));
+        for(VocTaskCodeVo task : autoApplyAllList){
+            taskDeadlineSum += task.getDeadline();
+        }
+
+        log.debug("deadline = {}", deadline);
+        log.debug("taskDeadlineSum1 = {}", taskDeadlineSum);
+
+        // 2. 전체적용 < deadline : 변경불가
+        if(taskDeadlineSum > deadline){
+            returnMap.put("msg", "전체적용 TASK의 처리기한 미만으로는 변경하실 수 없습니다.");
+            returnMap.put("result", false);
+            return returnMap;
+        }
+
+        // 전체적용 deadline 합에 요청 prcd를 target으로 하는 task의 처리기한 합 구하기
+        List<VocTaskCodeVo> autoApplyPrcdList = new ArrayList<>(taskList);
+        log.debug("prcdSeq = {}", param.get("prcdSeq"));
+        autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdSeq() == null || !task.getAutoApplyPrcdSeq().equals(param.get("prcdSeq")));
+        for(VocTaskCodeVo task : autoApplyPrcdList){
+            log.debug("left task = {]", task.getTaskNm());
+            taskDeadlineSum += task.getDeadline();
+        }
+        log.debug("taskDeadlineSum2 = {}", taskDeadlineSum);
+
+        // 3. 전체적용 + 개별적용 < deadline : 변경
+        if(taskDeadlineSum < deadline){
+            dao.updateDeadline(param);
+            returnMap.put("msg", "변경되었습니다.");
+            returnMap.put("result", true);
+            return returnMap;
+        }
+        // 4. 전체적용 > deadline && 전체적용 + 개별적용 > deadline : 자동적용 task row에서 현재 prcd를 삭제시킴
+        else {
+            dao.deleteAutoApplyPrcd(autoApplyPrcdList);
+            dao.updateDeadline(param);
+            returnMap.put("msg", "변경되었습니다.\n개별적용 task가 초기화되었습니다.");
+            returnMap.put("result", true);
+            return returnMap;
+        }
+    }
 }

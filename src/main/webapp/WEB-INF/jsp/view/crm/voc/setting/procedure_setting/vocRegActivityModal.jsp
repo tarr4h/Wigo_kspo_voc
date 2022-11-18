@@ -74,7 +74,6 @@
 
 </div>
 
-'${param.mcTaskSeq}'
 
 <script>
     const mcTaskSeq = '${param.mcTaskSeq}';

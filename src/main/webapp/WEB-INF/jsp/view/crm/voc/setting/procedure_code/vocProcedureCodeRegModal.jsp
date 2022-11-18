@@ -57,7 +57,7 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">변경적용 가능여부</span>
+                <span class="form_row_title">담당 변경적용 가능여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">

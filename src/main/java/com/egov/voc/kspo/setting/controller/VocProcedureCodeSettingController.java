@@ -71,6 +71,11 @@ public class VocProcedureCodeSettingController {
         return service.chngProcedureDuty(param);
     }
 
+    @PostMapping(value = "updateDeadline")
+    public @ResponseBody Object updateDeadline(@RequestBody EzMap param){
+        return service.updateDeadline(param);
+    }
+
     @GetMapping(value = { "openModal/{pageNm}"})
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
