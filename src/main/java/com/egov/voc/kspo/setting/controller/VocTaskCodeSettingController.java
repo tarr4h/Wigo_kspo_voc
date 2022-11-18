@@ -39,7 +39,7 @@ public class VocTaskCodeSettingController {
 
     @PostMapping(value = "insertCode")
     public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param) throws Exception {
-        return service.insert(param);
+        return service.insertCode(param);
     }
 
     @PostMapping(value = "saveRows")

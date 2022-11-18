@@ -280,6 +280,11 @@
         }
     }
 
+    /**
+     * 분류코드에 필수절차가 등록되어있는지 여부 조회 후 안내문구 표시
+     * @param managementCd
+     * @returns {Promise<void>}
+     */
     async function validateRequiredPrcd(managementCd){
         let dirCd = await selectDirCd(managementCd);
         $.ajax({

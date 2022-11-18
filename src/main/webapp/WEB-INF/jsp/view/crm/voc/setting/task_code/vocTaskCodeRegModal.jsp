@@ -373,17 +373,12 @@
                 formArr
             }),
             success(res, status, jqXHR){
-                if(jqXHR.status === 200 && res === 1){
-                    alert('등록되었습니다.');
+                if(jqXHR.status === 200 && res.result){
+                    alert(res.msg);
                     Utilities.getOpener().location.reload();
                     Utilities.closeModal();
-                } else if(res === 998){
-                    alert('적용대상 절차의 처리기한이 현재 task의 처리기한보다 낮습니다.' +
-                        '\n(task의 처리기한은 절차의 처리기한을 초과할 수 없습니다.');
-                    $('input[name="deadline"]').focus();
-                } else if(res === 999){
-                    alert('전체절차 중 현재 설정한 처리기한보다 낮은 처리기한의 절차가 존재합니다.' +
-                        '\n(전체절차 자동적용 시 task의 처리기한은 절차의 처리기한을 초과할 수 없습니다.)');
+                } else if(!res.result){
+                    alert(res.msg);
                     $('input[name="deadline"]').focus();
                 }
             },
