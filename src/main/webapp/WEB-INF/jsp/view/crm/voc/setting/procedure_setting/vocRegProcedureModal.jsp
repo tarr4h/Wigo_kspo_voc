@@ -75,6 +75,7 @@
   let orgTarget = null;
   const primaryOrg = 'primaryOrg';
   const subOrg = 'subOrg';
+  const dirCd = '${param.dirCd}';
 
   $(() => {
     setPrcdBasList();
@@ -89,7 +90,6 @@
    * @returns {boolean}
    */
   function regPrcd(){
-      let managementCd = '${param.managementCd}';
       let selectedPrcd = $('input[type="checkbox"]:checked');
 
       let prcdArr = [];
@@ -103,7 +103,7 @@
           contentType: 'application/json',
           data: JSON.stringify({
               prcdArr,
-              managementCd
+              dirCd
           }),
           success(res, status, jqXHR){
               if(jqXHR.status === 200){
@@ -171,6 +171,9 @@
       return new Promise(function (resolve) {
           $.ajax({
               url: '<c:url value="${urlPrefix}/selectPrcdBasList${urlSuffix}"/>',
+              data : {
+                  dirCd
+              },
               success(res) {
                   resolve(res);
               },

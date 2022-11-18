@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 public enum CodeGeneration {
 
     DIRCD("DI", 10),
-    PROCEDURE("PB", 10),
+    PROCEDURE_BAS("PB", 10),
+    PROCEDURE("PD", 10),
+    TASK_BAS("TB", 10),
     TASK("TK", 10),
     ACTIVITY("AT", 10);
 

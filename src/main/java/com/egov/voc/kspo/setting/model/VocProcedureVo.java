@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class VocProcedureVo extends VocProcedureCodeVo {
+public class VocProcedureVo extends VocProcedureCodeVo implements Comparable<VocProcedureVo>{
 
     private String mcPrcdSeq;
     private String prntsSeq;
@@ -39,5 +39,11 @@ public class VocProcedureVo extends VocProcedureCodeVo {
     @Override
     public String getTaskYn() {
         return super.getTaskYn();
+    }
+
+    @Override
+    public int compareTo(VocProcedureVo vo) {
+        int result = this.prcdSeq.compareTo(vo.prcdSeq);
+        return result;
     }
 }

@@ -20,7 +20,7 @@
     </meta>
         <column name="시퀀스" field="actSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="분류TASK시퀀스" field="mcTaskSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="기능CD" field="funcCd" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
+        <column name="기능CD" field="funcCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="수행명" field="actNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
         <column name="설명" field="explanation" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
 </grid>

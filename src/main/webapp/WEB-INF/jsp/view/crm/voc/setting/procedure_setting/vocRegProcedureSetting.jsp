@@ -69,11 +69,18 @@
     }
     .v_title_sm{
         margin-left: 7px;
+        margin-right: 7px;
         font-size: 12px;
         font-weight: 600;
         margin-top: 4px;
         color: #1c1c1c;
         display: inline-block;
+    }
+    .v_title_sub_warn{
+        color: red;
+    }
+    #prcdCompulsoryNoti{
+        display: none;
     }
     .v_section_btn_wrapper{
         float: right;
@@ -148,9 +155,9 @@
             <div class="v_area_section" id="section1">
                 <div class="v_section_title">
                     <h3 class="v_title_sm">절차 등록/수정</h3>
+                    <span class="v_title_sub_warn" id="prcdCompulsoryNoti">* 등록되지 않은 필수절차가 존재합니다. 반드시 추가해주세요.</span>
                 </div>
                 <div class="v_section_btn_wrapper">
-                    <button class="mBtn1 func_btn" data-target="procedure" data-event="save">저장</button>
                     <button class="mBtn1 func_btn" data-target="procedure" data-event="add">추가</button>
                     <button class="mBtn1 func_btn" data-target="procedure" data-event="delete">삭제</button>
                 </div>
@@ -170,7 +177,6 @@
                     <button class="sec_remove_btn">X</button>
                 </div>
                 <div class="v_section_btn_wrapper">
-                    <button class="mBtn1 func_btn" data-target="task" data-event="save">저장</button>
                     <button class="mBtn1 func_btn" data-target="task" data-event="add" data-procedure="">추가</button>
                     <button class="mBtn1 func_btn" data-target="task" data-event="delete">삭제</button>
                 </div>
@@ -214,13 +220,11 @@
 
        if(target === 'procedure'){
            switch(evt){
-               case 'save' : ; break;
                case 'add' : openProcedureRegModal(900, 447); break;
                case 'delete' : deleteProcedure(); break;
            }
        } else if(target === 'task'){
             switch(evt){
-                case 'save' : ; break;
                 case 'add' : openTaskRegModal($(this).data('procedure'), 900, 531); break;
                 case 'delete' : deleteTask(); break;
             }
@@ -257,6 +261,8 @@
 
         loadGrid('procedureGrid', param);
         loadGrid('orgGrid', param);
+
+        validateRequiredPrcd(managementCd);
     }
 
     /**
@@ -274,27 +280,52 @@
         }
     }
 
+    async function validateRequiredPrcd(managementCd){
+        let dirCd = await selectDirCd(managementCd);
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/validateRequiredPrcd${urlSuffix}"/>',
+            data: {
+                dirCd
+            },
+            success(res){
+                let target = $("#prcdCompulsoryNoti");
+                if(!res){
+                    target.show();
+                } else {
+                    target.hide();
+                }
+            },
+            error: console.log
+        });
+    }
+
     /**
      * grid에서 선택된 procedure 삭제
      *  - 이하 task, activity 삭제
      */
-    function deleteProcedure(){
+    async function deleteProcedure(){
+        if(!confirm("삭제하시겠습니까?\n필수절차는 반드시 재등록을 진행해주세요.")){
+            return false;
+        }
+
         let grid = window['procedureGrid'];
         let prcdList = grid.getCheckedJson();
+        let managementCd = $('#divTree').getSelectedNode().id;
+        let dirCd = await selectDirCd(managementCd);
 
-        console.log('prcdLIst : ', prcdList);
         $.ajax({
             url : '<c:url value="${urlPrefix}/deleteProcedure${urlSuffix}"/>',
             method : 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
+                dirCd,
                 prcdList
             }),
             success(res, status, jqXHR){
-                console.log(res);
                 if(jqXHR.status === 200){
-                    if(!res.result){
-                        alert(res.msg);
+                    alert(res.msg);
+                    if(res.result){
+                       location.reload();
                     }
                 }
             },
@@ -616,7 +647,7 @@
             return false;
         }
 
-        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm + "?managementCd=" + managementCd;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm + "?dirCd=" + dirCd;
         Utilities.openModal(url, width, height);
     }
 

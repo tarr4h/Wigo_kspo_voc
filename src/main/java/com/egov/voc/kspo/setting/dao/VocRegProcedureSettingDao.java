@@ -18,7 +18,7 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     <T> T selectPrcdBas(Object prcdSeq);
 
-    List<? extends BaseVo> selectPrcdBasList(Map<String, Object> param);
+    <T> List<T> selectPrcdBasList(Map<String, Object> param);
 
     String selectMaxMcPrcdSeq();
 
@@ -36,7 +36,7 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     String selectDirCd(Map<String, Object> param);
 
-    <T> List<T> selectProcedureList(EzMap param);
+    <T> List<T> selectProcedureList(Map<String, Object> param);
 
     List<EzMap> selectDutyOrgList(Map<String, Object> param);
 
@@ -67,4 +67,6 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
     <T> T selectProcedure(EzMap param);
 
     int deleteProcedure(EzMap param);
+
+    int updateProcedure(VocProcedureVo procedure);
 }

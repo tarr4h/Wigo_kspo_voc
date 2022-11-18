@@ -234,7 +234,7 @@
                         dir_cd = #{dirCd}
                 )
         order by
-            1
+            3
     </select>
 
     <select id="selectTaskList" resultType="com.egov.voc.kspo.setting.model.VocTaskVo">
@@ -371,4 +371,16 @@
                 #{prcd.mcPrcdSeq}
             </foreach>
     </delete>
+
+    <update id="updateProcedure">
+        update voc_procedure
+        set
+            prnts_seq = #{prntsSeq},
+            deadline = #{deadline},
+            duty_org = #{dutyOrg},
+            duty_emp = #{dutyEmp},
+            duty_role = #{dutyRole}
+        where
+            mc_prcd_seq = #{mcPrcdSeq}
+    </update>
 </mapper>

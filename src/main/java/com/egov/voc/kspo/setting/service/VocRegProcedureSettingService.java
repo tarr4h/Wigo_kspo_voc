@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -45,16 +42,17 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     }
 
     public Object selectPrcdBasList(Map<String, Object> param) {
-        return dao.selectPrcdBasList(param);
+        List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
+        List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
+        for(VocProcedureVo prcd : prcdList){
+            prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdSeq().equals(prcd.getPrcdSeq()));
+        }
+
+        return prcdBasList;
     }
 
     @SuppressWarnings("unchecked")
     public Object insertProcedure(EzMap param) {
-        // 1. 경로코드 조회(voc_dir_cd)
-        log.debug("******* select dirCd *******");
-        String dirCd = dao.selectDirCd(param);
-        param.put("dirCd", dirCd);
-
         // 경로-절차 매핑을 위해 mcPrcdSeq 보관 리스트
         List<String> mcPrcdSeqList = new ArrayList<>();
 
@@ -113,6 +111,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
                 log.debug("******* insert task END ********");
             }
 
+
             mcPrcdSeqList.add(mcPrcdSeq);
             foreSeq = mcPrcdSeq;
             log.debug("******** insert procedure END *******");
@@ -121,7 +120,24 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         // 5. 분류코드별 절차 매핑(voc_procedure_dir_conn)
         log.debug("******* insert procedure_dir_conn *******");
         param.put("mcPrcdSeqList", mcPrcdSeqList);
-        return dao.insertProcedureDirConn(param);
+
+        int result = dao.insertProcedureDirConn(param);
+
+        // 6. 후처리 - hierarchy 재정렬
+        List<VocProcedureVo> afterPrcdList = dao.selectProcedureList(param);
+        Collections.sort(afterPrcdList);
+
+        for(int i = 0; i < afterPrcdList.size(); i++){
+            VocProcedureVo procedure = afterPrcdList.get(i);
+            if(i == 0){
+                procedure.setPrntsSeq(null);
+            } else {
+                procedure.setPrntsSeq(afterPrcdList.get(i - 1).getMcPrcdSeq());
+            }
+            dao.updateProcedure(procedure);
+        }
+
+        return result;
     }
 
     public <T> List<T> selectProcedureList(EzMap param) {
@@ -280,30 +296,8 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     @SuppressWarnings("unchecked")
     public Object deleteProcedure(EzMap param) {
         Map<String, Object> returnMap = new HashMap<>();
-        StringBuilder msg = new StringBuilder();
-        boolean result = true;
 
         List<Map<String, Object>> prcdList = (List<Map<String, Object>>) param.get("prcdList");
-        // 필수 절차가 포함되어있는지 확인
-        for(int i = 0; i < prcdList.size(); i++){
-            Map<String, Object> prcd = prcdList.get(i);
-            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcd);
-            if(prcdBas.getRegCompulsoryYn().equals("Y")){
-                if(result){
-                    result = false;
-                    msg.append("필수 절차는 삭제하실 수 없습니다.\n[");
-                }
-                msg.append(prcdBas.getPrcdNm()).append(", ");
-            }
-        }
-        if(!result){
-            msg.delete(msg.length() - 2, msg.length());
-            msg.append("] 절차를 제외하고 다시 시도해주세요.");
-            returnMap.put("msg", msg.toString());
-            returnMap.put("result", false);
-            return returnMap;
-        }
-
 
         // 1. procedure에 속한 task 조회
         for(Map<String, Object> prcd : prcdList){
@@ -325,8 +319,38 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
                 dao.deleteTask(param);
             }
         }
-
         // 4. procedure 삭제
-        return dao.deleteProcedure(param);
+        int delResult = dao.deleteProcedure(param);
+
+        returnMap.put("msg", delResult + "건이 삭제되었습니다.");
+        returnMap.put("result", true);
+        return returnMap;
+    }
+
+    public Object validateRequiredPrcd(Map<String, Object> param) {
+        List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
+        boolean result = true;
+        if(prcdList.size() == 0){
+            return result;
+        }
+
+        List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
+        prcdBasList.removeIf(value -> value.getRegCompulsoryYn().equals("N"));
+        int requiredSize = prcdBasList.size();
+
+        int compulsoryCnt = 0;
+        for(int i = 0; i < prcdList.size(); i++){
+            VocProcedureVo prcd = prcdList.get(i);
+            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcd);
+            if(prcdBas.getRegCompulsoryYn().equals("Y")){
+                compulsoryCnt++;
+            }
+        }
+
+        if(requiredSize != compulsoryCnt){
+            result = false;
+        }
+
+        return result;
     }
 }

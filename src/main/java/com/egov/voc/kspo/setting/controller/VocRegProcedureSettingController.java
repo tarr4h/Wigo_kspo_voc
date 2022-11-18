@@ -190,4 +190,9 @@ public class VocRegProcedureSettingController {
     public @ResponseBody Object deleteActivity(@RequestBody EzMap param){
         return service.deleteActivity(param);
     }
+
+    @GetMapping(value = "validateRequiredPrcd")
+    public @ResponseBody Object validateRequiredPrcd(@RequestParam Map<String, Object> param){
+        return service.validateRequiredPrcd(param);
+    }
 }
