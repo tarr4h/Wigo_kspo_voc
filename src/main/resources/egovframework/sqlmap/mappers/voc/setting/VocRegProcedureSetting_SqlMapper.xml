@@ -62,6 +62,10 @@
             voc_procedure_bas
         where
             reg_use_yn = 'Y'
+            <if test="target != null and !target.equals('')">
+                and
+                ${target}_use_yn = 'Y'
+            </if>
         order by
             prcd_seq
     </select>

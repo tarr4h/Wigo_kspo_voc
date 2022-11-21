@@ -43,7 +43,6 @@ public class VocProcedureVo extends VocProcedureCodeVo implements Comparable<Voc
 
     @Override
     public int compareTo(VocProcedureVo vo) {
-        int result = this.prcdSeq.compareTo(vo.prcdSeq);
-        return result;
+        return this.prcdSeq.compareTo(vo.prcdSeq);
     }
 }

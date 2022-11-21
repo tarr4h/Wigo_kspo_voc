@@ -13,6 +13,9 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
+    .mPopup1{
+        padding-top: 41px;
+    }
     .content_wrapper{
         padding: 10px;
     }

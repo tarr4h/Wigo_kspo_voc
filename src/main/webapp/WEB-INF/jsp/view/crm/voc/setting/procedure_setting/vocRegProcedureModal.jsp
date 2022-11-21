@@ -13,6 +13,11 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
+.mPopup1{
+    padding-top: 41px;
+    padding-bottom: 35px;
+}
+
 .mBox1{
     border-bottom: none;
 }
@@ -51,6 +56,8 @@
     width: 100%;
     height: 53px;
     border: 1px solid gray;
+    position: fixed;
+    bottom: 0;
 }
 
 </style>
@@ -78,7 +85,7 @@
   const dirCd = '${param.dirCd}';
 
   $(() => {
-    setPrcdBasList();
+      setPrcdBasList();
   });
 
   $('#close_btn').on('click', function(){
@@ -142,11 +149,23 @@
    * @returns {Promise<void>}
    */
   async function setPrcdBasList(){
-      let list = await selectPrcdBasList();
+      let result = await selectPrcdBasList();
+      let list = result.list;
+      let target = result.target;
+
+      if(list.length === 0){
+          alert('등록 가능한 절차가 없습니다.');
+          Utilities.closeModal();
+      }
 
       $.each(list, (i, e) => {
-          let convertCompulsoryYn = e.regCompulsoryYn === 'Y' ? '필수' : '선택';
-          let compulsoryOpt = e.regCompulsoryYn === 'Y' ? 'checked disabled' : '';
+          let targetCol;
+          switch(target){
+              case 'reg' : targetCol = e.regCompulsoryYn;break;
+              case 'rec' : targetCol = e.recCompulsoryYn;break;
+          }
+          let convertCompulsoryYn = targetCol === 'Y' ? '필수' : '선택';
+          let compulsoryOpt = targetCol === 'Y' ? 'checked disabled' : '';
 
           let box = `
                 <div class="procedure_box">

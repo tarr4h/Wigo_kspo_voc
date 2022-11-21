@@ -34,4 +34,14 @@ public class VocProcedureCodeVo extends BaseVo {
     public String getDeadlineConvert() {
         return VocUtils.convertDeadline(deadline);
     }
+
+    public String getRequestCompulsoryYn(String target){
+        if(target.equals("reg")){
+            return this.getRegCompulsoryYn();
+        } else if(target.equals("rec")){
+            return this.getRecCompulsoryYn();
+        }
+
+        return null;
+    }
 }

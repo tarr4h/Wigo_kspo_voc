@@ -108,7 +108,7 @@ public class VocManagementCodeService extends AbstractCrmService {
         log.debug("management grp cd = {}", managementCd);
 
         param.put("managementCd", managementCd.toString());
-        param.put("topCd", managementCd.toString());
+//        param.put("topCd", managementCd.toString());
         param.put("odrg", addNum);
         param.put("lvl", 1);
         return param;
@@ -122,7 +122,6 @@ public class VocManagementCodeService extends AbstractCrmService {
         int childrenSize = dao.selectList(param).size();
         String maxChildCd = dao.maxChildCd(param);
 
-        param.put("topCd", prntsRow.getTopCd());
         param.put("lvl", prntsRow.getLvl() + 1);
         param.put("regUsr", Utilities.getLoginUserCd());
 
@@ -180,6 +179,10 @@ public class VocManagementCodeService extends AbstractCrmService {
         }
 
         log.debug("managementCd = {}", managementCd);
+
+        String topCd = prntsRow.getTopCd() == null ? managementCd.toString() : prntsRow.getTopCd();
+        log.debug("topCd = {}", topCd);
+        param.put("topCd", topCd);
 
         param.put("managementCd", managementCd.toString());
         return param;

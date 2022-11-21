@@ -9,18 +9,20 @@ import java.util.List;
 @Getter
 public enum ManageCodeCategoryEnum {
 
-    REGISTRATION("001", "등록 절차"),
-    RECEIPT("002", "접수 절차"),
-    DETAIL("003", "세부 절차");
+    REGISTRATION("001", "reg", "등록 절차"),
+    RECEIPT("002", "rec", "접수 절차"),
+    DETAIL("003", "det", "세부 절차");
 
     private String topComnCd;
     private String comnCd;
+    private String caption;
     private String footNote;
     private static final String topCd = "VOC010";
 
-    ManageCodeCategoryEnum(String comnCd, String footNote) {
+    ManageCodeCategoryEnum(String comnCd, String caption, String footNote) {
         this.topComnCd = topCd;
         this.comnCd = comnCd;
+        this.caption = caption;
         this.footNote = footNote;
     };
 

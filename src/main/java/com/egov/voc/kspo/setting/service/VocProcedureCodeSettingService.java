@@ -73,7 +73,6 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         int deadline = VocUtils.parseIntObject(param.get("deadline"));
         VocProcedureCodeVo prcd = dao.select(param);
 
-
         int taskDeadlineSum = 0;
         List<VocTaskCodeVo> taskList = dao.selectTaskList(param);
 
@@ -92,9 +91,6 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
             taskDeadlineSum += task.getDeadline();
         }
 
-        log.debug("deadline = {}", deadline);
-        log.debug("taskDeadlineSum1 = {}", taskDeadlineSum);
-
         // 2. 전체적용 < deadline : 변경불가
         if(taskDeadlineSum > deadline){
             returnMap.put("msg", "전체적용 TASK의 처리기한 미만으로는 변경하실 수 없습니다.");
@@ -104,28 +100,22 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
 
         // 전체적용 deadline 합에 요청 prcd를 target으로 하는 task의 처리기한 합 구하기
         List<VocTaskCodeVo> autoApplyPrcdList = new ArrayList<>(taskList);
-        log.debug("prcdSeq = {}", param.get("prcdSeq"));
         autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdSeq() == null || !task.getAutoApplyPrcdSeq().equals(param.get("prcdSeq")));
         for(VocTaskCodeVo task : autoApplyPrcdList){
-            log.debug("left task = {]", task.getTaskNm());
             taskDeadlineSum += task.getDeadline();
         }
-        log.debug("taskDeadlineSum2 = {}", taskDeadlineSum);
 
         // 3. 전체적용 + 개별적용 < deadline : 변경
         if(taskDeadlineSum < deadline){
             dao.updateDeadline(param);
             returnMap.put("msg", "변경되었습니다.");
-            returnMap.put("result", true);
-            return returnMap;
-        }
+        } else {
         // 4. 전체적용 > deadline && 전체적용 + 개별적용 > deadline : 자동적용 task row에서 현재 prcd를 삭제시킴
-        else {
             dao.deleteAutoApplyPrcd(autoApplyPrcdList);
             dao.updateDeadline(param);
             returnMap.put("msg", "변경되었습니다.\n개별적용 task가 초기화되었습니다.");
-            returnMap.put("result", true);
-            return returnMap;
         }
+        returnMap.put("result", true);
+        return returnMap;
     }
 }

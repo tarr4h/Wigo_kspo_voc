@@ -34,14 +34,10 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     }
 
     public Object vocManagementCodeTree(EzMap param) {
-        // single
-        ManageCodeCategoryEnum.setComnCdTreeMap(param, ManageCodeCategoryEnum.REGISTRATION);
-        // multiple example
-//        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
         return AbstractTreeVo.makeHierarchy(dao.vocManagementCodeTree(param));
     }
 
-    public Object selectPrcdBasList(Map<String, Object> param) {
+    public List<VocProcedureCodeVo> selectPrcdBasList(Map<String, Object> param) {
         List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
         List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
         for(VocProcedureVo prcd : prcdList){
@@ -329,28 +325,29 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
     public Object validateRequiredPrcd(Map<String, Object> param) {
         List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
-        boolean result = true;
         if(prcdList.size() == 0){
-            return result;
+            return true;
         }
 
+        String target = (String) param.get("target");
+
         List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
-        prcdBasList.removeIf(value -> value.getRegCompulsoryYn().equals("N"));
+        prcdBasList.removeIf(value -> value.getRequestCompulsoryYn(target).equals("N"));
         int requiredSize = prcdBasList.size();
 
         int compulsoryCnt = 0;
         for(int i = 0; i < prcdList.size(); i++){
             VocProcedureVo prcd = prcdList.get(i);
             VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcd);
-            if(prcdBas.getRegCompulsoryYn().equals("Y")){
+            if(prcdBas.getRequestCompulsoryYn(target).equals("Y")){
                 compulsoryCnt++;
             }
         }
 
         if(requiredSize != compulsoryCnt){
-            result = false;
+            return false;
         }
 
-        return result;
+        return true;
     }
 }

@@ -6,22 +6,25 @@ import com.egov.voc.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.util.VocUtils;
-import com.egov.voc.kspo.setting.model.*;
+import com.egov.voc.kspo.setting.model.VocActivityVo;
+import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
+import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.kspo.setting.model.VocTaskVo;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
 import lombok.extern.slf4j.Slf4j;
-import oracle.ucp.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping({"vocRegProcedureSetting", "{menuCd}/vocRegProcedureSetting"})
-public class VocRegProcedureSettingController {
+@RequestMapping({"vocRecProcedureSetting", "{menuCd}/vocRecProcedureSetting"})
+public class VocRecProcedureSettingController {
 
     @Autowired
     VocRegProcedureSettingService service;
@@ -29,13 +32,13 @@ public class VocRegProcedureSettingController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
-        return Utilities.getProperty("tiles.crm") + "voc/setting/procedure_setting/vocRegProcedureSetting";
+        return Utilities.getProperty("tiles.crm") + "voc/setting/procedure_setting/vocRecProcedureSetting";
     }
 
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
     public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws Exception{
         // single
-        ManageCodeCategoryEnum.setComnCdTreeMap(param, ManageCodeCategoryEnum.REGISTRATION);
+        ManageCodeCategoryEnum.setComnCdTreeMap(param, ManageCodeCategoryEnum.RECEIPT);
         // multiple example
 //        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
         return service.vocManagementCodeTree(param);
@@ -81,7 +84,7 @@ public class VocRegProcedureSettingController {
      */
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectPrcdBasList(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategoryEnum.REGISTRATION.getCaption());
+        param.put("target", ManageCodeCategoryEnum.RECEIPT.getCaption());
         param.put("list", service.selectPrcdBasList(param));
         return param;
     }
@@ -200,7 +203,7 @@ public class VocRegProcedureSettingController {
 
     @GetMapping(value = "validateRequiredPrcd")
     public @ResponseBody Object validateRequiredPrcd(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategoryEnum.REGISTRATION.getCaption());
+        param.put("target", ManageCodeCategoryEnum.RECEIPT.getCaption());
         return service.validateRequiredPrcd(param);
     }
 }
