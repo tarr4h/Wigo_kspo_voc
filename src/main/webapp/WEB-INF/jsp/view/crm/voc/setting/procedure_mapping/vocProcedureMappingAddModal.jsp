@@ -46,12 +46,16 @@
 <script>
     $("#regBtn").on('click', function(){
         let treeNode = $('#divTree').getSelectedNode();
+        console.log(treeNode);
+        if(treeNode.topCd === treeNode.id){
+            alert('최상단코드는 매핑에 추가하실 수 없습니다.');
+            return false;
+        }
 
         if(!confirm(treeNode.codeNm + '을 추가하시겠습니까?')){
             return false;
         }
 
-        console.log(treeNode);
         let managementCd = treeNode.id;
         let param = {
             managementCd

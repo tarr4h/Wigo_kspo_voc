@@ -10,6 +10,7 @@ import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Service
 @Slf4j
@@ -97,47 +100,50 @@ public class VocProcedureMappingService extends AbstractCrmService {
 
     public Map<String, Object> validateInsert(Map<String, Object> param){
         Map<String, Object> returnMap = new HashMap<>();
+        returnMap.put("result", false);
 
         VocManagementCodeVo reqVo = dao.selectManagementCode(param);
         String grp = reqVo.getTopCd();
-        log.debug("grp = {}", grp);
 
         // 바로 위 부모코드 조회
         Map<String, Object> map = new HashMap<>();
         map.put("mappingSeq", param.get("prntsCd"));
-        log.debug("prntsCd = {}", param.get("prntsCd"));
 
         VocProcedureMappingVo prntsVo = dao.select(map);
+
+//      현재 요소의 부모코드가 최상단코드가 아니면서 상위 mapping에 등록되어 있지 않은 경우
+        if(!reqVo.getTopCd().equals(reqVo.getPrntsCd()) && !reqVo.getPrntsCd().equals(prntsVo.getManagementCd())) {
+            returnMap.put("msg", "해당 코드의 상위코드가 등록되지 않았습니다.\n상위 코드를 먼저 등록해주세요.");
+            return returnMap;
+        }
 
         // 상위 부모코드 목록 조회
         List<VocProcedureMappingVo> list = findPrntsList(prntsVo);
         list.add(prntsVo);
-        log.debug("prntsListSize = {}", list.size());
 
         // prnts가 무조건 존재함 == size가 최소 1
         for(int i = 0; i < list.size(); i++){
             VocManagementCodeVo prcd = dao.selectManagementCode(list.get(i));
-            log.debug("prcd topCd = {}", prcd.getTopCd());
-            log.debug("prntsVo topCd = {}", prntsVo.getTopCd());
-            log.debug("lvl > reqVo, prntsPrcd = {}, {}", reqVo.getLvl(), prcd.getLvl());
             if(list.get(i).getManagementCd().equals(reqVo.getManagementCd())){
                 returnMap.put("msg", "중복 코드입니다.");
-                returnMap.put("result", false);
                 return returnMap;
             } else if(prcd.getTopCd().equals(grp) && (!prntsVo.getTopCd().equals(grp) || reqVo.getLvl() <= prcd.getLvl())){
                 returnMap.put("msg", "같은 분류의 코드가 부모레벨 이상에 존재하여 등록 불가합니다.");
-                returnMap.put("result", false);
                 return returnMap;
-            } else if((reqVo.getTopCd().equals(prntsVo.getTopCd()) && !reqVo.getTopCd().equals(reqVo.getManagementCd()) && !reqVo.getPrntsCd().equals(prntsVo.getManagementCd()))
-                || (!reqVo.getTopCd().equals(prntsVo.getTopCd()) && !reqVo.getTopCd().equals(reqVo.getManagementCd())))
-            {
-//                // 현재 요소(reqVo)가 prntsCd가 존재하는데, 부모요소가 없다면 등록불가
-//                returnMap.put("msg", "순서에 맞게 등록해주세요.\n상위 코드가 존재합니다.");
-//                returnMap.put("result", false);
-//                return returnMap;
             }
         }
 
+        // 부모코드의 자식요소 조회(siblings)
+        Map<String, Object> sbMap = new HashMap<>();
+        sbMap.put("prntsMappingSeq", prntsVo.getMappingSeq());
+        List<VocProcedureMappingVo> siblings = dao.selectList(sbMap);
+
+        for(VocProcedureMappingVo vo : siblings){
+            if(vo.getManagementCd().equals(reqVo.getManagementCd())){
+                returnMap.put("msg", "같은 레벨에 동일한 코드가 존재합니다.");
+                return returnMap;
+            }
+        }
 
         returnMap.put("result", true);
         returnMap.put("lvl", prntsVo.getLvl() + 1);

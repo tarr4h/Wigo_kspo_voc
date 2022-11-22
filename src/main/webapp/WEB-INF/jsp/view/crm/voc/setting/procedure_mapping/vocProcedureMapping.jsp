@@ -108,8 +108,9 @@
      * @param managementCd
      */
     function addMapping(managementCd){
-        let target = $('#divTree').getSelectedNode();
-        let prntsCd = target == null ? null : target.id;
+        let target = $('#divTree');
+        let node = target.getSelectedNode();
+        let prntsCd = node == null ? null : node.id;
         let param = {
             prntsCd,
             managementCd
@@ -123,7 +124,8 @@
             success(res){
                 if(res.result){
                     alert(res.msg);
-                    $('#divTree').reload();
+                    target.reload();
+                    target.removeNode(node.id);
                 } else {
                     alert(res.msg);
                 }
