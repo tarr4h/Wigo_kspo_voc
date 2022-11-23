@@ -222,7 +222,7 @@
             deadline,
             duty_org,
             duty_emp,
-            nvl(duty_role, '-') dutyRole,
+            duty_role,
             reg_usr,
             reg_dt,
             (select task_yn from voc_procedure_bas where prcd_seq = vp.prcd_seq) taskYn

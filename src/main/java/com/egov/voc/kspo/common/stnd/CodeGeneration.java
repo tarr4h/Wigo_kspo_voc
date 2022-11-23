@@ -14,7 +14,8 @@ public enum CodeGeneration {
     TASK_BAS("TB", 10),
     TASK("TK", 10),
     ACTIVITY("AT", 10),
-    PROCEDURE_MAPPING("PM", 10);
+    PROCEDURE_MAPPING("PM", 10),
+    REGISTRATION("VM", 12);
 
 
     private String preFix;

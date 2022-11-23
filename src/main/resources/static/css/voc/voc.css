@@ -1,3 +1,90 @@
+/* page */
+.v_header{
+    padding: 19px 10px;
+    margin-bottom: 10px;
+}
+.v_header_title{
+    font-size: 25px;
+    color: #464646;
+}
+
+/* button */
+.v_btn1{
+    padding: 0 15px;
+    border: 1px solid gray;
+    height: 25px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #464646;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    min-width: 80px;
+}
+.v_btn_green{
+    border-color: #1C661C;!important;
+    background-color: #1C661C;!important;
+    color: #FFF;!important;
+}
+
+.v_rBtn{
+    float: right;
+    margin-right: 5px;
+}
+
+/* table */
+.v_table{
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+.v_table th{
+    border: 1px solid #8f8f8f80;
+    height: 35px;
+    text-align: left;
+    padding-left: 20px;
+    background-color: #f6f6f4;
+    font-size: 13px;
+    font-weight: 500;
+    color: #464646;
+}
+.v_table td{
+    border: 1px solid #8f8f8f80;
+    padding-left: 20px;
+    font-size: 13px;
+}
+    /* input:text */
+    .v_td_input_text{
+        width: 99%;
+        height: 100%;
+        border: none;
+    }
+    .v_td_input_text:focus{
+        outline: none;
+    }
+    /*  textarea  */
+    .v_td_textarea{
+        width: 99%;
+        height: 450px;
+        border: none;
+        resize: none;
+        display: block;
+        padding: 15px 0;
+        overflow: auto;
+        font-size: 13px;
+    }
+    .v_td_textarea:focus{
+        outline: none;
+    }
+    /*  select  */
+    .v_td_select{
+        padding: 0 10px;
+        min-width: 100px;
+        text-align: left;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
 /*modal*/
 .v_modal_header{
     height: 15px;
