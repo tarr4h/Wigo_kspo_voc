@@ -7,14 +7,11 @@ import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocRegProcedureSettingDao;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 
 import com.egov.voc.kspo.setting.model.*;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.service.AbstractCrmService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -23,7 +20,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class VocRegProcedureSettingService extends AbstractCrmService {
+public class VocRegProcedureSettingService extends VocAbstractService {
 
     @Autowired
     VocRegProcedureSettingDao dao;
@@ -34,12 +31,12 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     }
 
     public Object vocManagementCodeTree(EzMap param) {
-        return AbstractTreeVo.makeHierarchy(dao.vocManagementCodeTree(param));
+        return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
     }
 
-    public List<VocProcedureCodeVo> selectPrcdBasList(Map<String, Object> param) {
-        List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
-        List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
+    public List<VocProcedureCodeVo> selectAvailablePrcdBasList(Map<String, Object> param) {
+        List<VocProcedureCodeVo> prcdBasList = selectPrcdBasList(param);
+        List<VocProcedureVo> prcdList = selectProcedureList(param);
         for(VocProcedureVo prcd : prcdList){
             prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdSeq().equals(prcd.getPrcdSeq()));
         }
@@ -54,7 +51,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
         // 주처리부서 찾기
         log.debug("******* find dutyOrg *******");
-        List<EzMap> orgList = dao.selectDutyOrgList(param);
+        List<EzMap> orgList = selectRegDutyOrgList(param);
         orgList.removeIf(value -> value.get("primaryOrgYn").equals("N"));
         String primaryOrg = orgList.get(0).get("orgId").toString();
         log.debug("******* find dutoOrg END *******");
@@ -76,7 +73,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
             }
 
             // 참조 prcd의 담당부서/담당자/적용권한이 없다면 분류코드 담당부서를 SET
-            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcdSeq);
+            VocProcedureCodeVo prcdBas = selectPrcdBas(prcdSeq);
             if(prcdBas.getDutyEmp() == null && prcdBas.getDutyOrg() == null && prcdBas.getDutyRole() == null){
                 prcd.setDutyOrg(primaryOrg);
             } else {
@@ -90,7 +87,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
                 log.debug("******* insert task *******");
                 param.put("autoApplyAllYn", "Y");
                 param.put("autoApplyPrcdSeq", prcdSeq);
-                List<VocTaskCodeVo> taskList = dao.selectTaskBasList(param);
+                List<VocTaskCodeVo> taskList = selectTaskBasList(param);
 
                 for(VocTaskCodeVo task : taskList){
                     EzMap taskMap = (EzMap) Utilities.beanToMap(task);
@@ -98,7 +95,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
                     String mcTaskSeq = CodeGeneration.generateCode(maxMcTaskSeq, CodeGeneration.TASK);
 
                     taskMap.put("mcPrcdSeq", mcPrcdSeq);
-                    int odrg = dao.selectTaskList(taskMap).size() + 1;
+                    int odrg = selectTaskList(taskMap).size() + 1;
                     taskMap.put("odrg", odrg);
                     taskMap.put("mcTaskSeq", mcTaskSeq);
 
@@ -120,7 +117,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         int result = dao.insertProcedureDirConn(param);
 
         // 6. 후처리 - hierarchy 재정렬
-        List<VocProcedureVo> afterPrcdList = dao.selectProcedureList(param);
+        List<VocProcedureVo> afterPrcdList = selectProcedureList(param);
         Collections.sort(afterPrcdList);
 
         for(int i = 0; i < afterPrcdList.size(); i++){
@@ -136,13 +133,10 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         return result;
     }
 
-    public <T> List<T> selectProcedureList(EzMap param) {
-        return dao.selectProcedureList(param);
-    }
-
-    public List<EzMap> selectDutyOrgList(Map<String, Object> param) {
-        List<EzMap> orgList = dao.selectDutyOrgList(param);
+    public List<EzMap> selectRegDutyOrgList(Map<String, Object> param) {
+        List<EzMap> orgList = selectDutyOrgList(param);
         for(EzMap org : orgList){
+            log.debug("org name = {}", org.get("orgNm"));
             VocUtils.setOrgInfoToMap(org);
         }
         return orgList;
@@ -150,7 +144,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
     public Object insertDirOrg(EzMap param) {
         String primaryOrgYn = "Y";
-        String dirCd = dao.selectDirCd(param);
+        String dirCd = selectDirCd(param);
         if(dirCd == null){
             String maxDirCd = dao.selectMaxDirCd();
             dirCd = CodeGeneration.generateCode(maxDirCd, CodeGeneration.DIRCD);
@@ -166,17 +160,18 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         return dao.insertDirOrgMapping(param);
     }
 
-    public Object selectDirCd(Map<String, Object> param) {
-        return dao.selectDirCd(param);
-    }
 
     @SuppressWarnings("unchecked")
-    public Object deleteDirOrg(EzMap param) {
+    public Object deleteDirOrg(Map<String, Object> param) {
         List<Map<String, Object>> orgList = (List<Map<String, Object>>) param.get("orgList");
         orgList.removeIf(value -> value.get("primaryOrgYn").equals("Y"));
 
-        param.put("orgList", orgList);
-        return dao.deleteDirOrg(param);
+        int result = 0;
+        if(orgList.size() != 0){
+            param.put("orgList", orgList);
+            result = dao.deleteDirOrg(param);
+        }
+        return result;
     }
 
     @SuppressWarnings("unchecked")
@@ -201,22 +196,6 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         return param;
     }
 
-    public Object selectPrcdBas(Map<String, Object> param) {
-        return dao.selectPrcdBas(param);
-    }
-
-    public List<VocTaskVo> selectTaskList(EzMap param) {
-        return dao.selectTaskList(param);
-    }
-
-    public List<VocActivityVo> selectActivityList(EzMap param) {
-        return dao.selectActivityList(param);
-    }
-
-    public <T> List<T> selectTaskBasList(EzMap param) {
-        return dao.selectTaskBasList(param);
-    }
-
     @SuppressWarnings("unchecked")
     public Object insertTask(EzMap param) {
         Map<String, Object> returnMap = new HashMap<>();
@@ -224,7 +203,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         int result = 0;
 
         String mcPrcdSeq = (String) param.get("mcPrcdSeq");
-        VocProcedureVo prcd = dao.selectProcedure(param);
+        VocProcedureVo prcd = selectProcedure(param);
         int prcdDeadline = prcd.getDeadline();
 
         List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
@@ -236,7 +215,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
             taskDeadlineSum += VocUtils.parseIntObject(task.get("deadline"));
         }
         // 2. 기존 등록 task list
-        List<VocTaskVo> foreTaskList = dao.selectTaskList(param);
+        List<VocTaskVo> foreTaskList = selectTaskList(param);
         for(VocTaskVo foreTask : foreTaskList){
             taskDeadlineSum += foreTask.getDeadline();
         }
@@ -249,7 +228,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
                 task.put("mcTaskSeq", mcTaskSeq);
                 task.put("mcPrcdSeq", mcPrcdSeq);
-                task.put("odrg", dao.selectTaskList(param).size() + 1);
+                task.put("odrg", selectTaskList(param).size() + 1);
 
                 result += dao.insertTask(task);
             }
@@ -259,10 +238,6 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         returnMap.put("msg", msg);
         returnMap.put("result", result);
         return returnMap;
-    }
-
-    public <T> List<T> selectActivityFuncBasList(EzMap param) {
-        return dao.selectActivityFuncBasList(param);
     }
 
     @SuppressWarnings("unchecked")
@@ -282,7 +257,7 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
         List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
         // task에 속한 activity 삭제
         for(Map<String, Object> task : taskList){
-            List<VocActivityVo> actList = dao.selectActivityList(task);
+            List<VocActivityVo> actList = selectActivityList(task);
             task.put("actList", actList);
             dao.deleteActivity(task);
         }
@@ -297,12 +272,12 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
 
         // 1. procedure에 속한 task 조회
         for(Map<String, Object> prcd : prcdList){
-            List<VocTaskVo> taskList = dao.selectTaskList(prcd);
+            List<VocTaskVo> taskList = selectTaskList(prcd);
 
             if(!taskList.isEmpty()){
                 // 2. task에 속한 activity 조회
                 for(VocTaskVo task : taskList){
-                    List<VocActivityVo> actList = dao.selectActivityList(Utilities.beanToMap(task));
+                    List<VocActivityVo> actList = selectActivityList(Utilities.beanToMap(task));
 
                     if(!actList.isEmpty()){
                         // 3. activity 삭제
@@ -324,21 +299,21 @@ public class VocRegProcedureSettingService extends AbstractCrmService {
     }
 
     public Object validateRequiredPrcd(Map<String, Object> param) {
-        List<VocProcedureVo> prcdList = dao.selectProcedureList(param);
+        List<VocProcedureVo> prcdList = selectProcedureList(param);
         if(prcdList.size() == 0){
             return true;
         }
 
         String target = (String) param.get("target");
 
-        List<VocProcedureCodeVo> prcdBasList = dao.selectPrcdBasList(param);
+        List<VocProcedureCodeVo> prcdBasList = selectPrcdBasList(param);
         prcdBasList.removeIf(value -> value.getRequestCompulsoryYn(target).equals("N"));
         int requiredSize = prcdBasList.size();
 
         int compulsoryCnt = 0;
         for(int i = 0; i < prcdList.size(); i++){
             VocProcedureVo prcd = prcdList.get(i);
-            VocProcedureCodeVo prcdBas = dao.selectPrcdBas(prcd);
+            VocProcedureCodeVo prcdBas = selectPrcdBas(prcd);
             if(prcdBas.getRequestCompulsoryYn(target).equals("Y")){
                 compulsoryCnt++;
             }

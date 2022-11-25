@@ -83,9 +83,9 @@ public class VocRecProcedureSettingController {
      * @return
      */
     @GetMapping(value = "selectPrcdBasList")
-    public @ResponseBody Object selectPrcdBasList(@RequestParam Map<String, Object> param){
+    public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
         param.put("target", ManageCodeCategoryEnum.RECEIPT.getCaption());
-        param.put("list", service.selectPrcdBasList(param));
+        param.put("list", service.selectAvailablePrcdBasList(param));
         return param;
     }
 
@@ -148,7 +148,7 @@ public class VocRecProcedureSettingController {
     @PostMapping(value = "selctDutyOrgGrid")
     public @ResponseBody Object selectDutyOrgGrid(@RequestBody EzMap param) throws Exception{
         EzPaginationInfo page = param.getPaginationInfo();
-        List<EzMap> list = service.selectDutyOrgList(param);
+        List<EzMap> list = service.selectRegDutyOrgList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
@@ -172,8 +172,8 @@ public class VocRecProcedureSettingController {
     }
 
     @GetMapping(value = "selectDutyOrgList")
-    public @ResponseBody Object selectDutyOrgList(@RequestParam Map<String, Object> param){
-        return service.selectDutyOrgList(param);
+    public @ResponseBody Object selectRegDutyOrgList(@RequestParam Map<String, Object> param){
+        return service.selectRegDutyOrgList(param);
     }
 
     @PostMapping(value = "deleteDirOrg")

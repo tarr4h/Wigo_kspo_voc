@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao">
 
-
-    <select id="select" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
-        select
-            *
-        from
-            voc_procedure_bas
-        where
-            prcd_seq = #{prcdSeq}
-    </select>
-
     <select id="selectList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
         select
             PRCD_SEQ,
@@ -110,13 +100,6 @@
         where
             prcd_seq = #{prcdSeq}
     </update>
-
-    <select id="selectTaskList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
-        select
-            *
-        from
-            voc_task_bas
-    </select>
 
     <update id="deleteAutoApplyPrcd" parameterType="java.util.List">
         update voc_task_bas

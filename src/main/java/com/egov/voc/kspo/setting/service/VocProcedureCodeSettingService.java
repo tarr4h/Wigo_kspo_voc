@@ -1,13 +1,11 @@
 package com.egov.voc.kspo.setting.service;
 
 
-import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
 import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.kspo.setting.model.VocTaskCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class VocProcedureCodeSettingService extends AbstractCrmService {
+public class VocProcedureCodeSettingService extends VocAbstractService {
 
     @Autowired
     VocProcedureCodeSettingDao dao;
@@ -27,10 +25,6 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
     @Override
     public ICrmDao getDao() {
         return dao;
-    }
-
-    public <T> T select(Map<String, Object> param){
-        return dao.select(param);
     }
 
     public <T> List<T> selectProcedureCodeList(Map<String, Object> param) {
@@ -52,7 +46,7 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
     /**
      * 절차 row 삭제
      *  - 해당 절차가 task의 자동적용으로 설정되어 있다면, trigger를 통해 update됩니다.
-     *  - 트리거명 : voc_procedure_bas_trig
+     *  - 트리거명 : trig_voc_procedure_bas_delete
      * @param param
      * @return
      * @throws Exception
@@ -71,10 +65,10 @@ public class VocProcedureCodeSettingService extends AbstractCrmService {
         VocUtils.sumUpDeadline(param);
 
         int deadline = VocUtils.parseIntObject(param.get("deadline"));
-        VocProcedureCodeVo prcd = dao.select(param);
+        VocProcedureCodeVo prcd = selectPrcdBas(param);
 
         int taskDeadlineSum = 0;
-        List<VocTaskCodeVo> taskList = dao.selectTaskList(param);
+        List<VocTaskCodeVo> taskList = selectTaskBasList(param);
 
         // 1. taskList가 존재하지 않는다면 : 변경
         if(taskList.size() == 0){

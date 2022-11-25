@@ -14,7 +14,5 @@ public interface VocProcedureCodeSettingDao extends ICrmDao {
 
     int updateDeadline(Map<String, Object> param);
 
-    <T> List<T> selectTaskList(Map<String, Object> param);
-
     int deleteAutoApplyPrcd(List<VocTaskCodeVo> autoApplyPrcdList);
 }

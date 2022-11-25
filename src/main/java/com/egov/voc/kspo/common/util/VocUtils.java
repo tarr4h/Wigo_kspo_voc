@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 @Component
@@ -153,5 +151,13 @@ public class VocUtils extends BaseUtilities {
         return sb.toString();
     }
 
+    public static Date setDefaultDeadlineDate(int minute){
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.add(Calendar.MINUTE, minute);
+
+        return cal.getTime();
+    }
 
 }

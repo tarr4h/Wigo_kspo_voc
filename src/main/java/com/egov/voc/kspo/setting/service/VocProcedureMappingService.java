@@ -6,11 +6,8 @@ import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.setting.dao.VocProcedureMappingDao;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureMappingVo;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 @Service
 @Slf4j
-public class VocProcedureMappingService extends AbstractCrmService {
+public class VocProcedureMappingService extends VocAbstractService {
 
     @Autowired
     VocProcedureMappingDao dao;
@@ -34,7 +29,7 @@ public class VocProcedureMappingService extends AbstractCrmService {
     }
 
     public Object vocManagementCodeTree(EzMap param) {
-        return AbstractTreeVo.makeHierarchy(dao.vocManagementCodeTree(param));
+        return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
     }
 
     public Object vocProcedureMappingTree(EzMap param) {
@@ -102,7 +97,7 @@ public class VocProcedureMappingService extends AbstractCrmService {
         Map<String, Object> returnMap = new HashMap<>();
         returnMap.put("result", false);
 
-        VocManagementCodeVo reqVo = dao.selectManagementCode(param);
+        VocManagementCodeVo reqVo = selectManagementCode(param);
         String grp = reqVo.getTopCd();
 
         // 바로 위 부모코드 조회
@@ -123,7 +118,7 @@ public class VocProcedureMappingService extends AbstractCrmService {
 
         // prnts가 무조건 존재함 == size가 최소 1
         for(int i = 0; i < list.size(); i++){
-            VocManagementCodeVo prcd = dao.selectManagementCode(list.get(i));
+            VocManagementCodeVo prcd = selectManagementCode(list.get(i));
             if(list.get(i).getManagementCd().equals(reqVo.getManagementCd())){
                 returnMap.put("msg", "중복 코드입니다.");
                 return returnMap;

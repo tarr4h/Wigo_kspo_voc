@@ -14,15 +14,11 @@ import java.util.Map;
 @CrmMapper
 public interface VocRegProcedureSettingDao extends ICrmDao {
 
-    List<? extends ITreeVo> vocManagementCodeTree(EzMap param);
-
-    <T> T selectPrcdBas(Object prcdSeq);
-
-    <T> List<T> selectPrcdBasList(Map<String, Object> param);
-
     String selectMaxMcPrcdSeq();
-
+    String selectMaxMcTaskSeq();
+    String selectMaxActSeq();
     String selectMaxDirCd();
+
 
     int insertDirCd(EzMap param);
 
@@ -34,37 +30,21 @@ public interface VocRegProcedureSettingDao extends ICrmDao {
 
     int insertProcedureDirConn(Map<String, Object> param);
 
-    String selectDirCd(Map<String, Object> param);
-
-    <T> List<T> selectProcedureList(Map<String, Object> param);
-
-    List<EzMap> selectDutyOrgList(Map<String, Object> param);
-
-    int deleteDirOrg(EzMap param);
+    int deleteDirOrg(Map<String, Object> param);
 
     int updateDirOrg(EzMap param);
 
-    <T> List<T> selectTaskBasList(EzMap param);
 
-    String selectMaxMcTaskSeq();
 
     int insertTask(Map<String, Object> taskMap);
 
-    <T> List<T> selectTaskList(Map<String, Object> param);
-
-    <T> List<T> selectActivityList(Map<String, Object> param);
-
-    <T> List<T> selectActivityFuncBasList(EzMap param);
-
     int insertActivity(Map<String, Object> param);
 
-    String selectMaxActSeq();
+
 
     int deleteActivity(Object param);
 
     int deleteTask(EzMap param);
-
-    <T> T selectProcedure(EzMap param);
 
     int deleteProcedure(EzMap param);
 

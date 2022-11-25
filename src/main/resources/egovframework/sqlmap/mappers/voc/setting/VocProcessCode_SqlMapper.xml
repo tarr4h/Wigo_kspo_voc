@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.kspo.setting.dao.VocProcessCodeDao">
+
+    <resultMap type="com.egov.voc.kspo.setting.model.VocActivityVo" id="VocActivityVo">
+        <result property="explanation"  column="EXPLANATION"  jdbcType="CLOB" javaType="java.lang.String" />
+    </resultMap>
+
+    <sql id="vocManagementCodeCols">
+        MANAGEMENT_CD,
+        TOP_CD,
+        PRNTS_CD,
+        TOP_COMN_CD,
+        COMN_CD,
+        ODRG,
+        LVL,
+        CODE_NM,
+        USE_YN,
+        REG_USR,
+        REG_DT
+    </sql>
+
+    <select id="selectVocManagementCodeTree" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
+        select
+        <include refid="vocManagementCodeCols"/>
+        from
+        voc_management_code
+        <where>
+            <if test="topComnCd != null and !topComnCd.equals('')">
+                top_comn_cd = #{topComnCd}
+                and
+                prnts_cd is not null
+            </if>
+            <!-- 단건의 분류코드 그룹 호출 시 -->
+            <if test="comnCd instanceof String">
+                and
+                comn_cd = #{comnCd}
+            </if>
+            <!-- 여러개의 분류코드 그룹 호출 시 -->
+            <if test="comnCd instanceof java.util.ArrayList">
+                and
+                comn_cd in
+                <foreach collection="comnCd" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by
+            MANAGEMENT_CD
+    </select>
+
+    <select id="selectManagementCode" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
+        select
+        <include refid="vocManagementCodeCols"/>
+        from
+        voc_management_code
+        <where>
+            <if test="managementCd != null and !managementCd.equals('')">
+                management_cd = #{managementCd}
+            </if>
+            <if test="prntsCd != null and !prntsCd.equals('')">
+                and
+                management_cd = #{prntsCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPrcdBas" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            *
+        from
+            voc_procedure_bas
+        where
+            prcd_seq = #{prcdSeq}
+    </select>
+
+    <select id="selectPrcdBasList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+        *
+        from
+        voc_procedure_bas
+        where
+        reg_use_yn = 'Y'
+        <if test="target != null and !target.equals('')">
+            and
+            ${target}_use_yn = 'Y'
+        </if>
+        order by
+        prcd_seq
+    </select>
+
+    <select id="selectTaskBasList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
+        select
+            *
+        from
+            voc_task_bas
+        <where>
+            <if test="autoApplyAllYn != null and !autoApplyAllYn.equals('')">
+                AUTO_APPLY_ALL_YN = #{autoApplyAllYn}
+            </if>
+            <if test="autoApplyPrcdSeq != null and !autoApplyPrcdSeq.equals('')">
+                or
+                AUTO_APPLY_PRCD_SEQ = #{autoApplyPrcdSeq}
+            </if>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                task_seq not in (
+                select
+                task_seq
+                from
+                voc_task
+                where
+                mc_prcd_seq = #{mcPrcdSeq}
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="selectActivityFuncBasList" resultType="EzMap">
+        select
+            *
+        from
+            voc_activity_func_bas
+        where
+            func_cd not in (
+            select
+                func_cd
+            from
+                voc_activity
+            where
+                mc_task_seq = #{mcTaskSeq}
+            )
+    </select>
+
+    <select id="selectProcedure" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
+        select
+        *
+        from
+        voc_procedure
+        <where>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                mc_prcd_seq = #{mcPrcdSeq}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProcedureList" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
+        select
+            mc_prcd_seq,
+            prnts_seq,
+            prcd_seq,
+            prcd_nm,
+            deadline,
+            duty_org,
+            duty_emp,
+            duty_role,
+            reg_usr,
+            reg_dt,
+            (select task_yn from voc_procedure_bas where prcd_seq = vp.prcd_seq) taskYn
+        from
+            voc_procedure vp
+        where
+                vp.mc_prcd_seq in (
+                select
+                    mc_prcd_seq
+                from
+                    voc_procedure_dir_conn
+                where
+                    dir_cd = #{dirCd}
+            )
+        order by
+            3
+    </select>
+
+    <select id="selectTaskList" resultType="com.egov.voc.kspo.setting.model.VocTaskVo">
+        select
+            mc_task_seq,
+            mc_prcd_seq,
+            task_seq,
+            task_nm,
+            odrg,
+            deadline,
+            duty_org,
+            duty_emp,
+            duty_role,
+            reg_usr,
+            reg_dt
+        from
+            voc_task
+        <where>
+            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
+                mc_prcd_seq = #{mcPrcdSeq}
+            </if>
+        </where>
+        order by
+            odrg
+    </select>
+
+    <select id="selectActivityList" resultMap="VocActivityVo">
+        select
+            act_seq,
+            mc_task_seq,
+            func_cd,
+            act_nm,
+            explanation
+        from
+           voc_activity
+        <where>
+            <if test="mcTaskSeq != null and !mcTaskSeq.equals('')">
+                mc_task_seq = #{mcTaskSeq}
+            </if>
+        </where>
+        order by
+            1
+    </select>
+
+    <select id="selectDirCd" resultType="string">
+        select
+        dir_cd
+        from
+        voc_dir_mc_mapping
+        <where>
+            <if test="managementCd != null and !managementCd.equals('')">
+                management_cd = #{managementCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDutyOrgList" resultType="EzMap">
+        select
+            *
+        from
+            voc_dir_org_mapping
+        where
+            dir_cd = #{dirCd}
+        order by
+            2 desc, 3
+    </select>
+
+    <select id="selectRegPrcdList" resultType="com.egov.voc.kspo.process.model.VocRegPrcdVo">
+        select
+            *
+        from
+            voc_reg_prcd
+        <where>
+            <if test="regSeq != null and !regSeq.equals('')">
+                reg_seq = #{regSeq}
+            </if>
+        </where>
+        order by
+            reg_prcd_seq
+    </select>
+
+    <update id="updateRegPrcd">
+        update voc_reg_prcd
+        set
+            status = #{status}
+        where
+            reg_prcd_seq = #{regPrcdSeq}
+    </update>
+</mapper>

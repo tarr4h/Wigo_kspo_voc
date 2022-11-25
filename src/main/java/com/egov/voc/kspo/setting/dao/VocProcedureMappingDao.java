@@ -11,9 +11,5 @@ import java.util.Map;
 
 @CrmMapper
 public interface VocProcedureMappingDao extends ICrmDao {
-    List<? extends ITreeVo> vocManagementCodeTree(EzMap param);
-
     String selectMaxCd();
-
-    <T> T selectManagementCode(Object param);
 }

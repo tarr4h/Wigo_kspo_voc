@@ -2,40 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.egov.voc.kspo.setting.dao.VocProcedureMappingDao">
 
-    <sql id="vocManagementCodeCols">
-        MANAGEMENT_CD,
-        TOP_CD,
-        PRNTS_CD,
-        TOP_COMN_CD,
-        COMN_CD,
-        ODRG,
-        LVL,
-        CODE_NM,
-        USE_YN,
-        REG_USR,
-        REG_DT
-    </sql>
-
-    <select id="vocManagementCodeTree" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
-        select
-        <include refid="vocManagementCodeCols"/>
-        from
-            voc_management_code
-        where
-            top_comn_cd = #{topComnCd}
-            <if test="comnCd instanceof java.util.ArrayList">
-                and
-                comn_cd in
-                <foreach collection="comnCd" item="item" separator="," open="(" close=")">
-                    #{item}
-                </foreach>
-            </if>
-            and
-            prnts_cd is not null
-        order by
-            MANAGEMENT_CD
-    </select>
-
     <select id="select" resultType="com.egov.voc.kspo.setting.model.VocProcedureMappingVo">
         select
             vmrm.*,
@@ -74,15 +40,6 @@
             max(mapping_seq)
         from
             VOC_MC_RELATION_MAPPING
-    </select>
-
-    <select id="selectManagementCode" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
-        select
-            *
-        from
-            VOC_MANAGEMENT_CODE
-        where
-            management_cd = #{managementCd}
     </select>
 
     <insert id="insert">

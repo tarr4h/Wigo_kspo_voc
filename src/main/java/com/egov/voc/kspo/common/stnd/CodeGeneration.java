@@ -1,6 +1,5 @@
 package com.egov.voc.kspo.common.stnd;
 
-import com.egov.voc.kspo.common.util.VocUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +14,9 @@ public enum CodeGeneration {
     TASK("TK", 10),
     ACTIVITY("AT", 10),
     PROCEDURE_MAPPING("PM", 10),
-    REGISTRATION("VM", 12);
+    REGISTRATION("VM", 12),
+
+    REG_PROCEDURE("RP", 12);
 
 
     private String preFix;

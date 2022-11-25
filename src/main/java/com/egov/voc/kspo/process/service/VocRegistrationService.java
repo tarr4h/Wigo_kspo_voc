@@ -1,40 +1,30 @@
 package com.egov.voc.kspo.process.service;
 
-import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.dao.VocRegistrationDao;
-import com.egov.voc.kspo.setting.dao.VocManagementCodeDao;
-import com.egov.voc.kspo.setting.dao.VocRegProcedureSettingDao;
-import com.egov.voc.kspo.setting.model.VocActivityVo;
+import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
-import com.egov.voc.kspo.setting.model.VocTaskVo;
+import com.egov.voc.kspo.setting.service.VocAbstractService;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unchecked")
 @Service
 @Slf4j
-public class VocRegistrationService extends AbstractCrmService {
+public class VocRegistrationService extends VocAbstractService {
 
     @Autowired
     VocRegistrationDao dao;
-
-    @Autowired
-    VocRegProcedureSettingDao rDao;
-
-    @Autowired
-    VocManagementCodeDao mDao;
 
     @Override
     public ICrmDao getDao() {
@@ -46,8 +36,9 @@ public class VocRegistrationService extends AbstractCrmService {
         return dao.selectChannel(param);
     }
 
-    public Object register(Map<String, Object> param) {
-        if(!insert(param)){
+    public Object register(Map<String, Object> param) throws Exception{
+        boolean insert = insert(param);
+        if(!insert){
             param.put("result", false);
             return param;
         }
@@ -55,12 +46,12 @@ public class VocRegistrationService extends AbstractCrmService {
         log.debug("param = {}", param);
         // 채널코드를 통해서 일치하는 dir_cd를 구한다.
         param.put("managementCd", param.get("channel"));
-        String dirCd = rDao.selectDirCd(param);
+        String dirCd = selectDirCd(param);
 
         // 일치하는 dir_cd가 없는 경우 상위 채널코드를 통해서 dir_cd를 구한다.(존재할때까지)
         if(dirCd == null){
             do {
-                VocManagementCodeVo mc = mDao.select(param);
+                VocManagementCodeVo mc = selectManagementCode(param);
                 if (mc.getPrntsCd() == null) {
                     param.put("msg", "해당 채널에 등록된 절차가 없습니다.");
                     param.put("result", false);
@@ -68,28 +59,32 @@ public class VocRegistrationService extends AbstractCrmService {
                 }
 
                 param.put("managementCd", mc.getPrntsCd());
-                dirCd = rDao.selectDirCd(param);
-                log.debug("dirCd2 = {}", dirCd);
+                dirCd = selectDirCd(param);
             } while (dirCd == null);
         }
 
-        // 절차목록(이하 task, activity 등)을 가져와서 등록한다.
+        // dirCd를 통해 절차목록를 조회
         param.put("dirCd", dirCd);
-        List<VocProcedureVo> prcdList = rDao.selectProcedureList(param);
+        List<VocProcedureVo> prcdList = selectProcedureList(param);
 
-        for(VocProcedureVo prcd : prcdList) {
-            log.debug("prcd = {}", prcd.getPrcdNm());
+        // reg_prcd를 등록. deadline을 지정한다.
+        int deadline = 0;
+        for(VocProcedureVo prcd : prcdList){
+            VocRegPrcdVo regPrcd = new VocRegPrcdVo();
+            regPrcd.setRegPrcdSeq(CodeGeneration.generateCode(dao.selectMaxRegPrcdSeq(), CodeGeneration.REG_PROCEDURE));
+            regPrcd.setRegSeq((String) param.get("regSeq"));
+            regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
+            deadline += prcd.getDeadline();
+            regPrcd.setDeadline(VocUtils.setDefaultDeadlineDate(deadline));
+            regPrcd.setModUsr(Utilities.getLoginUserCd());
 
-            List<VocTaskVo> taskList = rDao.selectTaskList(Utilities.beanToMap(prcd));
-            for(VocTaskVo task : taskList){
-                log.debug("task = {}", task.getTaskNm());
-
-                List<VocActivityVo> actList = rDao.selectActivityList(Utilities.beanToMap(task));
-
-            }
+            dao.insertRegProcedure(regPrcd);
         }
 
-        return null;
+        // 등록 절차의 상태를 완료로 업데이트
+        updateRegProcedureStatus(param, PrcdStatus.COMPLETE);
+
+        return param;
     }
 
     public boolean insert(Map<String, Object> param) {
@@ -100,7 +95,6 @@ public class VocRegistrationService extends AbstractCrmService {
         param.putAll(VocUtils.formSerializeArrayToMap((List<Map<String, Object>>) param.get("formArr")));
         List<String> chList = (List<String>) param.get("chList");
         param.put("channel", chList.get(chList.size() - 1));
-
         param.put("regSeq", CodeGeneration.generateCode(dao.selectMaxSeq(), CodeGeneration.REGISTRATION));
 
         dao.insert(param);

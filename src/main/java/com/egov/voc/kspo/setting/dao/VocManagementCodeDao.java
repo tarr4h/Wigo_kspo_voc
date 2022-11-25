@@ -13,7 +13,6 @@ import java.util.Map;
 
 @CrmMapper
 public interface VocManagementCodeDao extends ICrmDao {
-    List<? extends ITreeVo> vocManagementCodeTree(EzMap param);
 
     String maxChildCd(EzMap param);
 

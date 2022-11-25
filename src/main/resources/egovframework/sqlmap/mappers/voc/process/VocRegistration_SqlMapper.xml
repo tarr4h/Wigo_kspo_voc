@@ -51,5 +51,25 @@
             VOC_REGISTRATION
     </select>
 
+    <select id="selectMaxRegPrcdSeq" resultType="string">
+        select
+            max(reg_prcd_seq)
+        from
+            voc_reg_prcd
+    </select>
+
+    <insert id="insertRegProcedure">
+        insert into voc_reg_prcd
+        (REG_PRCD_SEQ, REG_SEQ, MC_PRCD_SEQ, DEADLINE, MOD_USR)
+        values
+            (
+             #{regPrcdSeq},
+             #{regSeq},
+             #{mcPrcdSeq},
+             #{deadline},
+             #{modUsr}
+            )
+    </insert>
+
 
 </mapper>

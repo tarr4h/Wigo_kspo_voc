@@ -32,7 +32,8 @@ public class VocRegistrationController {
     }
 
     @PostMapping(value = "register")
-    public @ResponseBody Object register(@RequestBody EzMap param) {
+    public @ResponseBody Object register(@RequestBody EzMap param) throws Exception{
         return service.register(param);
     }
+
 }

@@ -11,4 +11,8 @@ public interface VocRegistrationDao extends ICrmDao {
     <T> List<T> selectChannel(Map<String, Object> param);
 
     String selectMaxSeq();
+
+    String selectMaxRegPrcdSeq();
+
+    int insertRegProcedure(Object param);
 }

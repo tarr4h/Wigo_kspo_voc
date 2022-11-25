@@ -8,7 +8,6 @@ import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocManagementCodeDao;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 @Service
 @Slf4j
-public class VocManagementCodeService extends AbstractCrmService {
+public class VocManagementCodeService extends VocAbstractService {
 
     @Autowired
     VocManagementCodeDao dao;
@@ -30,8 +29,8 @@ public class VocManagementCodeService extends AbstractCrmService {
         return dao;
     }
 
-    public Object vocManagementCodeTree(EzMap param) {
-        return AbstractTreeVo.makeHierarchy(dao.vocManagementCodeTree(param));
+    public Object vocManagementCodeTree(Map<String, Object> param) {
+        return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
     }
 
     public <T> List<T> vocManagementCodeList(Map<String, Object> param) {
@@ -39,7 +38,7 @@ public class VocManagementCodeService extends AbstractCrmService {
     }
 
     public Object vocManagementCode(EzMap param) {
-        return dao.select(param);
+        return selectManagementCode(param);
     }
 
     public Object insert(EzMap param) {
@@ -116,7 +115,7 @@ public class VocManagementCodeService extends AbstractCrmService {
 
     public EzMap generateInsertCodeParam(EzMap param){
         // 17자리(코드값 2 + 분류값15(2/3/3/3/4))
-        VocManagementCodeVo prntsRow = dao.select(param);
+        VocManagementCodeVo prntsRow = selectManagementCode(param);
         log.debug("prntsRow = {}", prntsRow.getCodeNm());
 
         int childrenSize = dao.selectList(param).size();
