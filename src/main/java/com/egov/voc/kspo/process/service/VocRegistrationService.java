@@ -75,7 +75,7 @@ public class VocRegistrationService extends VocAbstractService {
             regPrcd.setRegSeq((String) param.get("regSeq"));
             regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
             deadline += prcd.getDeadline();
-            regPrcd.setDeadline(VocUtils.setDefaultDeadlineDate(deadline));
+            regPrcd.setDeadlineDt(VocUtils.setDefaultDeadlineDate(deadline));
             regPrcd.setModUsr(Utilities.getLoginUserCd());
 
             dao.insertRegProcedure(regPrcd);
@@ -83,6 +83,13 @@ public class VocRegistrationService extends VocAbstractService {
 
         // 등록 절차의 상태를 완료로 업데이트
         updateRegProcedureStatus(param, PrcdStatus.COMPLETE);
+        param.put("result", true);
+        return param;
+    }
+
+    public Object temporarySave(Map<String, Object> param){
+        boolean insert = insert(param);
+        param.put("result", insert);
 
         return param;
     }

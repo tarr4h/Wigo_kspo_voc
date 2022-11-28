@@ -27,17 +27,14 @@ public class VocUtils extends BaseUtilities {
     @Autowired
     VocCorporationService cpService;
 
-
-    public static int parseIntObject(Object obj){
-        return Integer.parseInt(String.valueOf(obj));
-    }
-
-
-
     @PostConstruct
     public void init() throws Exception{
         super.init();
         corpService = this.cpService;
+    }
+
+    public static int parseIntObject(Object obj){
+        return Integer.parseInt(String.valueOf(obj));
     }
 
     public static void setOrgInfoToMap(EzMap org) {

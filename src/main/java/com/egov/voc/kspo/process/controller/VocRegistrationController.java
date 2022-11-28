@@ -36,4 +36,9 @@ public class VocRegistrationController {
         return service.register(param);
     }
 
+    @PostMapping(value = "temporarySave")
+    public @ResponseBody Object temporarySave(@RequestBody EzMap param) throws Exception{
+        return service.temporarySave(param);
+    }
+
 }

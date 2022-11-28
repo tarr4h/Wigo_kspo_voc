@@ -76,17 +76,17 @@
 
     <select id="selectPrcdBasList" resultType="com.egov.voc.kspo.setting.model.VocProcedureCodeVo">
         select
-        *
+            *
         from
-        voc_procedure_bas
+            voc_procedure_bas
         where
-        reg_use_yn = 'Y'
-        <if test="target != null and !target.equals('')">
-            and
-            ${target}_use_yn = 'Y'
-        </if>
+            reg_use_yn = 'Y'
+            <if test="target != null and !target.equals('')">
+                and
+                ${target}_use_yn = 'Y'
+            </if>
         order by
-        prcd_seq
+            prcd_seq
     </select>
 
     <select id="selectTaskBasList" resultType="com.egov.voc.kspo.setting.model.VocTaskCodeVo">
@@ -133,12 +133,16 @@
 
     <select id="selectProcedure" resultType="com.egov.voc.kspo.setting.model.VocProcedureVo">
         select
-        *
+            *
         from
-        voc_procedure
+            voc_procedure
         <where>
             <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
                 mc_prcd_seq = #{mcPrcdSeq}
+            </if>
+            <if test="prntsSeq != null and !prntsSeq.equals('')">
+                and
+                prnts_seq = #{prntsSeq}
             </if>
         </where>
     </select>
@@ -236,19 +240,57 @@
             2 desc, 3
     </select>
 
-    <select id="selectRegPrcdList" resultType="com.egov.voc.kspo.process.model.VocRegPrcdVo">
+    <select id="selectRegPrcd" resultType="com.egov.voc.kspo.process.model.VocRegPrcdVo">
         select
             *
         from
             voc_reg_prcd
+        where
+            reg_prcd_seq = #{regPrcdSeq}
+    </select>
+
+    <select id="selectRegPrcdList" resultType="com.egov.voc.kspo.process.model.VocRegPrcdVo">
+        select
+            *
+        from
+            voc_procedure vp inner join voc_reg_prcd vrp
+            on vp.mc_prcd_seq = vrp.mc_prcd_seq
         <where>
             <if test="regSeq != null and !regSeq.equals('')">
-                reg_seq = #{regSeq}
+                vrp.reg_seq = #{regSeq}
             </if>
         </where>
         order by
             reg_prcd_seq
     </select>
+
+    <select id="selectVocStatus" parameterType="string" resultType="map">
+        select
+            status_cd "statusCd",
+            prcd_seq "prcdSeq",
+            status_nm "statusNm",
+            status "status"
+        from
+            voc_status
+        <where>
+            <if test="prcdSeq != null and !prcdSeq.equals('')">
+                prcd_seq = #{prcdSeq}
+            </if>
+            <if test="status != null and !status.equals('')">
+                and
+                status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--  upt  -->
+    <update id="updateRegistrationStatus">
+        update VOC_REGISTRATION
+        set
+            status_cd = #{statusCd}
+        where
+            reg_seq = #{regSeq}
+    </update>
 
     <update id="updateRegPrcd">
         update voc_reg_prcd

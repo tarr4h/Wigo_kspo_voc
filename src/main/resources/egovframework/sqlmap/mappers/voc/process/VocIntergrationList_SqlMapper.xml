@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.egov.voc.kspo.process.dao.VocIntergrationListDao">
+
+    <select id="selectList" resultType="com.egov.voc.kspo.process.model.VocRegistrationVo">
+        select
+            reg_seq,
+            channel,
+            status_cd,
+            title,
+            content,
+            reg_comment,
+            cust_id,
+            issue_yn,
+            issue_grade,
+            reg_usr,
+            reg_dt,
+            rec_usr,
+            rec_org,
+            rec_dt,
+            ownership_org,
+            del_yn,
+            (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
+        from
+            VOC_REGISTRATION vr
+    </select>
+
+
+
+</mapper>

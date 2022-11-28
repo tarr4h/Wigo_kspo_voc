@@ -1,5 +1,6 @@
 package com.egov.voc.kspo.process.model;
 
+import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,12 +8,12 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class VocRegPrcdVo {
+public class VocRegPrcdVo extends VocProcedureVo {
 
     private String regPrcdSeq;
     private String regSeq;
     private String mcPrcdSeq;
-    private Date deadline;
+    private Date deadlineDt;
     private String status;
     private String modUsr;
     private String modDt;
@@ -24,4 +25,5 @@ public class VocRegPrcdVo {
         this.regPrcdSeq = regPrcdSeq;
         this.status = status;
     }
+
 }

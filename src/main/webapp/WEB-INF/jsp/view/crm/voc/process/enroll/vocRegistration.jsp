@@ -79,7 +79,7 @@
                 <tr>
                     <th colspan="4">
                         <button type="button" class="v_rBtn v_btn1 v_btn_green" data-event="insert">등록</button>
-                        <button type="button" class="v_rBtn v_btn1" date-event="temporary">임시등록</button>
+                        <button type="button" class="v_rBtn v_btn1" data-event="temporary">임시등록</button>
                     </th>
                 </tr>
             </tbody>
@@ -117,10 +117,58 @@
     }
 
     /**
+     * 등록 후 통합검색 화면 랜딩
+     *  - 나머지 tab 화면 reload
+     */
+    function afterReg(){
+        let topWin = Utilities.getTopWindow();
+
+        let menu = {
+            menuCd: "0104010100",
+            menuLvlNo: 4,
+            menuNm: "VOC 통합검색",
+            menuUrl: "vocIntergrationList",
+            topMenuCd: "0100000000"
+        };
+
+        for(let i = 0; i < window.parent.length; i++){
+            let win = window.parent[i];
+            if(win.document.URL.includes('vocList')){
+                win.location.reload();
+            }
+        }
+
+        topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
+        topWin.removeTab("0104020100");
+    }
+
+    /**
      * voc 임시저장
      */
     function saveVoc(){
+        let form = $('#registerFrm');
+        let disabled = form.find(':input:disabled').removeAttr('disabled');
+        let formArr = form.serializeArray();
 
+        let chList = setChList();
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/temporarySave${urlSuffix}"/>',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                formArr,
+                chList
+            }),
+            success(res){
+                alert(res.msg);
+                if(res.result){
+                    // 페이지이동
+                    afterReg();
+                }
+            },
+            error: console.log
+        });
     }
 
     /**
@@ -142,11 +190,10 @@
                 chList
             }),
             success(res){
+                alert(res.msg);
                 if(res.result){
-                    alert('등록되었습니다.');
                     // 페이지이동
-                } else {
-                    alert(res.msg);
+                    afterReg();
                 }
             },
             error: console.log

@@ -25,6 +25,7 @@ import java.util.Map;
 
 public abstract class JwtUtility {
 	final static String key = "1qaz@WSX";
+//	final static String key = "!234";
 
 	public static String createToken(String userCd, String systemCd, long hours) {
 		Map<String, Object> headers = new HashMap<>();

@@ -60,13 +60,13 @@
 
     <insert id="insertRegProcedure">
         insert into voc_reg_prcd
-        (REG_PRCD_SEQ, REG_SEQ, MC_PRCD_SEQ, DEADLINE, MOD_USR)
+        (REG_PRCD_SEQ, REG_SEQ, MC_PRCD_SEQ, DEADLINE_DT, MOD_USR)
         values
             (
              #{regPrcdSeq},
              #{regSeq},
              #{mcPrcdSeq},
-             #{deadline},
+             #{deadlineDt},
              #{modUsr}
             )
     </insert>

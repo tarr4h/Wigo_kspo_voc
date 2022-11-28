@@ -256,6 +256,7 @@ function showSecondMenu(menuCd,forceOpen){
 	
 }
 function showThirdMenu(element,data){
+	console.log('showMenuData : ', data);
 	goMenu(data);
 }
 function showFourthMenu(element,data){
