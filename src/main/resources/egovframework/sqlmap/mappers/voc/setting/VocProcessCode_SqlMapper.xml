@@ -283,6 +283,42 @@
         </where>
     </select>
 
+    <select id="getManagementCodeSelect" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
+        select
+        *
+        from
+        VOC_MANAGEMENT_CODE
+        <where>
+            comn_cd = #{comnCd}
+            <if test="prntsCd != null and !prntsCd.equals('')">
+                and
+                prnts_cd = #{prntsCd}
+            </if>
+            <if test="prntsCd == null">
+                and
+                prnts_cd = (
+                select
+                management_cd
+                from
+                voc_management_code
+                where
+                comn_cd = #{comnCd}
+                and
+                management_cd = top_cd
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="selectStatus" resultType="map">
+        select
+            *
+        from
+            voc_status
+        order by
+            1
+    </select>
+
     <!--  upt  -->
     <update id="updateRegistrationStatus">
         update VOC_REGISTRATION

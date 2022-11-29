@@ -23,6 +23,8 @@
             (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
         from
             VOC_REGISTRATION vr
+        where
+            status_cd is not null
     </select>
 
 

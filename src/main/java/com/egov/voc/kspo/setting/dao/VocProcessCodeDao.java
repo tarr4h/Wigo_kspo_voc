@@ -46,5 +46,9 @@ public interface VocProcessCodeDao extends ICrmDao {
     Map<String, Object> selectVocStatus(String prcdSeq, String status);
 
     int updateRegistrationStatus(Object param);
+
+    <T> List<T> getManagementCodeSelect(Map<String, Object> param);
+
+    <T> List<T> selectStatus(Object param);
 }
 

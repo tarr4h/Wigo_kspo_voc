@@ -133,9 +133,7 @@
 
         for(let i = 0; i < window.parent.length; i++){
             let win = window.parent[i];
-            if(win.document.URL.includes('vocList')){
-                win.location.reload();
-            }
+            win.location.reload();
         }
 
         topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);

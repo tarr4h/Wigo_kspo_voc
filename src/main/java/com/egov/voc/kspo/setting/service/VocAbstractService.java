@@ -3,6 +3,7 @@ package com.egov.voc.kspo.setting.service;
 import com.egov.voc.base.common.model.EzMap;
 import com.egov.voc.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.dao.VocProcessCodeDao;
@@ -136,4 +137,12 @@ public abstract class VocAbstractService extends AbstractCrmService {
         return dao.selectDutyOrgList(param);
     }
 
+    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategoryEnum type) {
+        param.put("comnCd", type.getComnCd());
+        return dao.getManagementCodeSelect(param);
+    }
+
+    public <T> List<T> selectStatus(Object param){
+        return dao.selectStatus(param);
+    }
 }

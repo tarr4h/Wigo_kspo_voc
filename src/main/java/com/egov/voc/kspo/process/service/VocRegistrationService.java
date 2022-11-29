@@ -32,8 +32,7 @@ public class VocRegistrationService extends VocAbstractService {
     }
 
     public Object selectChannel(Map<String, Object> param) {
-        param.put("comnCd", ManageCodeCategoryEnum.REGISTRATION.getComnCd());
-        return dao.selectChannel(param);
+        return getManagementCodeSelect(param, ManageCodeCategoryEnum.REGISTRATION);
     }
 
     public Object register(Map<String, Object> param) throws Exception{

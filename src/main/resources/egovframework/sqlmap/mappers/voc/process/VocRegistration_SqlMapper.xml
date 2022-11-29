@@ -2,34 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.egov.voc.kspo.process.dao.VocRegistrationDao">
 
-
-    <select id="selectChannel" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
-        select
-            *
-        from
-            VOC_MANAGEMENT_CODE
-        <where>
-            comn_cd = #{comnCd}
-            <if test="prntsCd != null and !prntsCd.equals('')">
-                and
-                prnts_cd = #{prntsCd}
-            </if>
-            <if test="prntsCd == null">
-                and
-                prnts_cd = (
-                        select
-                            management_cd
-                        from
-                            voc_management_code
-                        where
-                            comn_cd = #{comnCd}
-                            and
-                            management_cd = top_cd
-                )
-            </if>
-        </where>
-    </select>
-
     <insert id="insert">
         insert into VOC_REGISTRATION
         (REG_SEQ, CHANNEL, TITLE, CONTENT, REG_COMMENT, CUST_ID, REG_USR)
