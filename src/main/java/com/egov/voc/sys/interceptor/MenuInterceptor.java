@@ -1,10 +1,10 @@
 package com.egov.voc.sys.interceptor;
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPropertyServiceImpl;
-import com.egov.voc.base.common.model.ITreeVo;
-import com.egov.voc.base.common.util.HandlerUtils;
-import com.egov.voc.base.common.util.NasUtil;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPropertyServiceImpl;
+import com.egov.base.common.model.ITreeVo;
+import com.egov.base.common.util.HandlerUtils;
+import com.egov.base.common.util.NasUtil;
 import com.egov.voc.comn.util.SessionUtil;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.controller.CrmMainController;

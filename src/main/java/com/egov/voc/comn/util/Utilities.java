@@ -1,8 +1,8 @@
 package com.egov.voc.comn.util;
 
-import com.egov.voc.base.common.util.BaseUtilities;
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPropertyServiceImpl;
+import com.egov.base.common.util.BaseUtilities;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPropertyServiceImpl;
 import com.egov.voc.sys.model.CrmLoginUserVo;
 import com.egov.voc.sys.model.CrmMenuBaseVo;
 import com.egov.voc.sys.service.CrmCommonService;

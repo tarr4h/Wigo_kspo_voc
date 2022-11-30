@@ -1,7 +1,7 @@
 package com.egov.voc.kspo.setting.dao;
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.ITreeVo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.mapper.CrmMapper;

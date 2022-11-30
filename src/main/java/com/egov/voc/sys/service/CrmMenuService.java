@@ -1,10 +1,10 @@
 package com.egov.voc.sys.service;
 
 
-import com.egov.voc.base.common.model.AbstractTreeVo;
-import com.egov.voc.base.common.model.EzAjaxException;
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.ITreeVo;
+import com.egov.base.common.model.AbstractTreeVo;
+import com.egov.base.common.model.EzAjaxException;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.SessionUtil;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.dao.CrmGrpMenuRelDao;

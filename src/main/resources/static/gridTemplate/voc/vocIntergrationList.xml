@@ -22,19 +22,19 @@
         <column name="채널" field="channel" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="상태코드" field="statusCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="상태" field="statusCdNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="제목" field="title" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="내용" field="content" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="작성자의견" field="regComment" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="고객ID" field="custId" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="이슈등급 사용여부" field="issueYn" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="이슈등급" field="issueGrade" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="등록자CD" field="regUsr" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="등록자" field="regUsrNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="등록일" field="regDt" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="접수자" field="recUsr" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="접수부서" field="recOrg" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="접수일시" field="recDt" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="주처리부서" field="ownershipOrg" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="삭제여부" field="delYn" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
+        <column name="제목" field="title" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="내용" field="content" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="작성자의견" field="regComment" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="고객ID" field="custId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="이슈등급 사용여부" field="issueYn" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="이슈등급" field="issueGrade" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="등록자CD" field="regUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="등록자" field="regUsrNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="등록일" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="접수자" field="recUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="접수부서" field="recOrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="접수일시" field="recDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="주처리부서" field="ownershipOrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="삭제여부" field="delYn" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
 
 </grid>

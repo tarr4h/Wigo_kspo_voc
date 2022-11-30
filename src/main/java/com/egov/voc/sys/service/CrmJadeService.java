@@ -1,7 +1,7 @@
 package com.egov.voc.sys.service;
 
 
-import com.egov.voc.base.common.util.BaseUtilities;
+import com.egov.base.common.util.BaseUtilities;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.model.CrmJadeOrgVo;
 import com.egov.voc.sys.model.CrmLoginUserVo;

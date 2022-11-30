@@ -12,85 +12,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
-<style>
-    /*  searchArea  */
-    .searchArea{
-        margin-top: 20px;
-        min-height: 200px;
-    }
-    #searchTable {
-        border-collapse: collapse;
-    }
-    #searchTable th{
-        background-color: #94a9b463;
-        border: 1px solid #80808059;
-        height: 35px;
-        font-size: 12px;
-        font-weight: 500;
-    }
-    #searchTable td{
-        border: 1px solid #80808059;
-        height: 35px;
-        padding-left: 15px;
-    }
-
-    .buttonArea{
-        width: 100%;
-        height: 30px;
-        display: flex;
-    }
-    .addonBtnBox{
-        display: block;
-        width: 20%;
-    }
-    .searchBtnBox{
-        display: block;
-        width: 80%;
-        text-align: right;
-        padding-top: 5px;
-    }
-    #addonBtn{
-        width: 20%;
-        border: 1px solid #80808059;
-        border-top: none;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        height: 30px;
-        background-color: #d9dee063;
-        font-size: 12px;
-    }
-    .searchBtn{
-        width: 60px;
-        height: 26px;
-        border: 1px solid gray;
-        margin-left: 5px;
-        font-size: 12px;
-        border-radius: 3px;
-    }
-
-    .shFrmInput{
-        width: 350px;
-        height: 25px;
-        border: 1px solid #8080809e;
-        padding-left: 10px;
-        font-size: 12px;
-        border-radius: 3px;
-    }
-    .shFrmInput:focus{
-        outline: none;
-    }
-
-    .searchSelect{
-        width: 100px;
-        text-align: center;
-        height: 25px;
-        border: 1px solid #80808082;
-        border-radius: 3px;
-        font-size: 12px;
-    }
-</style>
-
-
 
 <div class="v_header">
     <div class="v_header_title">
@@ -99,7 +20,7 @@
 </div>
 
 <div class="content_wrapper">
-    <div class="searchArea">
+    <div class="list_searchArea">
         <form action="" id="searchFrm">
             <table id="searchTable">
                 <colgroup>
@@ -112,22 +33,22 @@
                 <tr>
                     <th>VOC번호</th>
                     <td>
-                        <input type="text" name="regSeq" class="shFrmInput">
+                        <input type="text" name="regSeq" class="list_shFrmInput">
                     </td>
                     <th>제목</th>
                     <td>
-                        <input type="text" name="title" class="shFrmInput">
+                        <input type="text" name="title" class="list_shFrmInput">
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td>
-                        <input type="text" name="content" class="shFrmInput">
+                        <input type="text" name="content" class="list_shFrmInput">
                     </td>
                     <th>기간</th>
                     <td>
-                        <input class="it shFrmInput" type="text" data-type="dateRangeStart" data-range-end="endDt" id="strtDt" name="strtDt" data-enter="search" data-button="Y" value="" />
-                        <input class="it shFrmInput" type="text" id="endDt" name="endDt" data-enter="search" data-button="Y" value=""/>
+                        <input class="it list_shFrmInput" type="text" data-type="dateRangeStart" data-range-end="endDt" id="strtDt" name="strtDt" data-enter="search" data-button="Y" value="" />
+                        <input class="it list_shFrmInput" type="text" id="endDt" name="endDt" data-enter="search" data-button="Y" value=""/>
                         <button class="mBtn1 m lWhite" id="setToday" data-click="setToday" style="margin: 1px 0px;">오늘</button>
                         <button class="mBtn1 m lWhite" id="set1Week" data-click="set1Week" style="margin: 1px 0px;" data-default-button="Y">1주일</button>
                         <button class="mBtn1 m lWhite" id="set1month" data-click="set1month" style="margin: 1px 0px;">1개월</button>
@@ -140,9 +61,9 @@
                 <tr>
                     <th>등록자</th>
                     <td>
-                        <input type="text" name="regUsr" class="shFrmInput">
-                        <input type="button" value="조회하기" class="searchBtn" data-event="regEmp">
-                        <input type="button" value="MY VOC" class="searchBtn">
+                        <input type="text" name="regUsr" class="list_shFrmInput">
+                        <input type="button" value="조회하기" class="list_searchBtn" data-event="regEmp">
+                        <input type="button" value="MY VOC" class="list_searchBtn">
                     </td>
                     <th>채널</th>
                     <td>
@@ -152,9 +73,9 @@
                 <tr>
                     <th>접수자</th>
                     <td>
-                        <input type="text" name="recUsr" class="shFrmInput">
-                        <input type="button" value="조회하기" class="searchBtn" data-event="recEmp">
-                        <input type="button" value="MY VOC" class="searchBtn">
+                        <input type="text" name="recUsr" class="list_shFrmInput">
+                        <input type="button" value="조회하기" class="list_searchBtn" data-event="recEmp">
+                        <input type="button" value="MY VOC" class="list_searchBtn">
                     </td>
                     <th>유형</th>
                     <td>
@@ -164,8 +85,8 @@
                 <tr>
                     <th>부서</th>
                     <td>
-                        <input type="text" name="ownershipOrg" class="shFrmInput">
-                        <input type="button" value="조회하기" class="searchBtn" data-event="org">
+                        <input type="text" name="ownershipOrg" class="list_shFrmInput">
+                        <input type="button" value="조회하기" class="list_searchBtn" data-event="org">
                     </td>
                     <th>진행상태</th>
                     <td>
@@ -175,13 +96,13 @@
                 </tbody>
             </table>
         </form>
-        <div class="buttonArea">
-            <div class="addonBtnBox">
+        <div class="list_buttonArea">
+            <div class="list_addonBtnBox">
                 <input type="button" id="addonBtn" value="상세검색">
             </div>
-            <div class="searchBtnBox">
-                <input type="button" id="searchReset" class="searchBtn" data-event="reset" value="초기화">
-                <input type="button" id="searchRows" class="searchBtn" data-event="search" value="검색">
+            <div class="list_searchBtnBox">
+                <input type="button" id="searchReset" class="list_searchBtn" data-event="reset" value="초기화">
+                <input type="button" id="searchRows" class="list_searchBtn" data-event="search" value="검색">
             </div>
         </div>
         <div class="searchAddon">
@@ -219,7 +140,7 @@
         window['listGrid'].loadUrl('', param);
     }
 
-    $('.searchBtn').on('click', function(){
+    $('.list_searchBtn').on('click', function(){
         let evt = $(this).data('event');
 
         switch(evt){
@@ -241,7 +162,6 @@
      * @param data
      */
     function orgSearchCallback(data){
-        console.log('org callback : ', data);
         $('input[name="ownershipOrg"]').val(data.orgNm).data('value', data.orgId);
     }
 

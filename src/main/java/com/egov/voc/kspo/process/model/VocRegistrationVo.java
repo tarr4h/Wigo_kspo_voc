@@ -1,6 +1,6 @@
 package com.egov.voc.kspo.process.model;
 
-import com.egov.voc.base.common.model.BaseVo;
+import com.egov.base.common.model.BaseVo;
 import com.egov.voc.kspo.common.util.VocUtils;
 import lombok.Getter;
 import lombok.Setter;

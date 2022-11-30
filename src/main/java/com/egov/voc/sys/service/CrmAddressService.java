@@ -1,9 +1,9 @@
 package com.egov.voc.sys.service;
 
 
-import com.egov.voc.base.common.model.address.EzAddressSo;
-import com.egov.voc.base.common.model.address.EzAdressResultVo;
-import com.egov.voc.base.common.util.AddressUtil;
+import com.egov.base.common.model.address.EzAddressSo;
+import com.egov.base.common.model.address.EzAdressResultVo;
+import com.egov.base.common.util.AddressUtil;
 import org.springframework.stereotype.Service;
 
 @Service

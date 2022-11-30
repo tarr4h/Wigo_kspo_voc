@@ -1,9 +1,9 @@
 package com.egov.voc.comn.config;
 
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPropertyService;
-import com.egov.voc.base.common.model.EzPropertyServiceImpl;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPropertyService;
+import com.egov.base.common.model.EzPropertyServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

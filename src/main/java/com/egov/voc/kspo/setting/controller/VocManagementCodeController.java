@@ -1,7 +1,7 @@
 package com.egov.voc.kspo.setting.controller;
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPaginationInfo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;

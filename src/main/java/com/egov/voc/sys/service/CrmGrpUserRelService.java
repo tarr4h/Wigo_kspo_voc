@@ -1,7 +1,7 @@
 package com.egov.voc.sys.service;
 
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.sys.dao.CrmGrpUserRelDao;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmGrpUserRelVo;

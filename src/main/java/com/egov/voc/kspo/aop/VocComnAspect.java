@@ -1,25 +1,18 @@
 package com.egov.voc.kspo.aop;
 
 
-import com.egov.voc.base.common.model.BaseVo;
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Signature;
-import org.apache.poi.ss.formula.functions.T;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Intercepts({@Signature(type = Executor.class, method="", args= {MappedStatement.class, Object.class})})

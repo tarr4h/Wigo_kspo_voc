@@ -1,7 +1,7 @@
 package com.egov.voc.sys.model;
 
-import com.egov.voc.base.common.model.ITreeVo;
-import com.egov.voc.base.common.util.BaseUtilities;
+import com.egov.base.common.model.ITreeVo;
+import com.egov.base.common.util.BaseUtilities;
 import lombok.Getter;
 import lombok.Setter;
 

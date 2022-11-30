@@ -1,8 +1,8 @@
 package com.egov.voc.kspo.setting.service;
 
 
-import com.egov.voc.base.common.model.AbstractTreeVo;
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.AbstractTreeVo;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.common.util.VocUtils;

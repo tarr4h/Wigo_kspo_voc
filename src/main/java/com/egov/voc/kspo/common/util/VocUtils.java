@@ -1,11 +1,11 @@
 package com.egov.voc.kspo.common.util;
 
 
-import com.egov.voc.base.common.model.AbstractTreeVo;
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPaginationInfo;
-import com.egov.voc.base.common.model.ITreeVo;
-import com.egov.voc.base.common.util.BaseUtilities;
+import com.egov.base.common.model.AbstractTreeVo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPaginationInfo;
+import com.egov.base.common.model.ITreeVo;
+import com.egov.base.common.util.BaseUtilities;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.corp.service.VocCorporationService;
 import com.egov.voc.sys.model.CrmEmpBaseVo;

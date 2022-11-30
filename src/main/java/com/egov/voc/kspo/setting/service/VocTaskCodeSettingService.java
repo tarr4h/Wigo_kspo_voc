@@ -1,10 +1,9 @@
 package com.egov.voc.kspo.setting.service;
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocTaskCodeSettingDao;
 import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
-import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.kspo.setting.model.VocTaskCodeVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.service.AbstractCrmService;

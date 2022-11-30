@@ -1,7 +1,7 @@
 package com.egov.voc.kspo.setting.service;
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.ITreeVo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;

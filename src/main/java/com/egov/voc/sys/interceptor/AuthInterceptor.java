@@ -1,10 +1,10 @@
 package com.egov.voc.sys.interceptor;
 
-import com.egov.voc.base.common.model.EzLoginAjaxException;
-import com.egov.voc.base.common.model.EzLoginException;
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzLoginAjaxException;
+import com.egov.base.common.model.EzLoginException;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Constants;
-import com.egov.voc.base.common.util.HandlerUtils;
+import com.egov.base.common.util.HandlerUtils;
 import com.egov.voc.comn.util.SessionUtil;
 import com.egov.voc.sys.controller.CrmMainController;
 import com.egov.voc.sys.service.CrmLoginService;

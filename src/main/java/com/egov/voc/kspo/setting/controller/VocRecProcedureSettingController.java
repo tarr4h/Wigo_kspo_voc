@@ -1,13 +1,12 @@
 package com.egov.voc.kspo.setting.controller;
 
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPaginationInfo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.VocActivityVo;
-import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.kspo.setting.model.VocTaskVo;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

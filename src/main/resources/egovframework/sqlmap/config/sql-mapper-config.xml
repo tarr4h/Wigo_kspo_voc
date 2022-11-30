@@ -18,11 +18,7 @@
 
 
 	<typeAliases>
-		<typeAlias alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
-		<typeAlias alias="searchVO" type="com.egov.voc.egovframework.example.sample.service.SampleDefaultVO"/>
-		<typeAlias alias="sampleVO" type="com.egov.voc.egovframework.example.sample.service.SampleVO"/>
-
-		<typeAlias type="com.egov.voc.base.common.model.EzMap" alias="EzMap"/>
-		<typeAlias type="com.egov.voc.base.common.model.EzTreeMap" alias="EzTreeMap"/>
+		<typeAlias type="com.egov.base.common.model.EzMap" alias="EzMap"/>
+		<typeAlias type="com.egov.base.common.model.EzTreeMap" alias="EzTreeMap"/>
     </typeAliases>
 </configuration>

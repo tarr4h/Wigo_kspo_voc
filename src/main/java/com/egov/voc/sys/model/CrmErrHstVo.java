@@ -1,6 +1,6 @@
 package com.egov.voc.sys.model;
 
-import com.egov.voc.base.common.model.BaseVo;
+import com.egov.base.common.model.BaseVo;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.egov.voc.kspo.common.stnd;
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import lombok.Getter;
 
 import java.util.ArrayList;

@@ -8,9 +8,9 @@
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="webBindingInitializer">
-            <bean class="com.egov.voc.egovframework.example.cmmn.web.EgovBindingInitializer"/>
-        </property>
+<!--        <property name="webBindingInitializer">-->
+<!--            <bean class="com.egov.voc.egovframework.example.cmmn.web.EgovBindingInitializer"/>-->
+<!--        </property>-->
     </bean>
 
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -30,15 +30,15 @@
 	    p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
     <!-- For Pagination Tag -->
-    <bean id="imageRenderer" class="com.egov.voc.egovframework.example.cmmn.web.EgovImgPaginationRenderer"/>
+<!--    <bean id="imageRenderer" class="com.egov.voc.egovframework.example.cmmn.web.EgovImgPaginationRenderer"/>-->
 
-    <bean id="paginationManager" class="org.egovframe.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
-        <property name="rendererType">
-            <map>
-                <entry key="image" value-ref="imageRenderer"/>
-            </map>
-        </property>
-    </bean>
+<!--    <bean id="paginationManager" class="org.egovframe.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">-->
+<!--        <property name="rendererType">-->
+<!--            <map>-->
+<!--                <entry key="image" value-ref="imageRenderer"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
 	<!-- /For Pagination Tag -->
 
 <!--    <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>-->

@@ -1,6 +1,6 @@
 package com.egov.voc.kspo.process.controller;
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.process.service.VocRegistrationService;
 import lombok.extern.slf4j.Slf4j;

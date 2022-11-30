@@ -1,6 +1,6 @@
 package com.egov.voc.kspo.corp.service;
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.kspo.corp.dao.VocCorporationDao;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmComnCdBaseVo;

@@ -1,6 +1,6 @@
 package com.egov.voc.sys.model;
 
-import com.egov.voc.base.common.model.AbstractTreeVo;
+import com.egov.base.common.model.AbstractTreeVo;
 import lombok.Getter;
 import lombok.Setter;
 

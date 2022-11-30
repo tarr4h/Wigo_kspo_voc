@@ -1,10 +1,7 @@
 package com.egov.voc.kspo.setting.model;
 
-import com.egov.voc.base.common.model.AbstractTreeVo;
-import com.egov.voc.base.common.model.ITreeVo;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 @Getter
 @Setter

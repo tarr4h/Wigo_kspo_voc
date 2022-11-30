@@ -1,8 +1,8 @@
 package com.egov.voc.sys.service;
 
 
-import com.egov.voc.base.common.model.BaseVo;
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.BaseVo;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.dao.ICrmDao;
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;

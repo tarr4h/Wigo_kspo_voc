@@ -221,3 +221,71 @@
 .form_register_btn:hover{
     cursor: pointer;
 }
+
+/* listMenu */
+/*  searchArea  */
+.list_searchArea{
+    margin-top: 20px;
+    min-height: 200px;
+}
+#searchTable {
+    border-collapse: collapse;
+}
+#searchTable th{
+    background-color: #94a9b463;
+    border: 1px solid #80808059;
+    height: 35px;
+    font-size: 12px;
+    font-weight: 500;
+}
+#searchTable td{
+    border: 1px solid #80808059;
+    height: 35px;
+    padding-left: 15px;
+}
+
+.list_buttonArea{
+    width: 100%;
+    height: 30px;
+    display: flex;
+}
+.list_addonBtnBox{
+    display: block;
+    width: 20%;
+}
+.list_searchBtnBox{
+    display: block;
+    width: 80%;
+    text-align: right;
+    padding-top: 5px;
+}
+#addonBtn{
+    width: 20%;
+    border: 1px solid #80808059;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 30px;
+    background-color: #d9dee063;
+    font-size: 12px;
+}
+.list_searchBtn{
+    width: 60px;
+    height: 26px;
+    border: 1px solid gray;
+    margin-left: 5px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+.list_shFrmInput{
+    width: 350px;
+    height: 25px;
+    border: 1px solid #8080809e;
+    padding-left: 10px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+.list_shFrmInput:focus{
+    outline: none;
+}

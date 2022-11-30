@@ -1,6 +1,6 @@
 package com.egov.voc.sys.dao;
 
-import com.egov.voc.base.common.model.EzMap;
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.sys.mapper.CrmMapper;
 import com.egov.voc.sys.model.CrmMenuVo;
 

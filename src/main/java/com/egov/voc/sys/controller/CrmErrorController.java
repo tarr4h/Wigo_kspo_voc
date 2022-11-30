@@ -1,10 +1,10 @@
 package com.egov.voc.sys.controller;
 
 
-import com.egov.voc.base.common.model.EzAjaxException;
-import com.egov.voc.base.common.model.EzException;
-import com.egov.voc.base.common.model.EzLoginAjaxException;
-import com.egov.voc.base.common.model.EzLoginException;
+import com.egov.base.common.model.EzAjaxException;
+import com.egov.base.common.model.EzException;
+import com.egov.base.common.model.EzLoginAjaxException;
+import com.egov.base.common.model.EzLoginException;
 import com.egov.voc.comn.util.Constants;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.service.CrmErrHstService;

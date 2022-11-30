@@ -1,7 +1,7 @@
 package com.egov.voc.kspo.process.controller;
 
-import com.egov.voc.base.common.model.EzMap;
-import com.egov.voc.base.common.model.EzPaginationInfo;
+import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.util.VocUtils;
@@ -15,6 +15,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+
+/**
+ * <pre>
+ * com.egov.voc.kspo.process.controller.VocIntergrationListController
+ *  - VocIntergrationListController.java
+ * </pre>
+ *
+ * @ClassName     : VocIntergrationListController
+ * @description   : 통합목록 controller
+ * @author        : tarr4h
+ * @date          : 2022-11-30
+ *
+ */
+
 
 @Controller
 @RequestMapping({"vocIntergrationList", "{menuCd}/vocIntergrationList"})
