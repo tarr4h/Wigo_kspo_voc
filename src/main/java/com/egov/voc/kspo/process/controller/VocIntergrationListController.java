@@ -68,12 +68,6 @@ public class VocIntergrationListController {
         return service.selectStatus(param);
     }
 
-    @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
-        model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
-    }
-
     @PostMapping(value = "getOrgTree")
     public @ResponseBody Object getOrgTree(@RequestBody Map<String, Object> param){
         return VocUtils.getOrgTree(param);
@@ -92,5 +86,11 @@ public class VocIntergrationListController {
     @PostMapping(value = "getOrgGrid")
     public @ResponseBody Object getOrgGrid(@RequestBody EzMap param){
         return VocUtils.getOrgGrid(param);
+    }
+
+    @GetMapping(value = { "openComnModal/{pageNm}"})
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+        model.addAttribute("param", param);
+        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
     }
 }

@@ -9,7 +9,7 @@ import com.egov.voc.kspo.process.dao.VocRegistrationDao;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
-import com.egov.voc.kspo.setting.service.VocAbstractService;
+import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.sys.dao.ICrmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

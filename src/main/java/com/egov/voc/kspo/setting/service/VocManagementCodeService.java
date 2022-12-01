@@ -4,6 +4,7 @@ package com.egov.voc.kspo.setting.service;
 import com.egov.base.common.model.AbstractTreeVo;
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.dao.VocManagementCodeDao;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;

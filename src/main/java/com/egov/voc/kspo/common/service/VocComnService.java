@@ -1,12 +1,8 @@
-package com.egov.voc.kspo.corp.service;
+package com.egov.voc.kspo.common.service;
 
-import com.egov.base.common.model.EzMap;
-import com.egov.voc.kspo.corp.dao.VocCorporationDao;
+import com.egov.voc.kspo.common.dao.VocComnDao;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmComnCdBaseVo;
-import com.egov.voc.sys.model.CrmEmpBaseVo;
-import com.egov.voc.sys.model.CrmOrgBaseVo;
-import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,24 +10,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-@Service("corpService")
-@Slf4j
-public class VocCorporationService extends AbstractCrmService {
+/**
+ * <pre>
+ * com.egov.voc.kspo.common.service.VocComnService
+ *  - VocComnService.java
+ * </pre>
+ *
+ * @ClassName     : VocComnService
+ * @description   :
+ * @author        : tarr4h
+ * @date          : 2022-12-01
+ *
+*/
 
+@Service
+@Slf4j
+public class VocComnService extends VocAbstractService{
 
     @Autowired
-    VocCorporationDao dao;
+    VocComnDao dao;
+
     @Override
     public ICrmDao getDao() {
         return dao;
-    }
-
-    public List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
-        return dao.selectOrgList(param);
-    }
-
-    public List<CrmEmpBaseVo> selectEmpList(EzMap param) {
-        return dao.selectEmpList(param);
     }
 
     public Object selectComnCdList(Map<String, Object> param) {
@@ -44,13 +45,5 @@ public class VocCorporationService extends AbstractCrmService {
             sb.append(opt);
         }
         return sb;
-    }
-
-    public CrmOrgBaseVo selectOrg(String orgId) {
-        return dao.selectOrg(orgId);
-    }
-
-    public CrmEmpBaseVo selectEmp(String empId) {
-        return dao.selectEmp(empId);
     }
 }

@@ -4,10 +4,9 @@ package com.egov.voc.kspo.common.util;
 import com.egov.base.common.model.AbstractTreeVo;
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.EzPaginationInfo;
-import com.egov.base.common.model.ITreeVo;
 import com.egov.base.common.util.BaseUtilities;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.corp.service.VocCorporationService;
+import com.egov.voc.kspo.common.service.VocComnService;
 import com.egov.voc.sys.model.CrmEmpBaseVo;
 import com.egov.voc.sys.model.CrmOrgBaseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +21,17 @@ import java.util.*;
 @Slf4j
 public class VocUtils extends BaseUtilities {
 
-    private static VocCorporationService corpService;
+    private static VocComnService comnService;
 
     @Autowired
-    VocCorporationService cpService;
+    VocComnService cmService;
+
+
 
     @PostConstruct
     public void init() throws Exception{
         super.init();
-        corpService = this.cpService;
+        comnService = this.cmService;
     }
 
     public static int parseIntObject(Object obj){
@@ -39,18 +40,18 @@ public class VocUtils extends BaseUtilities {
 
     public static void setOrgInfoToMap(EzMap org) {
         String orgId = (String) org.get("orgId");
-        CrmOrgBaseVo orgVo = corpService.selectOrg(orgId);
+        CrmOrgBaseVo orgVo = comnService.selectOrg(orgId);
 
         EzMap orgMap = (EzMap) Utilities.beanToMap(orgVo);
         org.putAll(orgMap);
     }
 
     public static CrmOrgBaseVo selectOrg(String orgId){
-        return corpService.selectOrg(orgId);
+        return comnService.selectOrg(orgId);
     }
 
     public static String getOrgNm(String orgId) {
-        CrmOrgBaseVo org = corpService.selectOrg(orgId);
+        CrmOrgBaseVo org = comnService.selectOrg(orgId);
         if(org == null){
             return "-";
         } else {
@@ -59,7 +60,7 @@ public class VocUtils extends BaseUtilities {
     }
 
     public static String getEmpNm(String empId) {
-        CrmEmpBaseVo emp = corpService.selectEmp(empId);
+        CrmEmpBaseVo emp = comnService.selectEmp(empId);
         if(emp == null){
             return "-";
         } else {
@@ -69,28 +70,28 @@ public class VocUtils extends BaseUtilities {
 
     public static EzMap getEmpGrid(EzMap param) {
         EzPaginationInfo page = param.getPaginationInfo();
-        List<CrmEmpBaseVo> list = corpService.selectEmpList(param);
+        List<CrmEmpBaseVo> list = comnService.selectEmpList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
 
     public static Object getOrgTree(Map<String, Object> param){
-        return AbstractTreeVo.makeHierarchy((List<? extends ITreeVo>) corpService.selectOrgList(param));
+        return AbstractTreeVo.makeHierarchy(comnService.selectOrgList(param));
     }
 
     public static EzMap getOrgGrid(EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<CrmOrgBaseVo> list = corpService.selectOrgList(param);
+        List<CrmOrgBaseVo> list = comnService.selectOrgList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
 
     public static List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
-        return corpService.selectOrgList(param);
+        return comnService.selectOrgList(param);
     }
 
     public static Object selectComnCdList(Map<String, Object> param){
-        return corpService.selectComnCdList(param);
+        return comnService.selectComnCdList(param);
     }
 
     public static Map<String, Object> setCodeSettingParam(Object obj){

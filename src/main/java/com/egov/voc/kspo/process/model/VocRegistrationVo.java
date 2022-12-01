@@ -21,6 +21,7 @@ public class VocRegistrationVo extends BaseVo {
     private String issueYn;
     private String issueGrade;
     private String regUsr;
+    private String regOrg;
     private String regDt;
     private String recUsr;
     private String recOrg;

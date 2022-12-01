@@ -1,13 +1,15 @@
-package com.egov.voc.kspo.setting.service;
+package com.egov.voc.kspo.common.service;
 
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.dao.IVocPrcDao;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
-import com.egov.voc.kspo.setting.dao.VocProcessCodeDao;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.sys.model.CrmEmpBaseVo;
+import com.egov.voc.sys.model.CrmOrgBaseVo;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import java.util.Map;
 public abstract class VocAbstractService extends AbstractCrmService {
 
     @Autowired
-    VocProcessCodeDao dao;
+    IVocPrcDao dao;
 
     public List<? extends ITreeVo> selectVocManagementCodeTree(Map<String, Object> param){
         return dao.selectVocManagementCodeTree(param);
@@ -145,4 +147,24 @@ public abstract class VocAbstractService extends AbstractCrmService {
     public <T> List<T> selectStatus(Object param){
         return dao.selectStatus(param);
     }
+
+
+    ///// 사원, 부서 관련
+    public List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
+        return dao.selectOrgList(param);
+    }
+
+    public List<CrmEmpBaseVo> selectEmpList(EzMap param) {
+        return dao.selectEmpList(param);
+    }
+
+    public CrmOrgBaseVo selectOrg(String orgId) {
+        return dao.selectOrg(orgId);
+    }
+
+    public CrmEmpBaseVo selectEmp(String empId) {
+        return dao.selectEmp(empId);
+    }
+
+
 }

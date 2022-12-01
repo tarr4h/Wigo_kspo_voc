@@ -2,7 +2,7 @@ package com.egov.voc.kspo.process.service;
 
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.kspo.process.dao.VocIntergrationListDao;
-import com.egov.voc.kspo.setting.service.VocAbstractService;
+import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.sys.dao.ICrmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
