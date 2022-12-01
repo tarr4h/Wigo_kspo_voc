@@ -2,7 +2,7 @@ package com.egov.voc.kspo.process.service;
 
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.dao.VocRegistrationDao;
@@ -32,17 +32,15 @@ public class VocRegistrationService extends VocAbstractService {
     }
 
     public Object selectChannel(Map<String, Object> param) {
-        return getManagementCodeSelect(param, ManageCodeCategoryEnum.REGISTRATION);
+        return getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
     }
 
-    public Object register(Map<String, Object> param) throws Exception{
+    public boolean register(Map<String, Object> param) throws Exception{
         boolean insert = insert(param);
         if(!insert){
-            param.put("result", false);
-            return param;
+            return false;
         }
-
-        log.debug("param = {}", param);
+        
         // 채널코드를 통해서 일치하는 dir_cd를 구한다.
         param.put("managementCd", param.get("channel"));
         String dirCd = selectDirCd(param);
@@ -53,8 +51,7 @@ public class VocRegistrationService extends VocAbstractService {
                 VocManagementCodeVo mc = selectManagementCode(param);
                 if (mc.getPrntsCd() == null) {
                     param.put("msg", "해당 채널에 등록된 절차가 없습니다.");
-                    param.put("result", false);
-                    return param;
+                    return false;
                 }
 
                 param.put("managementCd", mc.getPrntsCd());
@@ -80,16 +77,32 @@ public class VocRegistrationService extends VocAbstractService {
             dao.insertRegProcedure(regPrcd);
         }
 
+        return true;
+    }
+
+    public Object registerComplete(Map<String, Object> param) throws Exception{
+        boolean result = register(param);
+        if(!result){
+            param.put("result", false);
+            return param;
+        }
+
         // 등록 절차의 상태를 완료로 업데이트
         updateRegProcedureStatus(param, PrcdStatus.COMPLETE);
         param.put("result", true);
         return param;
     }
 
-    public Object temporarySave(Map<String, Object> param){
-        boolean insert = insert(param);
-        param.put("result", insert);
+    public Object registerTemporary(Map<String, Object> param) throws Exception {
+        boolean result = register(param);
+        if(!result){
+            param.put("result", false);
+            return param;
+        }
 
+        // 등록 절차의 상태를 진행중으로 업데이트
+        updateRegProcedureStatus(param, PrcdStatus.ONGOING);
+        param.put("result", true);
         return param;
     }
 

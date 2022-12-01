@@ -1,8 +1,10 @@
 package com.egov.voc.kspo.common.service;
 
+import com.egov.base.common.model.EzMap;
 import com.egov.voc.kspo.common.dao.VocComnDao;
 import com.egov.voc.sys.dao.ICrmDao;
-import com.egov.voc.sys.model.CrmComnCdBaseVo;
+import com.egov.voc.sys.model.CrmEmpBaseVo;
+import com.egov.voc.sys.model.CrmOrgBaseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,15 +37,28 @@ public class VocComnService extends VocAbstractService{
         return dao;
     }
 
-    public Object selectComnCdList(Map<String, Object> param) {
-        log.debug("param = {}", param);
+    public <T> T selectComnCd(Map<String, Object> param){
+        return dao.selectComnCd(param);
+    }
 
-        StringBuilder sb = new StringBuilder();
-        List<CrmComnCdBaseVo> comnCdList = dao.selectComnCdList(param);
-        for(CrmComnCdBaseVo comnCd : comnCdList){
-            String opt = "<option value='" + comnCd.getComnCd() + "' data-top-comn-cd='" + comnCd.getTopComnCd()  + "'>" + comnCd.getComnCdNm() + "</option>";
-            sb.append(opt);
-        }
-        return sb;
+    public <T> List<T> selectComnCdList(Map<String, Object> param) {
+        return dao.selectComnCdList(param);
+    }
+
+    ///// 사원, 부서 관련
+    public List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
+        return dao.selectOrgList(param);
+    }
+
+    public List<CrmEmpBaseVo> selectEmpList(EzMap param) {
+        return dao.selectEmpList(param);
+    }
+
+    public CrmOrgBaseVo selectOrg(String orgId) {
+        return dao.selectOrg(orgId);
+    }
+
+    public CrmEmpBaseVo selectEmp(String empId) {
+        return dao.selectEmp(empId);
     }
 }

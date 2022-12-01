@@ -31,14 +31,14 @@ public class VocRegistrationController {
         return service.selectChannel(param);
     }
 
-    @PostMapping(value = "register")
-    public @ResponseBody Object register(@RequestBody EzMap param) throws Exception{
-        return service.register(param);
+    @PostMapping(value = "registerComplete")
+    public @ResponseBody Object registerComplete(@RequestBody EzMap param) throws Exception{
+        return service.registerComplete(param);
     }
 
-    @PostMapping(value = "temporarySave")
-    public @ResponseBody Object temporarySave(@RequestBody EzMap param) throws Exception{
-        return service.temporarySave(param);
+    @PostMapping(value = "registerTemporary")
+    public @ResponseBody Object registerTemporary(@RequestBody EzMap param) throws Exception{
+        return service.registerTemporary(param);
     }
 
 }

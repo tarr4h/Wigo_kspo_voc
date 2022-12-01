@@ -3,7 +3,7 @@ package com.egov.voc.kspo.process.controller;
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.process.service.VocIntergrationListService;
@@ -55,17 +55,17 @@ public class VocIntergrationListController {
 
     @GetMapping(value = "selectChannel")
     public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategoryEnum.REGISTRATION);
+        return service.getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
     }
 
     @GetMapping(value = "selectType")
     public @ResponseBody Object selectType(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategoryEnum.RECEIPT);
+        return service.getManagementCodeSelect(param, ManageCodeCategory.RECEIPT);
     }
 
-    @GetMapping(value = "selectStatus")
-    public @ResponseBody Object selectStatus(@RequestParam Map<String, Object> param){
-        return service.selectStatus(param);
+    @GetMapping(value = "selectStatusList")
+    public @ResponseBody Object selectStatusList(@RequestParam Map<String, Object> param){
+        return service.selectStatusList(param);
     }
 
     @PostMapping(value = "getOrgTree")

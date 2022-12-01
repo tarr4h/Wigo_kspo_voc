@@ -3,6 +3,16 @@
 <mapper namespace="com.egov.voc.kspo.common.dao.VocComnDao">
 
 
+    <select id="selectComnCd" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
+        select
+            *
+        from
+            crm_comn_cd_bas
+        where
+            top_comn_cd = #{topComnCd}
+            and
+            comn_cd = #{comnCd}
+    </select>
 
     <select id="selectComnCdList" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
         select
@@ -22,5 +32,43 @@
             </if>
     </select>
 
+    <!--    -->
+    <select id="selectOrg" resultType="com.egov.voc.sys.model.CrmOrgBaseVo">
+        select
+            *
+        from
+            crm_org_bas
+        where
+            org_id = #{orgId}
+    </select>
 
+    <select id="selectEmp" resultType="com.egov.voc.sys.model.CrmEmpBaseVo">
+        select
+            *
+        from
+            CRM_EMP_BAS
+        where
+            emp_id = #{empId}
+    </select>
+
+    <select id="selectOrgList" resultType="com.egov.voc.sys.model.CrmOrgBaseVo">
+        select
+            *
+        from
+            crm_org_bas
+        where
+            org_nm like '%' || #{keyword} || '%'
+    </select>
+
+    <select id="selectEmpList" resultType="com.egov.voc.sys.model.CrmEmpBaseVo">
+        select
+        ceb.*,
+        (select org_nm from crm_org_bas where org_id = ceb.org_id) orgNm
+        from
+        crm_emp_bas ceb
+        where
+        <if test="orgId != null">
+            org_id = #{orgId}
+        </if>
+    </select>
 </mapper>

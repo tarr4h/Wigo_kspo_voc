@@ -48,7 +48,7 @@ public class VocProcedureCodeSettingController {
     public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
         List<VocProcedureCodeVo> list = service.selectProcedureCodeList(param);
         param.put("existCd", list);
-        return VocUtils.selectComnCdList(param);
+        return VocUtils.selectComnCdOptionList(param);
     }
 
     @PostMapping(value = "insert")

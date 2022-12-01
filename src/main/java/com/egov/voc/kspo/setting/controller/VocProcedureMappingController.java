@@ -2,7 +2,7 @@ package com.egov.voc.kspo.setting.controller;
 
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.setting.service.VocProcedureMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class VocProcedureMappingController {
 
     @PostMapping(value = {"vocManagementCodeTree"})
     public @ResponseBody Object vocProcedureMappingTree(@RequestBody EzMap param) throws Exception{
-        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT, ManageCodeCategoryEnum.DETAIL));
+        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.REGISTRATION, ManageCodeCategory.RECEIPT, ManageCodeCategory.DETAIL));
         return service.vocManagementCodeTree(param);
     }
 

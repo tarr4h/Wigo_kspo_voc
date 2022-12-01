@@ -31,7 +31,7 @@ public class VocIntergrationListService extends VocAbstractService {
 
     @Override
     public ICrmDao getDao() {
-        return null;
+        return dao;
     }
 
     public <T> List<T> selectProcedureCodeList(EzMap param) {

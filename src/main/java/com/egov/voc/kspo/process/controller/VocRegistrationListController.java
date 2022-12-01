@@ -1,15 +1,18 @@
 package com.egov.voc.kspo.process.controller;
 
 import com.egov.base.common.model.EzMap;
+import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
+import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.process.service.VocRegistrationListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -41,14 +44,22 @@ public class VocRegistrationListController {
         return Utilities.getProperty("tiles.crm") + "voc/process/list/vocRegistrationList";
     }
 
-    @GetMapping(value = "selectChannel")
-    public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategoryEnum.REGISTRATION);
+    @PostMapping(value = "selectList")
+    public @ResponseBody Object selectList(@RequestBody EzMap param) throws Exception{
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocRegistrationVo> list = service.selectList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
     }
 
-    @GetMapping(value = "selectStatus")
-    public @ResponseBody Object selectStatus(@RequestParam Map<String, Object> param){
-        return service.selectStatus(param);
+    @GetMapping(value = "selectChannel")
+    public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
+        return service.getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
+    }
+
+    @GetMapping(value = "selectStatusList")
+    public @ResponseBody Object selectStatusList(@RequestParam Map<String, Object> param){
+        return service.selectStatusList(param);
     }
 
     @PostMapping(value = "getOrgTree")

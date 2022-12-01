@@ -206,7 +206,7 @@
      * status list를 select로 append
      */
     async function setStatus(){
-        let list = await selectStatus();
+        let list = await selectStatusList();
 
         let select = '<select class="v_td_select ' + 'status' + '">' +
             '<option value="" selected disabled>선택하세요</option>';
@@ -224,10 +224,10 @@
      * status 조회
      * @returns {Promise<unknown>}
      */
-    function selectStatus(){
+    function selectStatusList(){
         return new Promise(function(resolve){
             $.ajax({
-                url : '<c:url value="${urlPrefix}/selectStatus${urlSuffix}"/>',
+                url : '<c:url value="${urlPrefix}/selectStatusList${urlSuffix}"/>',
                 success(res){
                     resolve(res);
                 },

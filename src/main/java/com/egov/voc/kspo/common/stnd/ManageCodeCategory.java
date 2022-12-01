@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public enum ManageCodeCategoryEnum {
+public enum ManageCodeCategory {
 
     REGISTRATION("001", "reg", "등록 절차"),
     RECEIPT("002", "rec", "접수 절차"),
@@ -19,21 +19,21 @@ public enum ManageCodeCategoryEnum {
     private String footNote;
     private static final String topCd = "VOC010";
 
-    ManageCodeCategoryEnum(String comnCd, String caption, String footNote) {
+    ManageCodeCategory(String comnCd, String caption, String footNote) {
         this.topComnCd = topCd;
         this.comnCd = comnCd;
         this.caption = caption;
         this.footNote = footNote;
     };
 
-    public static void setComnCdTreeMap(EzMap param, ManageCodeCategoryEnum enumType){
+    public static void setComnCdTreeMap(EzMap param, ManageCodeCategory enumType){
         param.put("topComnCd", enumType.getTopComnCd());
         param.put("comnCd", enumType.getComnCd());
     }
 
-    public static void setComnCdListTreeMap(EzMap param, List<ManageCodeCategoryEnum> enumTypeList){
+    public static void setComnCdListTreeMap(EzMap param, List<ManageCodeCategory> enumTypeList){
         List<String> comnCdList = new ArrayList<>();
-        for(ManageCodeCategoryEnum enumType : enumTypeList){
+        for(ManageCodeCategory enumType : enumTypeList){
             comnCdList.add(enumType.getComnCd());
         }
         param.put("topComnCd", topCd);

@@ -5,8 +5,6 @@ import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.mapper.CrmMapper;
-import com.egov.voc.sys.model.CrmEmpBaseVo;
-import com.egov.voc.sys.model.CrmOrgBaseVo;
 
 import java.util.List;
 import java.util.Map;
@@ -51,15 +49,10 @@ public interface IVocPrcDao extends ICrmDao {
 
     <T> List<T> getManagementCodeSelect(Map<String, Object> param);
 
-    <T> List<T> selectStatus(Object param);
+    <T> T selectStatus(Object param);
 
-    /// 사원, 부서 관련
-    List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param);
+    <T> List<T> selectStatusList(Object param);
 
-    List<CrmEmpBaseVo> selectEmpList(EzMap param);
 
-    CrmOrgBaseVo selectOrg(String orgId);
-
-    CrmEmpBaseVo selectEmp(String empId);
 }
 

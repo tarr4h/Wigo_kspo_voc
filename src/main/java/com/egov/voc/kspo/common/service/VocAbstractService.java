@@ -4,12 +4,10 @@ import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.dao.IVocPrcDao;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
-import com.egov.voc.sys.model.CrmEmpBaseVo;
-import com.egov.voc.sys.model.CrmOrgBaseVo;
 import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,20 +77,20 @@ public abstract class VocAbstractService extends AbstractCrmService {
         status.put("regSeq", param.get("regSeq"));
         dao.updateRegistrationStatus(status);
 
-        // 완료(Y)인 경우 다음 절차의 대기(N) 상태로 업데이트 진행
-        if(requestStatus.getStatus().equals(PrcdStatus.COMPLETE.getStatus())){
-            param.remove("mcPrcdSeq");
-            param.put("prntsSeq", prcd.getMcPrcdSeq());
-            VocProcedureVo nextPrcd = dao.selectProcedure(param);
-
-            Map<String, Object> nextStatus = dao.selectVocStatus(nextPrcd.getPrcdSeq(), PrcdStatus.STNDBY.getStatus());
-            // 다음 상태가 존재하지 않는 경우 == 완료 -> 종결 처리(C)
-            if(nextStatus == null){
-                nextStatus = dao.selectVocStatus(null, PrcdStatus.CLOSE.getStatus());
-            }
-            nextStatus.put("regSeq", param.get("regSeq"));
-            dao.updateRegistrationStatus(nextStatus);
-        }
+        // 완료(Y)인 경우 다음 절차의 대기(N) 상태로 업데이트 진행 --> 수동 등록 시에는 등록에도 결재가 필요하므로, 완료 > 결재 처리 > 접수대기로 update
+//        if(requestStatus.getStatus().equals(PrcdStatus.COMPLETE.getStatus())){
+//            param.remove("mcPrcdSeq");
+//            param.put("prntsSeq", prcd.getMcPrcdSeq());
+//            VocProcedureVo nextPrcd = dao.selectProcedure(param);
+//
+//            Map<String, Object> nextStatus = dao.selectVocStatus(nextPrcd.getPrcdSeq(), PrcdStatus.STNDBY.getStatus());
+//            // 다음 상태가 존재하지 않는 경우 == 완료 -> 종결 처리(C)
+//            if(nextStatus == null){
+//                nextStatus = dao.selectVocStatus(null, PrcdStatus.CLOSE.getStatus());
+//            }
+//            nextStatus.put("regSeq", param.get("regSeq"));
+//            dao.updateRegistrationStatus(nextStatus);
+//        }
     }
 
     public <T> T selectManagementCode(Object param){
@@ -139,32 +137,21 @@ public abstract class VocAbstractService extends AbstractCrmService {
         return dao.selectDutyOrgList(param);
     }
 
-    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategoryEnum type) {
+    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategory type) {
         param.put("comnCd", type.getComnCd());
         return dao.getManagementCodeSelect(param);
     }
 
-    public <T> List<T> selectStatus(Object param){
+    public <T> T selectStatus(Object param){
         return dao.selectStatus(param);
     }
 
-
-    ///// 사원, 부서 관련
-    public List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
-        return dao.selectOrgList(param);
+    public <T> List<T> selectStatusList(Object param){
+        return dao.selectStatusList(param);
     }
 
-    public List<CrmEmpBaseVo> selectEmpList(EzMap param) {
-        return dao.selectEmpList(param);
-    }
 
-    public CrmOrgBaseVo selectOrg(String orgId) {
-        return dao.selectOrg(orgId);
-    }
 
-    public CrmEmpBaseVo selectEmp(String empId) {
-        return dao.selectEmp(empId);
-    }
 
 
 }

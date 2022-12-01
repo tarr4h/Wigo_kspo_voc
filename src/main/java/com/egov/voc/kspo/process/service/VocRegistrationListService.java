@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <pre>
  * com.egov.voc.kspo.process.service.VocRegistrationListService
@@ -31,5 +33,9 @@ public class VocRegistrationListService extends VocAbstractService {
     @Override
     public ICrmDao getDao() {
         return dao;
+    }
+
+    public <T> List<T> selectList(Object param) throws Exception {
+        return dao.selectList(param);
     }
 }

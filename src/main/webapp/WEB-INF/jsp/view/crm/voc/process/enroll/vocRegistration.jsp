@@ -151,7 +151,7 @@
         let chList = setChList();
 
         $.ajax({
-            url: '<c:url value="${urlPrefix}/temporarySave${urlSuffix}"/>',
+            url: '<c:url value="${urlPrefix}/registerTemporary${urlSuffix}"/>',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -180,7 +180,7 @@
         let chList = setChList();
 
         $.ajax({
-            url: '<c:url value="${urlPrefix}/register${urlSuffix}"/>',
+            url: '<c:url value="${urlPrefix}/registerComplete${urlSuffix}"/>',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({

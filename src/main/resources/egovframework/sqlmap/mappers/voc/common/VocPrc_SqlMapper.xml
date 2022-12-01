@@ -314,6 +314,18 @@
         select
             *
         from
+            voc_status vs inner join voc_procedure_bas vpb
+            on vs.PRCD_SEQ = vpb.PRCD_SEQ
+        where
+            vpb.top_comn_cd = #{topComnCd}
+            and
+            vpb.comn_cd = #{comnCd}
+    </select>
+
+    <select id="selectStatusList" resultType="map">
+        select
+            *
+        from
             voc_status
         order by
             1
@@ -340,43 +352,5 @@
 
 
 
-    <!--    -->
-    <select id="selectOrg" resultType="com.egov.voc.sys.model.CrmOrgBaseVo">
-        select
-            *
-        from
-            crm_org_bas
-        where
-            org_id = #{orgId}
-    </select>
 
-    <select id="selectEmp" resultType="com.egov.voc.sys.model.CrmEmpBaseVo">
-        select
-            *
-        from
-            CRM_EMP_BAS
-        where
-            emp_id = #{empId}
-    </select>
-
-    <select id="selectOrgList" resultType="com.egov.voc.sys.model.CrmOrgBaseVo">
-        select
-            *
-        from
-            crm_org_bas
-        where
-            org_nm like '%' || #{keyword} || '%'
-    </select>
-
-    <select id="selectEmpList" resultType="com.egov.voc.sys.model.CrmEmpBaseVo">
-        select
-        ceb.*,
-        (select org_nm from crm_org_bas where org_id = ceb.org_id) orgNm
-        from
-        crm_emp_bas ceb
-        where
-        <if test="orgId != null">
-            org_id = #{orgId}
-        </if>
-    </select>
 </mapper>

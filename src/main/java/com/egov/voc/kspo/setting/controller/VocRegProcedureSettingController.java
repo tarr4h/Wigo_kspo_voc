@@ -4,7 +4,7 @@ package com.egov.voc.kspo.setting.controller;
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategoryEnum;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.*;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
@@ -34,7 +34,7 @@ public class VocRegProcedureSettingController {
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
     public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws Exception{
         // single
-        ManageCodeCategoryEnum.setComnCdTreeMap(param, ManageCodeCategoryEnum.REGISTRATION);
+        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.REGISTRATION);
         // multiple example
 //        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
         return service.vocManagementCodeTree(param);
@@ -80,7 +80,7 @@ public class VocRegProcedureSettingController {
      */
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategoryEnum.REGISTRATION.getCaption());
+        param.put("target", ManageCodeCategory.REGISTRATION.getCaption());
         param.put("list", service.selectAvailablePrcdBasList(param));
         return param;
     }
@@ -199,7 +199,7 @@ public class VocRegProcedureSettingController {
 
     @GetMapping(value = "validateRequiredPrcd")
     public @ResponseBody Object validateRequiredPrcd(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategoryEnum.REGISTRATION.getCaption());
+        param.put("target", ManageCodeCategory.REGISTRATION.getCaption());
         return service.validateRequiredPrcd(param);
     }
 }

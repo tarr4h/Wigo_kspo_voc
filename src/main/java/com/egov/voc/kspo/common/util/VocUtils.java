@@ -7,6 +7,7 @@ import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.base.common.util.BaseUtilities;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.service.VocComnService;
+import com.egov.voc.sys.model.CrmComnCdBaseVo;
 import com.egov.voc.sys.model.CrmEmpBaseVo;
 import com.egov.voc.sys.model.CrmOrgBaseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -93,6 +94,16 @@ public class VocUtils extends BaseUtilities {
     public static Object selectComnCdList(Map<String, Object> param){
         return comnService.selectComnCdList(param);
     }
+
+    public static Object selectComnCdOptionList(Map<String, Object> param){
+        StringBuilder sb = new StringBuilder();
+        List<CrmComnCdBaseVo> comnCdList = comnService.selectComnCdList(param);
+        for(CrmComnCdBaseVo comnCd : comnCdList){
+            String opt = "<option value='" + comnCd.getComnCd() + "' data-top-comn-cd='" + comnCd.getTopComnCd()  + "'>" + comnCd.getComnCdNm() + "</option>";
+            sb.append(opt);
+        }
+        return sb;
+    };
 
     public static Map<String, Object> setCodeSettingParam(Object obj){
         Map<String, Object> param = (Map<String, Object>) obj;
