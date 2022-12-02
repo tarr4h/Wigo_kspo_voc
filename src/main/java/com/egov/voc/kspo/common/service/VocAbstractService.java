@@ -5,6 +5,7 @@ import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.dao.IVocPrcDao;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
+import com.egov.voc.kspo.common.stnd.PrcdCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
@@ -142,8 +143,20 @@ public abstract class VocAbstractService extends AbstractCrmService {
         return dao.getManagementCodeSelect(param);
     }
 
-    public <T> T selectStatus(Object param){
-        return dao.selectStatus(param);
+    /**
+     * 절차와 상태 파라미터를 통해서 status 조회 후 parameter에 put
+     * @param param : hashMap
+     * @param prcdCategory : eNum - 절차 분류
+     * @param prcdStatus : eNum - 상태
+     * @return statusCd
+     */
+    public void setStatusCd(Map<String, Object> param, PrcdCategory prcdCategory, PrcdStatus prcdStatus){
+        param.put("topComnCd", PrcdCategory.REGISTRATION.getTopComnCd());
+        param.put("comnCd", PrcdCategory.REGISTRATION.getComnCd());
+        param.put("status", PrcdStatus.ONGOING.getStatus());
+        Map<String, Object> status = dao.selectStatusCd(param);
+
+        param.put("statusCd", status.get("STATUS_CD"));
     }
 
     public <T> List<T> selectStatusList(Object param){

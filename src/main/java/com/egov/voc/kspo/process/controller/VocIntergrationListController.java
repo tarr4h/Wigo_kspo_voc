@@ -48,8 +48,8 @@ public class VocIntergrationListController {
     @PostMapping(value = "selectList")
     public @ResponseBody Object selectList(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocRegistrationVo> list = service.selectProcedureCodeList(param);
-        page.setTotalRecordCount(list.size());
+        List<VocRegistrationVo> list = service.selectList(param);
+        page.setTotalRecordCount(service.selectListCount(param));
         return Utilities.getGridData(list, page);
     }
 

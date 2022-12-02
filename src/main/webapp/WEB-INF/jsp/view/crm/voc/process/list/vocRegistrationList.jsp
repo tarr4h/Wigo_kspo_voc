@@ -101,6 +101,7 @@
     <div class="divWrapper">
         <div id="divGrid1"
              data-get-url="<c:url value='${urlPrefix}/selectList${urlSuffix}'/>"
+             data-pagenation="Y"
              data-grid-id="listGrid"
              data-type="grid"
              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocIntergrationList.xml${urlSuffix}'/>"
@@ -122,7 +123,23 @@
 
     function onGridLoad(){
         let param = {};
+        param.recordCountPerPage = 10;
         window['listGrid'].loadUrl('', param);
+    }
+
+    function onGridCellDblClick(gridView,itemIndex, column, json, value){
+        console.log('ongridCellDblClick json : ', json);
+
+        // 페이지이동
+        let menu = {
+            menuCd: "0104020100",
+            menuLvlNo: 4,
+            menuNm: "VOC 신규등록",
+            menuUrl: "vocRegistration?regSeq=" + json.regSeq,
+            topMenuCd: "0100000000"
+        };
+
+        openMenu(menu);
     }
 
     /**
@@ -134,6 +151,18 @@
         param.recordCountPerPage = 10;
 
         window['listGrid'].loadUrl("", param);
+    }
+
+    function openMenu(menu){
+        let topWin = Utilities.getTopWindow();
+
+        for(let i = 0; i < window.parent.length; i++){
+            let win = window.parent[i];
+            win.location.reload();
+        }
+
+        topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
+        // topWin.removeTab("0104020100");
     }
 
     $('.list_searchBtn').on('click', function(){

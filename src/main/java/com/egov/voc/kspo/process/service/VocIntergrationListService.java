@@ -34,8 +34,11 @@ public class VocIntergrationListService extends VocAbstractService {
         return dao;
     }
 
-    public <T> List<T> selectProcedureCodeList(EzMap param) {
+    public <T> List<T> selectList(EzMap param) {
         return dao.selectList(param);
     }
 
+    public int selectListCount(EzMap param) {
+        return dao.selectListCount(param);
+    }
 }

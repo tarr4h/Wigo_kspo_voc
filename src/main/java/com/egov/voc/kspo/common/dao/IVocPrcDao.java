@@ -49,7 +49,7 @@ public interface IVocPrcDao extends ICrmDao {
 
     <T> List<T> getManagementCodeSelect(Map<String, Object> param);
 
-    <T> T selectStatus(Object param);
+    <T> T selectStatusCd(Object param);
 
     <T> List<T> selectStatusList(Object param);
 

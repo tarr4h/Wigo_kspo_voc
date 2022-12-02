@@ -39,6 +39,16 @@ public class VocUtils extends BaseUtilities {
         return Integer.parseInt(String.valueOf(obj));
     }
 
+//    public static void setPagination(EzMap param, EzPaginationInfo page){
+//        int currentPage = page.getCurrentPageNo();
+//        int limit = page.getRecordCountPerPage();
+//        int pageStart = (currentPage - 1) * limit + 1;
+//        int pageEnd = currentPage * limit;
+//
+//        param.put("pageStart", pageStart);
+//        param.put("pageEnd", pageEnd);
+//    }
+
     public static void setOrgInfoToMap(EzMap org) {
         String orgId = (String) org.get("orgId");
         CrmOrgBaseVo orgVo = comnService.selectOrg(orgId);

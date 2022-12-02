@@ -285,9 +285,9 @@
 
     <select id="getManagementCodeSelect" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
         select
-        *
+            *
         from
-        VOC_MANAGEMENT_CODE
+            VOC_MANAGEMENT_CODE
         <where>
             comn_cd = #{comnCd}
             <if test="prntsCd != null and !prntsCd.equals('')">
@@ -297,20 +297,20 @@
             <if test="prntsCd == null">
                 and
                 prnts_cd = (
-                select
-                management_cd
-                from
-                voc_management_code
-                where
-                comn_cd = #{comnCd}
-                and
-                management_cd = top_cd
+                    select
+                        management_cd
+                    from
+                        voc_management_code
+                    where
+                        comn_cd = #{comnCd}
+                        and
+                        management_cd = top_cd
                 )
             </if>
         </where>
     </select>
 
-    <select id="selectStatus" resultType="map">
+    <select id="selectStatusCd" resultType="map">
         select
             *
         from
@@ -320,6 +320,8 @@
             vpb.top_comn_cd = #{topComnCd}
             and
             vpb.comn_cd = #{comnCd}
+            and
+            vs.status = #{status}
     </select>
 
     <select id="selectStatusList" resultType="map">

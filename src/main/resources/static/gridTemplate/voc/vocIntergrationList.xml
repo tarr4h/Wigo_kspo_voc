@@ -6,7 +6,7 @@
         <appendable value="N"/>
         <readOnly value="N"/>
         <showCheckbox value="Y"/>
-        <showNumber value="N"/>
+        <showNumber value="Y"/>
         <showStateBar value="N"/>
         <showHeaderSum value="N"/>
         <showFooter value="N"/>

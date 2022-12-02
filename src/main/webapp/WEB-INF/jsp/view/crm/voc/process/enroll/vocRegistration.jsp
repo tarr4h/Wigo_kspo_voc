@@ -20,7 +20,7 @@
 
 <div class="v_header">
     <div class="v_header_title">
-        <h3>VOC 신규등록</h3>
+        <h3>VOC 신규등록(${param.regSeq})</h3>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
                     </td>
                     <th>등록자</th>
                     <td>
-                        <input type="text" name="regUser" class="v_td_input_text" value="${LOGIN_USER.userNm}" disabled>
+                        <input type="text" name="regUser" class="v_td_input_text" value="<c:if test="${regSeq == null}">${LOGIN_USER.userNm}</c:if><c:if test="${registration.regUsr != null}">${registration.regUsrNm}</c:if>" disabled>
                     </td>
                 </tr>
                 <tr>
@@ -54,19 +54,19 @@
                 <tr>
                     <th>제목</th>
                     <td colspan="3">
-                        <input type="text" name="title" class="v_td_input_text" value="제목123">
+                        <input type="text" name="title" class="v_td_input_text" value="${registration.title}">
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3">
-                        <textarea name="content" class="v_td_textarea" cols="30" rows="10">내용123</textarea>
+                        <textarea name="content" class="v_td_textarea" cols="30" rows="10">${registration.content}</textarea>
                     </td>
                 </tr>
                 <tr>
-                    <th>등록자 COMMENT</th>
+                    <th>등록자 의견</th>
                     <td colspan="3">
-                        <input type="text" name="regComment" class="v_td_input_text" value="comment123">
+                        <input type="text" name="regComment" class="v_td_input_text" value="${registration.regComment}">
                     </td>
                 </tr>
                 <tr>
@@ -88,11 +88,12 @@
 </div>
 
 <script>
+    const regSeq = '${param.regSeq}';
+    const $channelWrapper = $('#channelWrapper');
+
     $(() => {
         setChannel();
     });
-
-    const $channelWrapper = $('#channelWrapper');
 
     $('button').on('click', function(){
         let evt = $(this).data('event');
@@ -120,16 +121,8 @@
      * 등록 후 통합검색 화면 랜딩
      *  - 나머지 tab 화면 reload
      */
-    function afterReg(){
+    function afterReg(menu){
         let topWin = Utilities.getTopWindow();
-
-        let menu = {
-            menuCd: "0104010100",
-            menuLvlNo: 4,
-            menuNm: "VOC 통합검색",
-            menuUrl: "vocIntergrationList",
-            topMenuCd: "0100000000"
-        };
 
         for(let i = 0; i < window.parent.length; i++){
             let win = window.parent[i];
@@ -155,6 +148,7 @@
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
+                regSeq,
                 formArr,
                 chList
             }),
@@ -162,7 +156,14 @@
                 alert(res.msg);
                 if(res.result){
                     // 페이지이동
-                    afterReg();
+                    let menu = {
+                        menuCd: "0104010200",
+                        menuLvlNo: 4,
+                        menuNm: "VOC 등록",
+                        menuUrl: "vocRegistrationList",
+                        topMenuCd: "0100000000"
+                    };
+                    afterReg(menu);
                 }
             },
             error: console.log
@@ -191,7 +192,14 @@
                 alert(res.msg);
                 if(res.result){
                     // 페이지이동
-                    afterReg();
+                    let menu = {
+                        menuCd: "0104010100",
+                        menuLvlNo: 4,
+                        menuNm: "VOC 통합검색",
+                        menuUrl: "vocIntergrationList",
+                        topMenuCd: "0100000000"
+                    };
+                    afterReg(menu);
                 }
             },
             error: console.log

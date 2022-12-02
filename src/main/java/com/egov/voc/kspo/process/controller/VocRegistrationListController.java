@@ -48,7 +48,7 @@ public class VocRegistrationListController {
     public @ResponseBody Object selectList(@RequestBody EzMap param) throws Exception{
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocRegistrationVo> list = service.selectList(param);
-        page.setTotalRecordCount(list.size());
+        page.setTotalRecordCount(service.selectListCount(param));
         return Utilities.getGridData(list, page);
     }
 

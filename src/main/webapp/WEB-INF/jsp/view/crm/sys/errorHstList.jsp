@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%> 
 <!-- mBtn1 m lWhite -->
 
@@ -76,7 +75,7 @@
  
  <div class="mBox1 " >
  <div class="gTitle1 ">
-								<h3 class="mTitle1">그룹별 조직 변경 이력</h3>
+								<h3 class="mTitle1">예외 발생 이력</h3>
 								<div class="gRt">
 									<code:btnGroup name="ErrorHist" hideDelete="true" hideInsert="true" hideSave="true" dispName="에러발생이력" gridId="grdList"/>
 								</div>

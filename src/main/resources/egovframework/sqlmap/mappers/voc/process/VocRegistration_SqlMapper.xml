@@ -43,5 +43,12 @@
             )
     </insert>
 
-
+    <select id="select" resultType="com.egov.voc.kspo.process.model.VocRegistrationVo">
+        select
+            *
+        from
+            VOC_REGISTRATION
+        where
+            reg_seq = #{regSeq}
+    </select>
 </mapper>

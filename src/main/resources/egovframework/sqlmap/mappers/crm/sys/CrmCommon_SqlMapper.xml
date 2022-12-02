@@ -4,14 +4,14 @@
 
 <mapper namespace="com.egov.voc.sys.dao.CrmCommonDao">
     <sql id="pagingHeader">
-SELECT T.*
-  FROM ( SELECT ROWNUM AS ROW_INDEX
-              , A.*
-           FROM (
-    </sql>
-    <sql id="pagingFooter">
-                  ) A ) T
- WHERE   T.ROW_INDEX BETWEEN NVL(#{firstRecordIndex},1) AND NVL(#{lastRecordIndex},30)
+        SELECT T.*
+          FROM ( SELECT ROWNUM AS ROW_INDEX
+                      , A.*
+                   FROM (
+            </sql>
+            <sql id="pagingFooter">
+                          ) A ) T
+         WHERE   T.ROW_INDEX BETWEEN NVL(#{firstRecordIndex},1) AND NVL(#{lastRecordIndex},30)
     </sql>
     <select id="getAutoSeq" resultType="String">
         SELECT FN_CRM_AUTO_SEQ(#{prefix}) 

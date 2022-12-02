@@ -2,6 +2,8 @@ package com.egov.voc.kspo.process.controller;
 
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.stnd.PrcdStatus;
+import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.process.service.VocRegistrationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class VocRegistrationController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
+        String regSeq = (String) param.get("regSeq");
+        if(regSeq != null){
+            log.debug("임시등록 재등록 시 reqSeq = {}", regSeq);
+            VocRegistrationVo regstration = service.select(param);
+            model.addAttribute("registration", regstration);
+        }
 
         return Utilities.getProperty("tiles.crm") + "voc/process/enroll/vocRegistration";
     }
@@ -33,12 +41,12 @@ public class VocRegistrationController {
 
     @PostMapping(value = "registerComplete")
     public @ResponseBody Object registerComplete(@RequestBody EzMap param) throws Exception{
-        return service.registerComplete(param);
+        return service.register(param, PrcdStatus.COMPLETE);
     }
 
     @PostMapping(value = "registerTemporary")
     public @ResponseBody Object registerTemporary(@RequestBody EzMap param) throws Exception{
-        return service.registerTemporary(param);
+        return service.register(param, PrcdStatus.ONGOING);
     }
 
 }

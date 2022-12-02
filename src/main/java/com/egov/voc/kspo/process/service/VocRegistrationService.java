@@ -7,6 +7,7 @@ import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.dao.VocRegistrationDao;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
+import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.kspo.common.service.VocAbstractService;
@@ -35,7 +36,7 @@ public class VocRegistrationService extends VocAbstractService {
         return getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
     }
 
-    public boolean register(Map<String, Object> param) throws Exception{
+    public boolean insertRegstration(Map<String, Object> param) throws Exception{
         boolean insert = insert(param);
         if(!insert){
             return false;
@@ -80,28 +81,23 @@ public class VocRegistrationService extends VocAbstractService {
         return true;
     }
 
-    public Object registerComplete(Map<String, Object> param) throws Exception{
-        boolean result = register(param);
+    public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws Exception {
+        log.debug("param = {}", param);
+        String regSeq = (String) param.get("regSeq");
+        boolean result;
+
+        if(regSeq == null){
+            result = insertRegstration(param);
+        } else {
+            result = insert(param);
+        }
         if(!result){
             param.put("result", false);
             return param;
         }
 
-        // 등록 절차의 상태를 완료로 업데이트
-        updateRegProcedureStatus(param, PrcdStatus.COMPLETE);
-        param.put("result", true);
-        return param;
-    }
-
-    public Object registerTemporary(Map<String, Object> param) throws Exception {
-        boolean result = register(param);
-        if(!result){
-            param.put("result", false);
-            return param;
-        }
-
-        // 등록 절차의 상태를 진행중으로 업데이트
-        updateRegProcedureStatus(param, PrcdStatus.ONGOING);
+        // 등록 절차의 상태를 업데이트
+        updateRegProcedureStatus(param, prcdStatus);
         param.put("result", true);
         return param;
     }
@@ -114,9 +110,13 @@ public class VocRegistrationService extends VocAbstractService {
         param.putAll(VocUtils.formSerializeArrayToMap((List<Map<String, Object>>) param.get("formArr")));
         List<String> chList = (List<String>) param.get("chList");
         param.put("channel", chList.get(chList.size() - 1));
-        param.put("regSeq", CodeGeneration.generateCode(dao.selectMaxSeq(), CodeGeneration.REGISTRATION));
+        if(param.get("regSeq") == null){
+            param.put("regSeq", CodeGeneration.generateCode(dao.selectMaxSeq(), CodeGeneration.REGISTRATION));
+            dao.insert(param);
+        } else {
+            dao.update(param);
+        }
 
-        dao.insert(param);
         param.put("msg", "등록되었습니다.");
         return true;
     }
@@ -129,6 +129,7 @@ public class VocRegistrationService extends VocAbstractService {
                 switch((String) col.get("name")){
                     case "title" : target = "제목";break;
                     case "content" : target = "내용";break;
+                    case "regComment" : continue;
                 }
                 param.put("msg", target + "이 입력되지 않았습니다.");
                 return false;
@@ -145,4 +146,7 @@ public class VocRegistrationService extends VocAbstractService {
     }
 
 
+    public VocRegistrationVo select(Map<String, Object> param) {
+        return dao.select(param);
+    }
 }

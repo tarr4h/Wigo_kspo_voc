@@ -116,6 +116,7 @@
         <div id="divGrid1"
              data-get-url="<c:url value='${urlPrefix}/selectList${urlSuffix}'/>"
              data-grid-id="listGrid"
+             data-pagenation="Y"
              data-type="grid"
              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocIntergrationList.xml${urlSuffix}'/>"
              style="width:100%;height:500px;"
@@ -137,6 +138,7 @@
 
     function onGridLoad(){
         let param = {};
+        param.recordCountPerPage = 10;
         window['listGrid'].loadUrl('', param);
     }
 
