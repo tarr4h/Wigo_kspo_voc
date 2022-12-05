@@ -6,7 +6,7 @@ import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.model.VocRegistrationVo;
-import com.egov.voc.kspo.process.service.VocRegistrationListService;
+import com.egov.voc.kspo.process.service.VocReceiptListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,33 +15,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * <pre>
- * com.egov.voc.kspo.process.controller.VocRegistrationListController
- *  - VocRegistrationListController.java
+ * com.egov.voc.kspo.process.controller.VocReceiptListController
+ *  - VocReceiptListController.java
  * </pre>
  *
- * @ClassName     : VocRegistrationListController
- * @description   : 등록목록 controller
+ * @ClassName     : VocReceiptListController
+ * @description   :
  * @author        : tarr4h
- * @date          : 2022-11-30
+ * @date          : 2022-12-05
  *
- */
-
+*/
 
 @Controller
-@RequestMapping({"vocRegistrationList", "{menuCd}/vocRegistrationList"})
-public class VocRegistrationListController {
+@RequestMapping({"vocReceiptList", "{menuCd}/vocReceiptList"})
+public class VocReceiptListController {
 
     @Autowired
-    VocRegistrationListService service;
+    VocReceiptListService service;
 
     @GetMapping(value = {"", "index"})
-    public String init(@RequestParam Map<String, Object> param, Model model) {
+    public String init(@RequestParam Map<String, Object> param, Model model){
         model.addAllAttributes(param);
-
-        return Utilities.getProperty("tiles.crm") + "voc/process/list/vocRegistrationList";
+        return Utilities.getProperty("tiles.crm") + "voc/process/list/vocReceiptList";
     }
 
     @PostMapping(value = "selectList")
@@ -55,6 +52,11 @@ public class VocRegistrationListController {
     @GetMapping(value = "selectChannel")
     public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
         return service.getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
+    }
+
+    @GetMapping(value = "selectType")
+    public @ResponseBody Object selectType(@RequestParam Map<String, Object> param){
+        return service.getManagementCodeSelect(param, ManageCodeCategory.RECEIPT);
     }
 
     @GetMapping(value = "selectStatusList")
@@ -88,8 +90,4 @@ public class VocRegistrationListController {
         return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
     }
 
-    @PostMapping(value = "temporaryApproval")
-    public @ResponseBody Object temporaryApproval(@RequestBody EzMap param){
-        return service.temporaryApproval(param);
-    }
 }

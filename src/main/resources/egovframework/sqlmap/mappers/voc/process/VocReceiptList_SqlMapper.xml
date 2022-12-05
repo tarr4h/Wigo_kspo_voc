@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.egov.voc.kspo.process.dao.VocRegistrationListDao">
+<mapper namespace="com.egov.voc.kspo.process.dao.VocReceiptListDao">
 
     <select id="selectList" resultType="com.egov.voc.kspo.process.model.VocRegistrationVo">
         <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>

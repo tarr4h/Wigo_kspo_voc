@@ -5,23 +5,7 @@
     <select id="selectList" resultType="com.egov.voc.kspo.process.model.VocRegistrationVo">
         <include refid="com.egov.voc.sys.dao.CrmCommonDao.pagingHeader"/>
         select
-            reg_seq,
-            channel,
-            status_cd,
-            title,
-            content,
-            reg_comment,
-            cust_id,
-            issue_yn,
-            issue_grade,
-            reg_usr,
-            reg_dt,
-            rec_usr,
-            rec_org,
-            rec_dt,
-            ownership_org,
-            del_yn,
-            (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
+            <include refid="com.egov.voc.kspo.common.dao.VocComnDao.registrationListCols"/>
         from
             VOC_REGISTRATION vr
         where

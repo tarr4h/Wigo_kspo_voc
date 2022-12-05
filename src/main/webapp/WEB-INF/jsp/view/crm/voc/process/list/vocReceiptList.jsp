@@ -1,7 +1,7 @@
 <%--
   @author: tarr4h
-  @date: 2022-11-30
-  @time: PM 5:34
+  @date: 2022-12-05
+  @time: PM 4:56
   @description
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -11,9 +11,52 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld" %>
 
+<style>
+    /* tab 관련 */
+    .btnTopMargin{ /* grid의 상단 margin을 죽임 */
+        margin-top: 0!important;
+    }
+
+    .tabArea{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-end;
+        margin-top: 10px;
+    }
+    .gridTab{
+        width: 110px;
+        height: 25px;
+        border: 1px solid gray;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        text-align: center;
+        padding-top: 9px;
+        font-size: 13px;
+        border-bottom: none;
+        margin-right: 3px;
+        background-color: #848484bd;
+        color: #f8f8f8b8;
+        font-weight: 600;
+    }
+    .gridArea{
+        display: none;
+    }
+
+    .tabSelected{
+        border: 1px solid #0f1e4c;
+        border-bottom: none;
+        color: #0f1e4c;
+        background-color: white!important;
+    }
+
+
+</style>
+
 <div class="v_header">
     <div class="v_header_title">
-        <h3>VOC 등록목록</h3>
+        <h3>VOC 접수목록</h3>
     </div>
 </div>
 
@@ -69,13 +112,27 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>접수자</th>
+                    <td>
+                        <input type="text" name="recUsr" class="list_shFrmInput">
+                        <input type="button" value="조회하기" class="list_searchBtn" data-event="recEmp">
+                        <input type="button" value="MY VOC" class="list_searchBtn">
+                    </td>
+                    <th>유형</th>
+                    <td>
+                        <div id="typeWrapper"></div>
+                    </td>
+                </tr>
+                <tr>
                     <th>부서</th>
                     <td>
                         <input type="text" name="ownershipOrg" class="list_shFrmInput">
                         <input type="button" value="조회하기" class="list_searchBtn" data-event="org">
                     </td>
                     <th>이슈등급</th>
-                    <td></td>
+                    <td>
+
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -97,6 +154,13 @@
         </div>
     </div>
 
+    <div class="tabArea">
+        <div class="gridTab tabSelected" data-grid="stndbyGrid" id="receiptStndby">접수대기</div>
+        <div class="gridTab" data-grid="onGoingGrid" id="receiptOngoing">접수중</div>
+        <div class="gridTab" data-grid="revokeGrid" id="receiptRevoke" >접수취소</div>
+        <div class="gridTab" data-grid="reReceiptGrid" id="reReceipt">재접수</div>
+    </div>
+
     <div class="divWrapper">
         <div id="divGrid1"
              data-get-url="<c:url value='${urlPrefix}/selectList${urlSuffix}'/>"
@@ -113,6 +177,7 @@
 <script>
     const $channelWrapper = $('#channelWrapper');
     const $statusWrapper = $("#statusWrapper");
+    const $typeWrapper = $("#typeWrapper");
 
     let empSearchTarget;
 
@@ -126,26 +191,13 @@
         window['listGrid'].loadUrl('', param);
     }
 
-    /**
-     * Grid 조회
-     * @param data
-     */
-    function loadGrid(data){
-        let param = {data};
-        param.recordCountPerPage = 10;
-
-        window['listGrid'].loadUrl("", param);
-    }
-
     function onGridCellDblClick(gridView,itemIndex, column, json, value){
-        console.log('ongridCellDblClick json : ', json);
-
         // 페이지이동
         let menu = {
-            menuCd: "0104020100",
+            menuCd: "0104030200",
             menuLvlNo: 4,
-            menuNm: "VOC 신규등록",
-            menuUrl: "vocRegistration?regSeq=" + json.regSeq,
+            menuNm: "VOC 접수",
+            menuUrl: "vocReceipt?regSeq=" + json.regSeq,
             topMenuCd: "0100000000"
         };
 
@@ -161,7 +213,6 @@
         }
 
         topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
-        // topWin.removeTab("0104020100");
     }
 
     $('.list_searchBtn').on('click', function(){
@@ -176,26 +227,6 @@
             case 'approval' : temporaryApproval(); break;
         }
     });
-
-
-    function temporaryApproval(){
-        let rows = window['listGrid'].getCheckedJson();
-
-        $.ajax({
-            url : '<c:url value="${urlPrefix}/temporaryApproval${urlSuffix}"/>',
-            method : 'POST',
-            contentType : 'application/json',
-            data: JSON.stringify({rows}),
-            success(res){
-                alert(res+'건이 결재처리되었습니다.(임시기능)');
-                for(let i = 0; i < window.parent.length; i++){
-                    let win = window.parent[i];
-                    win.location.reload();
-                }
-            },
-            error: console.log
-        });
-    }
 
     /**
      * 부서조회 callback
@@ -215,10 +246,15 @@
         }
     }
 
+    /**
+     * 검색영역 채널, 유형, 진행상태 select 기본값 호출
+     */
     function setSelectDefault(){
         $channelWrapper.empty();
         $statusWrapper.empty();
+        $typeWrapper.empty();
         setSelectBox('channel');
+        setSelectBox('type');
     }
 
     /**
@@ -229,6 +265,16 @@
         let prntsCd = $(this).val();
 
         setSelectBox('channel', prntsCd);
+    });
+
+    /**
+     * 유형 셀렉트박스 변경 시 자식 code append
+     */
+    $typeWrapper.on('change', '.type', function(){
+        $(this).nextAll().remove();
+        let prntsCd = $(this).val();
+
+        setSelectBox('type', prntsCd);
     });
 
     /**
@@ -253,7 +299,11 @@
             select += option;
         }
 
-        $channelWrapper.append(select);
+        switch(ctgr){
+            case 'channel' : $channelWrapper.append(select);break;
+            case 'type' : $typeWrapper.append(select);break;
+        }
+
     }
 
     /**
@@ -268,6 +318,7 @@
         let url;
         switch(ctgr){
             case 'channel' : url = '<c:url value="${urlPrefix}/selectChannel${urlSuffix}"/>';break;
+            case 'type' : url = '<c:url value="${urlPrefix}/selectType${urlSuffix}"/>';break;
         }
 
         return new Promise(function(resolve){
@@ -288,4 +339,8 @@
         let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
         Utilities.openModal(url, width, height);
     }
+
+
+
+
 </script>

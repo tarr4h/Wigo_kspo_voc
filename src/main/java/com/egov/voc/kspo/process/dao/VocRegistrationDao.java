@@ -12,3 +12,4 @@ public interface VocRegistrationDao extends ICrmDao {
 
     int insertRegProcedure(Object param);
 }
+

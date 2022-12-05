@@ -13,9 +13,12 @@ import com.egov.voc.sys.service.AbstractCrmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 @Slf4j
 public abstract class VocAbstractService extends AbstractCrmService {
 
@@ -24,6 +27,29 @@ public abstract class VocAbstractService extends AbstractCrmService {
 
     public List<? extends ITreeVo> selectVocManagementCodeTree(Map<String, Object> param){
         return dao.selectVocManagementCodeTree(param);
+    }
+
+    /**
+     * 등록절차 중 완료 상태표기를 다음 절차 대기상태로 변경
+     *  - 다음 절차가 없다면 종결처리
+     * @param param : reqSeq
+     * @return updateResult
+     */
+    public int updateY2N(Map<String, Object> param){
+        VocRegPrcdVo vo = selectNextRegPrcd(param);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("prntsSeq", vo.getMcPrcdSeq());
+        VocProcedureVo nextPrcd = selectProcedure(map);
+
+        Map<String, Object> nextStatus = selectVocStatus(nextPrcd.getPrcdSeq(), PrcdStatus.STNDBY.getStatus());
+        // 다음 상태가 존재하지 않는 경우 == 완료 -> 종결 처리(C)
+        if(nextStatus == null){
+            nextStatus = selectVocStatus(null, PrcdStatus.CLOSE.getStatus());
+        }
+        nextStatus.put("regSeq", param.get("regSeq"));
+
+        return dao.updateRegistrationStatus(nextStatus);
     }
 
     /**
@@ -39,6 +65,35 @@ public abstract class VocAbstractService extends AbstractCrmService {
         if(regSeq == null){
             throw new Exception("*** parameter에 [regSeq]가 존재하지 않습니다. ***");
         }
+
+        VocRegPrcdVo vo = selectNextRegPrcd(param);
+        vo.setStatus(requestStatus.getStatus());
+        dao.updateRegPrcd(vo);
+
+        // STATUS 업데이트 이후 등록 건 STATUS를 변경한다.
+        updateRegistrationStatus(Utilities.beanToMap(vo), requestStatus);
+    }
+
+    /**
+     * 등록 voc의 status를 변경
+     * @param param : VocRegPrcdVo를 map 변경한 object
+     * @param requestStatus : PrcdStatus 타입
+     */
+    public void updateRegistrationStatus(Map<String, Object> param, PrcdStatus requestStatus){
+        VocRegPrcdVo regPrcd = dao.selectRegPrcd(param);
+        VocProcedureVo prcd = dao.selectProcedure(regPrcd);
+
+        Map<String, Object> status = dao.selectVocStatus(prcd.getPrcdSeq(), requestStatus.getStatus());
+        status.put("regSeq", param.get("regSeq"));
+        dao.updateRegistrationStatus(status);
+    }
+
+    /**
+     * 등록 시퀀스를 통해 다음 등록절차를 조회
+     * @param param : reqSeq(등록시퀀스) 필수 포함
+     * @return VocRegPrcdVo - 등록절차 정보
+     */
+    public VocRegPrcdVo selectNextRegPrcd(Object param){
         List<VocRegPrcdVo> regPrcdList = dao.selectRegPrcdList(param);
 
         int cntN = 0;
@@ -50,10 +105,10 @@ public abstract class VocAbstractService extends AbstractCrmService {
         }
 
         if(cntN == 0) {
-            // 1. N이 존재하지 않는다면, Y가 아닌 절차를 업데이트 -> list에서 status = 'Y' 제거
+            // 1. N이 존재하지 않는다면, Y가 아닌 절차 -> list에서 status = 'Y' 제거
             regPrcdList.removeIf(value -> value.getStatus().equals(PrcdStatus.COMPLETE.getStatus()));
         } else if(cntN != regPrcdList.size()){
-            // 2. 모두 N이 아니고 N이 존재한다면, 가장 공통코드 우선순위가 낮은 N 이전의 절차를 업데이트
+            // 2. 모두 N이 아니고 N이 존재한다면, 가장 공통코드 우선순위가 낮은 N 이전의 절차
             for(int i = 0; i < regPrcdList.size(); i++){
                 if(regPrcdList.get(i).getStatus().equals(PrcdStatus.REJECT.getStatus())){
                     index = i - 1;
@@ -61,37 +116,9 @@ public abstract class VocAbstractService extends AbstractCrmService {
                 }
             }
         }
-        // 3. 모두 N이라면 0번 index를 update
+        // 3. 모두 N이라면 0번 index
         VocRegPrcdVo vo = regPrcdList.get(index);
-        vo.setStatus(requestStatus.getStatus());
-        dao.updateRegPrcd(vo);
-
-        // STATUS 업데이트 이후 등록 건 STATUS를 변경한다.
-        updateRegistrationStatus(Utilities.beanToMap(vo), requestStatus);
-    }
-
-    public void updateRegistrationStatus(Map<String, Object> param, PrcdStatus requestStatus){
-        VocRegPrcdVo regPrcd = dao.selectRegPrcd(param);
-        VocProcedureVo prcd = dao.selectProcedure(regPrcd);
-
-        Map<String, Object> status = dao.selectVocStatus(prcd.getPrcdSeq(), requestStatus.getStatus());
-        status.put("regSeq", param.get("regSeq"));
-        dao.updateRegistrationStatus(status);
-
-        // 완료(Y)인 경우 다음 절차의 대기(N) 상태로 업데이트 진행 --> 수동 등록 시에는 등록에도 결재가 필요하므로, 완료 > 결재 처리 > 접수대기로 update
-//        if(requestStatus.getStatus().equals(PrcdStatus.COMPLETE.getStatus())){
-//            param.remove("mcPrcdSeq");
-//            param.put("prntsSeq", prcd.getMcPrcdSeq());
-//            VocProcedureVo nextPrcd = dao.selectProcedure(param);
-//
-//            Map<String, Object> nextStatus = dao.selectVocStatus(nextPrcd.getPrcdSeq(), PrcdStatus.STNDBY.getStatus());
-//            // 다음 상태가 존재하지 않는 경우 == 완료 -> 종결 처리(C)
-//            if(nextStatus == null){
-//                nextStatus = dao.selectVocStatus(null, PrcdStatus.CLOSE.getStatus());
-//            }
-//            nextStatus.put("regSeq", param.get("regSeq"));
-//            dao.updateRegistrationStatus(nextStatus);
-//        }
+        return vo;
     }
 
     public <T> T selectManagementCode(Object param){
@@ -143,20 +170,45 @@ public abstract class VocAbstractService extends AbstractCrmService {
         return dao.getManagementCodeSelect(param);
     }
 
+    public Map<String, Object> selectVocStatus(String prcdSeq, String status){
+        return dao.selectVocStatus(prcdSeq, status);
+    }
+
     /**
-     * 절차와 상태 파라미터를 통해서 status 조회 후 parameter에 put
+     * 절차와 단건의 상태 파라미터를 통해서 1건의 status 조회 후 parameter에 put
      * @param param : hashMap
      * @param prcdCategory : eNum - 절차 분류
-     * @param prcdStatus : eNum - 상태
-     * @return statusCd
+     * @param prcdStatus : PrcdStatus
      */
     public void setStatusCd(Map<String, Object> param, PrcdCategory prcdCategory, PrcdStatus prcdStatus){
-        param.put("topComnCd", PrcdCategory.REGISTRATION.getTopComnCd());
-        param.put("comnCd", PrcdCategory.REGISTRATION.getComnCd());
-        param.put("status", PrcdStatus.ONGOING.getStatus());
+        param.put("topComnCd", prcdCategory.getTopComnCd());
+        param.put("comnCd", prcdCategory.getComnCd());
+
+        param.put("status", ((PrcdStatus) prcdStatus).getStatus());
         Map<String, Object> status = dao.selectStatusCd(param);
 
         param.put("statusCd", status.get("STATUS_CD"));
+    }
+
+    /**
+     * 절차와 여러건의 상태 파라미터를 통해서 N건의 status 조회 후 parameter에 put
+     * @param param : hashMap
+     * @param prcdCategory : eNum - 절차 분류
+     * @param prcdStatus : List<PrcdStatus>
+     */
+    public void setStatusCd(Map<String, Object> param, PrcdCategory prcdCategory, List<PrcdStatus> prcdStatus){
+        List<String> statusCdList = new ArrayList<>();
+        for(PrcdStatus reqStatus : prcdStatus){
+            Map<String, Object> map = new HashMap<>();
+            map.put("topComnCd", prcdCategory.getTopComnCd());
+            map.put("comnCd", prcdCategory.getComnCd());
+            map.put("status", reqStatus.getStatus());
+
+            Map<String, Object> status = dao.selectStatusCd(map);
+            statusCdList.add((String) status.get("STATUS_CD"));
+        }
+
+        param.put("statusCd", statusCdList);
     }
 
     public <T> List<T> selectStatusList(Object param){

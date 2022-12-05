@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 
 
+@SuppressWarnings("unchecked")
 @Service
 @Slf4j
 public class VocRegistrationListService extends VocAbstractService {
@@ -40,11 +42,22 @@ public class VocRegistrationListService extends VocAbstractService {
     }
 
     public <T> List<T> selectList(Map<String, Object> param) throws Exception {
-        setStatusCd(param, PrcdCategory.REGISTRATION, PrcdStatus.ONGOING);
+        setStatusCd(param, PrcdCategory.REGISTRATION, Arrays.asList(PrcdStatus.ONGOING, PrcdStatus.COMPLETE));
+//        setStatusCd(param, PrcdCategory.REGISTRATION, PrcdStatus.ONGOING);
         return dao.selectList(param);
     }
 
     public int selectListCount(EzMap param) {
         return dao.selectListCount(param);
+    }
+
+    public Object temporaryApproval(Map<String, Object> param) {
+        List<Map<String, Object>> rows = (List<Map<String, Object>>) param.get("rows");
+        int result = 0;
+        for(Map<String, Object> row : rows){
+            result += updateY2N(row);
+        }
+
+        return result;
     }
 }

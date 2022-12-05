@@ -38,7 +38,7 @@ public class VocRecProcedureSettingController {
         // single
         ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.RECEIPT);
         // multiple example
-//        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
+//        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.REGISTRATION, ManageCodeCategory.RECEIPT));
         return service.vocManagementCodeTree(param);
     }
 
