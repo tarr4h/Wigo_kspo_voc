@@ -12,15 +12,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
-<style>
-
-</style>
-
-
-
 <div class="v_header">
     <div class="v_header_title">
-        <h3>VOC 신규등록(${param.regSeq})</h3>
+        <h3>VOC 신규등록</h3>
     </div>
 </div>
 
@@ -230,6 +224,7 @@
 
         let select = '<select class="v_td_select channel">' +
             '<option value="" selected disabled>선택하세요</option>';
+
         for(let i = 0; i < channelList.length; i++){
             let option = `
                 <option value="\${channelList[i].id}">\${channelList[i].text}</option>

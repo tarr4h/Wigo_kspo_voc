@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,11 +25,14 @@ public class VocRegistrationController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
+
         String regSeq = (String) param.get("regSeq");
         if(regSeq != null){
-            log.debug("임시등록 재등록 시 reqSeq = {}", regSeq);
-            VocRegistrationVo regstration = service.select(param);
-            model.addAttribute("registration", regstration);
+            VocRegistrationVo registration = service.select(param);
+            model.addAttribute("registration", registration);
+
+            String channel = registration.getChannel();
+            List<Map<String, Object>> selectUpperChannel = service.selectUpperChannel(channel);
         }
 
         return Utilities.getProperty("tiles.crm") + "voc/process/enroll/vocRegistration";

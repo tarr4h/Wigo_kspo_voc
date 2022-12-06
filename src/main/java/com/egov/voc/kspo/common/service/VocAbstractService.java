@@ -165,8 +165,8 @@ public abstract class VocAbstractService extends AbstractCrmService {
         return dao.selectDutyOrgList(param);
     }
 
-    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategory type) {
-        param.put("comnCd", type.getComnCd());
+    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategory ctgr) {
+        param.put("comnCd", ctgr.getComnCd());
         return dao.getManagementCodeSelect(param);
     }
 

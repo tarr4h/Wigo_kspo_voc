@@ -1,6 +1,7 @@
 package com.egov.voc.kspo.process.service;
 
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
@@ -10,7 +11,6 @@ import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.setting.model.VocManagementCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
-import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.sys.dao.ICrmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +34,27 @@ public class VocRegistrationService extends VocAbstractService {
 
     public Object selectChannel(Map<String, Object> param) {
         return getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
+    }
+
+    public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws Exception {
+        log.debug("param = {}", param);
+        String regSeq = (String) param.get("regSeq");
+        boolean result;
+
+        if(regSeq == null){
+            result = insertRegstration(param);
+        } else {
+            result = insert(param);
+        }
+        if(!result){
+            param.put("result", false);
+            return param;
+        }
+
+        // 등록 절차의 상태를 업데이트
+        updateRegProcedureStatus(param, prcdStatus);
+        param.put("result", true);
+        return param;
     }
 
     public boolean insertRegstration(Map<String, Object> param) throws Exception{
@@ -79,27 +100,6 @@ public class VocRegistrationService extends VocAbstractService {
         }
 
         return true;
-    }
-
-    public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws Exception {
-        log.debug("param = {}", param);
-        String regSeq = (String) param.get("regSeq");
-        boolean result;
-
-        if(regSeq == null){
-            result = insertRegstration(param);
-        } else {
-            result = insert(param);
-        }
-        if(!result){
-            param.put("result", false);
-            return param;
-        }
-
-        // 등록 절차의 상태를 업데이트
-        updateRegProcedureStatus(param, prcdStatus);
-        param.put("result", true);
-        return param;
     }
 
     public boolean insert(Map<String, Object> param) {
@@ -148,5 +148,11 @@ public class VocRegistrationService extends VocAbstractService {
 
     public VocRegistrationVo select(Map<String, Object> param) {
         return dao.select(param);
+    }
+
+    public List<Map<String, Object>> selectUpperChannel(String channel) {
+
+
+        return null;
     }
 }

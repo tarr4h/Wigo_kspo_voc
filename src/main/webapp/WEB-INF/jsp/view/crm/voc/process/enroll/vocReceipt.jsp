@@ -11,7 +11,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld" %>
 
-<h3>접수화면</h3>
+<div class="v_header">
+    <div class="v_header_title">
+        <h3>VOC 신규등록(${param.regSeq})</h3>
+    </div>
+</div>
+
+<div class="content_wrapper">
+
+</div>
+
 regSeq = '${param.regSeq}';
 
 '${registration}';

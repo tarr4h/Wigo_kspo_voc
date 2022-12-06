@@ -16,6 +16,18 @@
               )
     </insert>
 
+    <update id="update">
+        update VOC_REGISTRATION
+        set
+            channel = #{channel},
+            title = #{title},
+            content = #{content},
+            reg_comment = #{regComment},
+            reg_usr = #{regUsr}
+        where
+            reg_seq = #{regSeq}
+    </update>
+
     <select id="selectMaxSeq" resultType="string">
         select
             max(REG_SEQ)
