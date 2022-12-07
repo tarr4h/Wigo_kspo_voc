@@ -9,10 +9,12 @@ import java.util.List;
 @Getter
 public enum ManageCodeCategory {
 
-    REGISTRATION("001", "reg", "등록 절차"),
-    RECEIPT("002", "rec", "접수 절차"),
-    DETAIL("003", "det", "세부 절차");
-
+    CHANNEL("001", "channel", "채널"),
+    TYPE("002", "type", "유형"),
+    LOCATION("003", "location", "장소"),
+    CAUSE("004", "cause", "원인"),
+    TARGET("005", "target", "대상");
+    
     private String topComnCd;
     private String comnCd;
     private String caption;

@@ -113,7 +113,7 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC등록 사용여부</span>
+                <span class="form_row_title">통합프로세스 사용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
@@ -128,7 +128,7 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC접수 사용여부</span>
+                <span class="form_row_title">상세프로세스 사용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
@@ -143,7 +143,7 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC등록 필수여부</span>
+                <span class="form_row_title">통합프로세스 필수여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
@@ -158,7 +158,7 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC접수 필수여부</span>
+                <span class="form_row_title">상세프로세스 필수여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">

@@ -40,9 +40,53 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>연락처</th>
+                    <td></td>
+                    <th>등록부서</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td>
+                        <button type="button" class="v_btn1">주소검색</button>
+                    </td>
+                    <th>등록일시</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>상세주소</th>
+                    <td>
+<%--                        <input type="text" name="regUser" class="v_td_input_text"/>--%>
+                    </td>
+                    <th>발생지</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>거주지</th>
+                    <td>
+<%--                        <select name="" id="">--%>
+<%--                            <option value="">선택하세요.</option>--%>
+<%--                            <option value="">1</option>--%>
+<%--                            <option value="">2</option>--%>
+<%--                            <option value="">3</option>--%>
+<%--                        </select>--%>
+                    </td>
                     <th>등록채널</th>
-                    <td colspan="3">
+                    <td>
                         <div id="channelWrapper"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>공개여부</th>
+                    <td>
+<%--                        <label for="publicY">공개</label>--%>
+<%--                        <input type="radio" name="publicYn" value="Y" id="publicY">--%>
+<%--                        <label for="publicY">비공개</label>--%>
+<%--                        <input type="radio" name="publicYn" value="N" id="publicN">--%>
+                    </td>
+                    <th>고객요구유형</th>
+                    <td>
+                        <div id="typeWrapper"></div>
                     </td>
                 </tr>
                 <tr>
@@ -84,9 +128,11 @@
 <script>
     const regSeq = '${param.regSeq}';
     const $channelWrapper = $('#channelWrapper');
+    const $typeWrapper = $("#typeWrapper");
 
     $(() => {
-        setChannel();
+        setSelectBox('channel');
+        setSelectBox('type');
     });
 
     $('button').on('click', function(){
@@ -201,38 +247,51 @@
     }
 
     /**
+     * 유형 셀렉트박스 변경 시 자식 code append
+     */
+    $typeWrapper.on('change', '.type', function(){
+        $(this).nextAll().remove();
+        let prntsCd = $(this).val();
+
+        setSelectBox('type', prntsCd);
+    });
+
+    /**
      * 채널 셀렉트박스 변경 시 자식 code append
      */
     $channelWrapper.on('change', '.channel', function(){
         $(this).nextAll().remove();
         let prntsCd = $(this).val();
 
-        setChannel(prntsCd);
+        setSelectBox('channel', prntsCd);
     });
 
     /**
-     * channelList를 화면에 append
+     * channel/type List를 화면에 append
      * @param prntsCd
      * @returns {Promise<boolean>}
      */
-    async function setChannel(prntsCd){
-        let channelList = await getChannel(prntsCd);
+    async function setSelectBox(ctgr, prntsCd){
+        let list = await getSelectList(ctgr, prntsCd);
 
-        if(channelList.length === 0){
+        if(list.length === 0){
             return false;
         }
 
-        let select = '<select class="v_td_select channel">' +
+        let select = '<select class="v_td_select ' + ctgr + '">' +
             '<option value="" selected disabled>선택하세요</option>';
 
-        for(let i = 0; i < channelList.length; i++){
+        for(let i = 0; i < list.length; i++){
             let option = `
-                <option value="\${channelList[i].id}">\${channelList[i].text}</option>
+                <option value="\${list[i].id}">\${list[i].text}</option>
             `;
             select += option;
         }
 
-        $channelWrapper.append(select);
+        switch(ctgr){
+            case 'channel' : $channelWrapper.append(select);break;
+            case 'type' : $typeWrapper.append(select);break;
+        }
     }
 
     /**
@@ -242,10 +301,16 @@
      * @param prntsCd
      * @returns {Promise<unknown>}
      */
-    function getChannel(prntsCd){
+    function getSelectList(ctgr, prntsCd){
+        let url;
+        switch(ctgr){
+            case 'channel' : url = '<c:url value="${urlPrefix}/selectChannel${urlSuffix}"/>';break;
+            case 'type' : url = '<c:url value="${urlPrefix}/selectType${urlSuffix}"/>';break;
+        }
+
         return new Promise(function(resolve){
             $.ajax({
-                url: '<c:url value="${urlPrefix}/selectChannel${urlSuffix}"/>',
+                url: url,
                 data: {
                     prntsCd
                 },

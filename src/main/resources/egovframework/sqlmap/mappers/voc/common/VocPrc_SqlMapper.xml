@@ -22,14 +22,12 @@
 
     <select id="selectVocManagementCodeTree" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
         select
-        <include refid="vocManagementCodeCols"/>
+            <include refid="vocManagementCodeCols"/>
         from
-        voc_management_code
+            voc_management_code
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
                 top_comn_cd = #{topComnCd}
-                and
-                prnts_cd is not null
             </if>
             <!-- 단건의 분류코드 그룹 호출 시 -->
             <if test="comnCd instanceof String">
@@ -51,14 +49,14 @@
 
     <select id="selectManagementCode" resultType="com.egov.voc.kspo.setting.model.VocManagementCodeVo">
         select
-        <include refid="vocManagementCodeCols"/>
+            <include refid="vocManagementCodeCols"/>
         from
-        voc_management_code
+            voc_management_code
         <where>
             <if test="managementCd != null and !managementCd.equals('')">
                 management_cd = #{managementCd}
             </if>
-            <if test="prntsCd != null and !prntsCd.equals('')">
+            <if test="managementCd == null and prntsCd != null and !prntsCd.equals('')">
                 and
                 management_cd = #{prntsCd}
             </if>
@@ -81,10 +79,6 @@
             voc_procedure_bas
         where
             reg_use_yn = 'Y'
-            <if test="target != null and !target.equals('')">
-                and
-                ${target}_use_yn = 'Y'
-            </if>
         order by
             prcd_seq
     </select>

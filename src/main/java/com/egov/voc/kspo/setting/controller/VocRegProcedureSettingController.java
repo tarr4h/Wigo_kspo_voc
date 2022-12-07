@@ -34,7 +34,7 @@ public class VocRegProcedureSettingController {
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
     public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws Exception{
         // single
-        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.REGISTRATION);
+        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.CHANNEL);
         // multiple example
 //        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
         return service.vocManagementCodeTree(param);
@@ -80,8 +80,10 @@ public class VocRegProcedureSettingController {
      */
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategory.REGISTRATION.getCaption());
-        param.put("list", service.selectAvailablePrcdBasList(param));
+        List<VocProcedureCodeVo> list = service.selectAvailablePrcdBasList(param);
+        list.removeIf(value -> value.getRegUseYn().equals("N"));
+        param.put("list", list);
+        param.put("target", "reg");
         return param;
     }
 
@@ -199,7 +201,7 @@ public class VocRegProcedureSettingController {
 
     @GetMapping(value = "validateRequiredPrcd")
     public @ResponseBody Object validateRequiredPrcd(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategory.REGISTRATION.getCaption());
+        param.put("target", "reg");
         return service.validateRequiredPrcd(param);
     }
 }

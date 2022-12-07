@@ -15,6 +15,7 @@
 <style>
     .content_wrapper{
         height: 106px;
+        padding-top: 41px;
     }
     #reg_btn{
         width: 100%;
@@ -58,10 +59,10 @@
     });
 
     function sendDeadline(){
-        if(!validate()){
-            alert('처리기한을 설정해주세요.');
-            return false;
-        }
+        // if(!validate()){
+        //     alert('처리기한을 설정해주세요.');
+        //     return false;
+        // }
 
         let param = {
             deadlineDate : $('input[name="deadlineDate"]').val(),

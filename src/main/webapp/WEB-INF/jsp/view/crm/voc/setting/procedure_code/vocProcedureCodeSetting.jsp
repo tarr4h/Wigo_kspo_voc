@@ -118,7 +118,9 @@
             contentType: 'application/json',
             data: JSON.stringify(param),
             success(res){
-                console.log(res);
+                if(res.result){
+                    alert(res.msg);
+                }
             },
             error: console.log
         })

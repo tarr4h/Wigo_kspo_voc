@@ -7,6 +7,7 @@ import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.setting.model.VocActivityVo;
+import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.kspo.setting.model.VocTaskVo;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
@@ -36,7 +37,7 @@ public class VocRecProcedureSettingController {
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
     public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws Exception{
         // single
-        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.RECEIPT);
+        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.TYPE);
         // multiple example
 //        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.REGISTRATION, ManageCodeCategory.RECEIPT));
         return service.vocManagementCodeTree(param);
@@ -82,8 +83,10 @@ public class VocRecProcedureSettingController {
      */
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategory.RECEIPT.getCaption());
-        param.put("list", service.selectAvailablePrcdBasList(param));
+        List<VocProcedureCodeVo> list = service.selectAvailablePrcdBasList(param);
+        list.removeIf(value -> value.getRecUseYn().equals("N"));
+        param.put("list", list);
+        param.put("target", "rec");
         return param;
     }
 
@@ -201,7 +204,7 @@ public class VocRecProcedureSettingController {
 
     @GetMapping(value = "validateRequiredPrcd")
     public @ResponseBody Object validateRequiredPrcd(@RequestParam Map<String, Object> param){
-        param.put("target", ManageCodeCategory.RECEIPT.getCaption());
+        param.put("target", "rec");
         return service.validateRequiredPrcd(param);
     }
 }

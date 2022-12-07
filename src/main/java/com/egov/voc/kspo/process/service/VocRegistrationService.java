@@ -3,7 +3,6 @@ package com.egov.voc.kspo.process.service;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.kspo.common.stnd.CodeGeneration;
-import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.dao.VocRegistrationDao;
@@ -30,10 +29,6 @@ public class VocRegistrationService extends VocAbstractService {
     @Override
     public ICrmDao getDao() {
         return dao;
-    }
-
-    public Object selectChannel(Map<String, Object> param) {
-        return getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
     }
 
     public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws Exception {

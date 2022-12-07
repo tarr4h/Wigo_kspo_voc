@@ -29,7 +29,7 @@ public class VocProcedureMappingController {
 
     @PostMapping(value = {"vocManagementCodeTree"})
     public @ResponseBody Object vocProcedureMappingTree(@RequestBody EzMap param) throws Exception{
-        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.REGISTRATION, ManageCodeCategory.RECEIPT, ManageCodeCategory.DETAIL));
+        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE, ManageCodeCategory.CAUSE, ManageCodeCategory.LOCATION, ManageCodeCategory.TARGET));
         return service.vocManagementCodeTree(param);
     }
 

@@ -12,6 +12,8 @@
             top_comn_cd = #{topComnCd}
             and
             comn_cd = #{comnCd}
+            and
+            use_yn = 'Y'
     </select>
 
     <select id="selectComnCdList" resultType="com.egov.voc.sys.model.CrmComnCdBaseVo">
@@ -23,6 +25,8 @@
             top_comn_cd = #{topComnCd}
             and
             comn_cd != #{topComnCd}
+            and
+            use_yn = 'Y'
             <if test="existCd != null and !existCd.isEmpty()">
                 and
                 comn_cd not in

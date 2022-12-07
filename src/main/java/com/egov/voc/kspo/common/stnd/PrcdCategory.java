@@ -20,10 +20,11 @@ import lombok.Getter;
 public enum PrcdCategory {
 
     REGISTRATION("001", "등록"),
-    RECEIPT("002", "접수"),
-    ASSIGN("003", "배정"),
+    ASSIGN("002", "배정"),
+    RECEIPT("003", "접수"),
     PROCESSING("004", "처리"),
-    COMPLETE("005", "완료");
+    COMPLETE("005", "완료"),
+    CONCLUSION("006", "종결");
 
     private String topComnCd;
     private String comnCd;

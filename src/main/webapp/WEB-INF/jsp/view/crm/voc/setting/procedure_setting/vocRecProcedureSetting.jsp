@@ -114,7 +114,7 @@
 <div class="gLeft" data-has-size="Y">
     <div class="mBox1">
         <div class="gTitle1">
-            <h3 class="mTitle1">VOC 등록절차 분류코드 목록</h3>
+            <h3 class="mTitle1">VOC 접수절차 분류코드 목록</h3>
         </div>
         <div id="divTree"
             data-type="tree"

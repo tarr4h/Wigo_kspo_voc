@@ -51,12 +51,12 @@ public class VocReceiptListController {
 
     @GetMapping(value = "selectChannel")
     public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategory.REGISTRATION);
+        return service.getManagementCodeSelect(param, ManageCodeCategory.CHANNEL);
     }
 
     @GetMapping(value = "selectType")
     public @ResponseBody Object selectType(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategory.RECEIPT);
+        return service.getManagementCodeSelect(param, ManageCodeCategory.TYPE);
     }
 
     @GetMapping(value = "selectStatusList")

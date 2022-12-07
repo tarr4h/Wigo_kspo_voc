@@ -108,7 +108,7 @@ public class VocManagementCodeService extends VocAbstractService {
         log.debug("management grp cd = {}", managementCd);
 
         param.put("managementCd", managementCd.toString());
-//        param.put("topCd", managementCd.toString());
+        param.put("topCd", managementCd.toString());
         param.put("odrg", addNum);
         param.put("lvl", 1);
         return param;

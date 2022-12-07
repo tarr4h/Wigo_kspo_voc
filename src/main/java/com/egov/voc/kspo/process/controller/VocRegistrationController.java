@@ -2,6 +2,7 @@ package com.egov.voc.kspo.process.controller;
 
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
+import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.process.service.VocRegistrationService;
@@ -40,7 +41,12 @@ public class VocRegistrationController {
 
     @GetMapping(value = "selectChannel")
     public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
-        return service.selectChannel(param);
+        return service.getManagementCodeSelect(param, ManageCodeCategory.CHANNEL);
+    }
+
+    @GetMapping(value = "selectType")
+    public @ResponseBody Object selectType(@RequestParam Map<String, Object> param){
+        return service.getManagementCodeSelect(param, ManageCodeCategory.TYPE);
     }
 
     @PostMapping(value = "registerComplete")
