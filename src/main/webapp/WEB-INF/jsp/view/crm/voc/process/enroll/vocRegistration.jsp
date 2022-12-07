@@ -30,63 +30,43 @@
             <tbody>
                 <tr>
                     <th>고객정보</th>
-                    <td>
+                    <td colspan="3">
                         <div id="custInfo"></div>
                         <button type="button" class="v_btn1">고객조회</button>
                     </td>
-                    <th>등록자</th>
-                    <td>
-                        <input type="text" name="regUser" class="v_td_input_text" value="<c:if test="${regSeq == null}">${LOGIN_USER.userNm}</c:if><c:if test="${registration.regUsr != null}">${registration.regUsrNm}</c:if>" disabled>
-                    </td>
+
                 </tr>
                 <tr>
-                    <th>연락처</th>
-                    <td></td>
-                    <th>등록부서</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>주소</th>
-                    <td>
-                        <button type="button" class="v_btn1">주소검색</button>
-                    </td>
-                    <th>등록일시</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>상세주소</th>
-                    <td>
-<%--                        <input type="text" name="regUser" class="v_td_input_text"/>--%>
-                    </td>
-                    <th>발생지</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>거주지</th>
-                    <td>
-<%--                        <select name="" id="">--%>
-<%--                            <option value="">선택하세요.</option>--%>
-<%--                            <option value="">1</option>--%>
-<%--                            <option value="">2</option>--%>
-<%--                            <option value="">3</option>--%>
-<%--                        </select>--%>
-                    </td>
                     <th>등록채널</th>
                     <td>
                         <div id="channelWrapper"></div>
                     </td>
+                    <th>등록자</th>
+                    <td>
+                        <input type="text" name="regUser" class="v_td_input_text" disabled>
+                    </td>
                 </tr>
                 <tr>
-                    <th>공개여부</th>
+                    <th>발생지</th>
                     <td>
-<%--                        <label for="publicY">공개</label>--%>
-<%--                        <input type="radio" name="publicYn" value="Y" id="publicY">--%>
-<%--                        <label for="publicY">비공개</label>--%>
-<%--                        <input type="radio" name="publicYn" value="N" id="publicN">--%>
+                        <div id="locationWrapper"></div>
                     </td>
+                    <th>등록부서</th>
+                    <td>
+                        <input type="text" name="regOrg" class="v_td_input_text" disabled>
+                    </td>
+                </tr>
+                <tr>
                     <th>고객요구유형</th>
                     <td>
                         <div id="typeWrapper"></div>
+                    </td>
+                    <th>공개여부</th>
+                    <td>
+                        <label for="publicY">공개</label>
+                        <input type="radio" name="publicYn" value="Y" id="publicY">
+                        <label for="publicY">비공개</label>
+                        <input type="radio" name="publicYn" value="N" id="publicN">
                     </td>
                 </tr>
                 <tr>
@@ -129,10 +109,13 @@
     const regSeq = '${param.regSeq}';
     const $channelWrapper = $('#channelWrapper');
     const $typeWrapper = $("#typeWrapper");
+    const $locationWrapper = $("#locationWrapper");
 
     $(() => {
         setSelectBox('channel');
         setSelectBox('type');
+        setSelectBox('location');
+        setEmpInfo();
     });
 
     $('button').on('click', function(){
@@ -143,6 +126,19 @@
             case 'temporary' : saveVoc();break;
         }
     });
+
+    function setEmpInfo(){
+        $.ajax({
+            url: '<c:url value="${urlPrefix}/getLoginUserInfo${urlSuffix}"/>',
+            success(res){
+                console.log(res);
+                $('input[name="regUser"]').val(res.empNm);
+                $('input[name="regOrg"]').val(res.orgNm);
+            },
+            error: console.log
+        })
+    }
+
 
     function setChList(){
         let arr = [];
@@ -247,6 +243,16 @@
     }
 
     /**
+     * 장소 셀렉트박스 변경 시 자식 code append
+     */
+    $locationWrapper.on('change', '.location', function(){
+        $(this).nextAll().remove();
+        let prntsCd = $(this).val();
+
+        setSelectBox('location', prntsCd);
+    });
+
+    /**
      * 유형 셀렉트박스 변경 시 자식 code append
      */
     $typeWrapper.on('change', '.type', function(){
@@ -291,6 +297,7 @@
         switch(ctgr){
             case 'channel' : $channelWrapper.append(select);break;
             case 'type' : $typeWrapper.append(select);break;
+            case 'location' : $locationWrapper.append(select);break;
         }
     }
 
@@ -306,6 +313,7 @@
         switch(ctgr){
             case 'channel' : url = '<c:url value="${urlPrefix}/selectChannel${urlSuffix}"/>';break;
             case 'type' : url = '<c:url value="${urlPrefix}/selectType${urlSuffix}"/>';break;
+            case 'location' : url = '<c:url value="${urlPrefix}/selectLocation${urlSuffix}"/>';break;
         }
 
         return new Promise(function(resolve){
