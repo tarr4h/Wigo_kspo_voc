@@ -52,6 +52,12 @@ public class VocRegistrationService extends VocAbstractService {
         return param;
     }
 
+    /**
+     * voc 등록(insert 통해서) + 채널에 해당하는 절차 등록
+     * @param param - regSeq
+     * @return boolean true/false
+     * @throws Exception
+     */
     public boolean insertRegstration(Map<String, Object> param) throws Exception{
         boolean insert = insert(param);
         if(!insert){
@@ -97,6 +103,11 @@ public class VocRegistrationService extends VocAbstractService {
         return true;
     }
 
+    /**
+     * 검증 후 voc_registration insert/update 진행
+     * @param param - regSeq
+     * @return booean true/false
+     */
     public boolean insert(Map<String, Object> param) {
         if(!insertValidation(param)){
             return false;
