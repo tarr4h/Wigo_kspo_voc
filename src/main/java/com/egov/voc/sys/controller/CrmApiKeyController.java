@@ -6,6 +6,7 @@ import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.model.CrmComnCdBaseVo;
 import com.egov.voc.sys.service.CrmComnCdService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = { "apikey" })
+@Slf4j
 public class CrmApiKeyController {
 	@Autowired
 	CrmComnCdService service;
@@ -52,6 +54,8 @@ public class CrmApiKeyController {
 	@PostMapping(value = { "getApikey" })
 	public @ResponseBody Object getApikey(@RequestBody CrmComnCdBaseVo param) throws Exception {
 		String token = JwtUtility.createToken("SYSTEM", param.getComnCd());
+		log.debug("***** getApikey token = {} *****", token);
+
 		EzMap ret = new EzMap();
 		ret.setString("token", token);
 		return ret;

@@ -8,6 +8,7 @@ import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.dao.CrmUserBaseDao;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmLoginUserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 @Service("loginService")
+@Slf4j
 public class CrmLoginService extends AbstractCrmService {
 	@Autowired
 	CrmUserBaseDao dao;
@@ -114,6 +116,7 @@ public class CrmLoginService extends AbstractCrmService {
 	}
 
 	public String goSso(HttpServletResponse res) throws IOException {
+		log.debug("************************authUrl = {}***************************", authUrl);
 		if(ssoMode) {
 			String state = Utilities.getUniqNumberID(50);
 			HttpSession session = Utilities.getSession();
