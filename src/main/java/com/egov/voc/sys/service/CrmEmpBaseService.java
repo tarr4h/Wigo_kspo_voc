@@ -20,8 +20,8 @@ public class CrmEmpBaseService extends AbstractCrmService {
 	@Autowired
 	CrmUserBaseDao userDao;
 
-	@Autowired
-	CrmJadeService jadeService;
+//	@Autowired
+//	CrmJadeService jadeService;
 
 	@Override
 	public ICrmDao getDao() {
@@ -29,9 +29,9 @@ public class CrmEmpBaseService extends AbstractCrmService {
 	}
 
 	public void saveSyncEmp() throws Exception {
-		List<CrmLoginUserVo> list = jadeService.getCeragemHrList();
-		list.addAll(jadeService.getCeragemCnsHrList());
-		insertList(list);
+//		List<CrmLoginUserVo> list = jadeService.getCeragemHrList();
+//		list.addAll(jadeService.getCeragemCnsHrList());
+//		insertList(list);
 	}
 
 	@Override

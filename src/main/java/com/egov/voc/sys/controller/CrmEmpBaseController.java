@@ -43,7 +43,7 @@ public @ResponseBody Object getList(@RequestBody EzMap param) throws Exception {
 }
 @GetMapping(value = { "sync" })
 public @ResponseBody Object sync(@RequestParam Map<String, Object> rparam) throws Exception {
-    service.saveSyncEmp();
+//    service.saveSyncEmp();
     return true;
 }
 

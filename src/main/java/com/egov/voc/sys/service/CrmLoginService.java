@@ -27,28 +27,28 @@ public class CrmLoginService extends AbstractCrmService {
 	CrmUserBaseDao dao;
 	@Autowired
 	CrmLoginService service;
-	@Value("${spring.sso.auth-url}")
-	private String authUrl;
+//	@Value("${spring.sso.auth-url}")
+//	private String authUrl;
 
 //	@Value("${spring.sso.logout-url}")
 	private String logoutUrl = "/";
 
-	@Value("${spring.sso.profile-url}")
-	private String profileUrl;
+//	@Value("${spring.sso.profile-url}")
+//	private String profileUrl;
+//
+//	@Value("${spring.sso.token-url}")
+//	private String accessTokenUrl;
+//
+//	@Value("${spring.sso.callback-url}")
+//	private String callbackUrl;
+//
+//	@Value("${spring.sso.client-id}")
+//	private String clientId;
+//
+//	@Value("${spring.sso.client-secret}")
+//	private String clientSecret;
 
-	@Value("${spring.sso.token-url}")
-	private String accessTokenUrl;
-
-	@Value("${spring.sso.callback-url}")
-	private String callbackUrl;
-
-	@Value("${spring.sso.client-id}")
-	private String clientId;
-
-	@Value("${spring.sso.client-secret}")
-	private String clientSecret;
-
-	private boolean ssoMode = false;
+//	private boolean ssoMode = false;
 	@Override
 	public ICrmDao getDao() {
 		return dao;
@@ -116,72 +116,72 @@ public class CrmLoginService extends AbstractCrmService {
 	}
 
 	public String goSso(HttpServletResponse res) throws IOException {
-		log.debug("************************authUrl = {}***************************", authUrl);
-		if(ssoMode) {
-			String state = Utilities.getUniqNumberID(50);
-			HttpSession session = Utilities.getSession();
-			session.setAttribute(Constants._LOGIN_STATE_KEY, state);
-			String url = authUrl + "?response_type=code&client_id=" + clientId + "&redirect_uri="
-					+ URLEncoder.encode(callbackUrl, "UTF-8") + "&state=" + state;
-			res.sendRedirect(url);	
-		}
-		
+//		log.debug("************************authUrl = {}***************************", authUrl);
+//		if(ssoMode) {
+//			String state = Utilities.getUniqNumberID(50);
+//			HttpSession session = Utilities.getSession();
+//			session.setAttribute(Constants._LOGIN_STATE_KEY, state);
+//			String url = authUrl + "?response_type=code&client_id=" + clientId + "&redirect_uri="
+//					+ URLEncoder.encode(callbackUrl, "UTF-8") + "&state=" + state;
+//			res.sendRedirect(url);
+//		}
+
 		return "login";
 	}
 
-	public void processSso(Map<String, Object> param, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-
-		String returl = "/";
-//		
-		String code = (String) param.get("code");
-		if (Utilities.isEmpty(code)) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-
-		String state = (String) param.get("state");
-		String aUrl = accessTokenUrl;
-		String aParam = "grant_type=authorization_code&client_id=" + clientId + "&client_secret=" + clientSecret
-				+ "&code=" + code + "&state=" + state;
-		String json = Utilities.wget(aUrl, aParam, null);
-		if (Utilities.isEmpty(json)) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-		Map<String, Object> map = Utilities.getJson(json);
-		if (map == null) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-		String token = (String) map.get("access_token");
-		if (Utilities.isEmpty(token)) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-
-		String pm = "client_id=" + clientId + "&client_secret=" + clientSecret + "&access_token=" + token;
-		String profile = Utilities.wget(profileUrl, pm);
-		if (Utilities.isEmpty(profile)) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-		Map<String, Object> pf = Utilities.getJson(profile);
-		if (pf == null) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-
-		String loginId = (String) pf.get("login_id");
-		if (Utilities.isEmpty(loginId)) {
-			request.getRequestDispatcher(returl).forward(request, response);
-			return;
-		}
-
-		CrmLoginUserVo user = new CrmLoginUserVo();
-		user.setLoginId(loginId);
-		updatelogin(user);
-		request.getRequestDispatcher(returl).forward(request, response);
-		return;
-	}
+//	public void processSso(Map<String, Object> param, HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//
+//		String returl = "/";
+////
+//		String code = (String) param.get("code");
+//		if (Utilities.isEmpty(code)) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//
+//		String state = (String) param.get("state");
+//		String aUrl = accessTokenUrl;
+//		String aParam = "grant_type=authorization_code&client_id=" + clientId + "&client_secret=" + clientSecret
+//				+ "&code=" + code + "&state=" + state;
+//		String json = Utilities.wget(aUrl, aParam, null);
+//		if (Utilities.isEmpty(json)) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//		Map<String, Object> map = Utilities.getJson(json);
+//		if (map == null) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//		String token = (String) map.get("access_token");
+//		if (Utilities.isEmpty(token)) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//
+//		String pm = "client_id=" + clientId + "&client_secret=" + clientSecret + "&access_token=" + token;
+//		String profile = Utilities.wget(profileUrl, pm);
+//		if (Utilities.isEmpty(profile)) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//		Map<String, Object> pf = Utilities.getJson(profile);
+//		if (pf == null) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//
+//		String loginId = (String) pf.get("login_id");
+//		if (Utilities.isEmpty(loginId)) {
+//			request.getRequestDispatcher(returl).forward(request, response);
+//			return;
+//		}
+//
+//		CrmLoginUserVo user = new CrmLoginUserVo();
+//		user.setLoginId(loginId);
+//		updatelogin(user);
+//		request.getRequestDispatcher(returl).forward(request, response);
+//		return;
+//	}
 }
