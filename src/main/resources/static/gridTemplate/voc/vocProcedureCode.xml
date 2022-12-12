@@ -31,11 +31,11 @@
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당변경가능여부" field="dutyChngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC등록 사용여부" field="regUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC접수 사용여부" field="recUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC등록 필수여부" field="regCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC접수 필수여부" field="recCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="TASK 사용여부" field="taskYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
+        <column name="VOC등록 사용여부" field="regUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC접수 사용여부" field="recUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC등록 필수여부" field="regCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC접수 필수여부" field="recCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="TASK 사용여부" field="taskYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
         <column name="수정자" field="modUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="수정일시" field="modDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
 </grid>

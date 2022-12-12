@@ -139,11 +139,15 @@
         })
     }
 
-
-    function setChList(){
+    /**
+     * 선택된 채널정보를 parameter에 담기 위해 배열로 변환
+     * @param target
+     * @returns {*[]}
+     */
+    function setSelectList(target){
         let arr = [];
 
-        $.each($('.channel'), (i, e) => {
+        $.each($('.' + target), (i, e) => {
             let val = $(e).val();
             if(val != null){
                 arr.push($(e).val());
@@ -177,7 +181,9 @@
         let disabled = form.find(':input:disabled').removeAttr('disabled');
         let formArr = form.serializeArray();
 
-        let chList = setChList();
+        let chList = setSelectList('channel');
+        let typeList = setSelectList('type');
+        let locationList = setSelectList('location');
 
         $.ajax({
             url: '<c:url value="${urlPrefix}/registerTemporary${urlSuffix}"/>',
@@ -186,7 +192,9 @@
             data: JSON.stringify({
                 regSeq,
                 formArr,
-                chList
+                chList,
+                typeList,
+                locationList
             }),
             success(res){
                 alert(res.msg);
@@ -214,7 +222,9 @@
         let disabled = form.find(':input:disabled').removeAttr('disabled');
         let formArr = form.serializeArray();
 
-        let chList = setChList();
+        let chList = setSelectList('channel');
+        let typeList = setSelectList('type');
+        let locationList = setSelectList('location');
 
         $.ajax({
             url: '<c:url value="${urlPrefix}/registerComplete${urlSuffix}"/>',
@@ -222,7 +232,9 @@
             contentType: 'application/json',
             data: JSON.stringify({
                 formArr,
-                chList
+                chList,
+                typeList,
+                locationList
             }),
             success(res){
                 alert(res.msg);

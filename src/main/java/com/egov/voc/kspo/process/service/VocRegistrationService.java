@@ -137,6 +137,18 @@ public class VocRegistrationService extends VocAbstractService {
             return false;
         }
 
+        List<String> typeList = (List<String>) param.get("typeList");
+        if(typeList.size() == 0){
+            param.put("msg", "유형이 선택되지 않았습니다.");
+            return false;
+        }
+
+        List<String> locationList = (List<String>) param.get("locationList");
+        if(locationList.size() == 0){
+            param.put("msg", "장소가 선택되지 않았습니다.");
+            return false;
+        }
+
         return true;
     }
 
