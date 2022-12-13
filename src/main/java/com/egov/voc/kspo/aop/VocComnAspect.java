@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class VocComnAspect {
 
-    // parameter 중 Map 또는 EzMap에 현재 접속 유저정보를 loginUsr로 넣는다.
+    // parameter 중 Map 또는 EzMap에 현재 접속 유저정보를 loginUsr로 넣는다..
     @SuppressWarnings("unchecked")
     @Before(value = "execution(* com.egov.voc.kspo..*Dao.*(..))")
     public void beforeSetLoginUsr(JoinPoint jp){
