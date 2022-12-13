@@ -35,7 +35,7 @@ public class TransactionConfig {
 //	}
 	@Bean(name = "txManager")
 //	@Bean(name = "crmTransactionManager")
-	public DataSourceTransactionManager crmTxManager(@Qualifier("crmDataSource") DataSource dataSource)
+	DataSourceTransactionManager crmTxManager(@Qualifier("crmDataSource") DataSource dataSource)
 			throws Exception {
 		return new DataSourceTransactionManager(dataSource);
 	}

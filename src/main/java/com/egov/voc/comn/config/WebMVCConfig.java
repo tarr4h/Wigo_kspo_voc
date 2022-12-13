@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableWebMvc
 @ComponentScan({"com.egov"})
-public class WebMVCConfig implements WebMvcConfigurer  {
+ class WebMVCConfig implements WebMvcConfigurer  {
 	 @Autowired
 	    @Qualifier(value = "authInterceptor")
 		private HandlerInterceptor authInterceptor;
@@ -53,7 +53,7 @@ public class WebMVCConfig implements WebMvcConfigurer  {
 	    
 	    
 		  @Bean
-		  public TomcatServletWebServerFactory tomcatFactory() {
+		   TomcatServletWebServerFactory tomcatFactory() {
 		    return new TomcatServletWebServerFactory() {
 		      @Override
 		      protected void postProcessContext(Context context) {
@@ -64,7 +64,7 @@ public class WebMVCConfig implements WebMvcConfigurer  {
 	    
 		//뷰 세팅1
 	    @Bean
-	    public TilesConfigurer tilesConfigurer() {
+	    TilesConfigurer tilesConfigurer() {
 	        final TilesConfigurer configurer = new TilesConfigurer();
 	        //타일즈 설정파일이 위치하는 디렉토리+파일명
 	        configurer.setDefinitions(new String[]{"classpath:/config/tiles/tiles-*.xml"});  
@@ -73,7 +73,7 @@ public class WebMVCConfig implements WebMvcConfigurer  {
 	    }
 		 //뷰 세팅2
 	    @Bean
-	    public ViewResolver tilesViewResolver() {
+	    ViewResolver tilesViewResolver() {
 	        final TilesViewResolver tilesViewResolver = new TilesViewResolver();
 	        tilesViewResolver.setViewClass(TilesView.class);
 	        tilesViewResolver.setOrder(1);  //뷰 우선순위

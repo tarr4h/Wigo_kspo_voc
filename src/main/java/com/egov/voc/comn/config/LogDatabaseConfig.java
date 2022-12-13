@@ -65,7 +65,7 @@ public class LogDatabaseConfig {
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
 	private int poolSize;
 	@Bean(name = "logDataSource")
-	public DataSource dataSource() {
+	DataSource dataSource() {
 //		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 //
 //		dataSource.setDriverClassName(dbDriverClassName);
@@ -92,7 +92,7 @@ public class LogDatabaseConfig {
 	}
 
 	@Bean(name = "logSqlSessionFactory")
-	public SqlSessionFactory sqlSessionFactory(@Qualifier("logDataSource") DataSource dataSource) throws Exception {
+	SqlSessionFactory sqlSessionFactory(@Qualifier("logDataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean
@@ -105,7 +105,7 @@ public class LogDatabaseConfig {
 
 //
 	@Bean(name = "logSqlSessionTemplate")
-	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+	SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
