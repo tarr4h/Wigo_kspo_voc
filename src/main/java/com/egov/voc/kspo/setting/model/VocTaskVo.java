@@ -1,11 +1,9 @@
 package com.egov.voc.kspo.setting.model;
 
-import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.util.VocUtils;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.rmi.CORBA.Util;
 
 @Getter
 @Setter
