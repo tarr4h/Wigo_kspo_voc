@@ -15,15 +15,15 @@ public class CrmOrgBaseService extends AbstractCrmService {
    @Autowired
    CrmOrgBaseDao dao;
    @Autowired
-   CrmJadeService jadeService;
+//   CrmJadeService jadeService;
    @Override
    public ICrmDao getDao() {
        return dao;
    }
    
    public void saveSyncOrg() throws Exception {
-	   List<CrmJadeOrgVo> list = jadeService.getCeragemOrgList();
-	   insertList(list);
+//	   List<CrmJadeOrgVo> list = jadeService.getCeragemOrgList();
+//	   insertList(list);
    }
    @Override
 	public int insert(Object param) throws Exception {

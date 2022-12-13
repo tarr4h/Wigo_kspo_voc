@@ -20,8 +20,8 @@ public class CrmLoginController {
 
 	@Autowired
 	CrmLoginService service;
-	@Value("${spring.sso.logout-url}")
-	private String logoutUrl;
+//	@Value("${spring.sso.logout-url}")
+//	private String logoutUrl;
 
 	//
 	@GetMapping(value = { "index", "" })
@@ -46,17 +46,17 @@ public class CrmLoginController {
 		return service.updatelogout();
 	}
 
-	@GetMapping(value = { "/logout" })
-	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		service.updatelogout();
-		response.sendRedirect(logoutUrl);
-		return "logout";
-	}
+//	@GetMapping(value = { "/logout" })
+//	public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		service.updatelogout();
+//		response.sendRedirect(logoutUrl);
+//		return "logout";
+//	}
 
-	@GetMapping(value = { "/oauth" })
-	public void oauth(@RequestParam Map<String, Object> param, HttpServletRequest request, HttpServletResponse response,
-			ModelMap model) throws Exception {
-		service.processSso(param, request, response);
-	}
+//	@GetMapping(value = { "/oauth" })
+//	public void oauth(@RequestParam Map<String, Object> param, HttpServletRequest request, HttpServletResponse response,
+//			ModelMap model) throws Exception {
+//		service.processSso(param, request, response);
+//	}
 
 }

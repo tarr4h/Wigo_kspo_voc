@@ -48,7 +48,7 @@ public @ResponseBody Object getTreeList(@RequestBody EzMap param) throws Excepti
 
 @GetMapping(value = { "sync" })
 public @ResponseBody Object sync(@RequestParam Map<String, Object> rparam) throws Exception {
-    service.saveSyncOrg();
+//    service.saveSyncOrg();
     return true;
 }
 
