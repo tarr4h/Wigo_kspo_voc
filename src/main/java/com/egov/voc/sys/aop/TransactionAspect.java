@@ -29,31 +29,31 @@ public class TransactionAspect {
 //	private TransactionManager crmTransactionManager;
 
 	@Bean
-	public TransactionInterceptor transactionAdvice() {
+	TransactionInterceptor transactionAdvice() {
 		return advice(txManager);
 	}
 
 	@Bean
-	public Advisor transactionAdviceAdvisor() {
+	Advisor transactionAdviceAdvisor() {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		pointcut.setExpression(AOP_TRANSCTION_EXPRESSION);
 		return new DefaultPointcutAdvisor(pointcut, transactionAdvice());
 	}
 
 	@Bean
-	public TransactionInterceptor crmTransactionAdvice() {
+	TransactionInterceptor crmTransactionAdvice() {
 		return advice(txManager);
 	}
 
 	@Bean
-	public Advisor crmTransactionAdviceAdvisor() {
+	Advisor crmTransactionAdviceAdvisor() {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		pointcut.setExpression(CRM_AOP_TRANSCTION_EXPRESSION);
 
 		return new DefaultPointcutAdvisor(pointcut, crmTransactionAdvice());
 	}
 
-	private TransactionInterceptor advice(TransactionManager txManager) {
+	TransactionInterceptor advice(TransactionManager txManager) {
 		NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
 		DefaultTransactionAttribute readOnlyTransactionAttribute = new DefaultTransactionAttribute(
 				TransactionDefinition.PROPAGATION_REQUIRED);

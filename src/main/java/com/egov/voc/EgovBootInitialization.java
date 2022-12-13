@@ -17,12 +17,12 @@ public class EgovBootInitialization implements WebMvcConfigurer {
 //	}
 //
 	@Bean
-    public SessionLocaleResolver localeResolver() {
+    SessionLocaleResolver localeResolver() {
         return new SessionLocaleResolver();
     } 
 
 	@Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
+    LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("language");
         return interceptor;

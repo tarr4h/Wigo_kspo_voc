@@ -16,14 +16,14 @@ import org.springframework.util.AntPathMatcher;
 public class LeavaTraceConfiguration {
 
     @Bean
-    public LeaveaTrace leaveaTrace(DefaultTraceHandleManager traceHandleManager){
+    LeaveaTrace leaveaTrace(DefaultTraceHandleManager traceHandleManager){
         LeaveaTrace leaveaTrace = new LeaveaTrace();
         leaveaTrace.setTraceHandlerServices(new TraceHandlerService[]{traceHandleManager});
         return leaveaTrace;
     }
 
     @Bean
-    public DefaultTraceHandleManager traceHandleManager(AntPathMatcher antPathMatcher, DefaultTraceHandler defaultTraceHandler) {
+    DefaultTraceHandleManager traceHandleManager(AntPathMatcher antPathMatcher, DefaultTraceHandler defaultTraceHandler) {
         DefaultTraceHandleManager defaultTraceHandleManager = new DefaultTraceHandleManager();
         defaultTraceHandleManager.setReqExpMatcher(antPathMatcher);
         defaultTraceHandleManager.setPatterns(new String[]{"*"});
@@ -32,14 +32,14 @@ public class LeavaTraceConfiguration {
     }
 
     @Bean(name = "antPathMater")
-    public AntPathMatcher antPathMatcher() {
+    AntPathMatcher antPathMatcher() {
 //        AntPathMatcher antPathMatcher = new AntPathMatcher();
 //        return antPathMatcher;
         return new AntPathMatcher();
     }
 
     @Bean
-    public DefaultTraceHandler defaultTraceHandler() {
+    DefaultTraceHandler defaultTraceHandler() {
 //        DefaultTraceHandler defaultTraceHandler = new DefaultTraceHandler();
 //        return defaultTraceHandler;
         return new DefaultTraceHandler();

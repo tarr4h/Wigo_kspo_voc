@@ -59,7 +59,7 @@ public class CrmDatabaseConfig {
 	
 	@Primary
 	@Bean(name = "crmDataSource")
-	public DataSource dataSource() {
+	DataSource dataSource() {
 		if(poolSize <= 0)
 			poolSize = 100;
 		if(timeout <=0)
@@ -77,7 +77,7 @@ public class CrmDatabaseConfig {
 	}
 	@Primary
 	@Bean(name = "crmSqlSessionFactory")
-	public SqlSessionFactory sqlSessionFactory(@Qualifier("crmDataSource") DataSource dataSource,@Qualifier("logDaoAspect") LogDaoAspect interceptor) throws Exception {
+	SqlSessionFactory sqlSessionFactory(@Qualifier("crmDataSource") DataSource dataSource,@Qualifier("logDaoAspect") LogDaoAspect interceptor) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:/egovframework/sqlmap/config/sql-mapper-config.xml"));
@@ -90,7 +90,7 @@ public class CrmDatabaseConfig {
 //
 	@Primary
 	@Bean(name = "crmSqlSessionFactory")
-	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+	SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 
