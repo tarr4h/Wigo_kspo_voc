@@ -1,6 +1,9 @@
 package com.egov.voc.sys.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.dao.CrmEmpBaseDao;
 import com.egov.voc.sys.dao.CrmUserBaseDao;
@@ -8,10 +11,6 @@ import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmJadeHrVo;
 import com.egov.voc.sys.model.CrmLoginUserVo;
 import com.egov.voc.sys.model.CrmUserBaseVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CrmEmpBaseService extends AbstractCrmService {

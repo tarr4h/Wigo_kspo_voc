@@ -1,18 +1,18 @@
 package com.egov.voc.kspo.process.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.kspo.common.service.VocAbstractService;
 import com.egov.voc.kspo.common.stnd.PrcdCategory;
 import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.dao.VocRegistrationListDao;
 import com.egov.voc.sys.dao.ICrmDao;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -30,7 +30,6 @@ import java.util.Map;
 
 @SuppressWarnings("unchecked")
 @Service
-@Slf4j
 public class VocRegistrationListService extends VocAbstractService {
 
     @Autowired

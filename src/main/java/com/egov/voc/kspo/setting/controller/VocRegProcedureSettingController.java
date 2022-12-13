@@ -1,24 +1,32 @@
 package com.egov.voc.kspo.setting.controller;
 
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.EzPaginationInfo;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
 import com.egov.voc.kspo.common.util.VocUtils;
-import com.egov.voc.kspo.setting.model.*;
+import com.egov.voc.kspo.setting.model.VocActivityVo;
+import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
+import com.egov.voc.kspo.setting.model.VocProcedureVo;
+import com.egov.voc.kspo.setting.model.VocTaskVo;
 import com.egov.voc.kspo.setting.service.VocRegProcedureSettingService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
-@Slf4j
 @RequestMapping({"vocRegProcedureSetting", "{menuCd}/vocRegProcedureSetting"})
 public class VocRegProcedureSettingController {
 

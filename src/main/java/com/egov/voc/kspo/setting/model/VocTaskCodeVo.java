@@ -3,16 +3,17 @@ package com.egov.voc.kspo.setting.model;
 
 import com.egov.base.common.model.BaseVo;
 import com.egov.voc.kspo.common.util.VocUtils;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
-@Slf4j
+//@Slf4j
 public class VocTaskCodeVo extends BaseVo {
 
-    private String taskSeq;
+    private static final long serialVersionUID = 8950672182287295915L;
+	private String taskSeq;
     private String taskNm;
     private int deadline;
     private String dutyOrg;

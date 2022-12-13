@@ -1,14 +1,13 @@
 package com.egov.voc.sys.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.egov.base.common.model.AbstractTreeVo;
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.sys.dao.CrmOrgBaseDao;
 import com.egov.voc.sys.dao.ICrmDao;
 import com.egov.voc.sys.model.CrmJadeOrgVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CrmOrgBaseService extends AbstractCrmService {

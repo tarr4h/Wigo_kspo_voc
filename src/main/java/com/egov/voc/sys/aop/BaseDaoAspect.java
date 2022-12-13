@@ -22,7 +22,7 @@ import java.util.Map;
  * </pre>
  *
  * @ClassName : BaseDaoAspect
- * @Description : TODO
+ * @Description : BaseDaoAspect
  * @author : MKH
  * @date : 2021. 1. 11.
  * @Version : 1.0

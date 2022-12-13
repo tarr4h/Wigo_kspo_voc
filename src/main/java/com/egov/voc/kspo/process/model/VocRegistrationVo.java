@@ -2,16 +2,16 @@ package com.egov.voc.kspo.process.model;
 
 import com.egov.base.common.model.BaseVo;
 import com.egov.voc.kspo.common.util.VocUtils;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
-@Slf4j
 public class VocRegistrationVo extends BaseVo {
 
-    private String regSeq;
+    private static final long serialVersionUID = 9008776161302071248L;
+	private String regSeq;
     private String channel;
     private String statusCd;
     private String title;

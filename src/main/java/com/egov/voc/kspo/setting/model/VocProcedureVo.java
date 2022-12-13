@@ -1,16 +1,16 @@
 package com.egov.voc.kspo.setting.model;
 
 import com.egov.voc.kspo.common.util.VocUtils;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
-@Slf4j
 public class VocProcedureVo extends VocProcedureCodeVo implements Comparable<VocProcedureVo>{
 
-    private String mcPrcdSeq;
+	private static final long serialVersionUID = 1L;
+	private String mcPrcdSeq;
     private String prntsSeq;
     private String prcdSeq;
     private String prcdNm;
