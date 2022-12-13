@@ -9,10 +9,10 @@ spring:
       max-request-size: 10GB
   nas:
 #    path: /Users/taewoohan/WorkFolder/test/ -- fore
-    path: /Users/taewoohan/WorkFolder/eGovFrame/eGovFrame_boot/attach
-#    path: C:\\tarr4h\\intelliJ\\attach
-    url: https://files.ceragem.com/crm/
-  jwt:
+#    path: /Users/taewoohan/WorkFolder/eGovFrame/eGovFrame_boot/attach
+    path: C:\\tarr4h\\intelliJ\\attach
+    url: https://files.ceragem.com/crm/   #추후 서버 경로에 맞춰서 저장.
+  jwt: #인증 방식
     secret: 1qaz@WSX
   datasource:
     # Pool
@@ -21,16 +21,16 @@ spring:
       maximum-pool-size: 3
     # Inmemory DB
     log-driver-class-name: oracle.jdbc.OracleDriver
-    log-url: jdbc:oracle:thin:@s3.moara.org:6022/XE
-    log-username: newVoc
-    log-password: newVoc
+    log-url: jdbc:oracle:thin:@s3.moara.org:6030/orcl
+    log-username: wigoVoc
+    log-password: wigoVoc
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@s3.moara.org:6022/XE
-    username: newVoc
-    password: newVoc
+    url: jdbc:oracle:thin:@s3.moara.org:6030/orcl
+    username: wigoVoc
+    password: wigoVoc
 
 
-  jade:
+  jade: #ceragem sync 관련
     token-url: https://cerahr.ceragem.com:9950/restful/getToken
     rest-url: https://cerahr.ceragem.com:9950/restful
     ceragem: 2011040
