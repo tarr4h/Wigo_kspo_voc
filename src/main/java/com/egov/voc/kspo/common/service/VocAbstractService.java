@@ -1,5 +1,12 @@
 package com.egov.voc.kspo.common.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.egov.base.common.model.EzMap;
 import com.egov.base.common.model.ITreeVo;
 import com.egov.voc.comn.util.Utilities;
@@ -10,16 +17,7 @@ import com.egov.voc.kspo.common.stnd.PrcdStatus;
 import com.egov.voc.kspo.process.model.VocRegPrcdVo;
 import com.egov.voc.kspo.setting.model.VocProcedureVo;
 import com.egov.voc.sys.service.AbstractCrmService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@SuppressWarnings("unchecked")
-@Slf4j
 public abstract class VocAbstractService extends AbstractCrmService {
 
     @Autowired
@@ -59,7 +57,7 @@ public abstract class VocAbstractService extends AbstractCrmService {
      * @param requestStatus : PrcdStatus Enum에서 status를 선택.(string)
      * @return : insert result(integer)
      */
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
     public void updateRegProcedureStatus(Map<String, Object> param, PrcdStatus requestStatus) throws Exception{
         String regSeq = (String) param.get("regSeq");
         if(regSeq == null){

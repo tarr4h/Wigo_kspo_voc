@@ -1,15 +1,15 @@
 package voc.registration;
 
-import com.egov.voc.kspo.process.service.VocRegistrationService;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.tools.ant.types.Assertions.*;
+import org.junit.Test;
+
+import com.egov.voc.kspo.process.service.VocRegistrationService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RegistrationTest {

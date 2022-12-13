@@ -1,13 +1,13 @@
 package com.egov.voc.kspo.process.service;
 
-import com.egov.voc.kspo.common.service.VocAbstractService;
-import com.egov.voc.kspo.process.dao.VocReceiptDao;
-import com.egov.voc.sys.dao.ICrmDao;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import com.egov.voc.kspo.common.service.VocAbstractService;
+import com.egov.voc.kspo.process.dao.VocReceiptDao;
+import com.egov.voc.sys.dao.ICrmDao;
 
 /**
  * <pre>
@@ -23,7 +23,6 @@ import java.util.Map;
 */
 
 @Service
-@Slf4j
 public class VocReceiptService extends VocAbstractService {
 
     @Autowired

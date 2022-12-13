@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>egov</groupId>
 	<artifactId>egovVoc</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<name>boot-example</name>
 	<url>http://www.egovframe.go.kr</url>
@@ -19,7 +19,7 @@
 	<parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.5.7</version>
     </parent>
 
 	<properties>
@@ -76,6 +76,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -113,14 +114,12 @@
         <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 
         <dependency>
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
         </dependency>
 
         <dependency>
@@ -138,7 +137,6 @@
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>2.5.0</version>
 		</dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -163,13 +161,11 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.6</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.9.6</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
@@ -242,11 +238,7 @@
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
+        
         <dependency>
             <groupId>org.apache.axis</groupId>
             <artifactId>axis</artifactId>
@@ -276,11 +268,7 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
-        <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>3.6</version>
-        </dependency>
+       
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
@@ -317,25 +305,11 @@
             <version>0.9.1</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>1.5</version>
-        </dependency>
-        <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
             <version>3.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>${com.jcraft.version}</version>
-        </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
@@ -346,7 +320,6 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>4.0.3</version>
         </dependency>
 
         <dependency>
@@ -384,7 +357,7 @@
 	<build>
         <defaultGoal>install</defaultGoal>
         <directory>${basedir}/target</directory>
-        <finalName>${artifactId}-${version}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -410,26 +383,7 @@
 						<maxmem>1024m</maxmem>
 					</configuration>
 				</plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>hibernate3-maven-plugin</artifactId>
-                    <version>3.0</version>
-                    <configuration>
-                        <components>
-                            <component>
-                                <name>hbm2ddl</name>
-                                <implementation>annotationconfiguration</implementation>
-                            </component>
-                        </components>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.hsqldb</groupId>
-                            <artifactId>hsqldb</artifactId>
-                            <version>2.5.0</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
+               
                 <!-- EMMA -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -471,32 +425,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
             </plugin>
         </plugins>
     </build>
     <reporting>
         <outputDirectory>${basedir}/target/site</outputDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.1.2</version>
-                <reportSets>
-                    <reportSet>
-                        <id>sunlink</id>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                        <inherited>true</inherited>
-                        <configuration>
-                            <links>
-                                <link>http://docs.oracle.com/javase/6/docs/api/</link>
-                            </links>
-                        </configuration>
-                    </reportSet>
-                </reportSets>
-            </plugin>
             <!-- JUnit Test Results & EMMA Coverage Reporting -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -525,17 +459,6 @@
                     <encoding>${encoding}</encoding>
                     <docencoding>${encoding}</docencoding>
                     <charset>${encoding}</charset>
-                </configuration>
-            </plugin>
-            <!-- Generating Java Source in HTML -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <configuration>
-                    <inputEncoding>${encoding}</inputEncoding>
-                    <outputEncoding>${encoding}</outputEncoding>
-                    <linkJavadoc>true</linkJavadoc>
-                    <javadocDir>apidocs</javadocDir>
                 </configuration>
             </plugin>
         </plugins>

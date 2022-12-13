@@ -31,7 +31,7 @@ import java.util.List;
  * </pre>
  *
  * @ClassName : LogDaoAspect
- * @Description : TODO
+ * @Description : LogDaoAspect
  * @author : 김성태
  * @date : 2021. 4. 23.
  * @Version : 1.0

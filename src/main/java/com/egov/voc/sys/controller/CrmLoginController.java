@@ -1,18 +1,22 @@
 package com.egov.voc.sys.controller;
 
 
-import com.egov.voc.comn.util.Utilities;
-import com.egov.voc.sys.model.CrmLoginUserVo;
-import com.egov.voc.sys.service.CrmLoginService;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+import com.egov.voc.sys.model.CrmLoginUserVo;
+import com.egov.voc.sys.service.CrmLoginService;
 
 @Controller
 @RequestMapping(value = { "login", "logout", "{menuCd}/login", "{menuCd}/logout" })

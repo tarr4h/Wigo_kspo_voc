@@ -1,5 +1,17 @@
 package com.egov.voc.kspo.process.controller;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.egov.base.common.model.EzMap;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.kspo.common.stnd.ManageCodeCategory;
@@ -8,17 +20,8 @@ import com.egov.voc.kspo.common.util.VocUtils;
 import com.egov.voc.kspo.process.model.VocRegistrationVo;
 import com.egov.voc.kspo.process.service.VocRegistrationService;
 import com.egov.voc.sys.model.CrmEmpBaseVo;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
-@Slf4j
 @RequestMapping({"vocRegistration", "{menuCd}/vocRegistration"})
 public class VocRegistrationController {
 
@@ -35,7 +38,8 @@ public class VocRegistrationController {
             model.addAttribute("registration", registration);
 
             String channel = registration.getChannel();
-            List<Map<String, Object>> selectUpperChannel = service.selectUpperChannel(channel);
+//            List<Map<String, Object>> selectUpperChannel = 
+            		service.selectUpperChannel(channel);
         }
 
         return Utilities.getProperty("tiles.crm") + "voc/process/enroll/vocRegistration";

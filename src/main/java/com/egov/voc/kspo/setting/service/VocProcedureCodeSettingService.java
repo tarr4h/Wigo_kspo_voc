@@ -1,23 +1,21 @@
 package com.egov.voc.kspo.setting.service;
 
 
-import com.egov.voc.kspo.common.service.VocAbstractService;
-import com.egov.voc.kspo.common.util.VocUtils;
-import com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
-import com.egov.voc.kspo.setting.model.VocProcedureCodeVo;
-import com.egov.voc.kspo.setting.model.VocTaskCodeVo;
-import com.egov.voc.sys.dao.ICrmDao;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.egov.voc.kspo.common.service.VocAbstractService;
+import com.egov.voc.kspo.common.util.VocUtils;
+import com.egov.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
+import com.egov.voc.kspo.setting.model.VocTaskCodeVo;
+import com.egov.voc.sys.dao.ICrmDao;
+
 @Service
-@Slf4j
 public class VocProcedureCodeSettingService extends VocAbstractService {
 
     @Autowired
@@ -32,7 +30,6 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         return dao.selectList(param);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public int insert(Object param) throws Exception {
         param = VocUtils.setCodeSettingParam(param);
@@ -66,7 +63,8 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         VocUtils.sumUpDeadline(param);
 
         int deadline = VocUtils.parseIntObject(param.get("deadline"));
-        VocProcedureCodeVo prcd = selectPrcdBas(param);
+//        VocProcedureCodeVo prcd = 
+        		selectPrcdBas(param);
 
         int taskDeadlineSum = 0;
         List<VocTaskCodeVo> taskList = selectTaskBasList(param);
