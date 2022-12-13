@@ -10,7 +10,8 @@ import java.util.Date;
 @Setter
 public class VocRegPrcdVo extends VocProcedureVo {
 
-    private String regPrcdSeq;
+    private static final long serialVersionUID = 235109878386090833L;
+	private String regPrcdSeq;
     private String regSeq;
     private String mcPrcdSeq;
     private Date deadlineDt;

@@ -9,7 +9,7 @@ import com.egov.voc.comn.util.Utilities;
  * </pre>
  *
  * @ClassName : LogDaoLocal
- * @Description : TODO
+ * @Description : LogDaoLocal
  * @author : 김성태
  * @date : 2021. 4. 23.
  * @Version : 1.0

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * </pre>
  *
  * @ClassName : AwsS3Util
- * @Description : TODO
+ * @Description : AwsS3Util
  * @author : 김성태
  * @date : 2021. 3. 5.
  * @Version : 1.0

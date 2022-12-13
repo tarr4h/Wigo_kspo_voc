@@ -24,7 +24,7 @@ spring:
     log-username: wigoVoc
     log-password: wigoVoc
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@s3.moara.org:6030/orcl
+    url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030/orcl
     username: wigoVoc
     password: wigoVoc
 

@@ -18,7 +18,7 @@ import java.io.IOException;
 * </pre>
 *
 * @ClassName	: GrdBtnTag 
-* @Description	: TODO 
+* @Description	: GrdBtnTag 
 * @author 		: MKH
 * @date 		: 2021. 1. 18.
 * @Version 		: 1.0 
