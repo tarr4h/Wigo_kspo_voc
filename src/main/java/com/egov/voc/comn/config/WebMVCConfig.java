@@ -84,7 +84,7 @@ import java.util.concurrent.TimeUnit;
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	        // Packaging resources
 	        registry.addResourceHandler("/static/**")
-	                .addResourceLocations("classpath:/static/")
+	                .addResourceLocations("/static/")
 	                .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 	    }
 

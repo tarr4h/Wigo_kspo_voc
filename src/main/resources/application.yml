@@ -20,15 +20,13 @@ spring:
       maximum-pool-size: 3
     # Inmemory DB
     log-driver-class-name: oracle.jdbc.OracleDriver
-    log-url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030/orcl
+    log-url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030:orcl
     log-username: wigoVoc
     log-password: wigoVoc
-    log-jndi-name: 111
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030/orcl
+    url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030:orcl
     username: wigoVoc
     password: wigoVoc
-    jndi-name: 1111
 
 
 #  jade:

@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 import javax.sql.DataSource;
 
@@ -52,6 +53,12 @@ public class CrmDatabaseConfig {
 	@Value("${spring.datasource.password}")
 	private String password;
 
+	@Value("${spring.datasource.jndi-name}")
+	private String jndiName;
+
+	@Value("${spring.profiles.active}")
+	private String activeProfile;
+
 	@Value("${spring.datasource.hikari.connection-timeout}")
 	private int timeout;
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
@@ -60,6 +67,10 @@ public class CrmDatabaseConfig {
 	@Primary
 	@Bean(name = "crmDataSource")
 	DataSource dataSource() {
+		if("prod".equals(activeProfile) || "dev".equals(activeProfile)) {
+			return getJndiSource();
+		}
+		
 		if(poolSize <= 0)
 			poolSize = 100;
 		if(timeout <=0)
@@ -74,6 +85,12 @@ public class CrmDatabaseConfig {
 		hikariConfig.setLeakDetectionThreshold(30000);
 		hikariConfig.setPoolName("wigo-voc-pool");
 		return new HikariDataSource(hikariConfig);
+	}
+	
+	private DataSource getJndiSource() {
+		JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
+		return jndiDataSourceLookup.getDataSource("java:comp/env/"+jndiName); 
+		
 	}
 	@Primary
 	@Bean(name = "crmSqlSessionFactory")
