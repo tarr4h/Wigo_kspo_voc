@@ -24,11 +24,13 @@ spring:
     log-username: 1111
     log-password: 1111
     log-jndi-name: jdbc/wigoVoc
+    log-jndi-yn: Y
     driver-class-name: 
     url: 1111
     username: 1111
     password: 1111
     jndi-name: jdbc/wigoVoc
+    jndi-yn: Y
 
 
 #  jade:

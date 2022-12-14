@@ -77,12 +77,13 @@
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter</artifactId>
-		    <exclusions>
-		        <exclusion>
-		            <groupId>org.springframework.boot</groupId>
-		            <artifactId>spring-boot-starter-logging</artifactId>
-		        </exclusion>
-		    </exclusions>
+<!--		    서버배포시 주석제거-->
+<!--		    <exclusions>-->
+<!--		        <exclusion>-->
+<!--		            <groupId>org.springframework.boot</groupId>-->
+<!--		            <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--		        </exclusion>-->
+<!--		    </exclusions>-->
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>

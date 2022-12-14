@@ -70,13 +70,13 @@ public class LogDatabaseConfig {
 	
 	
 	
-	@Value("${spring.profiles.active}")
-	private String activeProfile;
+	@Value("${spring.datasource.log-jndi-yn}")
+	private String jdniYn;
 	
 	@Bean(name = "logDataSource")
 	DataSource dataSource() {
 		
-		if("prod".equals(activeProfile) || "dev".equals(activeProfile)) {
+		if("Y".equals(jdniYn)) {
 			return getJndiSource();
 		}
 //		DriverManagerDataSource dataSource = new DriverManagerDataSource();

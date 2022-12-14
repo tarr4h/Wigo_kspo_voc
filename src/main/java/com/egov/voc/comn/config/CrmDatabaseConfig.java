@@ -56,8 +56,8 @@ public class CrmDatabaseConfig {
 	@Value("${spring.datasource.jndi-name}")
 	private String jndiName;
 
-	@Value("${spring.profiles.active}")
-	private String activeProfile;
+	@Value("${spring.datasource.jndi-yn}")
+	private String jdniYn;
 
 	@Value("${spring.datasource.hikari.connection-timeout}")
 	private int timeout;
@@ -67,7 +67,7 @@ public class CrmDatabaseConfig {
 	@Primary
 	@Bean(name = "crmDataSource")
 	DataSource dataSource() {
-		if("prod".equals(activeProfile) || "dev".equals(activeProfile)) {
+		if("Y".equals(jdniYn) ) {
 			return getJndiSource();
 		}
 		
