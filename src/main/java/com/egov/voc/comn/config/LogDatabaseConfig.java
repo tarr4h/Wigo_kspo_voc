@@ -1,9 +1,8 @@
 package com.egov.voc.comn.config;
 
 
-import com.egov.voc.sys.mapper.CrmLogMapper;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.egovframe.rte.psl.dataaccess.mapper.MapperConfigurer;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -15,8 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
-import javax.sql.DataSource;
+import com.egov.voc.sys.mapper.CrmLogMapper;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * 
@@ -56,7 +58,8 @@ public class LogDatabaseConfig {
 	@Value("${spring.datasource.log-password}")
 	private String password;
 	
-	
+	@Value("${spring.datasource.log-jndi-name}")
+	private String jndiName;
 	
 	
 	
@@ -64,8 +67,18 @@ public class LogDatabaseConfig {
 	private int timeout;
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
 	private int poolSize;
+	
+	
+	
+	@Value("${spring.datasource.log-jndi-yn}")
+	private String jdniYn;
+	
 	@Bean(name = "logDataSource")
 	DataSource dataSource() {
+		
+		if("Y".equals(jdniYn)) {
+			return getJndiSource();
+		}
 //		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 //
 //		dataSource.setDriverClassName(dbDriverClassName);
@@ -90,7 +103,12 @@ public class LogDatabaseConfig {
 		hikariConfig.setPoolName("wigo-voc-pool");
 		return new HikariDataSource(hikariConfig);
 	}
-
+	private DataSource getJndiSource() {
+		JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
+		return jndiDataSourceLookup.getDataSource("java:comp/env/"+jndiName); 
+		
+	}
+	
 	@Bean(name = "logSqlSessionFactory")
 	SqlSessionFactory sqlSessionFactory(@Qualifier("logDataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();

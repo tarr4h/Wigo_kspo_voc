@@ -19,18 +19,18 @@ spring:
       connection-timeout: 60000
       maximum-pool-size: 3
     # Inmemory DB
-    log-driver-class-name: oracle.jdbc.OracleDriver
-    log-url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030/orcl
-    log-username: wigoVoc
-    log-password: wigoVoc
-    log-jndi-name: 111
-    log-jndi-yn: N
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:log4jdbc:oracle:thin:@s3.moara.org:6030/orcl
-    username: wigoVoc
-    password: wigoVoc
-    jndi-name: 1111
-    jndi-yn: N
+    log-driver-class-name: 
+    log-url: 1111
+    log-username: 1111
+    log-password: 1111
+    log-jndi-name: jdbc/wigoVoc
+    log-jndi-yn: Y
+    driver-class-name: 
+    url: 1111
+    username: 1111
+    password: 1111
+    jndi-name: jdbc/wigoVoc
+    jndi-yn: Y
 
 #  jade:
 #    token-url: https://cerahr.ceragem.com:9950/restful/getToken
@@ -53,7 +53,7 @@ spring:
 
 #log
 logging:
-  config: classpath:logback-local.xml
+  config: classpath:logback-prod.xml
   level:
     com.egov: DEBUG
     org.springframework.web: INFO
