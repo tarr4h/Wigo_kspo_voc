@@ -63,5 +63,7 @@ public class CrmEmpBaseService extends AbstractCrmService {
 			return super.insert(param);
 		else
 			return super.update(param);
+		
+		
 	}
 }

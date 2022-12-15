@@ -1,6 +1,24 @@
 package com.egov.voc.sys.controller;
 
 
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.egov.base.common.model.EzAjaxException;
 import com.egov.base.common.model.EzException;
 import com.egov.base.common.model.EzLoginAjaxException;
@@ -9,16 +27,6 @@ import com.egov.voc.comn.util.Constants;
 import com.egov.voc.comn.util.Utilities;
 import com.egov.voc.sys.service.CrmErrHstService;
 import com.egov.voc.sys.service.CrmLoginService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Map;
 
 /**
  * <pre>
@@ -110,7 +118,16 @@ public class CrmErrorController implements ErrorController {
 		hstService.addErrorLog(ex, request, response);
 		return ex.toMap();
 	}
+	@ExceptionHandler(EgovBizException.class)
+	public @ResponseBody Object error(EgovBizException ex, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
+		hstService.addErrorLog(ex, request, response);
+		response.setStatus(488);
+		EzException e = new EzException(Constants._ERROR_UNKNOWN, "", ex);
+		return e.toMap();
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public @ResponseBody Object error(Exception ex, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
