@@ -1,6 +1,6 @@
 /*!
  * TOAST UI Date Picker
- * @version 4.3.0
+ * @version 4.3.1
  * @author NHN. FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -375,8 +375,7 @@
     position: relative;
     display: inline-block;
     width: 120px;
-    /* height: 28px; */
-    height: 27px;
+    height: 28px;
     vertical-align: top;
     border: 1px solid #ddd
 }
@@ -387,24 +386,12 @@
     box-sizing: border-box;
 }
 
-/* .tui-datepicker-input > input {
+.tui-datepicker-input > input {
     width: 100%;
     height: 100%;
     padding: 6px 27px 6px 10px;
     font-size: 12px;
     line-height: 14px;
-    vertical-align: top;
-    border: 0;
-    color: #333
-} */
-
-/* 수정 */
-.tui-datepicker-input > input {
-    width: 100%;
-    height: 25px;
-    padding: 7px;
-    font-size: 12px;
-    line-height: 12px;
     vertical-align: top;
     border: 0;
     color: #333
@@ -417,13 +404,8 @@
     margin: -6px 0 0 0
 }
 
-/* 수정 */
 .tui-datepicker-input.tui-has-focus {
-    /* border-color: #aaa */
-    border: solid 1px #cccccc;
-    box-sizing: border-box;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    border-color: #aaa
 }
 
 .tui-datetime-input {

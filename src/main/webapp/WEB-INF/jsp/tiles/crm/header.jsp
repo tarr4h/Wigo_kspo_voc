@@ -43,11 +43,14 @@
 <!-- jstree -->
 <link rel="stylesheet" href="<c:url value='/static/js/js-tree/themes/default/style.min.css'/>" />
 
+<!-- IE -->
+<script src="<c:url value='/static/js/polyfill.js'/>"></script>
 <!-- jQuery -->
 <script src="<c:url value='/static/js/jquery-blockui/jquery.blockUI.js'/>"></script>
 <script src="<c:url value='/static/js/jquery-form/jquery.form.min.js'/>"></script>
 <script src="<c:url value='/static/js/jquery-inputmask/jquery.inputmask.min.js'/>"></script>
 <script src="<c:url value='/static/js/jquery-cookie/jquery.cookie.js'/>"></script>
+
 <script src="<c:url value='/static/js/exceljs.js'/>"></script>
 <script src="<c:url value='/static/js/js-tree/jstree.min.js'/>"></script>
 <script src="<c:url value='/static/js/jquery.ui.monthpicker.js'/>"></script>
@@ -79,7 +82,7 @@
 <script src="/static/js/moment/moment.min.js"></script>
 
 <script src="<c:url value='/static/js/utilities.js?reqrend=${reqrend}'/>"></script>	
-<script src="<c:url value='/static/js/grid_toast_class.js?reqrend=${reqrend}'/>"></script>	
+<script src="<c:url value='/static/js/grid_toast_class_ie.js?reqrend=${reqrend}'/>"></script>	
 <script src="<c:url value='/static/js/gridWrap_toast.js?reqrend=${reqrend}'/>"></script>
 <script src="<c:url value='/static/js/ez-tree.js?reqrend=${reqrend}'/>"></script>
 <script src="<c:url value='/static/js/ez-attachfile.js?reqrend=${reqrend}'/>"></script>

@@ -94,7 +94,7 @@ $(document).ready(function() {
 var _gridHeaderHeight = 35;
 var _gridPaginationHeight = 28;
 var _defaultRecordCountPerPage = 30;
-tui.Grid.applyTheme('crm',{
+tui.Grid.applyTheme('cmm',{
 //	outline : {
 //		showVerticalBorder : true,
 //		border : '#CCCCCC'
@@ -141,16 +141,13 @@ tui.Grid.applyTheme('crm',{
           cell: {
             normal: {
               background: '#fbfbfb',
-              // border: '#ccc',
-              border: '#c1c1c1',
+              border: '#ccc',
               text : '#333333',
               showVerticalBorder: true
             },
             header: {
-              background: '#d9dee0',
-              // background: '#ffeded',
-              // border: '#ccc',
-              border: '#a39e9e',
+              background: '#ffeded',
+              border: '#ccc',
               text : '#333333',
               showVerticalBorder: true
             },
@@ -195,44 +192,11 @@ function initGrid(grd) {
 function createGridPaginationHtml(gridId){
 	
 	
-	
-	/*
-	<div class="mPag1">
-					<div class="mCount1">총 <strong>5</strong>건</div>
-
-					<span title="처음 리스트" class="first">처음으로</span>
-					<span title="이전 리스트" href="###" class="prev">이전</span>
-					<!-- able 버튼
-						<a title="처음 리스트" href="###" class="first">처음으로</a>
-						<a title="이전 리스트" href="###" class="prev">이전</a>
-					-->
-					<a title="현재페이지" href="###" class="active">1</a>
-					<a title="2 페이지" href="###">2</a>
-					<a title="3 페이지" href="###">3</a>
-					<a title="4 페이지" href="###">4</a>
-					<a title="5 페이지" href="###">5</a>
-					<a title="6 페이지" href="###">6</a>
-					<a title="다음 리스트" href="###" class="next">다음</a>
-					<a title="마지막 리스트" href="###" class="last">마지막으로</a>
-					<!-- disabled 버튼
-						<span title="다음 리스트" class="next">다음</span>
-						<span title="마지막 리스트" class="last">마지막으로</span>
-					-->
-					<select class="select" title="갯수선택">
-						<option>10</option>
-						<option>20</option>
-						<option>30</option>
-					</select>
-				</div>
-	
-	 */
-	
     var html = '';
     html +='<div class="mPag1" id="'+gridId+'_pagination" data-grid-id="'+gridId+'">';
     html += '<div class="mCount1">총 <strong data-grid-id="'+gridId+'" data-pagination-type="totalCount">0</strong>건</div>';
     html += '<a href="#;" title="처음 리스트" class="first" data-pagination-type="first"  data-grid-id="'+gridId+'">처음으로</a>';
     html += '<a href="#;" title="이전 리스트"  class="prev"  data-pagination-type="prev"  data-grid-id="'+gridId+'">이전</a>';
-//    html += '<span id="pagination'+gridId+'"><span>';
     html += '<a title="다음 리스트" href="#;" class="next" data-pagination-type="next"  data-grid-id="'+gridId+'">다음</a>';
     html += '<a title="마지막 리스트" href="#;" class="last" data-pagination-type="last"  data-grid-id="'+gridId+'">마지막으로</a>';
     html +='                            <select class="select" data-pagination-type="recordCountPerPage" data-grid-id="'+gridId+'">                                                                                  ';
@@ -240,21 +204,22 @@ function createGridPaginationHtml(gridId){
     html +='                                <option value="20">20</option>                                                                            ';
     html +='                                <option value="30" selected >30</option>                                                                            ';
     html +='                                <option value="50">50</option>                                                                            ';
-//    html +='                                <option value="100">100</option>                                                                            ';
-//    html +='                                <option value="200">200</option>                                                                            ';
-//    html +='                                <option value="300">300</option>                                                                            ';
-//    html +='                                <option value="400">400</option>                                                                            ';
-//    html +='                                <option value="500">500</option>                                                                            ';
-//    html +='                                <option value="1000">1000</option>                                                                            ';
+    html +='                                <option value="100">100</option>                                                                            ';
+    html +='                                <option value="200">200</option>                                                                            ';
+    html +='                                <option value="300">300</option>                                                                            ';
+    html +='                                <option value="400">400</option>                                                                            ';
+    html +='                                <option value="500">500</option>                                                                            ';
+    html +='                                <option value="1000">1000</option>                                                                            ';
     html +='                            </select>                                                                                                   ';
     html += '</div>';
     return html;
 }
 
-function createGridPaginationHtml2(gridId){
+function createGridPaginationHtml2(gridId,hidePagination){
    var html = '';
     html +='<div class="mPag1" id="'+gridId+'_pagination" data-grid-id="'+gridId+'">';
-    html += '<div class="mCount1">총 <strong data-grid-id="'+gridId+'" data-pagination-type="totalCount">0</strong>건</div>';
+    if(!hidePagination)
+        html += '<div class="mCount1">총 <strong data-grid-id="'+gridId+'" data-pagination-type="totalCount">0</strong>건</div>';
     html += '<a style="visibility:hidden" title="처음 리스트" class="first" data-pagination-type="first"  data-grid-id="'+gridId+'">처음으로</a>';
     html += '</div>';
     return html;
@@ -343,9 +308,12 @@ function ceatePaginationEvent(gridId){
     
 }
 function setPaginationInfo(gridId,pagination){
-    var currentPageNo = pagination.page;
-    var recourdCountPerPage = pagination.perPage;
-    var totalCount = pagination.totalCount;
+    var $div = $("#"+gridId+"_pagination");
+    var currentPageNo = pagination ? pagination.page : 0;
+    var recourdCountPerPage = pagination? pagination.perPage : Number($div.find('[data-pagination-type="recordCountPerPage"]').val());
+    if(!recourdCountPerPage)
+        recourdCountPerPage= 30;
+    var totalCount = pagination ? pagination.totalCount : 0;
     var totalPageCount  = parseInt(totalCount/recourdCountPerPage);
     if(totalCount % recourdCountPerPage > 0)
         totalPageCount++;
@@ -364,7 +332,7 @@ function setPaginationInfo(gridId,pagination){
 	var grid = window[gridId];// grid.movePage(page);;
  	var nBtn = $("[data-pagination-type=next][data-grid-id="+gridId+"]");
  	$("[data-pagination-type=paging][data-grid-id="+gridId+"]").remove();
- 	for(var i=fPage;i<=lPage;i++){
+ 	for(var i=fPage;totalCount && i<=lPage;i++){
 		var cls = ""; 
 		if(i==currentPageNo)
 			cls = "active";
@@ -377,7 +345,7 @@ function setPaginationInfo(gridId,pagination){
 	
 	}
  	
-    var $div = $("#"+gridId+"_pagination");
+    
     var $page = $div.find('input[data-pagination-type="pageNo"]');
     $page.val(currentPageNo);
     var $totalPage = $div.find('[data-pagination-type="totalPage"]');
@@ -386,8 +354,8 @@ function setPaginationInfo(gridId,pagination){
     var $totalCount = $div.find('[data-pagination-type="totalCount"]');
     $totalCount.html(Utilities.numberWithCommas(totalCount));
     
-    var $totalCount = $div.find('[data-pagination-type="recordCountPerPage"]');
-    $totalCount.val(recourdCountPerPage);
+    var $recordCountPerPage = $div.find('[data-pagination-type="recordCountPerPage"]');
+    $recordCountPerPage.val(recourdCountPerPage);
 }
 function setPaginationInfo2(gridId,list){
     var totalCount = list && list.length? list.length : 0 ;
@@ -433,6 +401,8 @@ function createGridObject(grd) {
     var forceReadOnly = grd.attr("data-read-only") == "Y";
     var scrollX = grd.attr("data-scroll-x") == "Y";
     var autoResize = grd.attr("data-auto-resize") != "N";
+    var loadFocus = grd.attr("data-load-focus") == "Y";
+    var hasMenu = grd.attr("data-menu") != "N";
     if(autoResize)
     	autoResize = !scrollX;
     if (!gridId)
@@ -454,10 +424,14 @@ function createGridObject(grd) {
         $("#"+wId).parent().append(html);
         ceatePaginationEvent(gridId);
     } else {
-        grd.height(gridHeight-45);
-        var html = createGridPaginationHtml2(gridId);
-        $("#"+wId).wrap('<div id="'+wId+'_top">');
-        $("#"+wId).parent().append(html);
+        const hidePagination = grd.attr("data-show-count")  == "N";
+//        if(!hidePagination){
+            grd.height(gridHeight-45);
+            var html = createGridPaginationHtml2(gridId,hidePagination);
+            $("#"+wId).wrap('<div id="'+wId+'_top">');
+            $("#"+wId).parent().append(html);    
+//        }
+        
     }   
     var blockUI = grd.attr("data-block-ui") =="Y";
     createGridContextMenu(grd);
@@ -470,6 +444,7 @@ function createGridObject(grd) {
         forceReadOnly : forceReadOnly,
         scrollX : scrollX,
         autoResize : autoResize,
+        loadFocus : loadFocus,
         tmplUrl : url,
         getUrl : getUrl,
         gridWrap : grd,
@@ -479,6 +454,7 @@ function createGridObject(grd) {
         gridJson : null,
         isPost : isPost,
         blockUI : blockUI,
+        hasMenu : hasMenu,
         getColumnInfo : function(colName) {
             return this.columnMap[colName];
         },
@@ -724,6 +700,8 @@ function createGridObject(grd) {
             }
             if (col.sortableYn=="Y")
                 json.sortable = true;     
+            if(col.rowSpan =='Y')
+            	json.rowSpan = true;
             var editable = (col.readOnly!="Y" && this.gridConfig.readOnly !="Y");
             
             if ( col.type.substring(0,4)=="date") {
@@ -805,16 +783,10 @@ function createGridObject(grd) {
                       }
                 }
             }
-            /**
-             * 1115 수정
-             *  - type button일때 attribute 추가
-             * @author : tarr4h
-             */
             else if (col.type == "button") {
                 json.renderer = {
                         type : ButtonRenderer,
-                        displayName: col.displayName ? col.displayName :( col.name=="선택"? "선택" : col.name),
-                        showButtonByValue : col.showButtonByValue 
+                        displayName: col.displayName ? col.displayName :( col.name=="선택"? "선택" : col.name)
                 };
                 json.align = "center";
             }
@@ -878,7 +850,10 @@ function createGridObject(grd) {
                     var gridView = window[gridId];
                     var colInfo = gridView.gridWrapper.columnMap[colName];
                     try{
-                       return gridView.htmlRenderCallback(row.rowKey,colInfo ,value);
+                        
+                       let html = gridView.htmlRenderCallback(row.rowKey,colInfo ,value);
+                       html = '<span data-grid-id="'+gridId+'" data-grid-col-type="htmlFormatter">'+html+'<span/>';
+                       return html;
                     }catch(e){
                        return value;
                     }
@@ -1047,91 +1022,97 @@ function createGridObject(grd) {
             }
             if (rowHeaders.length)
                 options.rowHeaders = rowHeaders;
+            if(this.hasMenu){
+                if(this.gridConfig.showCheckbox  =="Y")
+                {
+                    options.contextMenu = function(a,b,c){
+                        return [
+                            [
+                                {
+                                    name: 'checkSelection',
+                                    label: "선택 체크",
+                                    action: function(ev){
+                                        var grid = window[gridId];
+                                        var rg = grid.getSelectionRange();
+                                        if(rg == null){
+                                            var row = grid.getFocusedCell();
+                                            if(!row)
+                                              return;
+                                            grid.check(row.rowKey);
+                                        }else{
+                                            var startIndex = rg.start[0];
+                                            var endIndex = rg.end[0];
+                                            for(var i=startIndex;i<=endIndex;i++){
+                                                var json = grid.getRowAt(i);
+                                                grid.check(json.rowKey);
+                                            }
+                                        }
+                                        
+    
+                                    },
+                                },
+                                {
+                                    name: 'checkSelection',
+                                    label: "선택 체크 해제",
+                                    action: function(ev){
+                                        var grid = window[gridId];
+                                        var rg = grid.getSelectionRange();
+                                        if(rg == null){
+                                            var row = grid.getFocusedCell();
+                                            if(!row)
+                                              return;
+                                            grid.uncheck(row.rowKey);
+                                        }else{
+                                            var startIndex = rg.start[0];
+                                            var endIndex = rg.end[0];
+                                            for(var i=startIndex;i<=endIndex;i++){
+                                                var json = grid.getRowAt(i);
+                                                grid.uncheck(json.rowKey);
+                                            }
+                                        }
+                                        
+    
+                                    },
+                                }
+                            ],
+                        ];
+                    }
+                }
+                else {
+                    options.contextMenu = function(a,b,c){
+                        return [
+                            [
+                                
+                                {
+                                    name: 'copy',
+                                    label: "복사",
+                                    action: 'copy',
+                                },
+                                {
+                                    name: 'copyColumns',
+                                    label: "행복사",
+                                    action: 'copyColumns',
+                                },
+                                {
+                                    name: 'copyRows',
+                                    label: "열복사",
+                                    action: 'copyRows',
+                                },
+                                
+                            ],
+                        ];
+                    }
+                }
+            }
             
-            if(this.gridConfig.showCheckbox  =="Y")
-            {
-                options.contextMenu = function(a,b,c){
-                    return [
-                        [
-                            {
-                                name: 'checkSelection',
-                                label: "선택 체크",
-                                action: function(ev){
-                                    var grid = window[gridId];
-                                    var rg = grid.getSelectionRange();
-                                    if(rg == null){
-                                        var row = grid.getFocusedCell();
-                                        if(!row)
-                                          return;
-                                        grid.check(row.rowKey);
-                                    }else{
-                                        var startIndex = rg.start[0];
-                                        var endIndex = rg.end[0];
-                                        for(var i=startIndex;i<=endIndex;i++){
-                                            var json = grid.getRowAt(i);
-                                            grid.check(json.rowKey);
-                                        }
-                                    }
-                                    
-
-                                },
-                            },
-                            {
-                                name: 'checkSelection',
-                                label: "선택 체크 해제",
-                                action: function(ev){
-                                    var grid = window[gridId];
-                                    var rg = grid.getSelectionRange();
-                                    if(rg == null){
-                                        var row = grid.getFocusedCell();
-                                        if(!row)
-                                          return;
-                                        grid.uncheck(row.rowKey);
-                                    }else{
-                                        var startIndex = rg.start[0];
-                                        var endIndex = rg.end[0];
-                                        for(var i=startIndex;i<=endIndex;i++){
-                                            var json = grid.getRowAt(i);
-                                            grid.uncheck(json.rowKey);
-                                        }
-                                    }
-                                    
-
-                                },
-                            }
-                        ],
-                    ];
-                }
-            }
-            else {
-                options.contextMenu = function(a,b,c){
-                    return [
-                        [
-                            
-                            {
-                                name: 'copy',
-                                label: "복사",
-                                action: 'copy',
-                            },
-                            {
-                                name: 'copyColumns',
-                                label: "행복사",
-                                action: 'copyColumns',
-                            },
-                            {
-                                name: 'copyRows',
-                                label: "열복사",
-                                action: 'copyRows',
-                            },
-                            
-                        ],
-                    ];
-                }
-            }
+            else 
+                options.contextMenu = null;
+            
+            
             if(shwoFooter){
                 var summary = {
                      height: 30,
-                    position: 'top', // or 'top'
+                    position: 'top', // or 'bottom'
                 };
                 var columnContent = {};
                 
@@ -1139,15 +1120,15 @@ function createGridObject(grd) {
                     return {
                         template : function(valueMap){
                             if(sumType == "sum")
-                                return Utilities.numberWithCommas(`${valueMap.sum}`);
+                                return Utilities.numberWithCommas(valueMap.sum);
                             else if(sumType == "avg")
-                                return Math.round(`${valueMap.avg}`);
+                                return Math.round(valueMap.avg);
                             else if(sumType == "min")
-                                return Utilities.numberWithCommas(`${valueMap.min}`);
+                                return Utilities.numberWithCommas(valueMap.min);
                             else if(sumType == "max")
-                                return Utilities.numberWithCommas(`${valueMap.max}`);
+                                return Utilities.numberWithCommas(valueMap.max);
                             else if(sumType == "cnt")
-                                return Utilities.numberWithCommas(`${valueMap.cnt}`);
+                                return Utilities.numberWithCommas(valueMap.cnt);
                             else if(sumType == "sumTitle")
                                 return "합계";
                             else if(sumType == "avgTitle")
@@ -1422,6 +1403,7 @@ function createGridObject(grd) {
                 var grid = this;
                 
                 
+                
                 var list = null;
 //              var pagination = null;
                 if (Array.isArray(data)) {
@@ -1431,7 +1413,7 @@ function createGridObject(grd) {
                     list = data.contents;
                     if(this.searchParam && data.pagination)
                         this.searchParam.pagination = data.pagination;
-                    if (this.pagination&& data.pagination) {
+                    if (this.pagination) {
                         setPaginationInfo(this.gridId,data.pagination);
                         
                     }
@@ -1439,6 +1421,7 @@ function createGridObject(grd) {
                         setPaginationInfo2(this.gridId,list);
                     }
                 }
+               list =  gridView.mergeRows(list);
                 this.resetData(list);
                 
             };
@@ -1547,6 +1530,7 @@ function createGridObject(grd) {
                 this.commit();
                 var rowKey = this.getDataRow(row);
                 fnRemoveRow.call(this,rowKey);
+                this.updatePagination();
             };
             
             gridView.removeRows = function(rows) {
@@ -1564,6 +1548,7 @@ function createGridObject(grd) {
                         this.removeRow(arr[i]);
                     }
                 }
+                this.updatePagination();
             };
             gridView.removeCheckRow = function() {
                 var rows = this.getCheckedJson();
@@ -1577,6 +1562,7 @@ function createGridObject(grd) {
                         
                     }
                 }
+                this.updatePagination();
                 
             };
 
@@ -1624,12 +1610,31 @@ function createGridObject(grd) {
                 if(addDummy){
                     this.removeRow(0);
                 }
+                this.updatePagination();
                 return this.getRowCount()-1;
             };
             gridView.addRows = function(list) {
-                for(var i=0;i<list.length;i++){
-                    this.addRow(list[i]);
+                const colMap  = {};
+                const cols = this.gridWrapper.columns;
+                for(var i=0;i<cols.length;i++){
+                        var col = cols[i];
+                        if(col.defaultValue)
+                            colMap[col.field] = col.defaultValue;
                 }
+                
+                for(var i=0;i<list.length;i++){
+                    const json = list[i];
+                    for(let key in colMap){
+                        const fd = colMap[key];
+                        if(!json[key] && fd)
+                            json[key] =fd;
+                    }
+                     if(!json.stat)
+                       json.stat = "c";
+//                    this.addRow(list[i]);
+                }
+                this.appendRows(list);
+                this.updatePagination();
             };
             gridView.addTreeRow = function(data,option) {
                 this.commit();
@@ -1737,18 +1742,29 @@ function createGridObject(grd) {
                 }
                 
                 if(chk && chk.length){
-                      chk.click();
+//                      chk.click();
                 }
             };
             gridView.checkCell=function(colname,rowKey) {
                 var chk = null;
                 if("chkgrd" == colname)
-                  chk = this.gridWrapper.gridWrap.find("input[type=checkbox][name=checkbox_"+this.gridId+"][data-row-key="+rowKey+"]");
+                {
+                    const grid =this;
+                    var json = grid.getRow(rowKey);
+                    if(json)
+                    {
+                        if(json._attributes.checked){
+                            grid.uncheck(rowKey);
+                        } else {
+                            grid.check(rowKey);
+                        }
+                    }   
+                }  
                 else{
                   chk = this.gridWrapper.gridWrap.find("input[type=checkbox][data-colname="+colname+"][data-row-key="+rowKey+"][data-grid-id="+this.gridId+"]");
                 }
                 if(chk && chk.length){
-                      chk.click();
+//                      chk.click();
                 }
                 
             };
@@ -1807,6 +1823,8 @@ function createGridObject(grd) {
 				if(!this.gridWrapper.autoResize)
 					return ;
 				var divWidth = this.getGridEl().width();
+				if(divWidth<=0)
+				    return;
 				var scrollWidth = this.getGridEl().find(".tui-grid-scrollbar-right-top").width();
 				var totalWidth = 0;
 				var systemWidth = 0;
@@ -1815,9 +1833,9 @@ function createGridObject(grd) {
 					var colInfo = colList[i];
 					if(colInfo.hidden)
 						continue;
-					totalWidth += colInfo.width || colInfo.minWidth;
+					totalWidth += colInfo.width ||colInfo.baseWidth || colInfo.minWidth;
 					if(colInfo.name == "chkgrd" || colInfo.name == "rowNumCol" || colInfo.name == "stat") 
-						systemWidth += colInfo.width || colInfo.minWidth;
+						systemWidth += colInfo.width ||colInfo.baseWidth || colInfo.minWidth;
 					
 				}
 				var curWidth = divWidth - scrollWidth - systemWidth;
@@ -1831,15 +1849,15 @@ function createGridObject(grd) {
 					var colInfo = colList[i];
 					if(colInfo.hidden)
 					{
-						widthArr.push(0);
+//						widthArr.push(0);
 						continue;
 					}	
 					if(colInfo.name == "chkgrd" || colInfo.name == "rowNumCol" || colInfo.name == "stat") 
 					{
-						widthArr.push(parseInt(colInfo.width || colInfo.minWidth));
+						widthArr.push(parseInt(colInfo.width ||colInfo.baseWidth || colInfo.minWidth));
 						continue;
 					}	
-					var wd = parseInt(rate * (colInfo.width || colInfo.minWidth));
+					var wd = parseInt(rate * (colInfo.width||colInfo.baseWidth || colInfo.minWidth));
 					widthArr.push(wd);
 				}
 				this.resetColumnWidths(widthArr);
@@ -1847,14 +1865,78 @@ function createGridObject(grd) {
 				
 			};
             
+            gridView.updatePagination = function(){
+				if(this.pagination)
+					return;
+				const el = $("[data-grid-id="+this.gridId+"][data-pagination-type=totalCount]");
+				if(!el.length)
+					return;
+//				let totalCnt = parseInt(el.html());
+//				if(!totalCnt)
+				let	totalCnt = this.getRowCount();
+				if(!totalCnt)
+					totalCnt = 0;
+//				totalCnt++;
+				el.html(totalCnt);
+			};
             
-            
-            
+            gridView.mergeRows = function(rows){
+				var list = this.gridWrapper.columns;
+				var arr = [];
+				for(var i=0;i<list.length;i++){
+					if(list[i].rowSpan=="Y")
+						arr.push(list[i].field);
+				}
+				if(!arr.length)
+					return rows;
+				var reset = !!rows;
+				if(!rows)
+					rows = this.getData();
+				for(var i=0;i<rows.length;i++){
+					var row = rows[i];
+					for(var j=0;j<arr.length;j++){
+						var colName = arr[j];
+						var val = row[colName];
+						var prevJson = null;
+						var k=i-1;
+						var len = i-k + 1;
+						for(;k>=0;k--){
+							if(val && val == rows[k][colName]){
+								prevJson = rows[k];
+							} else
+								break;
+							len = i-k + 1;
+						}
+						if(prevJson){
+							
+							if(!prevJson._attributes)
+								prevJson._attributes = {};
+							if(!prevJson._attributes.rowSpan)
+								prevJson._attributes.rowSpan = {};
+							prevJson._attributes.rowSpan[colName] = len; 
+						}
+					}
+				}
+				if(reset)
+                	this.resetData(rows);
+				return rows;
+			};
 // 이벤트
            gridView.createContextMenu=function(rowKey,colName){
              alert(rowKey + "-" + colName);
                 return false;
            };
+           
+           gridView.onBooleanChecked=function(rowKey,colName,checked){
+                const grid = this;
+                const row = grid.getRow(rowKey);
+                if (window[gridId + "_colChecked"] && typeof (window[gridId + "_colChecked"]) == "function") {
+                    window[gridId + "_colChecked"](grid,rowKey ,colName,row,checked);
+                } else if (window["onGridColChecked"] && typeof (window["onGridColChecked"]) == "function") {
+                    window["onGridColChecked"](grid,rowKey ,colName,row,checked);
+                }
+           };
+           
             gridView.on("editingStart",function(ev){
                 
                 var grid = ev.instance;
@@ -1899,16 +1981,16 @@ function createGridObject(grd) {
                 $(grid.gridEl).ready(function(){
                 	grid.refresh();
                 });
-                
+                grid.gridWrapper.gridWrap.find(".tui-grid-lside-area").find(".tui-grid-body-area").hide();
                 if(grid.gridWrapper.gridConfig.showCheckbox == "Y"){
                     var chkth = grid.gridWrapper.gridWrap.find("th.tui-grid-cell-header[data-column-name=chkgrd]");
                     if(chkth && chkth.length){
 					const lbl = $('<label style="margin-left:3px" class="mCheckbox1"><input id="chkgrd_'+gridId+'" type="checkbox"><span class="label">&nbsp;</span></label>');
 //                        var chk = $('<input type="checkbox" id="chkgrd_'+gridId+'"/>');
-						var chk = lbl.find("input");
+						const chk = lbl.find("input");
                         chkth.html("");
                         chkth.append(lbl);
-                        lbl.click(function(e){
+                        chk.click(function(e){
                             e.stopPropagation();
                             
                             var checked = chk[0].checked;
@@ -1916,60 +1998,70 @@ function createGridObject(grd) {
                                 grid.checkAll();
                             else
                                 grid.uncheckAll();
-                            var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][name=checkbox_"+gridId+"]");
-                            chkList.prop("checked",checked);
+//                            var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][name=checkbox_"+gridId+"]");
+//                            chkList.prop("checked",checked);
                         });
                         
                     }
                 }
 //                
-//                if(grid.gridWrapper.gridConfig.readOnly != "Y"){
-//                    for(var i=0;i<grid.gridWrapper.columns.length;i++){
-//                        var colInfo =  grid.gridWrapper.columns[i];
-//                        if(colInfo.readOnly == "Y" )
-//                            continue;
-//                        if(colInfo.hidden == "Y")
-//                            continue;
-//                        if(colInfo.type != "checkbox")
-//                            continue;
-//                        var chkth = grid.gridWrapper.gridWrap.find("th.tui-grid-cell-header[data-column-name="+colInfo.field+"]");
-//                        
-//                        
-//                        
-//                        if(chkth && chkth.length){
-//                            var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][data-colname="+colInfo.field+"][data-row-key][data-grid-id='"+grid.gridId+"']");
-//                            var chked = chkList && chkList.length;
-//                            for(var j=0;j<chkList.length;j++){
-//                                if(!chkList[i].checked){
-//                                    chked = false;
-//                                    break;
-//                                }
-//                            }
-//                            
-//                            var chk = $('<input type="checkbox" data-colname="'+colInfo.field+'" data-grid-id="'+gridId+'"  id="'+colInfo.field+'_'+gridId+'"/>');
-//                            chkth.append(chk);
-//                            if(chked)
-//                                chk.prop("checked",chked);
-//                            
-//                            
-//                            chk.click(function(e){
-//                                e.stopPropagation();
-//                                var colInfo = $(this).data();
-//                                var checked = this.checked;
-//                                var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][data-colname="+colInfo.colname+"][data-row-key][data-grid-id='"+colInfo.gridId+"']");
-//                                chkList.prop("checked",checked);
-//                                var cnt = grid.getRowCount();
-//                                var chkData = $(this).data();
-//                                for(var i=0;i<cnt;i++){
-//                                    var rowData = grid.getRowAt(i);
-//                                    grid.setValue(rowData.rowKey,chkData.colname,checked?"Y":"N");
-//                                }
-//                            });
-//                        }
-//
-//                        
-//                    }
-//                }
+                if(grid.gridWrapper.gridConfig.readOnly != "Y"){
+                    for(var i=0;i<grid.gridWrapper.columns.length;i++){
+                        var colInfo =  grid.gridWrapper.columns[i];
+                        if(colInfo.readOnly == "Y" )
+                            continue;
+                        if(colInfo.hidden == "Y")
+                            continue;
+                        if(colInfo.type != "checkbox")
+                            continue;
+                        var chkth = grid.gridWrapper.gridWrap.find("th.tui-grid-cell-header[data-column-name="+colInfo.field+"]");
+                        
+                        
+                        
+                        if(chkth && chkth.length){
+                            var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][data-colname="+colInfo.field+"][data-row-key][data-grid-id='"+grid.gridId+"']");
+                            var chked = chkList && chkList.length;
+                            for(var j=0;j<chkList.length;j++){
+                                if(!chkList[i].checked){
+                                    chked = false;
+                                    break;
+                                }
+                            }
+                            const lbl = $('<label style="margin-left:3px" class="mCheckbox1"></label>');
+
+                            var chk = $('<input type="checkbox" data-colname="'+colInfo.field+'" data-grid-id="'+gridId+'"  id="'+colInfo.field+'_'+gridId+'"/>');
+                            //
+                            lbl.append(chk);
+                            lbl.append('<span class="label">&nbsp;</span>');
+                            chkth.append(lbl);
+                            if(chked)
+                                chk.prop("checked",chked);
+                            
+                            
+                            chk.click(function(e){
+                                e.stopPropagation();
+                                var colInfo = $(this).data();
+                                var checked = this.checked;
+                                var chkList = grid.gridWrapper.gridWrap.find("input[type=checkbox][data-colname="+colInfo.colname+"][data-row-key][data-grid-id='"+colInfo.gridId+"']");
+                                chkList.prop("checked",checked);
+                                var cnt = grid.getRowCount();
+                                var chkData = $(this).data();
+                                const val = checked?"Y":"N";
+                                for(var i=0;i<cnt;i++){
+                                    var rowData = grid.getRowAt(i);
+                                    const oldVal = grid.getValue(rowData.rowKey,chkData.colname);
+                                    if(oldVal != val){
+                                        grid.setValue(rowData.rowKey,chkData.colname,val);    
+                                        grid.onBooleanChecked(rowData.rowKey,chkData.colname,checked)
+                                    }
+                                    
+                                }
+                            });
+                        }
+
+                        
+                    }
+                }
 
                 //grid.gridWrapper.gridConfig
 
@@ -1991,12 +2083,40 @@ function createGridObject(grd) {
             
             gridView.on('onGridUpdated', function(ev) {
             	
+            	
                 var grid = ev.instance;
                 var gridId = grid.gridId;
                 grid.refresh();
                 grid.checkColHeader();
                 
+                $('[data-grid-id='+gridId+'][data-grid-col-type=htmlFormatter]').each(function(){
+                    makeAction($(this));
+                });
                 
+                 const disableCol = grid.gridWrapper.gridConfig.disableCol;
+                  if(disableCol){
+                        const ldata = grid.getData();
+                        for(let i=0;i<ldata.length;i++){
+                            const rData = ldata[i];
+                            if(rData[disableCol] != "Y")
+                                continue;
+                            grid.disableRow(rData.rowKey,true);    
+                        }
+                   }
+                if(grid.getRowCount() > 0 && grid.gridWrapper.loadFocus)
+                {
+					var colName = "";
+					for(var i=0;i<grid.gridWrapper.columns.length;i++){
+                        var colInfo =  grid.gridWrapper.columns[i];
+                        if(colInfo.hidden == "Y")
+                            continue;
+                         colName = colInfo.field;
+                         break; 
+                    }
+                    if(colName)
+						grid.focus(0, colName, true)
+				}	
+//
                 
                 if (window[gridId + "_dataLoaded"] && typeof (window[gridId + "_dataLoaded"]) == "function") {
                     var data = grid.getData();
@@ -2114,9 +2234,6 @@ function createGridObject(grd) {
                       grid.checkHeader(columnName);
                   }
                   if(columnName == "chkgrd"){
-                      
-                      
-                      
                       return;
                   }
                   grid.onCellClicked(grid, clickedData);
@@ -2154,38 +2271,62 @@ function createGridObject(grd) {
                 var row = grid.getRow(rowKey);
                 row._attributes.className = {row : ['gridViewChecked']};
                 grid.setRow(rowKey,row);  
+                
+                if (window[gridId + "_checked"] && typeof (window[gridId + "_checked"]) == "function") {
+                    window[gridId + "_checked"](grid,rowKey ,row,true);
+                } else if (window["onGridChecked"] && typeof (window["onGridChecked"]) == "function") {
+                    window["onGridChecked"](grid,rowKey ,row ,true);
+                }
+                
             });
             
             gridView.on('checkAll', function(ev) {
-                var rowKey = ev.rowKey;
-                var grid = ev.instance;
-                  var list = grid.getData();
-                  for(var i=0;list && i<list.length;i++){
-                      var row = list[i];
-                      var rowKey = row.rowKey;
+                const grid = ev.instance;
+                const list = grid.getData();
+                const gridId = grid.gridId;
+                  for(let i=0;list && i<list.length;i++){
+                      const row = list[i];
+                      const rowKey = row.rowKey;
                       row._attributes.className = {row : ['gridViewChecked']};
                       grid.setRow(rowKey,row);  
                   }
+                  
+                  if (window[gridId + "_checkedAll"] && typeof (window[gridId + "_checkedAll"]) == "function") {
+                    window[gridId + "_checkedAll"](grid,list,true);
+	              } else if (window["onGridCheckedAll"] && typeof (window["onGridCheckedAll"]) == "function") {
+	              	window["onGridCheckedAll"](grid,list,true);
+	              }
             });
             
             gridView.on('uncheck', function(ev) {
-                var rowKey = ev.rowKey;
                 var grid = ev.instance;
+                const rowKey = ev.rowKey;
                 var row = grid.getRow(rowKey);
                 row._attributes.className = null;
                 grid.setRow(rowKey,row);  
+                
+                if (window[gridId + "_checked"] && typeof (window[gridId + "_checked"]) == "function") {
+                    window[gridId + "_checked"](grid,rowKey ,row,false);
+                } else if (window["onGridChecked"] && typeof (window["onGridChecked"]) == "function") {
+                    window["onGridChecked"](grid,rowKey ,row,false);
+                }
             });
             
             gridView.on('uncheckAll', function(ev) {
-                var rowKey = ev.rowKey;
-                var grid = ev.instance;
-                  var list = grid.getData();
-                  for(var i=0;list && i<list.length;i++){
-                      var row = list[i];
-                      var rowKey = row.rowKey;
+               const grid = ev.instance;
+                const list = grid.getData();
+                const gridId = grid.gridId;
+                  for(let i=0;list && i<list.length;i++){
+                      const row = list[i];
+                      const rowKey = row.rowKey;
                       row._attributes.className = null;
                       grid.setRow(rowKey,row);  
-                  }   
+                  }
+                  if (window[gridId + "_checkedAll"] && typeof (window[gridId + "_checkedAll"]) == "function") {
+                    window[gridId + "_checkedAll"](grid,list,false);
+	              } else if (window["onGridCheckedAll"] && typeof (window["onGridCheckedAll"]) == "function") {
+	              	window["onGridCheckedAll"](grid,list,false);
+	              }   
             });
             
             
@@ -2313,7 +2454,7 @@ function createGridObject(grd) {
             gridView.exportExcel = function(excelName,hideHidden,excelUrl,excelParam) {
                 // 클라이언트 데이터로 엑셀 만들기
                 if(this.pagination){
-                    var searchUrl = this.searchUrl;
+//                    var searchUrl = this.searchUrl;
                     var searchParam = this.searchParam; 
                     if(!searchParam && excelParam != undefined ){
                         searchParam = {
@@ -2331,18 +2472,35 @@ function createGridObject(grd) {
                     {
                         return this.getUploadExcel(excelName,hideHidden);
                     }
-
+                    const totalCount = searchParam.pagination? searchParam.pagination.totalCount : 0 ;                    
+                    if(!searchParam.pagination || !totalCount){
+                        alert("다운로드 받을 데이터가 존재하지 않습니다.");
+                        return;
+                    }
+                    if(totalCount > 10000){
+                        alert("엑셀다운로드는 10,000건까지 가능합니다.\n10,000건 초과 데이터는 IT담당자에게 요청하시기 바랍니다.");
+                        return;
+                    }
+                    
                     var grid = this;
                     if(!param)
                         param = {};
+                    const prevPage = param.page; 
+                    const prevPerPage = param.perPage;
                     param.page = 1;
-                    param.perPage = 100000000;
+//                    param.perPage = 100000000;
+                    param.perPage = 10000;
+                    param.excelMode = 'Y';
                     Utilities.blockUI();
                     Utilities.getAjax(url,param,!!this.isPost,function(data,jqXHR){
-                        if(Utilities.processResult(data,jqXHR,"데이터 불러오기에 실패했습니다."))
+                        param.page = prevPage;
+                        param.perPage = prevPerPage;
+                        if(data == null)
+                            alert("엑셀데이터 다운로드에 실패했습니다.");
+                        if(data!=null && Utilities.processResult(data,jqXHR,"데이터 불러오기에 실패했습니다."))
                         {
                             grid.toExcel(excelName,data,hideHidden);
-                            try{addExcelLog(excelName)}catch(e){}
+                            try{addExcelLog(excelName,param,data)}catch(e){}
                         }
                         Utilities.unblockUI();
                     });
@@ -2351,7 +2509,7 @@ function createGridObject(grd) {
                 else{
                     Utilities.blockUI();
                     var ret =  this.getGridExcel(excelName,hideHidden);
-                    try{addExcelLog(excelName)}catch(e){}
+                    try{addExcelLog(excelName, this.searchParam,this.getJsonRows())}catch(e){}
                     Utilities.unblockUI();
                     return ret;
                 }
@@ -2545,7 +2703,7 @@ function createGridObject(grd) {
                 }
                 
                 const workbook = new ExcelJS.Workbook();
-                var maxRows = 65000;
+                var maxRows = 1000000;
                 var sheet = null;
                 for(var i=0;i<list.length;i++){
                     var rowData = list[i];
@@ -2553,29 +2711,35 @@ function createGridObject(grd) {
                         var val = rowData[key];
                         if(val)
                         {
+                            try{
                             val = moment(rowData[key]).format("YYYY-MM-DD");
                             if(val.indexOf("In")>-1)
                                 val = moment(rowData[key],'YYYYMMDD').format("YYYY-MM-DD");
                             rowData[key]= val;    
+                            }catch(e){}
                         }
                     }
                    for(var key in dateTimeMap){
                         var val = rowData[key];
                         if(val)
                         {
+                            try{
                             val = moment(rowData[key]).format("YYYY-MM-DD HH:mm:ss");
                             if(val.indexOf("In")>-1)
                                 val = moment(rowData[key],'YYYYMMDDHHmmss').format("YYYY-MM-DD HH:mm:ss");
                             rowData[key]= val;    
+                            }catch(e){}
                         }
                     }
                     if(addCodeNameList.length){
                         var eData = list[i];
                         for(var j=0;j<addCodeNameList.length;j++){
+                            try{
                             var colInfo = addCodeNameList[j];
                             var code = eData[colInfo.field];
                             var codeName = colInfo.codeMap[code];
                             eData[colInfo.fieldName] = codeName;
+                            }catch(e){}
                         }
                     }
                     if(i%maxRows == 0){
@@ -2707,6 +2871,7 @@ function createGridObject(grd) {
                         var f = files[0];
                         var reader = new FileReader();
                         reader.readAsArrayBuffer(f);
+                        Utilities.blockUI();
                         $(reader).on("loadend",function(e){
                             var buffer = this.result;
                             that.fromExcel(buffer);
@@ -2723,6 +2888,14 @@ function createGridObject(grd) {
                 var grid = this;
                 workbook.xlsx.load(buffer).then(function(wb){
                     var dataList = [];
+                    const colMap = {};
+                    
+                    for(var i=0;i<cols.length;i++){
+                        var col = cols[i];
+                        if(col.defaultValue)
+                            colMap[col.field] = col.defaultValue;
+                    }
+                    
                     for(var i=0;i<wb.worksheets.length;i++){
                         var sheet = wb.worksheets[i];
                         var rowCount = sheet.rowCount;
@@ -2732,12 +2905,21 @@ function createGridObject(grd) {
                             var json = {stat:"c"};
                             for(var k=1;k<=row.cellCount ;k++){
                                 if(cols.length >= k)
-                                    json[cols[k-1].field] = row.getCell(k).text;
+                                {
+                                    const fd = cols[k-1].field;
+                                     json[fd] = row.getCell(k).text;
+                                     if(!json[fd] && colMap[fd])
+                                        json[fd] = colMap[fd];
+                                }   
                             }
+ 
                             dataList.push(json);
                         }
                     }
-                    grid.addRows(dataList);
+                    
+                    grid.appendRows(dataList);
+                    grid.updatePagination();
+                    Utilities.unblockUI();
                 });
             }
             
