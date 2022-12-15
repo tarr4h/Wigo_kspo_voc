@@ -283,6 +283,7 @@ if (!window["Utilities"]) {
 //				console.log(name + " : " + map[name]);
                 var inp = jFrm.find("[name=" + name + "]");
                 if(inp.length>1){
+	
                     if($(inp[0]).attr("type")=="radio"){
                         var rArray = inp;
                         for(var i=0;i<rArray.length;i++){
@@ -308,8 +309,26 @@ if (!window["Utilities"]) {
                         }
                     }
                 }
-                else{
-                    inp.val(map[name]); 
+                else if(inp.length == 1){
+					var val = map[name];
+					if(inp.prop('tagName') == "SELECT" && inp.prop("multiple"))
+					{
+						
+						if(val){
+							var arr = null;
+							if(Array.isArray(val)){
+								arr = val;
+							}else{
+								arr = val.split(",");
+							}
+							inp.val(arr);
+							
+						}else {
+							inp.val(val);
+						}
+					}
+					else
+                    	inp.val(map[name]); 
                 }
                 
             }
@@ -673,11 +692,6 @@ if (!window["Utilities"]) {
             Utilities.ajax(opt);
             return retVal;
         },
-        reLoad : function() {
-            for(var i = 0;i<window.parent.length;i++){
-                window.parent[i].location.reload();
-            }
-        },
         getAjax : function(url, param, jsonBody, callback, option) {
             var nocaching;
             if (url.indexOf("?") > 0)
@@ -864,6 +878,73 @@ if (!window["Utilities"]) {
 //          var downloadUrl = _basePath + "/file/downloadUrl"+_urlSuffix+ "?fileUrl="+fileUrl+"&fileNm="+ fileNm;
             ifDown.prop("src",downloadUrl);
         },
+        downloadExcel : function(excelName,list,header){
+			const workbook = new ExcelJS.Workbook();
+			sheet = workbook.addWorksheet('sheet1' );
+			var hasHeader = !!header;
+			if(!header)
+			{
+				if(!list || !list.length)
+					return;
+				header = {};
+				for(key in list[0]){
+					header[key] = key;
+				}
+			}
+			var columns = [];	
+			for(var key in header){
+					columns.push({
+                                 header : header[key],
+                                 key : key
+                             });	
+			}
+			sheet.columns = columns;
+			
+			for(var i=0;i<list.length;i++){
+				var row = sheet.addRow(list[i]);
+                    row.eachCell({ includeEmpty: true },function(cell, colNumber){
+                        cell.border = {
+                                   top: {style:'thin'},
+                                   left: {style:'thin'},
+                                   bottom: {style:'thin'},
+                                   right: {style:'thin'}
+                        }; 
+                    });
+			}
+			if(hasHeader){
+				var row = sheet.getRow(1);
+                    row.eachCell({ includeEmpty: true },function(cell, colNumber){
+                        cell.border = {
+                                   top: {style:'thin'},
+                                   left: {style:'thin'},
+                                   bottom: {style:'thin'},
+                                   right: {style:'thin'}
+                        }; 
+                        cell.fill = {
+                               type: 'pattern',
+                               pattern:'solid',
+                               fgColor:{argb:'EEEEEE'}
+                        };
+                         cell.alignment = {
+                                 vertical: 'middle', horizontal: 'center'
+                               };
+                               });
+			} else{
+				var row = sheet.getRow(1);
+				 row.eachCell({ includeEmpty: true },function(cell, colNumber){
+                        cell.border = {
+                                   top: {style:'thin'},
+                                   left: {style:'thin'},
+                                   bottom: {style:'thin'},
+                                   right: {style:'thin'}
+                        }; 
+                    });
+			}
+			
+			 workbook.xlsx.writeBuffer().then(function (buffer){
+                    Utilities.downloadFile(buffer,excelName);
+                });
+		},
         min : function(x1, x2) {
             return x1 > x2 ? x2 : x1;
         },
@@ -1417,7 +1498,7 @@ if (!window["Utilities"]) {
                     
                 }
             }
-
+			const instId = Utilities.guid();
             var inst = $.fancybox.open({
                 src  : url,
                 type : 'iframe',
@@ -1426,6 +1507,9 @@ if (!window["Utilities"]) {
                 toolbar  : false,
                 smallBtn : true,
                 keyboard: false ,
+                afterClose : function(instance,currecnt,e){
+					window["modalInstances"].delete(instance.instId); 
+				},
 //              beforeClose : function( instance, current, e ) {
 //                  instance.callbackWindow.함수
 //               },
@@ -1433,7 +1517,9 @@ if (!window["Utilities"]) {
                 touch : false,
                 modal : true,
                 iframe : {
-                    preload : false
+                    preload : false,
+                    tpl:'<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}"  data-modal-frame="'+instId+'" class="fancybox-iframe" allowfullscreen allow="autoplay; fullscreen" src=""></iframe>',
+
                 },
                 helpers:  {
                         overlay : {
@@ -1441,7 +1527,7 @@ if (!window["Utilities"]) {
                         }
                     }
             });
-
+			inst.instId = instId;
             inst.callFunc = callFunc; // 호출 함수명
 
              // 콜백함수명 : 따로 지정을 안하거나 지정한 이름이 함수가 아닌 경우, 콜백 윈도우의 modalCallbackFunc 의 이름으로 callback 함수 지정
@@ -1451,6 +1537,10 @@ if (!window["Utilities"]) {
 //                return false;
 //            }
             inst.callbackWindow = callbackWin; // 콜백 윈도우명
+            if(!window["modalInstances"]){
+				window["modalInstances"] =  new Map();
+			}
+			window["modalInstances"].set(instId,inst); 
         },
         closeModal : function(data){
             var topWin = Utilities.getTopWindow();
@@ -1579,23 +1669,59 @@ if (!window["Utilities"]) {
                     preload: false // fixes issue with iframe and IE
                 }});
         },
-        getOpener : function() {
+        showMembershipLoc : function(itgCustNo){
+            if(!itgCustNo)
+                return ;
+            const width = 1100;
+            const height = 650;
+            Utilities.openModal("/util/mshipGrdeLoc/"+itgCustNo,width,height);
+            
+        },
+        getParentOpener : function() {
+			var inst = $.fancybox.getInstance();
+		            if(inst){
+		                return inst.callbackWindow;
+		            }
+		
+		            else{
+		                return opener;
+		            }
+		},
+        getOpener : function(win) {
             var topWin = Utilities.getTopWindow();
+            if(!win)
+            	win = window;
+            
+            
             if(window != topWin)
             {
               try{
-                 return topWin.Utilities.getOpener();
-                }catch(e){}
+                 return topWin.Utilities.getOpener(win);
+                }catch(e){
+					console.error(e);
+				}
                 
             }
-            var inst = $.fancybox.getInstance();
-            if(inst){
-                return inst.callbackWindow;
-            }
-
-            else{
-                return opener;
-            }
+            
+            const ifrList = $("iframe[data-modal-frame]");
+            for(let i = 0 ;i<ifrList.length;i++){
+				const ifr = ifrList[i];
+				instId = $(ifr).attr("data-modal-frame");
+				if(ifr.contentWindow == win)
+				{
+					const inst = window["modalInstances"].get(instId);
+					return inst.callbackWindow;
+				}
+			}
+            return opener;
+//            var inst = $.fancybox.getInstance();
+//            if(inst){
+//                return inst.callbackWindow;
+//            }
+//
+//            else{
+//                return opener;
+//            }
 
         },
         openOrgPop: function(callbackName){
@@ -1628,6 +1754,33 @@ if (!window["Utilities"]) {
             Utilities.openModal(url,900,600);    
                 
         },
+        openStorePop: function(callbackName, multiChk){
+			if(!callbackName)
+                callbackName = "onStoreSelect";
+            var url = "/util/storeBas/popStoreSearchInfo?callback=" + callbackName;
+            if(multiChk != null){
+            	url += "&multiChk="+ multiChk;
+            }
+            Utilities.openModal(url,1300,720);
+		},
+		openGroupSelPop: function(callbackName){
+			if(!callbackName)
+                callbackName = "onGroupSelect";
+            var url = "/util/custGroup/popGroupSearchInfo?callback=" + callbackName;
+            Utilities.openModal(url,1100,750);
+		},
+		openGroupUpdPop: function(callbackName, custGrpNo){
+			if(!callbackName)
+                callbackName = "onGroupUpdate";
+            var url = "/util/custGroup/popGroupBasInfoUpd?callback="+ callbackName +"&custGrpNo=" + custGrpNo;
+            Utilities.openModal(url,2000,1100);
+		},
+		openDealGodsPop: function(callbackName){
+			if(!callbackName)
+                callbackName = "onDealGodsSelect";
+            var url = "/util/custGroup/popDealGodsSearchInfo?callback=" + callbackName;
+            Utilities.openModal(url,1100,700);
+		},
         getFileExt : function(fileName) {
             var idx = fileName.lastIndexOf(".");
             if (idx > -1 && fileName.length > idx + 2)
@@ -1701,6 +1854,10 @@ if (!window["Utilities"]) {
                         },
                         error : function(jqXHR, textStatus, errorThrown) {
                             fileInfo.uploaded = false;
+                            result = false;
+                            if(jqXHR && jqXHR.responseJSON)
+                                resultData = jqXHR.responseJSON;
+                            
                         },
                         complete : function(jqXHR, textStatus) {
                             fileInfo.jqXHR = null;
@@ -1739,6 +1896,21 @@ if (!window["Utilities"]) {
                     }
                 },
                 onChange : function(e, data) {
+                    if(!window["_file_white_list"])
+                        return true;
+                    if(data.failed)
+                        return false;
+                    for(let i=0;i<data.fileList.length;i++){
+                       
+                        const fl = data.fileList[i];
+                         var fileExt = Utilities.getFileExt(fl.name).toLowerCase();
+                         if(!_file_white_list[fileExt]){
+                            alert("["+fl.name+"]업로드가 제한된 파일 형식입니다.");
+                            data.failed = true;
+                            return false;
+                            
+                        }
+                    }
                     return true;
                 },
                 onUploadProgress : function(fileInfo, loaded, total, percent) {
@@ -1805,11 +1977,15 @@ if (!window["Utilities"]) {
             };
             return uploader.createUploader(options);
         },
-        blockUI : function() {
-			if(top == window)
-        		$.blockUI({message : '<img src="/static/images/loader.gif" />' ,overlayCSS: { opacity:0.2 } ,css : {border: 'none', background: 'rgba(255, 255, 255,0)'}});
-        	else
+        blockUI : function(msg) {
+            if(!msg )
+                msg = '<img src="/static/images/loader.gif" />' ;
+			if(top == window){
+				$.blockUI.defaults.baseZ = 9999999999;
+        		$.blockUI({message : msg ,overlayCSS: { opacity:0.2 } ,css : {border: 'none', background: 'rgba(255, 255, 255,0)'}});
+        	}else{
         		top.Utilities.blockUI();
+        	}
         },
         unblockUI : function() {
 			if(top == window)
@@ -1825,15 +2001,19 @@ if (!window["Utilities"]) {
                     list : list,
                     textKey : textKey
             }
-            Utilities.openModal("/sort",800,600);
+            Utilities.openModal("/util/sort",800,600);
         },
-        textDialog : function (text,title,readonly){
+        textDialog : function (text,title,readonly,width,height){
             window["textDialog"]={
                     text : text
                     ,title : title
                     , readonly : !!readonly
             }
-            Utilities.openModal("/sort/textDialog",1000,500);
+            if(!width)
+                width = 1500;
+            if(!height)
+                height = 700;
+            Utilities.openModal("/util/textDialog?height="+(height-200),width,height);
         },
         getDownloadUrl : function(data){
             if(!data || !data.fileUrl)
@@ -1880,6 +2060,165 @@ if (!window["Utilities"]) {
         	});
         	
         },
+        /**
+         * 체크박스용 콤보박스 - 220415
+         * @param element : id (dom 아이디)
+         * @param code : 공통코드
+         * @param classNm : css명
+         * @param initVal : 최초 선택값(콤마 구분)
+         * @param optTotal : 전체옵션(true/false)
+         */
+        setChkboxData : function(element,code,classNm,initVal,optTotal){
+        	element = $("#"+element);
+        	
+        	let idVal = "";
+        	if(element != null){
+        		idVal = element.attr('id');
+        	}
+        	
+        	element.html("");
+        	let url = "/commCode/getComboCode";
+
+        	var param = {codeCd : code};
+        	Utilities.getAjax(url, param, true, function(list,jqXHR){
+        		if(Utilities.processResult(list,jqXHR,"콤보데이터를 가져올 수 없습니다.")){
+        			if(list.length > 0){
+        				var chkListStr = "";
+	        			for(var i=0;i<list.length;i++){
+	        				let cData = list[i];
+	        				//let opt = $('<label class="'+ classNm +'"><input type="checkbox" name="'+idVal+'" title="'+(cData.codeNm || cData.comnCdNm)+'" value="'+(cData.codeCd || cData.comnCd)+'"><span class="label">'+(cData.codeNm || cData.comnCdNm)+'</span></label>');
+	        				chkListStr += '<label class="'+ classNm +'"><input type="checkbox" name="'+idVal+'" title="'+(cData.codeNm || cData.comnCdNm)+'" value="'+(cData.codeCd || cData.comnCd)+'"><span class="label">'+(cData.codeNm || cData.comnCdNm)+'</span></label>';
+	        				//opt.data(cData);
+	        				//element.append(opt);
+	        				element.html(chkListStr);
+	        			}
+	        			
+	        			//전체옵션 설정이 존재한다면
+        				if(optTotal){
+	        				element.append('│<label class="'+ classNm +'"><input type="checkbox" id="tot_'+idVal+'" name="tot_'+idVal+'" title="전체"><span class="label">전체</span></label>');
+	        				
+	        				$("#tot_"+ idVal +"").off("click");
+	        				$("#tot_"+ idVal +"").on("click", function() {
+								if($("#tot_"+ idVal +"").is(":checked")) $("input[name="+ idVal +"]").prop("checked", true);
+								else $("input[name="+ idVal +"]").prop("checked", false);
+							});
+							
+							$("input[name="+ idVal +"]").off("click");
+	        				$("input[name="+ idVal +"]").on("click", function() {
+								var total = $("input[name="+ idVal +"]").length;
+								var checked = $("input[name="+ idVal +"]:checked").length;
+								
+								if(total != checked) $("#tot_"+ idVal +"").prop("checked", false);
+								else $("#tot_"+ idVal +"").prop("checked", true); 
+							});
+	        			}
+	        			
+	        			//선택한 값이 존재하면
+	        			if(initVal != null){
+	        				var checkedCount = 0;
+	        				var initValArr = initVal.split(",");
+	        				var chkboxObj = $('input[name='+ idVal +']');
+							for(var i = 0; i < chkboxObj.length; i++){
+								if(initValArr.includes(chkboxObj[i].value)){
+									chkboxObj[i].checked = true;
+									checkedCount++;
+								}
+							}
+							if(optTotal && checkedCount == chkboxObj.length){
+								$("#tot_"+ idVal +"").prop("checked", true);
+							}else{
+								$("#tot_"+ idVal +"").prop("checked", false);
+							}
+	        			}
+        			}
+        		}
+        	});
+        },
+        /**
+         * 라디오박스용 콤보박스 - 220502
+         * @param element : id (dom 아이디)
+         * @param code : 공통코드
+         * @param classNm : css명
+         * @param initVal : 최초 설정값 (콤마로 다중값 구분)
+         * @param callFunc: 클릭 콜백함수 (리턴:클릭한 객체)
+         */
+        setRdoboxData : function(element,code,classNm,initVal,clickCallFunc){
+        	element = $("#"+element);
+        	
+        	let idVal = "";
+        	if(element != null){
+        		idVal = element.attr('id');
+        	}
+        	
+        	element.html("");
+        	let url = "/commCode/getComboCode";
+        	
+        	var param = {codeCd : code};
+        	Utilities.getAjax(url, param, true, function(list,jqXHR){
+        		if(Utilities.processResult(list,jqXHR,"콤보데이터를 가져올 수 없습니다.")){
+        			for(var i=0;i<list.length;i++){
+        				let cData = list[i];
+        				let opt =$('<label class="'+ classNm +'"><input type="radio" name="'+idVal+'" title="'+(cData.codeNm || cData.comnCdNm)+'" value="'+(cData.codeCd || cData.comnCd)+'"><span class="label">'+(cData.codeNm || cData.comnCdNm)+'</span></label>');
+        				opt.data(cData);
+        				element.append(opt);
+        			}
+        			
+        			if(initVal != null){
+        				var initValArr = initVal.split(",");
+        				var rdoboxObj = $('input[name='+ idVal +']');
+						for(var i = 0; i < rdoboxObj.length; i++){
+							if(initValArr.includes(rdoboxObj[i].value)){
+								rdoboxObj[i].checked = true;
+							}
+						}
+        			}
+        			if(clickCallFunc != null){
+        				$('input[name="'+idVal+'"]').removeAttr('onclick');
+	        			$('input[name="'+idVal+'"]').click(function() {
+	        				clickCallFunc($(this));
+	        			});
+        			}
+        		}
+        	});
+        },
+        /**
+         * 현재날짜 대비 연령출력 - 220510
+         * @param birthday : 생일 (YYYYMMDD)
+         */
+        getBirthdayAge : function(birthday){
+        	var nowDt = new Date();
+			var nowYear = nowDt.getFullYear();
+			var tarYear = "";
+			var rtnAge = "";
+			
+			try{
+				if(birthday != null && birthday != ""){
+					tarYear = birthday.substring(0, 4);
+				}
+		
+				if(tarYear != ""){
+					rtnAge = (parseInt(nowYear) - parseInt(tarYear)) +"세";
+				}else{
+					rtnAge = "-";
+				}
+			}catch(e){
+				rtnAge = "-";
+			}finally{
+				return rtnAge;
+			}
+        },
+        /**
+         * 폼내부의 입력폼(hidden포함)을 초기화 합니다. - 220530
+         * @param frm : 폼아이디명
+         */
+        resetForm : function(frm){
+        	var jFrm = Utilities.getFormObject(frm);
+            if (!jFrm || !jFrm.length) return null;
+            jFrm.each(function() {
+                this.reset();
+            });
+            $("#"+ frm +" input[type=hidden]").val('');
+        },
         getFormattedJson : function(jsonStr){
             try{
                     var json = JSON.parse(jsonStr);
@@ -1888,7 +2227,22 @@ if (!window["Utilities"]) {
                 }catch(e){
                     return jsonStr;
                 }
-        }
+        },
+        openMenuTab : function(url,param){ 
+            //param = "a=1&b=2" 
+			var topWin = Utilities.getTopWindow();
+            
+            if(window != topWin)
+            {
+              try{
+                 return topWin.Utilities.openMenuTab(url,param);
+                }catch(e){
+					console.error(e);
+				}
+                
+            }
+            showMenuUrl(url,param);
+		}
         
     };
 }
@@ -2014,47 +2368,43 @@ function makeAction(element) {
         selector = $('[data-type=date]');
 
     selector.each(function() {
-//      $(this ).datepicker({
-//                  dateFormat: "yy-mm-dd",
-//                  changeMonth: true,
-//                  changeYear: true,
-//                  showButtonPanel: true,
-//                  dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-//                  showMonthAfterYear: true,
-//                  monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-//                  monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-//                  yearRange: "-150:+150",
+      $(this ).datepicker({
+                  dateFormat: "yy-mm-dd",
+                  changeMonth: true,
+                  changeYear: true,
+                  showButtonPanel: true,
+                  dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
+                  showMonthAfterYear: true,
+                  monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  yearRange: "-150:+150",
+
+              });
+
+
+//        var element = $(this);
+//        if (element.attr("data-type") != "date")
+//            return;
+//        element.addClass("it date hasDatepicker");    
+//        var val = element.val();
+//        element.wrap('<span></span>');
+//        var divParent = element.parent();
+//        var wrapper = $('<div style="margin-top: -1px;"></div>');
+//        divParent.append(wrapper);
 //
-//              });
-
-
-        var element = $(this);
-        if (element.attr("data-type") != "date")
-            return;
-        var val = element.val();
-        element.wrap('<div class="tui-datepicker-input tui-datetime-input tui-has-focus"></div>');
-        var divParent = element.parent();
-        var ico = $('<span class="tui-ico-date"></span>');
-        divParent.append(ico);
-
-        var divPick = divParent.wrap('<div></div>').parent();
-        var wrapper = $('<div style="margin-top: -1px;"></div>');
-        divPick.append(wrapper);
-
-        var datepicker = new tui.DatePicker(wrapper[0], {
-            date : new Date(),
-            input : {
-                element : element[0],
-                format : 'yyyyMMdd',
-                syncFromInput : true
-            },
-            type : 'date',
-            language : "ko",
-            syncFromInput : true,
-            openers : [ico[0]]
-        });
-        element.val(val);
-        datepicker._onChangeInput();
+//        var datepicker = new tui.DatePicker(wrapper[0], {
+//            date : new Date(),
+//            input : {
+//                element : element[0],
+//                format : 'yyyyMMdd',
+//                syncFromInput : true
+//            },
+//            type : 'date',
+//            language : "ko",
+//            syncFromInput : true,
+//        });
+//        element.val(val);
+//        datepicker._onChangeInput();
         
     });
     
@@ -2071,7 +2421,7 @@ function makeAction(element) {
         
         if (element.attr("data-type") != "datetime")
             return;
-//     element.inputmask("datetime", {inputFormat: "yyyy-mm-dd HH:MM:ss",placeholder: '____-__-__ __:__:__'});
+     element.inputmask("datetime", {inputFormat: "yyyy-mm-dd HH:MM:ss",placeholder: '____-__-__ __:__:__'});
 //  
 //      var val = element.val();
 //      element.wrap('<div class="tui-datepicker-input tui-datetime-input tui-has-focus"></div>');
@@ -2112,7 +2462,7 @@ function makeAction(element) {
         selector = $('[data-type=month]');
     
     selector.each(function() {
-        var element = $(this);
+        const element = $(this);
         if (element.attr("data-type") != "month")
             return;
         var val = element.val();
@@ -2136,6 +2486,11 @@ function makeAction(element) {
             language : "ko",
             openers : [ico[0]]
         });
+        
+        datepicker.on('change',function() {
+            element.change();
+        });
+        
         element.val(val);
         datepicker._onChangeInput();
     });
@@ -2153,7 +2508,7 @@ function makeAction(element) {
         selector = $('[data-type=year]');
     
     selector.each(function() {
-        var element = $(this);
+        const element = $(this);
         if (element.attr("data-type") != "year")
             return;
         var val = element.val();
@@ -2176,6 +2531,9 @@ function makeAction(element) {
             language : "ko",
             openers : [ico[0]]
         });
+        datepicker.on('change', function() {
+            element.change();
+        });
         element.val(val);
         datepicker._onChangeInput();
     });
@@ -2197,93 +2555,159 @@ function makeAction(element) {
         var elementEnd = $("#"+elementStart.attr("data-range-end"));
         if(elementEnd.length ==0)
             return;
-            
-        
-        var valStart = elementStart.val();
-        var valEnd  = elementEnd.val();
-        
-        elementStart.wrap('<div class="tui-datepicker-input tui-datetime-input tui-has-focus"></div>');
-        var divParentStart = elementStart.parent();
-        var icoStart = $('<span class="tui-ico-date"></span>');
-        divParentStart.append(icoStart);
+        $(elementStart ).addClass("date");
+        $(elementEnd ).addClass("date");
+        $(elementStart ).datepicker({
+                  dateFormat: "yymmdd",
+                  changeMonth: true,
+                  changeYear: true,
+                  showButtonPanel: true,
+                  dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
+                  showMonthAfterYear: true,
+                  monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  yearRange: "-150:+150",
 
-        //var divParentStart = divParentStart.wrap('<div></div>');
-        var wrapperStart = $('<div style="margin-top: -1px;"></div>');
-        divParentStart.parent().append(wrapperStart);
-        
+              });    
+              $(elementEnd ).datepicker({
+                  dateFormat: "yymmdd",
+                  changeMonth: true,
+                  changeYear: true,
+                  showButtonPanel: true,
+                  dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
+                  showMonthAfterYear: true,
+                  monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                  yearRange: "-150:+150",
 
-        
-        elementEnd.wrap('<div class="tui-datepicker-input tui-datetime-input tui-has-focus"></div>');
-        var divParentEnd = elementEnd.parent();
-        var icoEnd = $('<span class="tui-ico-date"></span>');
-        divParentEnd.append(icoEnd);
+              });    
+//        elementStart.addClass("it date hasDatepicker");
+//        elementEnd.addClass("it date hasDatepicker");
+//        
+//        var valStart = elementStart.val();
+//        var valEnd  = elementEnd.val();
+//        
+//        elementStart.wrap('<span class=""></span>');
+//        var divParentStart = elementStart.parent();
+//        var wrapperStart = $('<div style="margin-top: -1px;"></div>');
+//        divParentStart.parent().append(wrapperStart);
+//        
+//
+//        
+//        elementEnd.wrap('<span class=""></span>');
+//        var divParentEnd = elementEnd.parent();
+//        var wrapperEnd = $('<div style="margin-top: -1px;"></div>');
+//        divParentEnd.parent().append(wrapperEnd);
+//        
+//        var endDate = null;//new Date();
+//        var startDate = null;//new Date();
+//        
+//        if(valStart)
+//        {
+//            elementStart.val(valStart);
+//            startDate = new Date();
+//            startDate.setFullYear(parseInt(valStart.substring(0,4)));
+//            startDate.setMonth(parseInt(valStart.substring(4,6))-1);
+//            startDate.setDate(parseInt(valStart.substring(6,8)));
+//        }   
+//        
+//        if(valEnd)
+//        {
+//            elementEnd.val(valEnd);
+//            endDate = new Date();
+//            endDate.setFullYear(parseInt(valEnd.substring(0,4)));
+//            endDate.setMonth(parseInt(valEnd.substring(4,6))-1);
+//            endDate.setDate(parseInt(valEnd.substring(6,8)));
+//        }   
+//        var picker = tui.DatePicker.createRangePicker({
+//            startpicker: {
+//                date: startDate,
+//                input: elementStart[0],
+//                format : 'yyyyMMdd',
+//                container: wrapperStart[0],
+//            },
+//            endpicker: {
+//                date: endDate,
+//                input: elementEnd[0],
+//                format : 'yyyyMMdd',
+//                container: wrapperEnd[0],
+//            },
+//            format : 'yyyyMMdd',
+//            language : "ko"
+//        });
+//        elementStart[0].picker = picker;
+//        elementEnd[0].picker = picker;
+//        elementStart.change(function(){
+//			if(this.picker)
+//			{
+//				if(this.value)
+//					this.picker.getStartpicker()._onChangeInput();
+//				else
+//					this.picker.getStartpicker().setNull();
+//			}	
+//		});
+//		elementEnd.change(function(){
+//			if(this.picker)
+//			{
+//				if(this.value)
+//					this.picker.getEndpicker()._onChangeInput();
+//				else
+//					this.picker.getEndpicker().setNull();
+//			}	
+//		});
+//        
+//        picker.getStartpicker()._onChangeInput();
+//        picker.getEndpicker()._onChangeInput();
+//        
+//        var startPicker = picker.getStartpicker();
+//        var endPicker = picker.getEndpicker();
+//        
+//        startPicker.on('close', () => {
+//			const el = $(startPicker._datepickerInput._input);
+//			const val = el.val();
+//			if(val == ''){
+//				startPicker.setNull();	
+//			} else if(val.length == 8){
+//				const myDate = moment(val, 'YYYYMMDD').toDate();
+//				if(myDate){
+//					startPicker._onChangeInput();
+//				}
+//
+//			}
+//		});
+//
+//		startPicker.on('change', () => {
+//			const el = $(startPicker.getDateElements());
+//			const dt = startPicker.getDate();
+//			if(dt == null){
+//				el.val('');
+//			}else {
+//				el.val(moment(dt).format('YYYYMMDD'));
+//			}
+//		});
+//		endPicker.on('close', () => {
+//			const el = $(endPicker._datepickerInput._input);
+//			const val = el.val();
+//			if(val == ''){
+//				endPicker.setNull();	
+//			} else if(val.length == 8){
+//				const myDate = moment(val, 'YYYYMMDD').toDate();
+//				if(myDate){
+//					endPicker._onChangeInput();
+//				}
+//
+//			}
+//		});
+//		endPicker.on('change', () => {
+//			const el = $(endPicker.getDateElements());
+//			const dt = endPicker.getDate();
+//			if(dt == null){
+//				el.val('');
+//			}else {
+//				el.val(moment(dt).format('YYYYMMDD'));
+//			}
+//		});
 
-        //var divParentEnd = divParentEnd.wrap('<div></div>');
-        var wrapperEnd = $('<div style="margin-top: -1px;"></div>');
-        divParentEnd.parent().append(wrapperEnd);
-        
-        var endDate = null;//new Date();
-        var startDate = null;//new Date();
-        
-        if(valStart)
-        {
-            elementStart.val(valStart);
-            startDate = new Date();
-            startDate.setFullYear(parseInt(valStart.substring(0,4)));
-            startDate.setMonth(parseInt(valStart.substring(4,6))-1);
-            startDate.setDate(parseInt(valStart.substring(6,8)));
-        }   
-        
-        if(valEnd)
-        {
-            elementEnd.val(valEnd);
-            endDate = new Date();
-            endDate.setFullYear(parseInt(valEnd.substring(0,4)));
-            endDate.setMonth(parseInt(valEnd.substring(4,6))-1);
-            endDate.setDate(parseInt(valEnd.substring(6,8)));
-        }   
-//      startDate.setDate(1);
-        var picker = tui.DatePicker.createRangePicker({
-            startpicker: {
-                date: startDate,
-                input: elementStart[0],
-                format : 'yyyyMMdd',
-                container: wrapperStart[0],
-                openers : [icoStart[0]]
-            },
-            endpicker: {
-                date: endDate,
-                input: elementEnd[0],
-                format : 'yyyyMMdd',
-                container: wrapperEnd[0],
-                openers : [icoEnd[0]]
-            },
-            format : 'yyyyMMdd',
-            language : "ko"
-        });
-        elementStart[0].picker = picker;
-        elementEnd[0].picker = picker;
-        elementStart.change(function(){
-			if(this.picker)
-			{
-				if(this.value)
-					this.picker.getStartpicker()._onChangeInput();
-				else
-					this.picker.getStartpicker().setNull();
-			}	
-		});
-		elementEnd.change(function(){
-			if(this.picker)
-			{
-				if(this.value)
-					this.picker.getEndpicker()._onChangeInput();
-				else
-					this.picker.getEndpicker().setNull();
-			}	
-		});
-        
-        picker.getStartpicker()._onChangeInput();
-        picker.getEndpicker()._onChangeInput();
     });
     
     
@@ -2366,7 +2790,66 @@ function makeAction(element) {
     
     
     
+     if (element) {
+        selector = $(element).find('[data-type=storeSelect]');
+
+    } else
+        selector = $('[data-type="storeSelect"]');
     
+    const storeEl = selector;
+    if(storeEl.length)
+    {
+        const codeType = "storeNo";
+        const url = window["_CODE_URL"] || "/util/commCode/getComboCode";
+        const param = {codeType : codeType};
+        const storeList = [];
+        const storeMap = {};
+        Utilities.getAjax(url, param, true, function(list,jqXHR)
+        {
+            if(Utilities.processResult(list,jqXHR,"매장정보를 가져올 수 없습니다."))
+            {
+                for(let i=0;i<list.length;i++){
+                    const cd = list[i];
+                    const val = {value: cd.comnCd , text : cd.comnCdNm};
+                    storeList.push(val);
+                    storeMap[cd.comnCd] = val;
+                }
+//                const thisVal = this.value;
+               
+                storeEl.each(function(){
+                    this.storeMap = storeMap;
+                    const thisVal = this.value;
+                    const items = [];
+                    if(thisVal){
+                        
+                        const arr = thisVal.split(",");
+                        for(let i=0;i<arr.length;i++){
+                            const it = storeMap[arr[i]];
+                            if(it)
+                             items.push(it);
+                        }
+                    }
+                    const option = {
+                            plugins: ['remove_button'],
+                            delimiter: ',',
+                            options : items,
+//                            items : items,
+                            persist: false, 
+                            create : false,
+                            openOnFocus : false,
+                            onDelete : function(value){
+                                this.removeOption(value);
+                            }
+                    };
+                    const maxCnt = $(this).attr("data-max-cnt");
+                    if(maxCnt > 0)
+                        option.maxItems = maxCnt;
+    
+                    $(this).selectize(option);
+                });
+            }
+        });
+    }
     
     
     
@@ -2562,6 +3045,25 @@ function makeAction(element) {
         
     }); 
     
+    
+    /*권한 버튼 보이기*/
+    if (element) {
+        selector = $(element).find('[data-auth-type]');
+        selector.push($(element)[0]);
+
+    } else
+        selector = $('[data-auth-type]');
+    
+    selector.each(function(){
+		var dt = $(this).data();
+		if(window["_user_auth_"+dt.authType]){
+			if(window["_user_auth_"+dt.authType]=="Y")
+				$(this).show();
+			else
+				$(this).hide();
+				
+		}
+	});
     
     
     var $gLeft = $("div.gLeft");

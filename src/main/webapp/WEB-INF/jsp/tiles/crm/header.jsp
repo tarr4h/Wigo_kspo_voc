@@ -17,6 +17,9 @@
  <title>VOC</title>
 <%-- favicon --%>
 <link rel="shortcut icon" href="/static/crm/images/favicon.ico">
+
+<!-- IE -->
+<script src="<c:url value='/static/js/polyfill.js'/>"></script>
 <!-- library -->
 <script type="text/javascript" src="/static/crm/js/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/crm/plugins/swiper/swiper.min.css">
@@ -43,8 +46,6 @@
 <!-- jstree -->
 <link rel="stylesheet" href="<c:url value='/static/js/js-tree/themes/default/style.min.css'/>" />
 
-<!-- IE -->
-<script src="<c:url value='/static/js/polyfill.js'/>"></script>
 <!-- jQuery -->
 <script src="<c:url value='/static/js/jquery-blockui/jquery.blockUI.js'/>"></script>
 <script src="<c:url value='/static/js/jquery-form/jquery.form.min.js'/>"></script>

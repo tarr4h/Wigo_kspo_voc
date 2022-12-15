@@ -25,8 +25,8 @@ import java.net.URLEncoder;
 
 public abstract class AddressUtil {
 
-	private static final String _KEY_KO = "devU01TX0FVVEgyMDIyMDIyNDE1MDEwNzExMjI3Njc=";
-	private static final String _KEY_EN = "devU01TX0FVVEgyMDIyMDIyNDE0NTAxNDExMjI3NjY=";
+	private static final String _KEY_KO = "devU01TX0FVVEgyMDIyMTIxNTEzNTQyMjExMzM0MjI=";
+	private static final String _KEY_EN = "devU01TX0FVVEgyMDIyMTIxNTEzNTUyNTExMzM0MjM=";
 	private static final String _API_URL_KO = "https://www.juso.go.kr/addrlink/addrLinkApi.do";
 	private static final String _API_URL_EN = "https://www.juso.go.kr/addrlink/addrEngApi.do";
 	private static final int _COUNT_PER_PAGE = 100;
