@@ -30,11 +30,13 @@ if(parent != window && parent["mainIndex"] && parent["resizeTabWnd"]){
 					clearTimeout(self.chkTimeout);
 				var wd = $body.outerWidth();
 				var ht = $body.outerHeight();
-				if(this.width != wd || this.height != ht){
-					this.handler();
-				}
-				this.width = wd;
-				this.height = ht;
+				if(wd && ht){
+                    if(this.width != wd || this.height != ht){
+                        this.handler();
+                    }
+                    this.width = wd;
+                    this.height = ht;
+                }
 				self.chkTimeout = setTimeout(function(){
 					self.init();
 				}, 100);
