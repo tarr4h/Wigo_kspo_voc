@@ -65,9 +65,11 @@
 // });
 function signIn(){
 // 	var param = Utilities.formToMap("frmMain");
+    var cur = new Date();
 	var param = {
 			loginId : $("#loginId").val(),
-			loginPwd : $("#loginPwd").val()
+			loginPwd : $("#loginPwd").val(),
+			current : cur.getTime()
 	};
 	if(!param.loginId){
 		alert("로그인 아이디를 입력해 주세요");

@@ -79,6 +79,8 @@
 		<!-- //gnb -->
 		<div class="gRt">
 			<span class="log"><c:out value="${LOGIN_USER.userNm }" />(<c:out value="${LOGIN_USER.loginId }" />)님 환영합니다.</span>
+            <span class="log" id="elSessionTime"></span>
+            <a href="#;" class="mBtn1 s lWhite" data-click="extendSession">연장</a>
 			<a href="#;" class="mBtn1 s lWhite" data-click="logout">로그아웃</a>
 		</div>
 	</div>
@@ -475,8 +477,52 @@ function showMyMenu(element){
 	element.parent().addClass("active");
 	return false;
 }
+var _offsetMs = 0;
+var _sessionTime = 0;
+var _sessionTimer = 0;
 
+function extendSession(){
+	var url = "/extendSession";
+    Utilities.getAjax(url,null,false,function(result,jqXHR){
+        
+    });
+}
 
+function startSessionTime(){
+	if(_sessionTimer)
+		clearTimeout(_sessionTimer);
+	var cur = new Date();
+	var lastTouch = parseInt(Utilities.getCookie("lastTouch"));
+	var lumode =  parseInt(Utilities.getCookie("lumode"));
+	var tm =parseInt( ( cur.getTime() - lastTouch - _offsetMs)/1000);
+	var lft = _sessionTime - tm;
+	if(lft<0 || !lumode)
+		lft = 0;
+	if(lft ==0){
+		Utilities.setCookie("lastTouch","1000");
+		logout();
+		return;
+	}
+	var min = "0"+parseInt(lft / 60);
+	var sec = "0" + lft%60;
+	var str = min.slice(-2) + ":" + sec.slice(-2);
+	$("#elSessionTime").html(str);
+// 	console.log(str);
+	_sessionTimer = setTimeout(startSessionTime,1000);
+}
+
+function getOffsetTime(){
+	var url = "/util/getTime";
+	Utilities.getAjax(url,null,false,function(result,jqXHR){
+        if(Utilities.processResult(result,jqXHR,""))
+        {
+        	var cur = new Date();
+        	_offsetMs =   parseInt(result.currentTime) - cur.getTime();
+        	_sessionTime = parseInt(result.sessionTime) ;
+        	startSessionTime();
+        }
+    });
+}
 $(document).ready(function() {
 	// openMenuTab("MAIN","통합고객정보 관리","/main",true);
 	openMenuTab("MAIN","main","/main",true);
@@ -492,6 +538,8 @@ $(document).ready(function() {
 		$(this).removeClass("active");
 		return false;
 	});
+	
+	getOffsetTime();
 
 });
 

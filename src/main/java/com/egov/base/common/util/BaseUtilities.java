@@ -2124,7 +2124,7 @@ public class BaseUtilities {
 		HttpServletResponse response = getResponse();
 		value = value == null ? null : value.replace("\n", "").replace("\r", "");
 		Cookie cookie = new Cookie(name, value);
-		cookie.setSecure(true);
+//		cookie.setSecure(true);
 		cookie.setPath("/");
 
 		response.addCookie(cookie);

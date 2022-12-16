@@ -1,5 +1,9 @@
 if (!window["Utilities"]) {
-
+$.ajaxSetup({
+  xhrFields: {
+    withCredentials: true
+  }
+});
     var _ERROR_NEED_LOGIN = 462;
     var _ERROR_HAS_NO_RIGHT = 463;
     var _ERROR_BAN_LOGIN = 464;
@@ -706,6 +710,7 @@ if (!window["Utilities"]) {
             var opt = {
                 url : url,
                 dataType : 'json',
+                xhrFields: { withCredentials: true },
                 data : jsonBody && param ? Utilities.toJSON(param) : param,
                 type : mthd,
                 cache : false,
