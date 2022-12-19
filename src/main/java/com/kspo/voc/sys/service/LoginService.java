@@ -20,8 +20,8 @@ import com.kspo.voc.sys.model.LoginUserVo;
 public class LoginService extends AbstractVocService {
 	@Autowired
 	UserBaseDao dao;
-	@Autowired
-	LoginService service;
+//	@Autowired
+//	LoginService service;
 //	@Value("${spring.sso.auth-url}")
 //	private String authUrl;
 
