@@ -58,5 +58,5 @@ spring:
 logging:
   config: classpath:logback-local.xml
   level:
-    com.egov: DEBUG
+    com.kspo: DEBUG
     org.springframework.web: INFO
