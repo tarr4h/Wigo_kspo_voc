@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.CrmChngHstDao">
+    <sql id="sqlPkConditions">
+                WHERE CHNG_HST_CD       =       #{chngHstCd}
+    </sql>
+    <sql id="sqlCols">
+                      CHNG_HST_CD                    /*변경이력코드        */
+                    , MENU_CD                    /*메뉴코드        */
+                    , CHNG_CALL_URL                    /*변경호출URL        */
+                    , CHNG_RSLT_TXN                    /*변경결과내역        */
+                    , CHNG_PARAM_TXN                    /*변경파라미터내역        */
+                    , CHNG_CALL_TXN                    /*변경호출내역        */
+                    , CHNG_CALL_DT                    /*변경호출일시        */
+                    , CHNG_EXEC_MSEC                    /*변경실행밀리초        */
+                    , CHNG_CALL_IP_ADDR                    /*변경호출IP주소        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="chngHstCd != null and chngHstCd != ''">
+            <choose>
+                <when test="chngHstCd instanceof String">
+                              AND A.CHNG_HST_CD       =       #{chngHstCd}
+                </when>
+                <otherwise>
+                    AND A.CHNG_HST_CD       IN
+                    <foreach item="item" index="index" collection="chngHstCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuCd != null and menuCd != ''">
+            <choose>
+                <when test="menuCd instanceof String">
+                              AND A.MENU_CD           =       #{menuCd}
+                </when>
+                <otherwise>
+                    AND A.MENU_CD           IN
+                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="chngCallUrl != null and chngCallUrl != ''">
+                      AND A.CHNG_CALL_URL     =       #{chngCallUrl}
+        </if>
+        <if test="chngCallDt != null and chngCallDt != ''">
+                      AND A.CHNG_CALL_DT      =       #{chngCallDt}
+        </if>
+        <if test="chngExecMsec != null and chngExecMsec != ''">
+                      AND A.CHNG_EXEC_MSEC    =       #{chngExecMsec}
+        </if>
+        <if test="chngCallIpAddr != null and chngCallIpAddr != ''">
+                      AND A.CHNG_CALL_IP_ADDR =       #{chngCallIpAddr}
+        </if>
+        
+        
+         <if test="strtDt != null and strtDt != ''">
+                      AND A.CHNG_CALL_DT      >=       TO_DATE(#{strtDt},'YYYYMMDD')
+        </if>
+        <if test="endDt != null and endDt != ''">
+                      AND TO_DATE(#{endDt},'YYYYMMDD') + 1 > A.CHNG_CALL_DT
+        </if>
+        <if test="loginIdLike != null and loginIdLike != ''">
+                      AND C.LOGIN_ID         LIKE   '%' ||  #{loginIdLike} ||'%'
+        </if>
+        <if test="userNmLike != null and userNmLike != ''">
+                      AND C.USER_NM          LIKE   '%' ||  #{userNmLike} ||'%'
+        </if>
+        <if test="menuNmLike != null and menuNmLike != ''">
+                      AND B.MENU_NM          LIKE   '%' ||  #{menuNmLike} ||'%'
+        </if>
+        <if test="chngCallUrlLike != null and chngCallUrlLike != ''">
+                      AND A.CHNG_CALL_URL     LIKE   '%' || #{chngCallUrlLike} ||'%'
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_CHNG_HST A
+                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmChngHstVo">
+        SELECT A.* 
+             , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
+                   FROM CRM_MENU_BAS
+                  WHERE 1=1
+                  START WITH MENU_CD = A.MENU_CD 
+                CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD
+                ) MENU_PATH
+        FROM (
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT A.CHNG_HST_CD                    /*변경이력코드        */
+                    , A.MENU_CD                    /*메뉴코드        */
+                    , A.CHNG_CALL_URL                    /*변경호출URL        */
+                    , A.CHNG_RSLT_TXN                    /*변경결과내역        */
+                    , A.CHNG_PARAM_TXN                    /*변경파라미터내역        */
+                    , A.CHNG_CALL_TXN                    /*변경호출내역        */
+                    , A.CHNG_CALL_DT                    /*변경호출일시        */
+                    , A.CHNG_EXEC_MSEC                    /*변경실행밀리초        */
+                    , A.CHNG_CALL_IP_ADDR                    /*변경호출IP주소        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , B.MENU_NM
+                    , C.USER_CD
+                    , C.USER_NM
+                    , C.LOGIN_ID
+                 FROM CRM_CHNG_HST A
+                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+        ) A
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmChngHstVo">
+               SELECT A.CHNG_HST_CD                    /*변경이력코드        */
+                    , A.MENU_CD                    /*메뉴코드        */
+                    , A.CHNG_CALL_URL                    /*변경호출URL        */
+                    , A.CHNG_RSLT_TXN                    /*변경결과내역        */
+                    , A.CHNG_PARAM_TXN                    /*변경파라미터내역        */
+                    , A.CHNG_CALL_TXN                    /*변경호출내역        */
+                    , A.CHNG_CALL_DT                    /*변경호출일시        */
+                    , A.CHNG_EXEC_MSEC                    /*변경실행밀리초        */
+                    , A.CHNG_CALL_IP_ADDR                    /*변경호출IP주소        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
+                          FROM CRM_MENU_BAS
+                         WHERE 1=1
+                         START WITH MENU_CD = A.MENU_CD 
+                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                    , B.MENU_NM
+                    , C.USER_CD
+                    , C.USER_NM
+                    , C.LOGIN_ID
+                 FROM CRM_CHNG_HST A
+                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_CHNG_HST (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       NVL(#{chngHstCd},FN_CRM_AUTO_SEQ('C'))
+                     , #{menuCd}
+                     , #{chngCallUrl}
+                     , #{chngRsltTxn}
+                     , #{chngParamTxn}
+                     , #{chngCallTxn}
+                     , TO_DATE(#{chngCallDt},'YYYYMMDDHH24MISS')
+                     , #{chngExecMsec}
+                     , #{chngCallIpAddr}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_CHNG_HST
+                  SET MENU_CD             =         #{menuCd}
+                    , CHNG_CALL_URL       =         #{chngCallUrl}
+                    , CHNG_RSLT_TXN       =         #{chngRsltTxn}
+                    , CHNG_PARAM_TXN      =         #{chngParamTxn}
+                    , CHNG_CALL_TXN       =         #{chngCallTxn}
+                    , CHNG_CALL_DT        =         #{chngCallDt}
+                    , CHNG_EXEC_MSEC      =         #{chngExecMsec}
+                    , CHNG_CALL_IP_ADDR   =         #{chngCallIpAddr}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_CHNG_HST
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

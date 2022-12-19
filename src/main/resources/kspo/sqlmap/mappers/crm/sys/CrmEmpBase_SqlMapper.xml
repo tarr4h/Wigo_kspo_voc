@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.CrmEmpBaseDao">
+    <sql id="sqlPkConditions">
+                WHERE EMP_ID            =       #{empId}
+    </sql>
+    <sql id="sqlCols">
+                      EMP_ID                    /*사원ID        */
+                    , ORG_ID                    /*조직ID        */
+                    , EMP_NM                    /*사원명        */
+                    , CMP_CD                    /*회사코드        */
+                    , JOB_ID                    /*직업ID(C010)        */
+                    , DUTY_CD                   /*직무코드(C020)        */
+                    , EMP_GRADE_CD              /*사원등급코드(C030) */
+                    , TEL_NO                    /*전화번호        */
+                    , BIRTHDAY                  /*생년월일        */
+                    , EMAIL_ADDR                /*이메일주소        */
+                    , STATUS_CD                 /*상태코드 (C040)       */
+                    , ENCO_YMD                  /*입사년월일        */
+                    , RETIRE_YMD                /*퇴사년월일        */
+                    , EMP_TYPE_CD               /*사원유형코드 (C050)       */
+                    , MPHON_NO                  /*이동전화번호        */
+                    , MPHON_NO_ENC_VAL                  /*이동전화번호암호화값        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                   /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+                    , REGR_ID                   /*등록자ID        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="empId != null and empId != ''">
+                      AND EMP_ID            =       #{empId}
+        </if>
+        <if test="orgId != null and orgId != ''">
+                      AND ORG_ID            =       #{orgId}
+        </if>
+        <if test="empNm != null and empNm != ''">
+                      AND EMP_NM            =       #{empNm}
+        </if>
+        <if test="empNmLike != null and empNmLike != ''">
+                      AND EMP_NM            LIKE     '%' ||  #{empNmLike} || '%'
+        </if>
+        <if test="empIdLike != null and empIdLike != ''">
+                     AND EMP_ID            LIKE      #{empIdLike} || '%'
+        </if>
+        <if test="topOrgId != null and topOrgId != ''">
+             AND ORG_ID            IN ( SELECT ORG_ID FROM CRM_ORG_BAS 
+                                           START WITH ORG_ID = #{topOrgId}
+            CONNECT BY PRIOR   ORG_ID = UP_ORG_ID)
+        </if>
+        <if test="cmpCd != null and cmpCd != ''">
+            <choose>
+                <when test="cmpCd instanceof String">
+                              AND CMP_CD            =       #{cmpCd}
+                </when>
+                <otherwise>
+                    AND CMP_CD            IN
+                    <foreach item="item" index="index" collection="cmpCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="jobId != null and jobId != ''">
+                      AND JOB_ID            =       #{jobId}
+        </if>
+        <if test="dutyCd != null and dutyCd != ''">
+            <choose>
+                <when test="dutyCd instanceof String">
+                              AND DUTY_CD           =       #{dutyCd}
+                </when>
+                <otherwise>
+                    AND DUTY_CD           IN
+                    <foreach item="item" index="index" collection="dutyCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="telNo != null and telNo != ''">
+                      AND TEL_NO            =       #{telNo}
+        </if>
+        <if test="birthday != null and birthday != ''">
+                      AND BIRTHDAY          =       #{birthday}
+        </if>
+        <if test="emailAddr != null and emailAddr != ''">
+                      AND EMAIL_ADDR        =       #{emailAddr}
+        </if>
+        <if test="statusCd != null and statusCd != ''">
+            <choose>
+                <when test="statusCd instanceof String">
+                              AND STATUS_CD         =       #{statusCd}
+                </when>
+                <otherwise>
+                    AND STATUS_CD         IN
+                    <foreach item="item" index="index" collection="statusCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="encoYmd != null and encoYmd != ''">
+                      AND ENCO_YMD          =       #{encoYmd}
+        </if>
+        <if test="retireYmd != null and retireYmd != ''">
+                      AND RETIRE_YMD        =       #{retireYmd}
+        </if>
+        <if test="empTypeCd != null and empTypeCd != ''">
+            <choose>
+                <when test="empTypeCd instanceof String">
+                              AND EMP_TYPE_CD       =       #{empTypeCd}
+                </when>
+                <otherwise>
+                    AND EMP_TYPE_CD       IN
+                    <foreach item="item" index="index" collection="empTypeCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="mphonNo != null and mphonNo != ''">
+                      AND MPHON_NO          =       #{mphonNo}
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_EMP_BAS
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmJadeHrVo">
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                    , (SELECT ORG_NM FROM CRM_ORG_BAS WHERE A.ORG_ID = ORG_ID) ORG_NM
+<!--                         , ORG_NM -->
+<!--                           , CMP_NM -->
+<!--                           , JOB_NM  -->
+<!--                           , DUTY_NM -->
+<!--                           , EMP_GRADE_NM -->
+<!--                           , EMP_TYPE_NM -->
+<!--                           , STATUS_NM -->
+                 FROM CRM_EMP_BAS A
+        <include refid="sqlConditions"/>
+               ORDER BY TO_NUMBER(EMP_GRADE_CD) 
+                       , EMP_NM
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmJadeHrVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_EMP_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_EMP_BAS (
+        <include refid="sqlCols"/>
+<!--                         , ORG_NM -->
+<!--                           , CMP_NM -->
+<!--                           , JOB_NM  -->
+<!--                           , DUTY_NM -->
+<!--                           , EMP_GRADE_NM -->
+<!--                           , EMP_TYPE_NM -->
+<!--                           , STATUS_NM -->
+                 ) VALUES (
+                       #{empId}
+                     , #{orgId}
+                     , #{empNm}
+                     , #{cmpCd}
+                     , #{jobId}
+                     , #{dutyCd}
+                     , #{empGradeCd}
+                     , #{telNo}
+                     , #{birthday}
+                     , #{emailAddr}
+                     , #{statusCd}
+                     , #{encoYmd}
+                     , #{retireYmd}
+                     , #{empTypeCd}
+                     , #{mphonNo}
+                     , #{mphonNoEncVal}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                     , #{regrId}
+                     
+<!--                      , #{orgNm} -->
+<!--                      , #{cmpNm} -->
+<!--                      , #{jobNm} -->
+<!--                      , #{dutyNm} -->
+<!--                      , #{empGradeNm} -->
+<!--                      , #{empTypeNm} -->
+<!--                      , #{statusNm} -->
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_EMP_BAS
+                  SET EMP_NM              =         #{empNm}
+                    , CMP_CD              =         #{cmpCd}
+                    , ORG_ID              =         #{orgId}
+                    , JOB_ID              =         #{jobId}
+                    , DUTY_CD             =         #{dutyCd}
+                    , EMP_GRADE_CD        =         #{empGradeCd} /*사원등급코드 */
+                    , TEL_NO              =         #{telNo}
+                    , BIRTHDAY            =         #{birthday}
+                    , EMAIL_ADDR          =         #{emailAddr}
+                    , STATUS_CD           =         #{statusCd}
+                    , ENCO_YMD            =         #{encoYmd}
+                    , RETIRE_YMD          =         #{retireYmd}
+                    , EMP_TYPE_CD         =         #{empTypeCd}
+                    , MPHON_NO            =         #{mphonNo}
+                    , MPHON_NO_ENC_VAL    =         #{mphonNoEncVal}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+<!--                     , ORG_NM -->
+<!--                         , CMP_NM            =  #{cmpNm} -->
+<!--                         , JOB_NM             = #{jobNm} -->
+<!--                         , DUTY_NM            = #{dutyNm} -->
+<!--                         , EMP_GRADE_NM        = #{empGradeNm} -->
+<!--                         , EMP_TYPE_NM        = #{empTypeNm} -->
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_EMP_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.CrmGrpUserRelDao">
+    <sql id="sqlPkConditions">
+                WHERE GRP_CD            =       #{grpCd}
+                  AND USER_CD           =       #{userCd}
+    </sql>
+    <sql id="sqlCols">
+                      GRP_CD                    /*그룹코드        */
+                    , USER_CD                    /*사용자코드        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="grpCd != null and grpCd != ''">
+            <choose>
+                <when test="grpCd instanceof String">
+                              AND GRP_CD            =       #{grpCd}
+                </when>
+                <otherwise>
+                    AND GRP_CD            IN
+                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="userCd != null and userCd != ''">
+            <choose>
+                <when test="userCd instanceof String">
+                              AND USER_CD           =       #{userCd}
+                </when>
+                <otherwise>
+                    AND USER_CD           IN
+                    <foreach item="item" index="index" collection="userCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_GRP_USER_REL
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpUserRelVo">
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_GRP_USER_REL
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpUserRelVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_GRP_USER_REL
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO CRM_GRP_USER_REL (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{grpCd}
+                     , #{userCd}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_GRP_USER_REL
+                  SET AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_GRP_USER_REL
+        <include refid="sqlPkConditions"/>
+    </delete>
+    
+    <delete id="deleteUserCd">
+               DELETE 
+                 FROM CRM_GRP_USER_REL
+                WHERE USER_CD = #{userCd}
+    </delete>
+    
+    <delete id="deleteGrpCd">
+               DELETE 
+                 FROM CRM_GRP_USER_REL
+                WHERE GRP_CD = #{grpCd}
+    </delete>
+</mapper>

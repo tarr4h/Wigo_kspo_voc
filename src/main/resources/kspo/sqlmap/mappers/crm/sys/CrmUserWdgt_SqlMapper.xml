@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.CrmUserWdgtDao">
+    <sql id="sqlPkConditions">
+                WHERE USER_CD           =       #{userCd}
+                  AND MENU_CD           =       #{menuCd}
+    </sql>
+    <sql id="sqlCols">
+                      USER_CD                    /*사용자코드        */
+                    , MENU_CD                    /*메뉴코드        */
+                    , MENU_ODRG                    /*메뉴순번        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE A.MENU_CD = B.MENU_CD
+        <if test="userCd != null and userCd != ''">
+            <choose>
+                <when test="userCd instanceof String">
+                              AND A.USER_CD           =       #{userCd}
+                </when>
+                <otherwise>
+                    AND A.USER_CD           IN
+                    <foreach item="item" index="index" collection="userCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuCd != null and menuCd != ''">
+            <choose>
+                <when test="menuCd instanceof String">
+                              AND A.MENU_CD           =       #{menuCd}
+                </when>
+                <otherwise>
+                    AND A.MENU_CD           IN
+                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="menuOdrg != null and menuOdrg != ''">
+                      AND A.MENU_ODRG         =       #{menuOdrg}
+        </if>
+        
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM CRM_USER_WDGT_BAS A
+                    , CRM_MENU_BAS B
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmUserWdgtVo">
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT A.USER_CD                    /*사용자코드        */
+                    , A.MENU_CD                    /*메뉴코드        */
+                    , A.MENU_ODRG                    /*메뉴순번        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , B.MENU_NM
+                    , B.MENU_URL
+                 FROM CRM_USER_WDGT_BAS A
+                    , CRM_MENU_BAS B
+<!--                   AND A.USER_CD = NVL(#{userCd},#{amdrId})      -->
+                  <include refid="sqlConditions"/>      
+                ORDER BY A.MENU_ODRG
+                    , B.MENU_NM
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmUserWdgtVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM CRM_USER_WDGT_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+        <selectKey order="BEFORE" keyProperty="menuOdrg" resultType="int">
+            SELECT NVL(DECODE(#{menuOdrg},0,NULL,#{menuOdrg}),NVL(MAX(MENU_ODRG),0) + 1 )
+              FROM CRM_USER_WDGT_BAS
+             WHERE USER_CD = TO_CHAR(#{userCd}) 
+        </selectKey>
+                INSERT INTO CRM_USER_WDGT_BAS (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{userCd}
+                     , #{menuCd}
+                     , #{menuOdrg}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE CRM_USER_WDGT_BAS
+                  SET MENU_ODRG           =         #{menuOdrg}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM CRM_USER_WDGT_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+    <delete id="deleteMenuCd">
+               DELETE FROM CRM_USER_WDGT_BAS
+                WHERE MENU_CD = #{menuCd}
+    </delete>
+    
+</mapper>

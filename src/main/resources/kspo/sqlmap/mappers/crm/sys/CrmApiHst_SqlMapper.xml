@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.CrmApiExecHstDao">
+    <resultMap type="com.kspo.voc.sys.model.CrmApiExecHstVo" id="CrmApiExecHstVo">
+        <result property="apiRsltTxn"  column="API_RSLT_TXN"  jdbcType="CLOB" javaType="java.lang.String" />
+        <result property="apiParamTxn"  column="API_PARAM_TXN"  jdbcType="CLOB" javaType="java.lang.String" />
+    </resultMap>
+
+    <sql id="sqlPkConditions">
+                WHERE API_HST_CD        =       #{apiHstCd}
+    </sql>
+    <sql id="sqlCols">
+                      API_HST_CD                    /*API이력코드        */
+                    , API_CD                    /*API코드        */
+                    , API_CALL_URL                    /*API호출URL        */
+                    , API_RSLT_CD                    /*API결과코드        */
+                    , API_RSLT_MSG_TXN                    /*API결과메시지내역        */
+                    , API_PARAM_TXN                    /*API파라미터내역        */
+                    , API_RSLT_TXN                    /*API결과내역        */
+                    , API_CALL_DT                    /*API호출일시        */
+                    , API_EXEC_MSEC                    /*API실행초        */
+                    , API_CALL_IP_ADDR           /*API호출IP주소*/
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="apiHstCd != null and apiHstCd != ''">
+            <choose>
+                <when test="apiHstCd instanceof String">
+                              AND API_HST_CD        =       #{apiHstCd}
+                </when>
+                <otherwise>
+                    AND API_HST_CD        IN
+                    <foreach item="item" index="index" collection="apiHstCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="apiCd != null and apiCd != ''">
+            <choose>
+                <when test="apiCd instanceof String">
+                              AND API_CD            =       #{apiCd}
+                </when>
+                <otherwise>
+                    AND API_CD            IN
+                    <foreach item="item" index="index" collection="apiCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        
+        <if test="apiCallUrl != null and apiCallUrl != ''">
+                      AND API_CALL_URL      =       #{apiCallUrl}
+        </if>
+        <if test="apiCallUrlLike != null and apiCallUrlLike != ''">
+                      AND API_CALL_URL     LIKE    '%' ||  #{apiCallUrlLike} || '%'
+        </if>
+        
+        <if test="apiRsltCd != null and apiRsltCd != ''">
+            <choose>
+                <when test="apiRsltCd instanceof String">
+                              AND API_RSLT_CD       =       #{apiRsltCd}
+                </when>
+                <otherwise>
+                    AND API_RSLT_CD       IN
+                    <foreach item="item" index="index" collection="apiRsltCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="apiCallSysCd != null and apiCallSysCd != ''">
+            <choose>
+                <when test="apiCallSysCd instanceof String">
+                              AND REGR_ID     =       #{apiCallSysCd}
+                </when>
+                <otherwise>
+                    AND REGR_ID       IN
+                    <foreach item="item" index="index" collection="apiCallSysCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="apiRsltCdLike != null and apiRsltCdLike != ''">
+                      AND API_RSLT_CD      LIKE       '%' || #{apiRsltCdLike}  || '%'
+        </if>
+        <if test="apiRsltMsgTxn != null and apiRsltMsgTxn != ''">
+                      AND API_RSLT_MSG_TXN  =       #{apiRsltMsgTxn}
+        </if>
+        <if test="apiParamTxn != null and apiParamTxn != ''">
+                      AND API_PARAM_TXN     =       #{apiParamTxn}
+        </if>
+        <if test="apiRsltTxn != null and apiRsltTxn != ''">
+                      AND API_RSLT_TXN      =       #{apiRsltTxn}
+        </if>
+        <if test="apiCallDt != null and apiCallDt != ''">
+                      AND API_CALL_DT       =       #{apiCallDt}
+        </if>
+        <if test="apiExecMsec != null and apiExecMsec != ''">
+                      AND API_EXEC_MSEC      =       #{apiExecMsec}
+        </if>
+        <if test="sysCd != null and sysCd != ''">
+                      AND REGR_ID      =       #{sysCd}
+        </if>
+        <if test="successYn != null and successYn != ''">
+                      <choose>
+                        <when test="'Y'.toString().equals(successYn)" >
+                      AND API_RSLT_CD = 'IAR0200'
+                        </when>
+                        <when test="'N'.toString().equals(successYn)" >
+                      AND API_RSLT_CD != 'IAR0200'
+                        </when>
+                      </choose>
+        </if>
+        
+        <if test="strtDt != null and strtDt != ''">
+                      AND API_CALL_DT      >=       TO_DATE(#{strtDt},'YYYYMMDD')
+        </if>
+        <if test="endDt != null and endDt != ''">
+                      AND TO_DATE(#{endDt},'YYYYMMDD') + 1 > API_CALL_DT
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM API_EXEC_HST
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultMap="CrmApiExecHstVo">
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+               SELECT API_HST_CD                    /*API이력코드        */
+                    , API_CD                    /*API코드        */
+                    , API_CALL_URL                    /*API호출URL        */
+                    , API_RSLT_CD                    /*API결과코드        */
+                    , API_RSLT_MSG_TXN                    /*API결과메시지내역        */
+                    , API_PARAM_TXN                    /*API파라미터내역        */
+                    , API_RSLT_TXN                    /*API결과내역        */
+                    , API_CALL_DT                    /*API호출일시        */
+                    , API_EXEC_MSEC                    /*API실행초        */
+                    , API_CALL_IP_ADDR           /*API호출IP주소*/
+                    , DECODE(REGR_ID,'000','',REGR_ID) REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+                 FROM API_EXEC_HST
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultMap="CrmApiExecHstVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM API_EXEC_HST
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO API_EXEC_HST (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       NVL(#{apiHstCd},FN_CRM_AUTO_SEQ('API'))
+                     , #{apiCd}
+                     , #{apiCallUrl}
+                     , #{apiRsltCd}
+                     , #{apiRsltMsgTxn}
+                     , #{apiParamTxn}
+                     , #{apiRsltTxn}
+                     , DECODE(#{apiCallDt},NULL,SYSDATE,TO_DATE(#{apiCallDt},'YYYYMMDDHH24MISS'))
+                     , DECODE(#{apiCallDt},NULL,0, (SYSDATE - TO_DATE(#{apiCallDt},'YYYYMMDDHH24MISS')) * 86400 )
+                     , #{apiCallIpAddr}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE API_EXEC_HST
+                  SET API_CD              =         #{apiCd}
+                    , API_CALL_URL        =         #{apiCallUrl}
+                    , API_RSLT_CD         =         #{apiRsltCd}
+                    , API_RSLT_MSG_TXN    =         #{apiRsltMsgTxn}
+                    , API_PARAM_TXN       =         #{apiParamTxn}
+                    , API_RSLT_TXN        =         #{apiRsltTxn}
+                    , API_CALL_DT         =         #{apiCallDt}
+                    , API_EXEC_MSEC        =         #{apiExecMsec}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM API_EXEC_HST
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>
