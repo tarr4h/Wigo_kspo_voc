@@ -98,17 +98,17 @@
                       AND A.DEL_YN            =       #{delYn}
         </if>
         <if test="exGrpCd != null and exGrpCd != ''">
-           AND A.USER_CD NOT IN (SELECT USER_CD FROM CRM_GRP_USER_REL WHERE GRP_CD = #{exGrpCd})
+           AND A.USER_CD NOT IN (SELECT USER_CD FROM TB_SYS_GRP_USER_REL WHERE GRP_CD = #{exGrpCd})
            AND A.DEL_YN  = 'N'
          </if>
          <if test="grpCd != null and grpCd != ''">
-           AND A.USER_CD IN (SELECT USER_CD FROM CRM_GRP_USER_REL WHERE GRP_CD = #{grpCd})
+           AND A.USER_CD IN (SELECT USER_CD FROM TB_SYS_GRP_USER_REL WHERE GRP_CD = #{grpCd})
            AND A.DEL_YN  = 'N'
          </if>
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_USER_BAS A
+                 FROM TB_SYS_USER_BAS A
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmUserBaseVo">
@@ -130,18 +130,18 @@
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
                     , A.REGR_ID                    /*등록자ID        */
-                 FROM CRM_USER_BAS A
+                 FROM TB_SYS_USER_BAS A
         <include refid="sqlConditions"/>
                ORDER BY USER_NM
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmUserBaseVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_USER_BAS A
+                 FROM TB_SYS_USER_BAS A
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_USER_BAS (
+                INSERT INTO TB_SYS_USER_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{userCd}
@@ -165,7 +165,7 @@
     </insert>
     
     <update id="update">
-               UPDATE CRM_USER_BAS
+               UPDATE TB_SYS_USER_BAS
                   SET LOGIN_ID            =         NVL(#{loginId},LOGIN_ID)
                     , USER_NM             =         #{userNm}
                     , EMAIL_ADDR          =         #{emailAddr}
@@ -178,7 +178,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <update id="updateEmp">
-               UPDATE CRM_USER_BAS
+               UPDATE TB_SYS_USER_BAS
                   SET USER_NM             =         #{userNm}
                     , EMAIL_ADDR          =         #{emailAddr}
                     , MPHON_NO            =         #{mphonNo}
@@ -190,7 +190,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_USER_BAS
+               DELETE FROM TB_SYS_USER_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     <select id="selectUser" resultType="com.kspo.voc.sys.model.CrmLoginUserVo">
@@ -220,32 +220,32 @@
                     , B.RETIRE_YMD
                     , B.EMP_TYPE_CD
                     , B.MPHON_NO_ENC_VAL
-                    , (SELECT LISTAGG(GRP_CD, ',') WITHIN GROUP(ORDER BY GRP_CD) FROM CRM_GRP_USER_REL WHERE USER_CD = A.USER_CD) GRP_CDS 
-                 FROM CRM_USER_BAS A 
-                 LEFT JOIN CRM_EMP_BAS B ON A.USER_CD = B.EMP_ID
+                    , (SELECT LISTAGG(GRP_CD, ',') WITHIN GROUP(ORDER BY GRP_CD) FROM TB_SYS_GRP_USER_REL WHERE USER_CD = A.USER_CD) GRP_CDS 
+                 FROM TB_SYS_USER_BAS A 
+                 LEFT JOIN TB_SYS_EMP_BAS B ON A.USER_CD = B.EMP_ID
       <include refid="sqlPkConditions" />
     </select>
      <update id="updateLogin">
-           UPDATE CRM_USER_BAS
+           UPDATE TB_SYS_USER_BAS
               SET LAST_LOGIN_DT        =    SYSDATE
                 , LOGIN_FAIL_CNT       =    0   
             <include refid="sqlPkConditions" />
     </update>
     <update id="updateLoginFail">
-            UPDATE CRM_USER_BAS
+            UPDATE TB_SYS_USER_BAS
               SET LAST_LOGIN_DT        =    SYSDATE
                 , LOGIN_FAIL_CNT       =    NVL(LOGIN_FAIL_CNT,0) + 1   
          <include refid="sqlPkConditions" />
     </update>
     <update id="updatePassword">
-        UPDATE CRM_USER_BAS
+        UPDATE TB_SYS_USER_BAS
               SET LOGIN_PWD        =    #{loginPwd}
                 , LOGIN_FAIL_CNT       =    0
                 , PWD_AMD_DT          =    SYSDATE
          <include refid="sqlPkConditions" />
     </update>
      <insert id="insertLoginHist">
-        INSERT INTO CRM_USER_LOGIN_HST (
+        INSERT INTO TB_SYS_USER_LOGIN_HST (
                   USER_CD
                 , LOGIN_DT
                 , LOGIN_IP_ADDR
@@ -264,7 +264,7 @@
             )
     </insert>
      <update id="updateMyInfo">
-       UPDATE CRM_USER_BAS
+       UPDATE TB_SYS_USER_BAS
           SET EMAIL_ADDR           =         #{emailAddr}
             , MPHON_NO             =         #{mphonNo}
             , AMDR_ID              =         #{amdrId}

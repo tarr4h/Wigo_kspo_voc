@@ -49,8 +49,8 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_USER_WDGT_BAS A
-                    , CRM_MENU_BAS B
+                 FROM TB_SYS_USER_WDGT_BAS A
+                    , TB_SYS_MENU_BAS B
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmUserWdgtVo">
@@ -64,8 +64,8 @@
                     , A.AMD_DT                    /*수정일시        */
                     , B.MENU_NM
                     , B.MENU_URL
-                 FROM CRM_USER_WDGT_BAS A
-                    , CRM_MENU_BAS B
+                 FROM TB_SYS_USER_WDGT_BAS A
+                    , TB_SYS_MENU_BAS B
 <!--                   AND A.USER_CD = NVL(#{userCd},#{amdrId})      -->
                   <include refid="sqlConditions"/>      
                 ORDER BY A.MENU_ODRG
@@ -74,16 +74,16 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmUserWdgtVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_USER_WDGT_BAS
+                 FROM TB_SYS_USER_WDGT_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
         <selectKey order="BEFORE" keyProperty="menuOdrg" resultType="int">
             SELECT NVL(DECODE(#{menuOdrg},0,NULL,#{menuOdrg}),NVL(MAX(MENU_ODRG),0) + 1 )
-              FROM CRM_USER_WDGT_BAS
+              FROM TB_SYS_USER_WDGT_BAS
              WHERE USER_CD = TO_CHAR(#{userCd}) 
         </selectKey>
-                INSERT INTO CRM_USER_WDGT_BAS (
+                INSERT INTO TB_SYS_USER_WDGT_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{userCd}
@@ -96,18 +96,18 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_USER_WDGT_BAS
+               UPDATE TB_SYS_USER_WDGT_BAS
                   SET MENU_ODRG           =         #{menuOdrg}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_USER_WDGT_BAS
+               DELETE FROM TB_SYS_USER_WDGT_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     <delete id="deleteMenuCd">
-               DELETE FROM CRM_USER_WDGT_BAS
+               DELETE FROM TB_SYS_USER_WDGT_BAS
                 WHERE MENU_CD = #{menuCd}
     </delete>
     

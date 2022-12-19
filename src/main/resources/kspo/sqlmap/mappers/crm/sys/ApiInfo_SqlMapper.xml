@@ -78,27 +78,27 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM API_INFO_BAS
+                 FROM TB_SYS_API_INFO_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmApiInfoBaseVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM API_INFO_BAS
+                 FROM TB_SYS_API_INFO_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmApiInfoBaseVo">
                SELECT <include refid="sqlCols"/>
-                 FROM API_INFO_BAS
+                 FROM TB_SYS_API_INFO_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO API_INFO_BAS (
+                INSERT INTO TB_SYS_API_INFO_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       NVL(#{apiCd},FN_CRM_AUTO_SEQ('API'))
+                       NVL(#{apiCd},FN_VOC_AUTO_SEQ('API'))
                      , #{sysCd}
                      , #{apiUrl}
                      , #{callMthdCd}
@@ -111,7 +111,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE API_INFO_BAS
+               UPDATE TB_SYS_API_INFO_BAS
                   SET SYS_CD              =         #{sysCd}
                     , API_URL             =         #{apiUrl}
                     , CALL_MTHD_CD        =         #{callMthdCd}
@@ -122,7 +122,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM API_INFO_BAS
+               DELETE FROM TB_SYS_API_INFO_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

@@ -82,15 +82,15 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_CHNG_HST A
-                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+                 FROM TB_SYS_CHNG_HST A
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmChngHstVo">
         SELECT A.* 
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
-                   FROM CRM_MENU_BAS
+                   FROM TB_SYS_MENU_BAS
                   WHERE 1=1
                   START WITH MENU_CD = A.MENU_CD 
                 CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD
@@ -114,9 +114,9 @@
                     , C.USER_CD
                     , C.USER_NM
                     , C.LOGIN_ID
-                 FROM CRM_CHNG_HST A
-                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+                 FROM TB_SYS_CHNG_HST A
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
@@ -137,7 +137,7 @@
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
-                          FROM CRM_MENU_BAS
+                          FROM TB_SYS_MENU_BAS
                          WHERE 1=1
                          START WITH MENU_CD = A.MENU_CD 
                        CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
@@ -145,16 +145,16 @@
                     , C.USER_CD
                     , C.USER_NM
                     , C.LOGIN_ID
-                 FROM CRM_CHNG_HST A
-                INNER JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN CRM_USER_BAS C ON A.REGR_ID = C.USER_CD
+                 FROM TB_SYS_CHNG_HST A
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_CHNG_HST (
+                INSERT INTO TB_SYS_CHNG_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       NVL(#{chngHstCd},FN_CRM_AUTO_SEQ('C'))
+                       NVL(#{chngHstCd},FN_VOC_AUTO_SEQ('C'))
                      , #{menuCd}
                      , #{chngCallUrl}
                      , #{chngRsltTxn}
@@ -170,7 +170,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_CHNG_HST
+               UPDATE TB_SYS_CHNG_HST
                   SET MENU_CD             =         #{menuCd}
                     , CHNG_CALL_URL       =         #{chngCallUrl}
                     , CHNG_RSLT_TXN       =         #{chngRsltTxn}
@@ -184,7 +184,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_CHNG_HST
+               DELETE FROM TB_SYS_CHNG_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

@@ -32,14 +32,14 @@
                       AND A.ORG_ID            =       #{orgId}
         </if>
          <if test="exGrpCd != null and exGrpCd != ''">
-           AND ORG_ID NOT IN (SELECT ORG_ID FROM CRM_GRP_ORG_REL WHERE GRP_CD = #{exGrpCd})
+           AND ORG_ID NOT IN (SELECT ORG_ID FROM TB_SYS_GRP_ORG_REL WHERE GRP_CD = #{exGrpCd})
          </if>
     </sql>
     <select id="selectListCount" resultType="int">
                SELECT COUNT(1)
-                 FROM CRM_GRP_ORG_REL A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
-                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+                 FROM TB_SYS_GRP_ORG_REL A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpOrgRelVo">
@@ -52,20 +52,20 @@
                     , A.AMD_DT                    /*수정일시        */
                     , B.GRP_NM
                     , C.ORG_NM
-                 FROM CRM_GRP_ORG_REL A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
-                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+                 FROM TB_SYS_GRP_ORG_REL A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
                ORDER BY C.ORG_NM
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpOrgRelVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_ORG_REL
+                 FROM TB_SYS_GRP_ORG_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_ORG_REL (
+                INSERT INTO TB_SYS_GRP_ORG_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpCd}
@@ -77,17 +77,17 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_ORG_REL
+               UPDATE TB_SYS_GRP_ORG_REL
                   SET AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_ORG_REL
+               DELETE FROM TB_SYS_GRP_ORG_REL
         <include refid="sqlPkConditions"/>
     </delete>
     <delete id="deleteGrpCd">
-               DELETE FROM CRM_GRP_ORG_REL
+               DELETE FROM TB_SYS_GRP_ORG_REL
                 WHERE GRP_CD            =       #{grpCd}
     </delete>
     

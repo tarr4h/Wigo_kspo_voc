@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.sys.dao.CrmXlsDnldHstDao">
+<mapper namespace="com.kspo.voc.sys.dao.CrmErrHstDao">
     <sql id="sqlPkConditions">
-                WHERE DNLD_HST_CD       =       #{dnldHstCd}
+                WHERE ERR_HST_CD        =       #{errHstCd}
     </sql>
     <sql id="sqlCols">
-                      DNLD_HST_CD                    /*다운로드이력코드        */
+                      ERR_HST_CD                    /*오류이력코드        */
                     , MENU_CD                    /*메뉴코드        */
-                    , DNLD_NM                    /*다운로드명        */
+                    , MENU_URL                    /*메뉴URL        */
+                    , ERR_CD                    /*오류코드        */
+                    , ERR_MSG_TXN                    /*오류메시지내역        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
@@ -15,14 +17,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="dnldHstCd != null and dnldHstCd != ''">
+        <if test="errHstCd != null and errHstCd != ''">
             <choose>
-                <when test="dnldHstCd instanceof String">
-                              AND A.DNLD_HST_CD       =       #{dnldHstCd}
+                <when test="errHstCd instanceof String">
+                              AND A.ERR_HST_CD        =       #{errHstCd}
                 </when>
                 <otherwise>
-                    AND A.DNLD_HST_CD       IN
-                    <foreach item="item" index="index" collection="dnldHstCd" open="(" separator="," close=")">
+                    AND A.ERR_HST_CD        IN
+                    <foreach item="item" index="index" collection="errHstCd" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -41,8 +43,24 @@
                 </otherwise>
             </choose>
         </if>
-        <if test="dnldNm != null and dnldNm != ''">
-                      AND A.DNLD_NM           =       #{dnldNm}
+        <if test="menuUrl != null and menuUrl != ''">
+                      AND A.MENU_URL          =       #{menuUrl}
+        </if>
+        <if test="errCd != null and errCd != ''">
+            <choose>
+                <when test="errCd instanceof String">
+                              AND A.ERR_CD            =       #{errCd}
+                </when>
+                <otherwise>
+                    AND A.ERR_CD            IN
+                    <foreach item="item" index="index" collection="errCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="errMsgTxn != null and errMsgTxn != ''">
+                      AND A.ERR_MSG_TXN       =       #{errMsgTxn}
         </if>
         <if test="strtDt != null and strtDt != ''">
                       AND A.REG_DT      >=       TO_DATE(#{strtDt},'YYYYMMDD')
@@ -50,55 +68,55 @@
         <if test="endDt != null and endDt != ''">
                       AND TO_DATE(#{endDt},'YYYYMMDD') + 1 > A.REG_DT
         </if>
-        <if test="empId != null and empId != ''">
-                      AND A.AMDR_ID LIKE  #{empId} || '%'
+        <if test="menuUrlLike != null and menuUrlLike != ''">
+                      AND A.MENU_URL LIKE '%' || #{menuUrlLike} || '%'
         </if>
         <if test="menuNmLike != null and menuNmLike != ''">
                       AND B.MENU_NM LIKE '%' || #{menuNmLike} || '%'
         </if>
-        <if test="dnldNmLike != null and dnldNmLike != ''">
-                      AND A.DNLD_NM LIKE '%' || #{dnldNmLike} || '%'
-        </if>
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                  FROM CRM_XLS_DNLD_HST A
-                  LEFT JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                 FROM TB_SYS_ERR_HST A
+                 LEFT JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
         <include refid="sqlConditions"/>
     </select>
-    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmXlsDnldHstVo">
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmErrHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.DNLD_HST_CD                    /*다운로드이력코드        */
+               SELECT A.ERR_HST_CD                    /*오류이력코드        */
                     , A.MENU_CD                    /*메뉴코드        */
-                    , A.DNLD_NM                    /*다운로드명        */
+                    , A.MENU_URL                    /*메뉴URL        */
+                    , A.ERR_CD                    /*오류코드        */
+                    , A.ERR_MSG_TXN                    /*오류메시지내역        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
-                    , B.MENU_NM
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
-                          FROM CRM_MENU_BAS
+                          FROM TB_SYS_MENU_BAS
                          WHERE 1=1
                          START WITH MENU_CD = A.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH 
-                 FROM CRM_XLS_DNLD_HST A
-                 LEFT JOIN CRM_MENU_BAS B ON A.MENU_CD = B.MENU_CD
+                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                 FROM TB_SYS_ERR_HST A
+                 LEFT JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
-    <select id="select" resultType="com.kspo.voc.sys.model.CrmXlsDnldHstVo">
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmErrHstVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_XLS_DNLD_HST
+                 FROM TB_SYS_ERR_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_XLS_DNLD_HST (
+                INSERT INTO TB_SYS_ERR_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       FN_CRM_AUTO_SEQ('XDH')
+                       FN_VOC_AUTO_SEQ('ERC')
                      , #{menuCd}
-                     , #{dnldNm}
+                     , #{menuUrl}
+                     , #{errCd}
+                     , #{errMsgTxn}
                      , #{regrId}
                      , SYSDATE
                      , #{amdrId}
@@ -106,15 +124,17 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_XLS_DNLD_HST
+               UPDATE TB_SYS_ERR_HST
                   SET MENU_CD             =         #{menuCd}
-                    , DNLD_NM             =         #{dnldNm}
+                    , MENU_URL            =         #{menuUrl}
+                    , ERR_CD              =         #{errCd}
+                    , ERR_MSG_TXN         =         #{errMsgTxn}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_XLS_DNLD_HST
+               DELETE FROM TB_SYS_ERR_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

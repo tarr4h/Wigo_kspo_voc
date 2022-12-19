@@ -128,7 +128,7 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM API_EXEC_HST
+                 FROM TB_SYS_API_EXEC_HST
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultMap="CrmApiExecHstVo">
@@ -147,21 +147,21 @@
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
                     , AMD_DT                    /*수정일시        */
-                 FROM API_EXEC_HST
+                 FROM TB_SYS_API_EXEC_HST
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultMap="CrmApiExecHstVo">
                SELECT <include refid="sqlCols"/>
-                 FROM API_EXEC_HST
+                 FROM TB_SYS_API_EXEC_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO API_EXEC_HST (
+                INSERT INTO TB_SYS_API_EXEC_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       NVL(#{apiHstCd},FN_CRM_AUTO_SEQ('API'))
+                       NVL(#{apiHstCd},FN_VOC_AUTO_SEQ('API'))
                      , #{apiCd}
                      , #{apiCallUrl}
                      , #{apiRsltCd}
@@ -178,7 +178,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE API_EXEC_HST
+               UPDATE TB_SYS_API_EXEC_HST
                   SET API_CD              =         #{apiCd}
                     , API_CALL_URL        =         #{apiCallUrl}
                     , API_RSLT_CD         =         #{apiRsltCd}
@@ -192,7 +192,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM API_EXEC_HST
+               DELETE FROM TB_SYS_API_EXEC_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

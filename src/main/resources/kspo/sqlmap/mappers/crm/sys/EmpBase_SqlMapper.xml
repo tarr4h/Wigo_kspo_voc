@@ -44,7 +44,7 @@
                      AND EMP_ID            LIKE      #{empIdLike} || '%'
         </if>
         <if test="topOrgId != null and topOrgId != ''">
-             AND ORG_ID            IN ( SELECT ORG_ID FROM CRM_ORG_BAS 
+             AND ORG_ID            IN ( SELECT ORG_ID FROM TB_SYS_ORG_BAS 
                                            START WITH ORG_ID = #{topOrgId}
             CONNECT BY PRIOR   ORG_ID = UP_ORG_ID)
         </if>
@@ -124,13 +124,13 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_EMP_BAS
+                 FROM TB_SYS_EMP_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmJadeHrVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                    , (SELECT ORG_NM FROM CRM_ORG_BAS WHERE A.ORG_ID = ORG_ID) ORG_NM
+                    , (SELECT ORG_NM FROM TB_SYS_ORG_BAS WHERE A.ORG_ID = ORG_ID) ORG_NM
 <!--                         , ORG_NM -->
 <!--                           , CMP_NM -->
 <!--                           , JOB_NM  -->
@@ -138,7 +138,7 @@
 <!--                           , EMP_GRADE_NM -->
 <!--                           , EMP_TYPE_NM -->
 <!--                           , STATUS_NM -->
-                 FROM CRM_EMP_BAS A
+                 FROM TB_SYS_EMP_BAS A
         <include refid="sqlConditions"/>
                ORDER BY TO_NUMBER(EMP_GRADE_CD) 
                        , EMP_NM
@@ -146,11 +146,11 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmJadeHrVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_EMP_BAS
+                 FROM TB_SYS_EMP_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_EMP_BAS (
+                INSERT INTO TB_SYS_EMP_BAS (
         <include refid="sqlCols"/>
 <!--                         , ORG_NM -->
 <!--                           , CMP_NM -->
@@ -191,7 +191,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_EMP_BAS
+               UPDATE TB_SYS_EMP_BAS
                   SET EMP_NM              =         #{empNm}
                     , CMP_CD              =         #{cmpCd}
                     , ORG_ID              =         #{orgId}
@@ -218,7 +218,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_EMP_BAS
+               DELETE FROM TB_SYS_EMP_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

@@ -58,14 +58,14 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_FILE_BAS
+                 FROM TB_SYS_FILE_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmFileVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
                     , TO_CHAR(REG_DT, 'YYYYMMDDHH24MISS') UPL_DT
-                 FROM CRM_FILE_BAS
+                 FROM TB_SYS_FILE_BAS
         <include refid="sqlConditions"/>
                ORDER BY <if test="fileCd != null and fileCd != ''">
                     FILE_ODRG ,
@@ -75,17 +75,17 @@
     <select id="select" resultType="com.kspo.voc.sys.model.CrmFileVo">
                SELECT <include refid="sqlCols"/>
                     , TO_CHAR(REG_DT, 'YYYYMMDDHH24MISS') UPL_DT
-                 FROM CRM_FILE_BAS
+                 FROM TB_SYS_FILE_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
         <selectKey order="BEFORE" keyProperty="fileOdrg" resultType="int">
             SELECT NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
-              FROM CRM_FILE_BAS
+              FROM TB_SYS_FILE_BAS
              WHERE FILE_CD = TO_CHAR(#{fileCd}) 
         </selectKey>
         
-                INSERT INTO CRM_FILE_BAS (
+                INSERT INTO TB_SYS_FILE_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{fileCd}
@@ -103,7 +103,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_FILE_BAS
+               UPDATE TB_SYS_FILE_BAS
                   SET FILE_NM             =         #{fileNm}
                     , FILE_SIZE           =         #{fileSize}
                     , FILE_SAVE_NM        =         #{fileSaveNm}
@@ -115,7 +115,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_FILE_BAS
+               DELETE FROM TB_SYS_FILE_BAS
                 WHERE FILE_CD            =       TO_CHAR(#{fileCd})
                 <if test="fileOdrg != null and fileOdrg != ''">
                   AND FILE_ODRG           =       #{fileOdrg} 
@@ -123,7 +123,7 @@
     </delete>
     <select id="selectMaxfileOdrg" resultType="int">
         SELECT NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
-              FROM CRM_FILE_BAS
+              FROM TB_SYS_FILE_BAS
              WHERE FILE_CD = TO_CHAR(#{fileCd})
     </select>
 </mapper>

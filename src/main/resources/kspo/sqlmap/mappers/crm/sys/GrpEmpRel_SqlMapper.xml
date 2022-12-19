@@ -34,9 +34,9 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_GRP_EMP_REL A
-                INNER JOIN CRM_EMP_BAS B ON A.EMP_ID = B.EMP_ID
-                INNER JOIN CRM_ORG_BAS C ON B.ORG_ID = C.ORG_ID
+                 FROM TB_SYS_GRP_EMP_REL A
+                INNER JOIN TB_SYS_EMP_BAS B ON A.EMP_ID = B.EMP_ID
+                INNER JOIN TB_SYS_ORG_BAS C ON B.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpEmpRelVo">
@@ -50,9 +50,9 @@
                     , B.EMP_GRADE_CD
                     , B.EMP_NM
                     , C.ORG_NM
-                 FROM CRM_GRP_EMP_REL A
-                INNER JOIN CRM_EMP_BAS B ON A.EMP_ID = B.EMP_ID
-                INNER JOIN CRM_ORG_BAS C ON B.ORG_ID = C.ORG_ID
+                 FROM TB_SYS_GRP_EMP_REL A
+                INNER JOIN TB_SYS_EMP_BAS B ON A.EMP_ID = B.EMP_ID
+                INNER JOIN TB_SYS_ORG_BAS C ON B.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
                ORDER BY TO_NUMBER(B.EMP_GRADE_CD)
                        , B.EMP_NM
@@ -60,11 +60,11 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpEmpRelVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_EMP_REL
+                 FROM TB_SYS_GRP_EMP_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_EMP_REL (
+                INSERT INTO TB_SYS_GRP_EMP_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpCd}
@@ -76,17 +76,17 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_EMP_REL
+               UPDATE TB_SYS_GRP_EMP_REL
                   SET AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_EMP_REL
+               DELETE FROM TB_SYS_GRP_EMP_REL
         <include refid="sqlPkConditions"/>
     </delete>
      <delete id="deleteGrpCd">
-               DELETE FROM CRM_GRP_EMP_REL
+               DELETE FROM TB_SYS_GRP_EMP_REL
                 WHERE GRP_CD            =       #{grpCd}
     </delete>
 </mapper>

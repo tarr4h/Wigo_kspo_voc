@@ -33,24 +33,24 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_GRP_BAS
+                 FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpBaseVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_BAS
+                 FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpBaseVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_BAS
+                 FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_BAS (
+                INSERT INTO TB_SYS_GRP_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpCd}
@@ -62,14 +62,14 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_BAS
+               UPDATE TB_SYS_GRP_BAS
                   SET GRP_NM              =         #{grpNm}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_BAS
+               DELETE FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     
@@ -83,9 +83,9 @@
     
     <select id="selectGroupUserListCount" resultType="int">
              SELECT COUNT(1) CNT
-               FROM CRM_GRP_BAS A
-                  , CRM_GRP_USER_REL B
-                  , CRM_USER_BAS C
+               FROM TB_SYS_GRP_BAS A
+                  , TB_SYS_GRP_USER_REL B
+                  , TB_SYS_USER_BAS C
               WHERE A.GRP_CD = B.GRP_CD
                 AND B.USER_CD = C.USER_CD
              <choose>
@@ -102,9 +102,9 @@
         SELECT A.GRP_CD
              , A.GRP_NM
              , DECODE( NVL(B.GRP_CD,C.GRP_CD),NULL,'N','Y') CHECK_YN
-          FROM CRM_GRP_BAS A
-          LEFT JOIN CRM_GRP_USER_REL B ON A.GRP_CD = B.GRP_CD AND B.USER_CD = #{userCd}
-          LEFT JOIN CRM_GRP_MENU_REL C ON A.GRP_CD = C.GRP_CD AND C.MENU_CD = #{menuCd}
+          FROM TB_SYS_GRP_BAS A
+          LEFT JOIN TB_SYS_GRP_USER_REL B ON A.GRP_CD = B.GRP_CD AND B.USER_CD = #{userCd}
+          LEFT JOIN TB_SYS_GRP_MENU_REL C ON A.GRP_CD = C.GRP_CD AND C.MENU_CD = #{menuCd}
     </select>
     <select id="selectGroupUserList" resultType="com.kspo.voc.sys.model.CrmGrpUserRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
@@ -114,9 +114,9 @@
             , C.USER_NM
             , C.EMAIL_ADDR
             , C.MPHON_NO
-         FROM CRM_GRP_BAS A
-            , CRM_GRP_USER_REL B
-            , CRM_USER_BAS C
+         FROM TB_SYS_GRP_BAS A
+            , TB_SYS_GRP_USER_REL B
+            , TB_SYS_USER_BAS C
        WHERE A.GRP_CD = B.GRP_CD
          AND B.USER_CD = C.USER_CD
          <choose>
@@ -133,9 +133,9 @@
     </select>
     <select id="selectGroupMenuListCount" resultType="int">
         SELECT COUNT(1) CNT
-          FROM CRM_GRP_BAS A
-             , CRM_GRP_MENU_REL B
-             , CRM_MENU_BAS C
+          FROM TB_SYS_GRP_BAS A
+             , TB_SYS_GRP_MENU_REL B
+             , TB_SYS_MENU_BAS C
         WHERE A.GRP_CD = B.GRP_CD
           AND B.MENU_CD = C.MENU_CD
          <choose>
@@ -165,13 +165,13 @@
             , B.MENU_AMD_AUTH_YN
             , B.MENU_DEL_AUTH_YN
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
-                          FROM CRM_MENU_BAS
+                          FROM TB_SYS_MENU_BAS
                          WHERE 1=1
                          START WITH MENU_CD = C.MENU_CD 
                        CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
-         FROM CRM_GRP_BAS A
-            , CRM_GRP_MENU_REL B
-            , CRM_MENU_BAS C
+         FROM TB_SYS_GRP_BAS A
+            , TB_SYS_GRP_MENU_REL B
+            , TB_SYS_MENU_BAS C
         WHERE A.GRP_CD = B.GRP_CD
           AND B.MENU_CD = C.MENU_CD
           <choose>

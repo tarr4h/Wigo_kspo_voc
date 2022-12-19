@@ -110,7 +110,7 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_NTCART_BAS
+                 FROM TB_SYS_NTCART_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmNtcartBasVo">
@@ -135,18 +135,18 @@
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
                     , AMD_DT                    /*수정일시        */
-                 FROM CRM_NTCART_BAS
+                 FROM TB_SYS_NTCART_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmNtcartBasVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_NTCART_BAS
+                 FROM TB_SYS_NTCART_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_NTCART_BAS (
+                INSERT INTO TB_SYS_NTCART_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{ntcartId}
@@ -172,7 +172,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_NTCART_BAS
+               UPDATE TB_SYS_NTCART_BAS
                   SET BRD_ID              =         #{brdId}
                     , UP_NTCART_ID        =         #{upNtcartId}
                     , TOP_NTCART_ID       =         #{topNtcartId}
@@ -193,7 +193,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_NTCART_BAS
+               DELETE FROM TB_SYS_NTCART_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

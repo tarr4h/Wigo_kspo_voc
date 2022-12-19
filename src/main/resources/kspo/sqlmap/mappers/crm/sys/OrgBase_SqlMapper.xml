@@ -29,7 +29,7 @@
                       AND ORG_ID            =       #{orgId}
         </if>
 <!--          <if test="upOrgIds != null and upOrgIds != ''"> -->
-<!--                       AND ORG_ID            IN ( SELECT ORG_ID FROM CRM_ORG_BAS  -->
+<!--                       AND ORG_ID            IN ( SELECT ORG_ID FROM TB_SYS_ORG_BAS  -->
 <!--                                                     START WITH ORG_ID = #{upOrgIds} -->
 <!--                                                 CONNECT BY PRIOR   ORG_ID = UP_ORG_ID) -->
 <!--         </if> -->
@@ -69,13 +69,13 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_ORG_BAS
+                 FROM TB_SYS_ORG_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmJadeOrgVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_ORG_BAS
+                 FROM TB_SYS_ORG_BAS
         <include refid="sqlConditions"/>
                ORDER BY LVL_NO 
 <!--                    , ORG_ODRG -->
@@ -85,11 +85,11 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmJadeOrgVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_ORG_BAS
+                 FROM TB_SYS_ORG_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_ORG_BAS (
+                INSERT INTO TB_SYS_ORG_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{orgId}
@@ -111,7 +111,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_ORG_BAS
+               UPDATE TB_SYS_ORG_BAS
                   SET ORG_NM              =         #{orgNm}
                     , ORG_CLASS_ID        =         #{orgClassId}
                     , ORG_CLASS_NM        =         #{orgClassNm}
@@ -128,7 +128,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_ORG_BAS
+               DELETE FROM TB_SYS_ORG_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

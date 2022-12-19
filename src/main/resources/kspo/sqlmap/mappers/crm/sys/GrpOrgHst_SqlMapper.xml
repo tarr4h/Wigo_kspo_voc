@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.sys.dao.CrmGrpMenuHstDao">
+<mapper namespace="com.kspo.voc.sys.dao.CrmGrpOrgHstDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_MENU_HST_CD   =       #{grpMenuHstCd}
+                WHERE GRP_ORG_HST_CD    =       #{grpOrgHstCd}
     </sql>
     <sql id="sqlCols">
-                      GRP_MENU_HST_CD                    /*그룹메뉴이력코드        */
+                      GRP_ORG_HST_CD                    /*그룹조직이력코드        */
                     , GRP_CD                    /*그룹코드        */
-                    , MENU_CD                    /*메뉴코드        */
+                    , ORG_ID                    /*조직ID        */
                     , DEL_YN                    /*삭제여부        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -16,14 +16,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpMenuHstCd != null and grpMenuHstCd != ''">
+        <if test="grpOrgHstCd != null and grpOrgHstCd != ''">
             <choose>
-                <when test="grpMenuHstCd instanceof String">
-                              AND A.RP_MENU_HST_CD   =       #{grpMenuHstCd}
+                <when test="grpOrgHstCd instanceof String">
+                              AND A.GRP_ORG_HST_CD    =       #{grpOrgHstCd}
                 </when>
                 <otherwise>
-                    AND A.GRP_MENU_HST_CD   IN
-                    <foreach item="item" index="index" collection="grpMenuHstCd" open="(" separator="," close=")">
+                    AND A.GRP_ORG_HST_CD    IN
+                    <foreach item="item" index="index" collection="grpOrgHstCd" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -42,18 +42,8 @@
                 </otherwise>
             </choose>
         </if>
-        <if test="menuCd != null and menuCd != ''">
-            <choose>
-                <when test="menuCd instanceof String">
-                              AND A.MENU_CD           =       #{menuCd}
-                </when>
-                <otherwise>
-                    AND A.MENU_CD           IN
-                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
-                        #{item}
-                    </foreach>
-                </otherwise>
-            </choose>
+        <if test="orgId != null and orgId != ''">
+                      AND A.ORG_ID            =       #{orgId}
         </if>
         <if test="delYn != null and delYn != ''">
                       AND A.DEL_YN            =       #{delYn}
@@ -67,53 +57,48 @@
         <if test="empId != null and empId != ''">
                       AND A.AMDR_ID LIKE  #{empId} || '%'
         </if>
-        <if test="menuNmLike != null and menuNmLike != ''">
-                      AND C.MENU_NM LIKE '%' || #{menuNmLike} || '%'
+        <if test="orgNmLike != null and orgNmLike != ''">
+                      AND C.ORG_NM LIKE '%' || #{orgNmLike} || '%'
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_GRP_MENU_HST A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN CRM_MENU_BAS C ON A.MENU_CD = C.MENU_CD
+                 FROM TB_SYS_GRP_ORG_HST A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
     </select>
-    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpMenuHstVo">
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpOrgHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_MENU_HST_CD                    /*그룹메뉴이력코드        */
+               SELECT A.GRP_ORG_HST_CD                    /*그룹조직이력코드        */
                     , A.GRP_CD                    /*그룹코드        */
-                    , A.MENU_CD                    /*메뉴코드        */
+                    , A.ORG_ID                    /*조직ID        */
                     , A.DEL_YN                    /*삭제여부        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
                     , B.GRP_NM
-                    , C.MENU_NM
-                    , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
-                          FROM CRM_MENU_BAS
-                         WHERE 1=1
-                         START WITH MENU_CD = A.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
-                 FROM CRM_GRP_MENU_HST A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN CRM_MENU_BAS C ON A.MENU_CD = C.MENU_CD
+                    , C.ORG_NM
+                 FROM TB_SYS_GRP_ORG_HST A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
-               ORDER BY A.REG_DT DESC
+               ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
-    <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpMenuHstVo">
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpOrgHstVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_MENU_HST
+                 FROM TB_SYS_GRP_ORG_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_MENU_HST (
+                INSERT INTO TB_SYS_GRP_ORG_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       FN_CRM_AUTO_SEQ('GMH')
+                       FN_VOC_AUTO_SEQ('GOH')
                      , #{grpCd}
-                     , #{menuCd}
+                     , #{orgId}
                      , 'N'
                      , #{regrId}
                      , SYSDATE
@@ -122,12 +107,12 @@
                  )
     </insert>
     <insert id="insertDelete">
-                INSERT INTO CRM_GRP_MENU_HST (
+                INSERT INTO TB_SYS_GRP_ORG_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       FN_CRM_AUTO_SEQ('GMH')
+                       FN_VOC_AUTO_SEQ('GOH')
                      , #{grpCd}
-                     , #{menuCd}
+                     , #{orgId}
                      , 'Y'
                      , #{regrId}
                      , SYSDATE
@@ -136,16 +121,16 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_MENU_HST
+               UPDATE TB_SYS_GRP_ORG_HST
                   SET GRP_CD              =         #{grpCd}
-                    , MENU_CD             =         #{menuCd}
+                    , ORG_ID              =         #{orgId}
                     , DEL_YN              =         #{delYn}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_MENU_HST
+               DELETE FROM TB_SYS_GRP_ORG_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

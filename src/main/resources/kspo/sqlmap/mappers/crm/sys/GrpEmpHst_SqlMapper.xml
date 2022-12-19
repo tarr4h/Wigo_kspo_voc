@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.sys.dao.CrmGrpOrgHstDao">
+<mapper namespace="com.kspo.voc.sys.dao.CrmGrpEmpHstDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_ORG_HST_CD    =       #{grpOrgHstCd}
+                WHERE GRP_EMP_HST_CD    =       #{grpEmpHstCd}
     </sql>
     <sql id="sqlCols">
-                      GRP_ORG_HST_CD                    /*그룹조직이력코드        */
+                      GRP_EMP_HST_CD                    /*그룹사원이력코드        */
                     , GRP_CD                    /*그룹코드        */
-                    , ORG_ID                    /*조직ID        */
+                    , EMP_ID                    /*사원ID        */
                     , DEL_YN                    /*삭제여부        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -16,14 +16,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpOrgHstCd != null and grpOrgHstCd != ''">
+        <if test="grpEmpHstCd != null and grpEmpHstCd != ''">
             <choose>
-                <when test="grpOrgHstCd instanceof String">
-                              AND A.GRP_ORG_HST_CD    =       #{grpOrgHstCd}
+                <when test="grpEmpHstCd instanceof String">
+                              AND A.GRP_EMP_HST_CD    =       #{grpEmpHstCd}
                 </when>
                 <otherwise>
-                    AND A.GRP_ORG_HST_CD    IN
-                    <foreach item="item" index="index" collection="grpOrgHstCd" open="(" separator="," close=")">
+                    AND A.GRP_EMP_HST_CD    IN
+                    <foreach item="item" index="index" collection="grpEmpHstCd" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -42,8 +42,8 @@
                 </otherwise>
             </choose>
         </if>
-        <if test="orgId != null and orgId != ''">
-                      AND A.ORG_ID            =       #{orgId}
+        <if test="empId != null and empId != ''">
+                      AND A.EMP_ID            =       #{empId}
         </if>
         <if test="delYn != null and delYn != ''">
                       AND A.DEL_YN            =       #{delYn}
@@ -57,48 +57,51 @@
         <if test="empId != null and empId != ''">
                       AND A.AMDR_ID LIKE  #{empId} || '%'
         </if>
-        <if test="orgNmLike != null and orgNmLike != ''">
-                      AND C.ORG_NM LIKE '%' || #{orgNmLike} || '%'
+        <if test="empNmLike != null and empNmLike != ''">
+                      AND C.EMP_NM LIKE '%' || #{empNmLike} || '%'
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_GRP_ORG_HST A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+                 FROM TB_SYS_GRP_EMP_HST A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_EMP_BAS C ON A.EMP_ID = C.EMP_ID
+                INNER JOIN TB_SYS_ORG_BAS D ON C.ORG_ID = D.ORG_ID
         <include refid="sqlConditions"/>
     </select>
-    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpOrgHstVo">
+    <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpEmpHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_ORG_HST_CD                    /*그룹조직이력코드        */
+               SELECT A.GRP_EMP_HST_CD                    /*그룹사원이력코드        */
                     , A.GRP_CD                    /*그룹코드        */
-                    , A.ORG_ID                    /*조직ID        */
+                    , A.EMP_ID                    /*사원ID        */
                     , A.DEL_YN                    /*삭제여부        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
                     , B.GRP_NM
-                    , C.ORG_NM
-                 FROM CRM_GRP_ORG_HST A
-                INNER JOIN CRM_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN CRM_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+                    , C.EMP_NM
+                    , D.ORG_NM
+                 FROM TB_SYS_GRP_EMP_HST A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_EMP_BAS C ON A.EMP_ID = C.EMP_ID
+                INNER JOIN TB_SYS_ORG_BAS D ON C.ORG_ID = D.ORG_ID
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
-    <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpOrgHstVo">
+    <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpEmpHstVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_ORG_HST
+                 FROM TB_SYS_GRP_EMP_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_ORG_HST (
+                INSERT INTO TB_SYS_GRP_EMP_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       FN_CRM_AUTO_SEQ('GOH')
+                       FN_VOC_AUTO_SEQ('GEH')
                      , #{grpCd}
-                     , #{orgId}
+                     , #{empId}
                      , 'N'
                      , #{regrId}
                      , SYSDATE
@@ -107,12 +110,12 @@
                  )
     </insert>
     <insert id="insertDelete">
-                INSERT INTO CRM_GRP_ORG_HST (
+                INSERT INTO TB_SYS_GRP_EMP_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       FN_CRM_AUTO_SEQ('GOH')
+                       FN_VOC_AUTO_SEQ('GEH')
                      , #{grpCd}
-                     , #{orgId}
+                     , #{empId}
                      , 'Y'
                      , #{regrId}
                      , SYSDATE
@@ -121,16 +124,16 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_ORG_HST
+               UPDATE TB_SYS_GRP_EMP_HST
                   SET GRP_CD              =         #{grpCd}
-                    , ORG_ID              =         #{orgId}
+                    , EMP_ID              =         #{empId}
                     , DEL_YN              =         #{delYn}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_ORG_HST
+               DELETE FROM TB_SYS_GRP_EMP_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

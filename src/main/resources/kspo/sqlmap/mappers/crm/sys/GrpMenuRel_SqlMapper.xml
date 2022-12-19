@@ -60,24 +60,24 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_GRP_MENU_REL
+                 FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpMenuRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_MENU_REL
+                 FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmGrpMenuRelVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_GRP_MENU_REL
+                 FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_GRP_MENU_REL (
+                INSERT INTO TB_SYS_GRP_MENU_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpCd}
@@ -93,7 +93,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_GRP_MENU_REL
+               UPDATE TB_SYS_GRP_MENU_REL
                   SET MENU_REG_AUTH_YN    =         #{menuRegAuthYn}
                     , MENU_READ_AUTH_YN   =         #{menuReadAuthYn}
                     , MENU_AMD_AUTH_YN    =         #{menuAmdAuthYn}
@@ -103,17 +103,17 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM CRM_GRP_MENU_REL
+               DELETE FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlPkConditions"/>
     </delete>
     <delete id="deleteMenuCd">
                DELETE 
-                 FROM CRM_GRP_MENU_REL
+                 FROM TB_SYS_GRP_MENU_REL
                 WHERE MENU_CD  =  #{menuCd}
     </delete>
     <delete id="deleteGrpCd">
                DELETE 
-                 FROM CRM_GRP_MENU_REL
+                 FROM TB_SYS_GRP_MENU_REL
                 WHERE GRP_CD  =  #{grpCd}
     </delete>
 </mapper>

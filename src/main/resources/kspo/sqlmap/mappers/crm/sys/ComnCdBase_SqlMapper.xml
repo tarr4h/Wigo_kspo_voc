@@ -243,13 +243,13 @@
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM CRM_COMN_CD_BAS
+                 FROM TB_SYS_COMN_CD_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmComnCdBaseVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_COMN_CD_BAS
+                 FROM TB_SYS_COMN_CD_BAS
         <include refid="sqlConditions"/>
                ORDER BY COMN_CD_LVL_NO
                       , TOP_COMN_CD
@@ -259,17 +259,17 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmComnCdBaseVo">
                SELECT <include refid="sqlCols"/>
-                 FROM CRM_COMN_CD_BAS
+                 FROM TB_SYS_COMN_CD_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO CRM_COMN_CD_BAS (
+                INSERT INTO TB_SYS_COMN_CD_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{comnCd}
                      , NVL(#{topComnCd},#{comnCd})
                      , NVL(#{comnCdLvlNo},1)
-                     , NVL(#{comnCdOdrg},DECODE(#{prntsComnCd},NULL, NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM CRM_COMN_CD_BAS WHERE COMN_CD_LVL_NO = 1),1), NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM CRM_COMN_CD_BAS WHERE PRNTS_COMN_CD = #{prntsComnCd}),1) ) )
+                     , NVL(#{comnCdOdrg},DECODE(#{prntsComnCd},NULL, NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM TB_SYS_COMN_CD_BAS WHERE COMN_CD_LVL_NO = 1),1), NVL((SELECT MAX(COMN_CD_ODRG)+ 1 FROM TB_SYS_COMN_CD_BAS WHERE PRNTS_COMN_CD = #{prntsComnCd}),1) ) )
                      , #{prntsComnCd}
                      , #{comnCdNm}
                      , NVL(#{useYn},'Y')
@@ -298,7 +298,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE CRM_COMN_CD_BAS
+               UPDATE TB_SYS_COMN_CD_BAS
                   SET COMN_CD_ODRG        =         NVL(#{comnCdOdrg},COMN_CD_ODRG)
                     , COMN_CD_NM          =         #{comnCdNm}
                     , USE_YN              =         #{useYn}
@@ -325,18 +325,18 @@
         <include refid="sqlPkConditions"/>
     </update>
     <update id="updateSeq">
-    UPDATE CRM_COMN_CD_BAS
+    UPDATE TB_SYS_COMN_CD_BAS
        SET COMN_CD_ODRG          =          #{comnCdOdrg}   
          , AMDR_ID             =          #{regrId}     
          , AMD_DT             =          SYSDATE
      <include refid="sqlPkConditions" />
     </update>
     <delete id="delete">
-               DELETE FROM CRM_COMN_CD_BAS
+               DELETE FROM TB_SYS_COMN_CD_BAS
         <include refid="sqlPkConditions"/>
     </delete>
      <delete id="deleteChildren">
-               DELETE FROM CRM_COMN_CD_BAS
+               DELETE FROM TB_SYS_COMN_CD_BAS
                 WHERE PRNTS_COMN_CD = #{comnCd}
                   AND TOP_COMN_CD = #{topComnCd}
     </delete>  
@@ -344,7 +344,7 @@
     
     <sql id="sqlCode" >
         SELECT <include refid="sqlCols"/>
-                 FROM CRM_COMN_CD_BAS
+                 FROM TB_SYS_COMN_CD_BAS
          WHERE  1=1
          <choose>
             <when test="codeName !=null and codeName !=''" >
@@ -413,7 +413,7 @@
      <sql id="sqlSystemCd">
         SELECT MENU_CD COMN_CD
              , MENU_NM COMN_CD_NM
-          FROM CRM_MENU_BAS
+          FROM TB_SYS_MENU_BAS
          WHERE  1=1 
            AND MENU_LVL_NO = 1
            AND USE_YN = 'Y'
@@ -424,7 +424,7 @@
     <sql id="sqlGroupCd">
         SELECT GRP_CD COMN_CD
              , GRP_NM COMN_CD_NM
-          FROM CRM_GRP_BAS
+          FROM TB_SYS_GRP_BAS
          WHERE  1=1 
          ORDER BY GRP_NM
              , GRP_CD
