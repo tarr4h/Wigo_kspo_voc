@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
-import com.kspo.voc.sys.model.CrmLoginUserVo;
+import com.kspo.voc.sys.model.LoginUserVo;
 
 import java.util.Calendar;
 import java.util.List;
@@ -41,7 +41,7 @@ public class SessionUtil {
 
 	}
 
-	public static void setLoginUser(CrmLoginUserVo user) {
+	public static void setLoginUser(LoginUserVo user) {
 		HttpSession session = Utilities.getSession();
 		if (session == null)
 			return;
@@ -51,18 +51,18 @@ public class SessionUtil {
 		Utilities.setCookie("lumode", "1");
 	}
 
-	public static CrmLoginUserVo getLoginUser() {
+	public static LoginUserVo getLoginUser() {
 		HttpSession session = Utilities.getSession();
 		if (session == null)
 			return null;
-		return (CrmLoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
+		return (LoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
 	}
 
 	public static String getLoginUserId() {
 		HttpSession session = Utilities.getSession();
 		if (session == null)
 			return null;
-		CrmLoginUserVo user = (CrmLoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
+		LoginUserVo user = (LoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
 		if (user == null)
 			return null;
 		return (String) user.getUserId();

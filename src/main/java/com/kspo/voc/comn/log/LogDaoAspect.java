@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmLoginUserVo;
-import com.kspo.voc.sys.model.CrmMenuBaseVo;
-import com.kspo.voc.sys.service.CrmChngHstService;
+import com.kspo.voc.sys.model.LoginUserVo;
+import com.kspo.voc.sys.model.MenuBaseVo;
+import com.kspo.voc.sys.service.ChngHstService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import java.util.List;
 public class LogDaoAspect implements Interceptor {
 
 	@Autowired
-    CrmChngHstService service;
+    ChngHstService service;
 	static boolean logMode = true;
 
 	@Before(value = "execution(* *..*Controller.*(..))")
@@ -64,14 +64,14 @@ public class LogDaoAspect implements Interceptor {
 		if (request == null)
 			return;
 
-		CrmMenuBaseVo menu = (CrmMenuBaseVo) request.getAttribute("currentMenu");
+		MenuBaseVo menu = (MenuBaseVo) request.getAttribute("currentMenu");
 		if (menu == null)
 			return;
 
 		if (!"Y".equals(menu.getChngLogYn()))
 			return;
 
-		CrmLoginUserVo user = SessionUtil.getLoginUser();
+		LoginUserVo user = SessionUtil.getLoginUser();
 		String userId = user == null ? null : user.getLoginId();
 		if (Utilities.isEmpty(userId))
 			userId = "SYSTEM";

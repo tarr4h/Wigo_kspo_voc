@@ -3,7 +3,7 @@
 <mapper namespace="com.kspo.voc.kspo.process.dao.VocReceiptListDao">
 
     <select id="selectList" resultType="com.kspo.voc.kspo.process.model.VocRegistrationVo">
-        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
         select
             <include refid="com.kspo.voc.kspo.common.dao.VocComnDao.registrationListCols"/>
         from
@@ -12,7 +12,7 @@
             <include refid="com.kspo.voc.kspo.common.dao.VocComnDao.registrationListStatusCondition"/>
         order by
             reg_seq desc
-        <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
 
     </select>
 

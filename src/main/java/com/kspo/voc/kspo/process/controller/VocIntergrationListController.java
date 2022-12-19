@@ -47,7 +47,7 @@ public class VocIntergrationListController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.crm") + "voc/process/list/vocIntergrationList";
+        return Utilities.getProperty("tiles.voc") + "voc/process/list/vocIntergrationList";
     }
 
     @PostMapping(value = "selectList")
@@ -96,6 +96,6 @@ public class VocIntergrationListController {
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }
 }

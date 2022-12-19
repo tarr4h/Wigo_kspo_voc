@@ -13,7 +13,7 @@ import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
 import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 @Service
 public class VocProcedureCodeSettingService extends VocAbstractService {
@@ -22,7 +22,7 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
     VocProcedureCodeSettingDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

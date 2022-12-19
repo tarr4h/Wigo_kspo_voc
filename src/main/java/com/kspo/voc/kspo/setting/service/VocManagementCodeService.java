@@ -15,7 +15,7 @@ import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.dao.VocManagementCodeDao;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class VocManagementCodeService extends VocAbstractService {
     VocManagementCodeDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

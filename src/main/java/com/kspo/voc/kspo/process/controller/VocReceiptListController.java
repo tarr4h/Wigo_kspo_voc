@@ -39,7 +39,7 @@ public class VocReceiptListController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model){
         model.addAllAttributes(param);
-        return Utilities.getProperty("tiles.crm") + "voc/process/list/vocReceiptList";
+        return Utilities.getProperty("tiles.voc") + "voc/process/list/vocReceiptList";
     }
 
     @PostMapping(value = "selectList")
@@ -88,7 +88,7 @@ public class VocReceiptListController {
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }
 
 }

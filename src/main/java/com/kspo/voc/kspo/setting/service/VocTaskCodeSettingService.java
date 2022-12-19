@@ -13,17 +13,17 @@ import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao;
 import com.kspo.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.service.AbstractCrmService;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.service.AbstractVocService;
 
 @Service
-public class VocTaskCodeSettingService extends AbstractCrmService {
+public class VocTaskCodeSettingService extends AbstractVocService {
 
     @Autowired
     VocTaskCodeSettingDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

@@ -6,11 +6,11 @@ import java.util.Map;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
 import com.kspo.voc.kspo.process.model.VocRegPrcdVo;
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
 
-@CrmMapper
-public interface IVocPrcDao extends ICrmDao {
+@VocMapper
+public interface IVocPrcDao extends IVocDao {
 
     List<? extends ITreeVo> selectVocManagementCodeTree(Map<String, Object> param);
 

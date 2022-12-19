@@ -32,7 +32,7 @@ public class VocManagementCodeController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.crm") + "voc/setting/management_code/vocManagementCodeSetting";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/management_code/vocManagementCodeSetting";
     }
 
     @PostMapping(value = {"vocManagementCodeTree"})
@@ -81,6 +81,6 @@ public class VocManagementCodeController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.crm.blank") + "voc/setting/management_code/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/management_code/" + pageNm;
     }
 }

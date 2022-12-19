@@ -42,7 +42,7 @@ public class VocRegistrationListController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.crm") + "voc/process/list/vocRegistrationList";
+        return Utilities.getProperty("tiles.voc") + "voc/process/list/vocRegistrationList";
     }
 
     @PostMapping(value = "selectList")
@@ -86,7 +86,7 @@ public class VocRegistrationListController {
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }
 
     @PostMapping(value = "temporaryApproval")

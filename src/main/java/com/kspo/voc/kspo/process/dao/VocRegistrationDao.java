@@ -1,10 +1,10 @@
 package com.kspo.voc.kspo.process.dao;
 
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
 
-@CrmMapper
-public interface VocRegistrationDao extends ICrmDao {
+@VocMapper
+public interface VocRegistrationDao extends IVocDao {
 
     String selectMaxSeq();
 

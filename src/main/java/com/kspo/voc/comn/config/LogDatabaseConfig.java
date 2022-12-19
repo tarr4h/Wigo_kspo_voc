@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
-import com.kspo.voc.sys.mapper.CrmLogMapper;
+import com.kspo.voc.sys.mapper.LogMapper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -40,7 +40,7 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 @Configuration
 //@MapperScan(basePackages = {"com.wigo.voc"}, value = "최상위 패키지 경로", annotationClass = CrmLogMapper.class, sqlSessionFactoryRef = "logSqlSessionFactory")
-@MapperScan(basePackages = {"com.kspo.voc"}, value = "최상위 패키지 경로", annotationClass = CrmLogMapper.class, sqlSessionFactoryRef = "logSqlSessionFactory"
+@MapperScan(basePackages = {"com.kspo.voc"}, value = "최상위 패키지 경로", annotationClass = LogMapper.class, sqlSessionFactoryRef = "logSqlSessionFactory"
 	, basePackageClasses = MapperConfigurer.class)
 public class LogDatabaseConfig {
 	@Autowired

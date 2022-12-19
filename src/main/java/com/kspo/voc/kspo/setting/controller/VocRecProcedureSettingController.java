@@ -36,7 +36,7 @@ public class VocRecProcedureSettingController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
-        return Utilities.getProperty("tiles.crm") + "voc/setting/procedure_setting/vocRecProcedureSetting";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_setting/vocRecProcedureSetting";
     }
 
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
@@ -52,13 +52,13 @@ public class VocRecProcedureSettingController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.crm.blank") + "voc/setting/procedure_setting/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_setting/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }
 
     @PostMapping(value = "getOrgTree")

@@ -6,8 +6,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmComnCdBaseVo;
-import com.kspo.voc.sys.service.CrmComnCdService;
+import com.kspo.voc.sys.model.ComnCdBaseVo;
+import com.kspo.voc.sys.service.ComnCdService;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class CommCodeTag extends TagSupport {
 	private String refCd7;
 	private String refCd8;
 	private String refCd9;
-	private CrmComnCdService codeService = Utilities.getBean(CrmComnCdService.class);
+	private ComnCdService codeService = Utilities.getBean(ComnCdService.class);
 
 	public String getCodeCd() {
 		return codeCd;
@@ -309,7 +309,7 @@ public class CommCodeTag extends TagSupport {
 		param.put("refCd9", getRefCd9());
 
 		try {
-			List<CrmComnCdBaseVo> list = codeService.getComboCode(param);
+			List<ComnCdBaseVo> list = codeService.getComboCode(param);
 			if (Utilities.isNotEmpty(prefixValue) || Utilities.isNotEmpty(prefixLabel)) {
 				prefixValue = Utilities.nullCheck(prefixValue);
 				prefixLabel = Utilities.nullCheck(prefixLabel);
@@ -318,7 +318,7 @@ public class CommCodeTag extends TagSupport {
 				options += "<option value=\"" + prefixValue + "\">" + prefixLabel + "</options>";
 			}
 			for (int i = 0; i < list.size(); i++) {
-				CrmComnCdBaseVo code = list.get(i);
+				ComnCdBaseVo code = list.get(i);
 				String selected = "";
 				if (code.getComnCd().equals(selectedValue)) {
 					selected = " selected ";

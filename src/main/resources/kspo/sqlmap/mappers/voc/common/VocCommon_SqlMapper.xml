@@ -3,7 +3,7 @@
 <mapper namespace="com.kspo.voc.kspo.common.dao.VocComnDao">
 
     <!--  공통코드 관련  -->
-    <select id="selectComnCd" resultType="com.kspo.voc.sys.model.CrmComnCdBaseVo">
+    <select id="selectComnCd" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
         select
             *
         from
@@ -16,7 +16,7 @@
             use_yn = 'Y'
     </select>
 
-    <select id="selectComnCdList" resultType="com.kspo.voc.sys.model.CrmComnCdBaseVo">
+    <select id="selectComnCdList" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
         select
             *
         from
@@ -37,7 +37,7 @@
     </select>
 
     <!--  부서/사원 관련  -->
-    <select id="selectOrg" resultType="com.kspo.voc.sys.model.CrmOrgBaseVo">
+    <select id="selectOrg" resultType="com.kspo.voc.sys.model.OrgBaseVo">
         select
             *
         from
@@ -46,7 +46,7 @@
             org_id = #{orgId}
     </select>
 
-    <select id="selectEmp" resultType="com.kspo.voc.sys.model.CrmEmpBaseVo">
+    <select id="selectEmp" resultType="com.kspo.voc.sys.model.EmpBaseVo">
         select
             *
         from
@@ -55,7 +55,7 @@
             emp_id = #{empId}
     </select>
 
-    <select id="selectOrgList" resultType="com.kspo.voc.sys.model.CrmOrgBaseVo">
+    <select id="selectOrgList" resultType="com.kspo.voc.sys.model.OrgBaseVo">
         select
             *
         from
@@ -64,7 +64,7 @@
             org_nm like '%' || #{keyword} || '%'
     </select>
 
-    <select id="selectEmpList" resultType="com.kspo.voc.sys.model.CrmEmpBaseVo">
+    <select id="selectEmpList" resultType="com.kspo.voc.sys.model.EmpBaseVo">
         select
         ceb.*,
         (select org_nm from crm_org_bas where org_id = ceb.org_id) orgNm

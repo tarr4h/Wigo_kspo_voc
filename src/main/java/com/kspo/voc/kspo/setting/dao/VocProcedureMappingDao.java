@@ -1,9 +1,9 @@
 package com.kspo.voc.kspo.setting.dao;
 
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
 
-@CrmMapper
-public interface VocProcedureMappingDao extends ICrmDao {
+@VocMapper
+public interface VocProcedureMappingDao extends IVocDao {
     String selectMaxCd();
 }

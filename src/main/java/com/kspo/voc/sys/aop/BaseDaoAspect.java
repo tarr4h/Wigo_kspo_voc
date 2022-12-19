@@ -11,7 +11,7 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmLoginUserVo;
+import com.kspo.voc.sys.model.LoginUserVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class BaseDaoAspect {
 				}
 			}
 			if(Utilities.isEmpty(userId) || "SYSTEM".equals(userId)) {
-				CrmLoginUserVo user = SessionUtil.getLoginUser();
+				LoginUserVo user = SessionUtil.getLoginUser();
 //				userId = user==null? null : user.getLoginId();
 				userId = user==null? null : user.getUserId();
 				if (Utilities.isEmpty(userId)) {

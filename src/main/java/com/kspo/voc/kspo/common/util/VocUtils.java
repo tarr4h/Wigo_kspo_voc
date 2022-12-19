@@ -17,9 +17,9 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.service.VocComnService;
-import com.kspo.voc.sys.model.CrmComnCdBaseVo;
-import com.kspo.voc.sys.model.CrmEmpBaseVo;
-import com.kspo.voc.sys.model.CrmOrgBaseVo;
+import com.kspo.voc.sys.model.ComnCdBaseVo;
+import com.kspo.voc.sys.model.EmpBaseVo;
+import com.kspo.voc.sys.model.OrgBaseVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,18 +57,18 @@ public class VocUtils extends Utilities {
 
     public static void setOrgInfoToMap(EzMap org) {
         String orgId = (String) org.get("orgId");
-        CrmOrgBaseVo orgVo = comnService.selectOrg(orgId);
+        OrgBaseVo orgVo = comnService.selectOrg(orgId);
 
         EzMap orgMap = (EzMap) Utilities.beanToMap(orgVo);
         org.putAll(orgMap);
     }
 
-    public static CrmOrgBaseVo selectOrg(String orgId){
+    public static OrgBaseVo selectOrg(String orgId){
         return comnService.selectOrg(orgId);
     }
 
     public static String getOrgNm(String orgId) {
-        CrmOrgBaseVo org = comnService.selectOrg(orgId);
+        OrgBaseVo org = comnService.selectOrg(orgId);
         if(org == null){
             return "-";
         } else {
@@ -77,7 +77,7 @@ public class VocUtils extends Utilities {
     }
 
     public static String getEmpNm(String empId) {
-        CrmEmpBaseVo emp = comnService.selectEmp(empId);
+        EmpBaseVo emp = comnService.selectEmp(empId);
         if(emp == null){
             return "-";
         } else {
@@ -87,7 +87,7 @@ public class VocUtils extends Utilities {
 
     public static EzMap getEmpGrid(EzMap param) {
         EzPaginationInfo page = param.getPaginationInfo();
-        List<CrmEmpBaseVo> list = comnService.selectEmpList(param);
+        List<EmpBaseVo> list = comnService.selectEmpList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
@@ -98,12 +98,12 @@ public class VocUtils extends Utilities {
 
     public static EzMap getOrgGrid(EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<CrmOrgBaseVo> list = comnService.selectOrgList(param);
+        List<OrgBaseVo> list = comnService.selectOrgList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
 
-    public static List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
+    public static List<OrgBaseVo> selectOrgList(Map<String, Object> param){
         return comnService.selectOrgList(param);
     }
 
@@ -113,8 +113,8 @@ public class VocUtils extends Utilities {
 
     public static Object selectComnCdOptionList(Map<String, Object> param){
         StringBuilder sb = new StringBuilder();
-        List<CrmComnCdBaseVo> comnCdList = comnService.selectComnCdList(param);
-        for(CrmComnCdBaseVo comnCd : comnCdList){
+        List<ComnCdBaseVo> comnCdList = comnService.selectComnCdList(param);
+        for(ComnCdBaseVo comnCd : comnCdList){
             String opt = "<option value='" + comnCd.getComnCd() + "' data-top-comn-cd='" + comnCd.getTopComnCd()  + "'>" + comnCd.getComnCdNm() + "</option>";
             sb.append(opt);
         }

@@ -14,7 +14,7 @@ import com.kspo.voc.kspo.process.model.VocRegPrcdVo;
 import com.kspo.voc.kspo.process.model.VocRegistrationVo;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class VocRegistrationService extends VocAbstractService {
     VocRegistrationDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

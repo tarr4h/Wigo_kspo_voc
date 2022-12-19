@@ -7,7 +7,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.service.CrmComnCdService;
+import com.kspo.voc.sys.service.ComnCdService;
 
 /**
  * 
@@ -34,7 +34,7 @@ public class CommCodeNameTag extends TagSupport {
     private String codeCd;
     private String codeType;
     
-	private CrmComnCdService codeService = Utilities.getBean(CrmComnCdService.class);
+	private ComnCdService codeService = Utilities.getBean(ComnCdService.class);
 	
 	public String getUpCodeCd() {
 		return upCodeCd;

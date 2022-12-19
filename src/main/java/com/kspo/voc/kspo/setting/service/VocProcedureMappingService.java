@@ -11,7 +11,7 @@ import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.setting.dao.VocProcedureMappingDao;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureMappingVo;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class VocProcedureMappingService extends VocAbstractService {
     VocProcedureMappingDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

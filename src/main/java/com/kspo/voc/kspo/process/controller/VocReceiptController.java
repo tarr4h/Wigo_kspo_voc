@@ -42,6 +42,6 @@ public class VocReceiptController {
 
         VocRegistrationVo registration = service.selectRegstration(param);
         model.addAttribute("registration", registration);
-        return Utilities.getProperty("tiles.crm") + "voc/process/enroll/vocReceipt";
+        return Utilities.getProperty("tiles.voc") + "voc/process/enroll/vocReceipt";
     }
 }

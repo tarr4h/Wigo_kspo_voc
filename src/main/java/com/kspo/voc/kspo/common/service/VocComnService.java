@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.kspo.common.dao.VocComnDao;
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.model.CrmEmpBaseVo;
-import com.kspo.voc.sys.model.CrmOrgBaseVo;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.model.EmpBaseVo;
+import com.kspo.voc.sys.model.OrgBaseVo;
 
 /**
  * <pre>
@@ -32,7 +32,7 @@ public class VocComnService extends VocAbstractService{
     VocComnDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 
@@ -45,19 +45,19 @@ public class VocComnService extends VocAbstractService{
     }
 
     ///// 사원, 부서 관련
-    public List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param){
+    public List<OrgBaseVo> selectOrgList(Map<String, Object> param){
         return dao.selectOrgList(param);
     }
 
-    public List<CrmEmpBaseVo> selectEmpList(EzMap param) {
+    public List<EmpBaseVo> selectEmpList(EzMap param) {
         return dao.selectEmpList(param);
     }
 
-    public CrmOrgBaseVo selectOrg(String orgId) {
+    public OrgBaseVo selectOrg(String orgId) {
         return dao.selectOrg(orgId);
     }
 
-    public CrmEmpBaseVo selectEmp(String empId) {
+    public EmpBaseVo selectEmp(String empId) {
         return dao.selectEmp(empId);
     }
 }

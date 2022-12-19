@@ -19,7 +19,7 @@ import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.process.model.VocRegistrationVo;
 import com.kspo.voc.kspo.process.service.VocRegistrationService;
-import com.kspo.voc.sys.model.CrmEmpBaseVo;
+import com.kspo.voc.sys.model.EmpBaseVo;
 
 @Controller
 @RequestMapping({"vocRegistration", "{menuId}/vocRegistration"})
@@ -42,7 +42,7 @@ public class VocRegistrationController {
             		service.selectUpperChannel(channel);
         }
 
-        return Utilities.getProperty("tiles.crm") + "voc/process/enroll/vocRegistration";
+        return Utilities.getProperty("tiles.voc") + "voc/process/enroll/vocRegistration";
     }
 
     @GetMapping(value = "selectChannel")
@@ -63,7 +63,7 @@ public class VocRegistrationController {
 
     @GetMapping(value = "getLoginUserInfo")
     public @ResponseBody Object getLoginUserInfo(@RequestParam Map<String, Object> param){
-        CrmEmpBaseVo user = Utilities.getLoginUser();
+        EmpBaseVo user = Utilities.getLoginUser();
         Map<String, Object> returnMap = Utilities.beanToMap(user);
         returnMap.put("empNm", VocUtils.getEmpNm(user.getEmpId()));
         returnMap.put("orgNm", VocUtils.getOrgNm(user.getOrgId()));

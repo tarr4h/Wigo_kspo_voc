@@ -7,7 +7,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmMenuVo;
+import com.kspo.voc.sys.model.MenuVo;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class BtnGroupTag extends TagSupport {
     public int doStartTag() throws JspException {
     	
 		ServletRequest req = pageContext.getRequest();
-		CrmMenuVo menu = (CrmMenuVo)req.getAttribute("currentMenu");
+		MenuVo menu = (MenuVo)req.getAttribute("currentMenu");
 		if(menu != null) {
 			StringBuffer html = new StringBuffer();
 			String gridIdHtml = "";

@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmChngHstVo;
+import com.kspo.voc.sys.model.ChngHstVo;
 
 @Getter
 @Setter
-public class ChangeLogVo extends CrmChngHstVo {
+public class ChangeLogVo extends ChngHstVo {
 
 	/**
 	 * 

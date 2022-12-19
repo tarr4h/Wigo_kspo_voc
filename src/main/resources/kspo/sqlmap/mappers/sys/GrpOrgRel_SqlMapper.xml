@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.GrpOrgRelDao">
+    <sql id="sqlPkConditions">
+                WHERE GRP_ID            =       #{grpId}
+                  AND ORG_ID            =       #{orgId}
+    </sql>
+    <sql id="sqlCols">
+                      GRP_ID                    /*그룹코드        */
+                    , ORG_ID                    /*조직ID        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="grpId != null and grpId != ''">
+            <choose>
+                <when test="grpId instanceof String">
+                              AND A.GRP_ID            =       #{grpId}
+                </when>
+                <otherwise>
+                    AND A.GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="orgId != null and orgId != ''">
+                      AND A.ORG_ID            =       #{orgId}
+        </if>
+         <if test="exGrpId != null and exGrpId != ''">
+           AND ORG_ID NOT IN (SELECT ORG_ID FROM TB_SYS_GRP_ORG_REL WHERE GRP_ID = #{exGrpId})
+         </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+               SELECT COUNT(1)
+                 FROM TB_SYS_GRP_ORG_REL A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID 
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.GrpOrgRelVo">
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
+               SELECT A.GRP_ID                    /*그룹코드        */
+                    , A.ORG_ID                    /*조직ID        */
+                    , A.REGR_ID                    /*등록자ID        */
+                    , A.REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , A.AMD_DT                    /*수정일시        */
+                    , B.GRP_NM
+                    , C.ORG_NM
+                 FROM TB_SYS_GRP_ORG_REL A
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID 
+                INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
+        <include refid="sqlConditions"/>
+               ORDER BY C.ORG_NM
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.GrpOrgRelVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_GRP_ORG_REL
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO TB_SYS_GRP_ORG_REL (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{grpId}
+                     , #{orgId}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE TB_SYS_GRP_ORG_REL
+                  SET AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM TB_SYS_GRP_ORG_REL
+        <include refid="sqlPkConditions"/>
+    </delete>
+    <delete id="deleteGrpId">
+               DELETE FROM TB_SYS_GRP_ORG_REL
+                WHERE GRP_ID            =       #{grpId}
+    </delete>
+    
+</mapper>

@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.kspo.base.common.model.EzMap;
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
-import com.kspo.voc.sys.model.CrmEmpBaseVo;
-import com.kspo.voc.sys.model.CrmOrgBaseVo;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
+import com.kspo.voc.sys.model.EmpBaseVo;
+import com.kspo.voc.sys.model.OrgBaseVo;
 
 /**
  * <pre>
@@ -22,19 +22,19 @@ import com.kspo.voc.sys.model.CrmOrgBaseVo;
  *
 */
 
-@CrmMapper
-public interface VocComnDao extends ICrmDao {
+@VocMapper
+public interface VocComnDao extends IVocDao {
     <T> T selectComnCd(Map<String, Object> param);
 
     <T> List<T> selectComnCdList(Map<String, Object> param);
 
     /// 사원, 부서 관련
-    List<CrmOrgBaseVo> selectOrgList(Map<String, Object> param);
+    List<OrgBaseVo> selectOrgList(Map<String, Object> param);
 
-    List<CrmEmpBaseVo> selectEmpList(EzMap param);
+    List<EmpBaseVo> selectEmpList(EzMap param);
 
-    CrmOrgBaseVo selectOrg(String orgId);
+    OrgBaseVo selectOrg(String orgId);
 
-    CrmEmpBaseVo selectEmp(String empId);
+    EmpBaseVo selectEmp(String empId);
 
 }

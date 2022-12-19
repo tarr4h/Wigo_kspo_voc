@@ -14,8 +14,8 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.util.HandlerUtils;
 import com.kspo.voc.comn.util.Constants;
 import com.kspo.voc.comn.util.SessionUtil;
-import com.kspo.voc.sys.controller.CrmMainController;
-import com.kspo.voc.sys.service.CrmLoginService;
+import com.kspo.voc.sys.controller.MainController;
+import com.kspo.voc.sys.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +41,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	private Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
 	@Autowired
-    CrmLoginService loginService;
+    LoginService loginService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -84,7 +84,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			
 			*/
 		} else {
-			if (HandlerUtils.isInstance(handler, CrmMainController.class))
+			if (HandlerUtils.isInstance(handler, MainController.class))
 				return true;
 
 			String menuId = (String) request.getAttribute("currentMenuId");

@@ -14,7 +14,7 @@ import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.dao.VocRegProcedureSettingDao;
 import com.kspo.voc.kspo.setting.model.*;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 import java.util.*;
 
@@ -26,7 +26,7 @@ public class VocRegProcedureSettingService extends VocAbstractService {
     VocRegProcedureSettingDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

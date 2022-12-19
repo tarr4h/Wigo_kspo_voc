@@ -72,9 +72,9 @@ import com.kspo.base.common.util.HttpUtil;
 import com.kspo.base.common.util.MailUtil;
 import com.kspo.base.common.util.PKZip;
 import com.kspo.base.common.util.security.KisaSeed256;
-import com.kspo.voc.sys.model.CrmLoginUserVo;
-import com.kspo.voc.sys.model.CrmMenuBaseVo;
-import com.kspo.voc.sys.service.CrmCommonService;
+import com.kspo.voc.sys.model.LoginUserVo;
+import com.kspo.voc.sys.model.MenuBaseVo;
+import com.kspo.voc.sys.service.CommonService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,9 +103,9 @@ public class Utilities {
 	private static MessageSource messageSource;
 
 //    private static CommonService              commonService;
-	private static CrmCommonService commonService;
+	private static CommonService commonService;
 	@Autowired
-	CrmCommonService commService;
+	CommonService commService;
 	private static EzPropertyServiceImpl propertiesService;
 
 	@Autowired
@@ -2820,15 +2820,15 @@ public class Utilities {
 		return treeList;
 	}
 
-	public static CrmLoginUserVo getLoginUser() {
+	public static LoginUserVo getLoginUser() {
 		HttpSession session = getSession();
 		if (session == null)
 			return null;
-		return (CrmLoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
+		return (LoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
 	}
 
 	public static String getUserId() {
-		CrmLoginUserVo loginUser = getLoginUser();
+		LoginUserVo loginUser = getLoginUser();
 		if (loginUser == null)
 			return null;
 		return loginUser.getUserId();
@@ -2837,7 +2837,7 @@ public class Utilities {
 
 	public static String getLoginId() {
 		// return "2020000001";
-		CrmLoginUserVo loginUser = getLoginUser();
+		LoginUserVo loginUser = getLoginUser();
 		if (loginUser == null)
 			return null;
 		return loginUser.getLoginId();
@@ -2872,16 +2872,16 @@ public class Utilities {
 		return getAutoSeq(param);
 	}
 
-	public static CrmMenuBaseVo getCurrentMenu() {
+	public static MenuBaseVo getCurrentMenu() {
 		HttpServletRequest request = getRequest();
 		if (request == null)
 			return null;
 
-		return (CrmMenuBaseVo) request.getAttribute("currentMenu");
+		return (MenuBaseVo) request.getAttribute("currentMenu");
 	}
 
 	public static String getCurrentMenuId() {
-		CrmMenuBaseVo menu = getCurrentMenu();
+		MenuBaseVo menu = getCurrentMenu();
 		if (menu == null)
 			return null;
 		return menu.getMenuId();

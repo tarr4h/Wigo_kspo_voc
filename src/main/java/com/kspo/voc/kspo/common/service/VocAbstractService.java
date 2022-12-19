@@ -16,9 +16,9 @@ import com.kspo.voc.kspo.common.stnd.PrcdCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.process.model.VocRegPrcdVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
-import com.kspo.voc.sys.service.AbstractCrmService;
+import com.kspo.voc.sys.service.AbstractVocService;
 
-public abstract class VocAbstractService extends AbstractCrmService {
+public abstract class VocAbstractService extends AbstractVocService {
 
     @Autowired
     IVocPrcDao dao;

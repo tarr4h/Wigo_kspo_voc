@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.process.dao.VocReceiptDao;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 /**
  * <pre>
@@ -30,7 +30,7 @@ public class VocReceiptService extends VocAbstractService {
 
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

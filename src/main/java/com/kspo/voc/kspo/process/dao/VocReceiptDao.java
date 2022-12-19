@@ -2,8 +2,8 @@ package com.kspo.voc.kspo.process.dao;
 
 import java.util.Map;
 
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
 
 /**
  * <pre>
@@ -18,7 +18,7 @@ import com.kspo.voc.sys.mapper.CrmMapper;
  *
 */
 
-@CrmMapper
-public interface VocReceiptDao extends ICrmDao {
+@VocMapper
+public interface VocReceiptDao extends IVocDao {
     <T> T selectRegistration(Map<String, Object> param);
 }

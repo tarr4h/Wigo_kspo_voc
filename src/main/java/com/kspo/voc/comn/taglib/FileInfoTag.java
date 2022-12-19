@@ -7,8 +7,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.CrmFileBaseVo;
-import com.kspo.voc.sys.service.CrmFileService;
+import com.kspo.voc.sys.model.FileBaseVo;
+import com.kspo.voc.sys.service.FileService;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +41,7 @@ public class FileInfoTag extends TagSupport {
 	private String acceptExts="";
 	private boolean viewMode = false;
 	private String fileCategory = "attachment";
-	CrmFileService service = Utilities.getBean(CrmFileService.class);
+	FileService service = Utilities.getBean(FileService.class);
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -63,7 +63,7 @@ public class FileInfoTag extends TagSupport {
 		if (fileSeq > 0) {
 			param.setInt("fileSeq", fileSeq);
 		}
-		List<CrmFileBaseVo> fileList = null;
+		List<FileBaseVo> fileList = null;
 		try {
 			fileList = service.getList(param);
 			if (Utilities.isEmpty(fileList))

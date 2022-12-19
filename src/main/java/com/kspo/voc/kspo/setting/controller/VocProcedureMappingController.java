@@ -29,7 +29,7 @@ public class VocProcedureMappingController {
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
-        return Utilities.getProperty("tiles.crm") + "voc/setting/procedure_mapping/vocProcedureMapping";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_mapping/vocProcedureMapping";
     }
 
     @PostMapping(value = {"vocManagementCodeTree"})
@@ -46,7 +46,7 @@ public class VocProcedureMappingController {
     @GetMapping(value = { "openModal/{pageNm}"})
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.crm.blank") + "voc/setting/procedure_mapping/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_mapping/" + pageNm;
     }
 
     @PostMapping(value = "insert")

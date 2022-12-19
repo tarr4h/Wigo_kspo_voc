@@ -19,10 +19,10 @@ import com.kspo.base.common.util.HandlerUtils;
 import com.kspo.base.common.util.NasUtil;
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.controller.CrmMainController;
-import com.kspo.voc.sys.model.CrmMenuBaseVo;
-import com.kspo.voc.sys.model.CrmMenuVo;
-import com.kspo.voc.sys.service.CrmMenuService;
+import com.kspo.voc.sys.controller.MainController;
+import com.kspo.voc.sys.model.MenuBaseVo;
+import com.kspo.voc.sys.model.MenuVo;
+import com.kspo.voc.sys.service.MenuService;
 
 /**
  * 
@@ -44,7 +44,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 //	private Logger logger = LoggerFactory.getLogger(MenuInterceptor.class);
 
 	@Autowired
-	CrmMenuService menuService;
+	MenuService menuService;
 
 	@Resource(name = "propertiesService")
 	EzPropertyServiceImpl propertiesService;
@@ -95,20 +95,20 @@ public class MenuInterceptor implements HandlerInterceptor {
 
 		EzMap urlMap = new EzMap();
 		for (String key : menuMap.keySet()) {
-			CrmMenuVo menu = (CrmMenuVo) menuMap.get(key);
+			MenuVo menu = (MenuVo) menuMap.get(key);
 			String url = menu.getMenuUrl();
 			if (Utilities.isNotEmpty(url))
 				urlMap.put(url, menu);
 		}
 
-		CrmMenuBaseVo currentMenu = (CrmMenuBaseVo) urlMap.get(menuUrl);
+		MenuBaseVo currentMenu = (MenuBaseVo) urlMap.get(menuUrl);
 		String menuId = currentMenu == null ? menuUrl : currentMenu.getMenuUrl();
 		request.setAttribute("currentMenuId", menuUrl);
 		request.setAttribute("menuMap", urlMap);
 
 		if (menuTree != null && menuTree.size() > 0) {
 			request.setAttribute("menuTree", menuTree.get(0));
-			CrmMenuVo menu = (CrmMenuVo) urlMap.get(menuId);
+			MenuVo menu = (MenuVo) urlMap.get(menuId);
 
 			request.setAttribute("currentMenu", currentMenu);
 
@@ -158,7 +158,7 @@ public class MenuInterceptor implements HandlerInterceptor {
 			if (HandlerUtils.isInstance(handler, ErrorController.class))
 				return true;
 
-			if (HandlerUtils.isInstance(handler, CrmMainController.class)) {
+			if (HandlerUtils.isInstance(handler, MainController.class)) {
 				if (!SessionUtil.isAjaxRequest()) {
 					if (request.getRequestURI().equals("/") || request.getRequestURI().equals("")) {
 						SessionUtil.setUserMenuMap(null);

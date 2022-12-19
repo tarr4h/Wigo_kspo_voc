@@ -12,7 +12,7 @@ import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.stnd.PrcdCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.process.dao.VocRegistrationListDao;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 /**
  * <pre>
@@ -36,7 +36,7 @@ public class VocRegistrationListService extends VocAbstractService {
     VocRegistrationListDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

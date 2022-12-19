@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.process.dao.VocIntergrationListDao;
-import com.kspo.voc.sys.dao.ICrmDao;
+import com.kspo.voc.sys.dao.IVocDao;
 
 /**
  * <pre>
@@ -29,7 +29,7 @@ public class VocIntergrationListService extends VocAbstractService {
     VocIntergrationListDao dao;
 
     @Override
-    public ICrmDao getDao() {
+    public IVocDao getDao() {
         return dao;
     }
 

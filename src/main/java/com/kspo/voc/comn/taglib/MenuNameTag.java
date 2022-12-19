@@ -5,7 +5,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.service.CrmMenuService;
+import com.kspo.voc.sys.service.MenuService;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class MenuNameTag extends TagSupport {
 	private static final long serialVersionUID = 6129581713388769101L;
     private String menuId;
     
-    private CrmMenuService service = Utilities.getBean("menuService");
+    private MenuService service = Utilities.getBean("menuService");
 	
 	@Override
     public int doStartTag() throws JspException {

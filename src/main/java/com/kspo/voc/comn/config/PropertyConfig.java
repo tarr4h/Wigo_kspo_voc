@@ -1,6 +1,5 @@
 package com.kspo.voc.comn.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,7 +26,6 @@ public class PropertyConfig {
 //	@Autowired
 //	private Environment environment;
 
-
 	@Bean(name = "propertiesService")
 	EzPropertyService tilesViewResolver() {
 
@@ -44,32 +42,8 @@ public class PropertyConfig {
 
 		map.setString("context.manage", "");
 
-//        map.setString("tiles.manage", "manage/");
-//        map.setString("tiles.manage.blank", "manage/blank/");
-//        map.setString("tiles.manage.blankBody", "manage/blankBody");
-//        
-		map.setString("tiles.kland", "kland/");
-		map.setString("tiles.kland.blank", "kland/blank/");
-		map.setString("tiles.kland.blankBody", "kland/blankBody/");
-
-		map.setString("tiles.manage", "manage/");
-		map.setString("tiles.manage.blank", "manage/blank/");
-		map.setString("tiles.manage.blankBody", "manage/blankBody/");
-
-		map.setString("tiles.lms", "lms/");
-		map.setString("tiles.lms.blank", "lms/blank/");
-
-		
-		
-		map.setString("tiles.crm", "crm/");
-		map.setString("tiles.crm.blank", "crm/blank/");
-//		for (PropertySource<?> propertySource : ((ConfigurableEnvironment) environment).getPropertySources()) {
-//			if (propertySource instanceof EnumerablePropertySource) {
-//				for (String key : ((EnumerablePropertySource<?>) propertySource).getPropertyNames()) {
-//					map.put(key, propertySource.getProperty(key).toString());
-//				}
-//			}
-//		}
+		map.setString("tiles.voc", "voc/");
+		map.setString("tiles.voc.blank", "voc/blank/");
 
 		propertyService.setProperties(map);
 

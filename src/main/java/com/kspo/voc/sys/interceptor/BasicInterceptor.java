@@ -12,7 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.kspo.base.common.model.EzPropertyServiceImpl;
 import com.kspo.voc.comn.util.SessionUtil;
-import com.kspo.voc.sys.service.CrmMenuService;
+import com.kspo.voc.sys.service.MenuService;
 
 /**
  * 
@@ -32,7 +32,7 @@ import com.kspo.voc.sys.service.CrmMenuService;
 public class BasicInterceptor implements HandlerInterceptor {
 
 	@Autowired
-	CrmMenuService menuService;
+	MenuService menuService;
 
 	@Resource(name = "propertiesService")
 	EzPropertyServiceImpl propertiesService;

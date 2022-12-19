@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
-import com.kspo.voc.sys.dao.ICrmDao;
-import com.kspo.voc.sys.mapper.CrmMapper;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.mapper.VocMapper;
 
-@CrmMapper
-public interface VocProcedureCodeSettingDao extends ICrmDao {
+@VocMapper
+public interface VocProcedureCodeSettingDao extends IVocDao {
 
     int chngProcedureDuty(Map<String, Object> param);
 

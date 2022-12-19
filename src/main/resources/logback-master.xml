@@ -32,7 +32,7 @@
 
 
     
-<!--     <logger name="dao.sys.com.wigo.voc.CrmChngHstDao.insert" level="ERROR" additivity="true"> -->
+<!--     <logger name="dao.sys.com.wigo.voc.ChngHstDao.insert" level="ERROR" additivity="true"> -->
 <!--         <appender-ref ref="dailyRollingFileAppender"/> -->
 <!--     </logger> -->
     
