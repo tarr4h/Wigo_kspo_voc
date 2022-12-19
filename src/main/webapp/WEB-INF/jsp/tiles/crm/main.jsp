@@ -465,9 +465,6 @@ function removeMyMenu(data){
         }
     });
 	
-	
-	
-	
 }
 function removeWdgt(elem,data){
 	removeMyMenu(data);
