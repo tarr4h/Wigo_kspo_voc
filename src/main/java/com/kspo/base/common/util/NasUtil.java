@@ -54,7 +54,7 @@ public class NasUtil {
 //        URL url = amazonS3Client.generatePresignedUrl(generatePresignedUrlRequest);
 //        return url.toString();
 //	}
-//	public PutObjectResult upload(MultipartFile file,String saveFileName, String fileName) throws Exception  {
+//	public PutObjectResult upload(MultipartFile file,String saveFileName, String fileName) throws EgovBizException  {
 //		new Thread(new Runnable() {
 //			
 //			@Override
@@ -86,7 +86,7 @@ public class NasUtil {
 //		return null;
 //	}
 //
-//	public void delete(String fileName) throws Exception {
+//	public void delete(String fileName) throws EgovBizException {
 //		try {
 //			logger.info("파일삭제 ["+fileName+"]");
 //			DeleteObjectRequest delReq = new DeleteObjectRequest(getBuketName(fileName), fileName);
@@ -103,7 +103,7 @@ public class NasUtil {
 //		}
 //	}
 //
-//	public void copy(String orgPath, String copyPath) throws Exception {
+//	public void copy(String orgPath, String copyPath) throws EgovBizException {
 //		try {
 //			logger.info("파일복사 ["+orgPath+"] ===> ["+copyPath+"]");
 //			// Copy 객체 생성
@@ -123,7 +123,7 @@ public class NasUtil {
 //		}
 //	}
 //
-//	public void rename(String orgPath, String copyPath) throws Exception {
+//	public void rename(String orgPath, String copyPath) throws EgovBizException {
 //		try {
 //			logger.info("파일변경 ["+orgPath+"] ===> ["+copyPath+"]");
 //			copy(orgPath, copyPath);
@@ -147,19 +147,19 @@ public class NasUtil {
 //				return 0;
 //			long nLength = (long) obj.getObjectMetadata().getContentLength();
 //			return nLength;
-//		} catch (Exception ex) {
+//		} catch (EgovBizException ex) {
 //			return 0L;
 //		}finally {
 //			if(obj!=null) {
 //				try {
 //					obj.close();
-//				} catch (Exception e) {
+//				} catch (EgovBizException e) {
 //
 //				}
 //			}	
 //		}
 //	}
-//	public void download(String fileName,String strDisplayName,HttpServletResponse response) throws Exception {
+//	public void download(String fileName,String strDisplayName,HttpServletResponse response) throws EgovBizException {
 //		
 //		S3ObjectInputStream s3is = null;
 //		S3Object obj = amazonS3Client.getObject(getBuketName(fileName), fileName);
@@ -175,10 +175,10 @@ public class NasUtil {
 //		    s3is = obj.getObjectContent();
 //			Utilities.DownloadStream(response.getOutputStream(),s3is);
 //			
-//		} catch (Exception ex) {
+//		} catch (EgovBizException ex) {
 //			try {
 //				response.sendError(404);
-//			} catch (Exception e) {
+//			} catch (EgovBizException e) {
 //
 //			}
 //			throw ex;
@@ -186,14 +186,14 @@ public class NasUtil {
 //			if(s3is!=null) {
 //				try {
 //					s3is.close();
-//				} catch (Exception e) {
+//				} catch (EgovBizException e) {
 //
 //				}
 //			}	
 //			if(obj!=null) {
 //				try {
 //					obj.close();
-//				} catch (Exception e) {
+//				} catch (EgovBizException e) {
 //
 //				}
 //			}	

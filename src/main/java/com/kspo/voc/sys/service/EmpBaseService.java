@@ -1,5 +1,6 @@
 package com.kspo.voc.sys.service;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,14 @@ public class EmpBaseService extends AbstractVocService {
 		return dao;
 	}
 
-	public void saveSyncEmp() throws Exception {
+	public void saveSyncEmp() throws EgovBizException {
 //		List<CrmLoginUserVo> list = jadeService.getCeragemHrList();
 //		list.addAll(jadeService.getCeragemCnsHrList());
 //		insertList(list);
 	}
 
 	@Override
-	public int insert(Object param) throws Exception {
+	public int insert(Object param) throws EgovBizException {
 		if (param instanceof LoginUserVo) {
 
 			LoginUserVo v = (LoginUserVo) param;

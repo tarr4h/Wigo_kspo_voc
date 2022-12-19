@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class VocTaskCodeSettingService extends AbstractVocService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Object> insertCode(Object param) throws Exception {
+    public Map<String, Object> insertCode(Object param) throws EgovBizException {
         param = VocUtils.setCodeSettingParam(param);
 
         Map<String, Object> returnMap = validateAutoApply((Map<String, Object>) param);
@@ -116,12 +117,12 @@ public class VocTaskCodeSettingService extends AbstractVocService {
     }
 
     @Override
-    public int update(Object param) throws Exception {
+    public int update(Object param) throws EgovBizException {
         return super.update(param);
     }
 
     @Override
-    public int delete(Object param) throws Exception {
+    public int delete(Object param) throws EgovBizException {
         return super.delete(param);
     }
 

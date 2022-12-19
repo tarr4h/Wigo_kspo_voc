@@ -1,9 +1,7 @@
 package com.kspo.voc.comn.config;
 
-import com.kspo.voc.comn.log.LogDaoAspect;
-import com.kspo.voc.sys.mapper.VocMapper;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.egovframe.rte.psl.dataaccess.mapper.MapperConfigurer;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -18,7 +16,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
-import javax.sql.DataSource;
+import com.kspo.voc.comn.log.LogDaoAspect;
+import com.kspo.voc.sys.mapper.VocMapper;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * 

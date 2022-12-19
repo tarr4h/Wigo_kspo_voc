@@ -4,6 +4,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = {"vocRegistrationManagementCodeTree"})
-    public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws EgovBizException{
         // single
         ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.CHANNEL);
         // multiple example
@@ -49,14 +50,14 @@ public class VocRegProcedureSettingController {
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})
-    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_setting/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }
@@ -116,7 +117,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = {"selectProcedureGrid"})
-    public @ResponseBody Object selectProcedureGrid(@RequestBody EzMap param) throws Exception {
+    public @ResponseBody Object selectProcedureGrid(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocProcedureVo> list = service.selectProcedureList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
@@ -125,7 +126,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = "selectTaskGrid")
-    public @ResponseBody Object selectTaskGrid(@RequestBody EzMap param) throws Exception {
+    public @ResponseBody Object selectTaskGrid(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocTaskVo> list = service.selectTaskList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
@@ -134,7 +135,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = "selectActivityGrid")
-    public @ResponseBody Object selectActivityGrid(@RequestBody EzMap param) throws Exception {
+    public @ResponseBody Object selectActivityGrid(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocActivityVo> list = service.selectActivityList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
@@ -143,7 +144,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = "selectActivityFuncBasGrid")
-    public @ResponseBody Object selectActivityFuncBasGrid(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object selectActivityFuncBasGrid(@RequestBody EzMap param) throws EgovBizException{
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocActivityVo> list = service.selectActivityFuncBasList(param);
 //        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
@@ -152,7 +153,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = "selctDutyOrgGrid")
-    public @ResponseBody Object selectDutyOrgGrid(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object selectDutyOrgGrid(@RequestBody EzMap param) throws EgovBizException{
         EzPaginationInfo page = param.getPaginationInfo();
         List<EzMap> list = service.selectRegDutyOrgList(param);
         page.setTotalRecordCount(list.size());
@@ -160,7 +161,7 @@ public class VocRegProcedureSettingController {
     }
 
     @PostMapping(value = "selectTaskBasSearchGrid")
-    public @ResponseBody Object selectTaskBasSearchGrid(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object selectTaskBasSearchGrid(@RequestBody EzMap param) throws EgovBizException{
         EzPaginationInfo page = param.getPaginationInfo();
         List<EzMap> list = service.selectTaskBasList(param);
         page.setTotalRecordCount(list.size());

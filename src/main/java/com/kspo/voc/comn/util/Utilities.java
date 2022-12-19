@@ -20,7 +20,10 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +54,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.digest.Sha2Crypt;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.MessageSource;
@@ -122,7 +126,7 @@ public class Utilities {
 	private static final String _SALT_KEY = "$5$AvoubMud";
 
 	@PostConstruct
-	public void init() throws Exception {
+	public void init() throws NoSuchAlgorithmException, KeyManagementException {
 
 		context = this.ctx;
 		objectMapper = (ObjectMapper) context.getBean("jacksonObjectMapper");
@@ -455,7 +459,7 @@ public class Utilities {
 	public static Date parseDate(String strDate, SimpleDateFormat format) {
 		try {
 			return format.parse(strDate);
-		} catch (Exception ex) {
+		} catch (ParseException ex) {
 			return null;
 		}
 	}
@@ -675,9 +679,10 @@ public class Utilities {
 	 * @param strText
 	 * @return
 	 * @throws Exception
+	 * @throws UnsupportedEncodingException 
 	 */
 
-	public static byte[] getStringByte(String strText) throws Exception {
+	public static byte[] getStringByte(String strText) throws UnsupportedEncodingException {
 		if (strText == null || strText.length() == 0)
 			return new byte[] {};
 		return strText.getBytes(_ENC_LANG);
@@ -758,9 +763,7 @@ public class Utilities {
 	 */
 	public static String getTimeString(Date dt, String strSpliter) {
 		try {
-			String strFormat = "HH" + strSpliter + "mm" + strSpliter + "ss";
-			SimpleDateFormat sf = new SimpleDateFormat(strFormat, Locale.KOREA);
-			return sf.format(dt);
+			
 		} catch (Exception ex) {
 			Utilities.trace(ex);
 		}
@@ -2849,7 +2852,7 @@ public class Utilities {
 		return Utilities.isNotEmpty(getLoginId());
 	}
 
-	public static String getAutoSeq(String prefix) throws Exception {
+	public static String getAutoSeq(String prefix) throws EgovBizException {
 		EzMap param = new EzMap();
 		param.setString("prefix", prefix);
 		return getAutoSeq(param);
@@ -2862,7 +2865,7 @@ public class Utilities {
 //		return getAutoSeq(param);
 //	}
 
-	public static String getAutoSeq(Map<String, Object> param) throws Exception {
+	public static String getAutoSeq(Map<String, Object> param) throws EgovBizException {
 		return commonService.getAutoSeq(param);
 	}
 

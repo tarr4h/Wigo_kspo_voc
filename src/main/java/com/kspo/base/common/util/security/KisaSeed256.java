@@ -11,6 +11,10 @@
 *************************************************************/
 package com.kspo.base.common.util.security;
 
+import java.io.UnsupportedEncodingException;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+
 /**
  * 
 * <pre>
@@ -750,9 +754,10 @@ public abstract class KisaSeed256 {
 	 * 암호화
 	 * @param value
 	 * @return
-	 * @throws Exception 
+	 * @throws EgovBizException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String encrypt (String value,byte[] key) throws Exception {
+	public static String encrypt (String value,byte[] key) throws UnsupportedEncodingException {
 		if(isEmpty (value)) {
 			return null;
 		}
@@ -864,16 +869,16 @@ public abstract class KisaSeed256 {
 		
 		return paddingResult;
 	}
-	public static String encrypt (String value,String key) throws Exception {
+	public static String encrypt (String value,String key) throws UnsupportedEncodingException {
         return encrypt(value, key.getBytes(_ENC_LANG));
     }
-    public static String decrypt (String value,String key) throws Exception {
+    public static String decrypt (String value,String key) throws UnsupportedEncodingException {
         return decrypt(value, key.getBytes(_ENC_LANG));
     }
-    public static String encrypt (String value) throws Exception {
+    public static String encrypt (String value) throws UnsupportedEncodingException {
         return encrypt(value, _KEY);
     }
-    public static String decrypt (String value) throws Exception {
+    public static String decrypt (String value) throws UnsupportedEncodingException {
         return decrypt(value, _KEY);
     }
 }

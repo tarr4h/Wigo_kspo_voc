@@ -1,6 +1,8 @@
 package com.kspo.voc.kspo.common.util;
 
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,8 +38,11 @@ public class VocUtils extends Utilities {
 
 
     @PostConstruct
-    public void init() throws Exception{
-        super.init();
+    public void init(){
+        try {
+			super.init();
+		} catch (KeyManagementException | NoSuchAlgorithmException e) {
+		}
         comnService = this.cmService;
     }
 

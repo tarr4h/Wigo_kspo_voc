@@ -3,6 +3,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,17 +44,17 @@ public class VocTaskCodeSettingController {
     }
 
     @PostMapping(value = "insertCode")
-    public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.insertCode(param);
     }
 
     @PostMapping(value = "saveRows")
-    public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.update(param);
     }
 
     @PostMapping(value = "deleteRows")
-    public @ResponseBody Object deleteRows(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object deleteRows(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.delete(param);
     }
 
@@ -63,14 +64,14 @@ public class VocTaskCodeSettingController {
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})
-    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.voc.blank") + "voc/setting/task_code/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;

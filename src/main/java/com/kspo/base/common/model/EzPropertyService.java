@@ -186,7 +186,7 @@ public interface EzPropertyService extends EgovPropertyService {
     /**
      * resource 변경시 refresh
      */
-//    void refreshPropertyFiles() throws Exception;
+//    void refreshPropertyFiles() throws EgovBizException;
     void refreshPropertyFiles() throws FdlException, IOException;
 
     /**

@@ -1,17 +1,23 @@
 package com.kspo.voc.sys.controller;
 
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.model.ComnCdBaseVo;
 import com.kspo.voc.sys.service.ComnCdService;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * 
@@ -35,14 +41,14 @@ public class ComnCdController {
     ComnCdService service;
 
     @PostMapping( value = { "getComboCode" } )
-    public @ResponseBody Object getComboCode( @RequestBody EzMap param ) throws Exception {
+    public @ResponseBody Object getComboCode( @RequestBody EzMap param ) throws EgovBizException {
     	if(Utilities.isEmpty(param.getString("codeCd")) && Utilities.isEmpty(param.getString("codeType")))
     		return new ArrayList<ComnCdBaseVo>();
         return service.getComboCode( param );
     }
     
     @GetMapping( value = { "getCode" } )
-    public @ResponseBody Object getCode(@RequestParam Map<String,Object> rparam ) throws Exception {
+    public @ResponseBody Object getCode(@RequestParam Map<String,Object> rparam ) throws EgovBizException {
     	EzMap param = new EzMap(rparam);
     	return  getComboCode(param);
     }

@@ -167,7 +167,6 @@ public class MenuInterceptor implements HandlerInterceptor {
 					}
 				}
 			}
-
 			setMenuId(request);
 			if (SessionUtil.isAjaxRequest())
 				return true;

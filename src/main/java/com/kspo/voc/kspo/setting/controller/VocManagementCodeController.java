@@ -3,6 +3,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,12 +37,12 @@ public class VocManagementCodeController {
     }
 
     @PostMapping(value = {"vocManagementCodeTree"})
-    public @ResponseBody Object vocManagementCodeTree(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object vocManagementCodeTree(@RequestBody EzMap param) throws EgovBizException{
         return service.vocManagementCodeTree(param);
     }
 
     @PostMapping(value = {"vocManagementCodeGrid"})
-    public @ResponseBody Object vocMcMappingRows(@RequestBody EzMap param) throws Exception {
+    public @ResponseBody Object vocMcMappingRows(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocManagementCodeVo> list = service.vocManagementCodeList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
@@ -78,7 +79,7 @@ public class VocManagementCodeController {
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})
-    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
         return Utilities.getProperty("tiles.voc.blank") + "voc/setting/management_code/" + pageNm;

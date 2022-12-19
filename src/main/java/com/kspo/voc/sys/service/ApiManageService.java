@@ -1,6 +1,7 @@
 package com.kspo.voc.sys.service;
 
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class ApiManageService extends AbstractVocService {
 	}
 
 	@Override
-	public int update(Object param) throws Exception {
+	public int update(Object param) throws EgovBizException {
 		if(param instanceof ApiInfoBaseVo) {
 			ApiInfoBaseVo vo = (ApiInfoBaseVo) param;
 			String url = vo.getApiUrl();
@@ -30,7 +31,7 @@ public class ApiManageService extends AbstractVocService {
 		return super.update(param);
 	}
 	@Override
-	public int insert(Object param) throws Exception {
+	public int insert(Object param) throws EgovBizException {
 		if(param instanceof ApiInfoBaseVo) {
 			ApiInfoBaseVo vo = (ApiInfoBaseVo) param;
 			String url = vo.getApiUrl();

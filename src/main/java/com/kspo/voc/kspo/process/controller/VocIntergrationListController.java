@@ -3,6 +3,7 @@ package com.kspo.voc.kspo.process.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,7 +95,7 @@ public class VocIntergrationListController {
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }

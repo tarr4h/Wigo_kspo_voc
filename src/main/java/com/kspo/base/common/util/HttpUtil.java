@@ -1,15 +1,20 @@
 package com.kspo.base.common.util;
 
-import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
+
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class HttpUtil {
 	/**

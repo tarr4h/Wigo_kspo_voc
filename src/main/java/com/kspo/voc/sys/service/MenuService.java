@@ -1,6 +1,10 @@
 package com.kspo.voc.sys.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +15,11 @@ import com.kspo.base.common.model.ITreeVo;
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.dao.GrpMenuRelDao;
+import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.dao.MenuBaseDao;
 import com.kspo.voc.sys.dao.UserWdgtDao;
-import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.model.MenuVo;
 import com.kspo.voc.sys.model.UserWdgtVo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("menuService")
 public class MenuService extends AbstractVocService {
@@ -37,7 +38,7 @@ public class MenuService extends AbstractVocService {
 	}
 
 	@Override
-	public int delete(Object param) throws Exception {
+	public int delete(Object param) throws EgovBizException {
 		int cnt = dao.selectChildrenCount(param);
 		if (cnt > 0)
 			throw new EzAjaxException("하부메뉴가 존재합니다.");
@@ -46,7 +47,7 @@ public class MenuService extends AbstractVocService {
 		return super.delete(param);
 	}
 
-	public MenuVo getNewMenu(MenuVo param) throws Exception {
+	public MenuVo getNewMenu(MenuVo param) throws EgovBizException {
 
 		String parentCd = param.getPrntsMenuId();
 		MenuVo parent = null;
@@ -99,20 +100,20 @@ public class MenuService extends AbstractVocService {
 	 * 
 	 * @param param
 	 * @return
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param) throws Exception {
+	public List<ITreeVo> getUserMenuTree(Object param) throws EgovBizException {
 		EzMap itemMap = new EzMap();
 		return getUserMenuTree(param, itemMap);
 
 	}
 
-	public List<ITreeVo> getTreeList(EzMap param) throws Exception {
+	public List<ITreeVo> getTreeList(EzMap param) throws EgovBizException {
 		param.setInt("recordCountPerPage", 100000);
 		return AbstractTreeVo.makeHierarchy(dao.selectTreeList(param));
 	}
 
-//	public List<EzMap> getGridTreeList(EzMap param) throws Exception {
+//	public List<EzMap> getGridTreeList(EzMap param) throws EgovBizException {
 //		return  Utilities.convertTreeJson(getList(param),"menuId","menuNm","uprMenCId");
 //	}
 //	
@@ -122,7 +123,7 @@ public class MenuService extends AbstractVocService {
 	 * @param param
 	 * @return
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap) throws Exception {
+	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap) throws EgovBizException {
 		return getUserMenuTree(param, itemMap, false);
 
 	}
@@ -133,7 +134,7 @@ public class MenuService extends AbstractVocService {
 	 * @param param
 	 * @return
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap, boolean force) throws Exception {
+	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap, boolean force) throws EgovBizException {
 		if (itemMap == null)
 			itemMap = new EzMap();
 		EzMap map = force ? null : SessionUtil.getUserMenuMap();
@@ -164,16 +165,16 @@ public class MenuService extends AbstractVocService {
 		return list;
 	}
 
-	public List<MenuVo> getUserMenuList(Object param) throws Exception {
+	public List<MenuVo> getUserMenuList(Object param) throws EgovBizException {
 		return dao.selectUserMenuList(param);
 	}
 
-	public EzMap saveSeq(MenuVo param) throws Exception {
+	public EzMap saveSeq(MenuVo param) throws EgovBizException {
 		return Utilities.getUpdateResult(dao.updateSeq(param));
 
 	}
 
-	public EzMap saveSeq(List<MenuVo> list) throws Exception {
+	public EzMap saveSeq(List<MenuVo> list) throws EgovBizException {
 		List<EzMap> result = new ArrayList<EzMap>();
 		for (int i = 0; i < list.size(); i++) {
 			result.add(saveSeq(list.get(i)));

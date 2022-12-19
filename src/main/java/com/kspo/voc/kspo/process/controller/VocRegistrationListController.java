@@ -1,9 +1,19 @@
 package com.kspo.voc.kspo.process.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
@@ -12,9 +22,6 @@ import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.process.model.VocRegistrationVo;
 import com.kspo.voc.kspo.process.service.VocRegistrationListService;
-
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -46,7 +53,7 @@ public class VocRegistrationListController {
     }
 
     @PostMapping(value = "selectList")
-    public @ResponseBody Object selectList(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object selectList(@RequestBody EzMap param) throws EgovBizException{
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocRegistrationVo> list = service.selectList(param);
         page.setTotalRecordCount(service.selectListCount(param));
@@ -84,7 +91,7 @@ public class VocRegistrationListController {
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }

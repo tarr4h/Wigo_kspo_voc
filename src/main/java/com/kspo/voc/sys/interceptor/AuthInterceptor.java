@@ -1,5 +1,8 @@
 package com.kspo.voc.sys.interceptor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,6 @@ import com.kspo.voc.comn.util.Constants;
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.sys.controller.MainController;
 import com.kspo.voc.sys.service.LoginService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 

@@ -61,7 +61,6 @@ public class CommCodeNameTag extends TagSupport {
     		if(codeNm!=null)
     			pageContext.getOut().print(codeNm);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
     	return SKIP_BODY;
     }

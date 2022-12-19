@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class VocRegistrationListService extends VocAbstractService {
         return dao;
     }
 
-    public <T> List<T> selectList(Map<String, Object> param) throws Exception {
+    public <T> List<T> selectList(Map<String, Object> param) throws EgovBizException {
         setStatusCd(param, PrcdCategory.REGISTRATION, Arrays.asList(PrcdStatus.ONGOING, PrcdStatus.COMPLETE));
 //        setStatusCd(param, PrcdCategory.REGISTRATION, PrcdStatus.ONGOING);
         return dao.selectList(param);

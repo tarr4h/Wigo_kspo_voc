@@ -1,6 +1,8 @@
 package com.kspo.voc.comn.taglib;
 
 
+import java.util.List;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
@@ -8,8 +10,6 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.model.ComnCdBaseVo;
 import com.kspo.voc.sys.service.ComnCdService;
-
-import java.util.List;
 
 /**
  * 

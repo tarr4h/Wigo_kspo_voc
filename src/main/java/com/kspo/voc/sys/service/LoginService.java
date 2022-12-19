@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,7 @@ public class LoginService extends AbstractVocService {
 		return dao;
 	}
 
-	public Object updatelogin(LoginUserVo param) throws Exception {
+	public Object updatelogin(LoginUserVo param) throws EgovBizException {
 		EzMap result = new EzMap();
 		LoginUserVo user = dao.selectUser(param);
 		if (user == null) {
@@ -62,7 +63,7 @@ public class LoginService extends AbstractVocService {
 		return result;
 	}
 
-	public Object updatelogout() throws Exception {
+	public Object updatelogout() throws EgovBizException {
 		EzMap result = new EzMap();
 		result.put("success", true);
 		result.put("url", logoutUrl);
@@ -74,19 +75,19 @@ public class LoginService extends AbstractVocService {
 	 * 사용자의 Login 이력을 갱신하고, Session 에 사용자 정보를 저장한다.
 	 * 
 	 * @param user
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-	private void processLogin(LoginUserVo user) throws Exception {
+	private void processLogin(LoginUserVo user) throws EgovBizException {
 		SessionUtil.setLoginUser(user);
 		setLoginHist(user);
 	}
 
-	public void setLoginHist(LoginUserVo user) throws Exception {
+	public void setLoginHist(LoginUserVo user) throws EgovBizException {
 		dao.updateLogin(user);
 		dao.insertLoginHist(user);
 	};
 
-	private void processLogout() throws Exception {
+	private void processLogout() throws EgovBizException {
 		SessionUtil.logOut();
 //		response.sendRedirect(logoutUrl);
 		
@@ -107,7 +108,7 @@ public class LoginService extends AbstractVocService {
 	}
 
 //	public void processSso(Map<String, Object> param, HttpServletRequest request, HttpServletResponse response)
-//			throws Exception {
+//			throws EgovBizException {
 //
 //		String returl = "/";
 ////

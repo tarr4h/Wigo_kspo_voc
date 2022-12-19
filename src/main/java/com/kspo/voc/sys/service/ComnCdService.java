@@ -1,5 +1,8 @@
 package com.kspo.voc.sys.service;
 
+import java.util.List;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +11,6 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.dao.ComnCdBaseDao;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.model.ComnCdBaseVo;
-
-import java.util.List;
 
 @Service
 public class ComnCdService extends AbstractVocService {
@@ -22,18 +23,18 @@ public class ComnCdService extends AbstractVocService {
 	}
 	
 	@Override
-	public int delete(Object param)  throws Exception{
+	public int delete(Object param)  throws EgovBizException{
 		if(param instanceof ComnCdBaseVo) {
 			dao.deleteChildren(param);
 		}
 		return super.delete(param);
 	}
 
-	public List<ComnCdBaseVo> getComboCode(Object param) throws Exception {
+	public List<ComnCdBaseVo> getComboCode(Object param) throws EgovBizException {
 		return dao.selectCodeCombo(param);
 	}
 
-	public String getComboCodeName(EzMap param) throws Exception {
+	public String getComboCodeName(EzMap param) throws EgovBizException {
 		String codeCd = param.getString("codeCd");
 		if (Utilities.isEmpty(codeCd))
 			return "";

@@ -1,11 +1,12 @@
 package com.kspo.voc.comn.interceptor;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {

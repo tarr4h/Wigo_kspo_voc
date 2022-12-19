@@ -1,5 +1,6 @@
 package com.kspo.voc.sys.service;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class OrgBaseService extends AbstractVocService {
    }
    
    @Override
-	public int insert(Object param) throws Exception {
+	public int insert(Object param) throws EgovBizException {
 	   OrgBaseVo vo = get(param);
 	   if(vo == null)
 		   return super.insert(param);

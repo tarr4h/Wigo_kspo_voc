@@ -1,15 +1,21 @@
 package com.kspo.voc.sys.service;
 
+import java.util.List;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kspo.base.common.model.EzMap;
-import com.kspo.voc.sys.dao.*;
+import com.kspo.voc.sys.dao.GrpBaseDao;
+import com.kspo.voc.sys.dao.GrpEmpRelDao;
+import com.kspo.voc.sys.dao.GrpMenuRelDao;
+import com.kspo.voc.sys.dao.GrpOrgRelDao;
+import com.kspo.voc.sys.dao.GrpUserRelDao;
+import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.model.GrpBaseVo;
 import com.kspo.voc.sys.model.GrpMenuRelVo;
 import com.kspo.voc.sys.model.GrpUserRelVo;
-
-import java.util.List;
 
 @Service
 public class GrpBaseService extends AbstractVocService {
@@ -29,28 +35,28 @@ public class GrpBaseService extends AbstractVocService {
 		return dao;
 	}
 
-	public List<GrpUserRelVo> getGroupUserList(Object param) throws Exception {
+	public List<GrpUserRelVo> getGroupUserList(Object param) throws EgovBizException {
 		return dao.selectGroupUserList(param);
 	}
 
-	public int getGroupUserListCount(Object param) throws Exception {
+	public int getGroupUserListCount(Object param) throws EgovBizException {
 		return dao.selectGroupUserListCount(param);
 	}
 
-	public List<GrpMenuRelVo> getGroupMenuList(Object param) throws Exception {
+	public List<GrpMenuRelVo> getGroupMenuList(Object param) throws EgovBizException {
 		return dao.selectGroupMenuList(param);
 	}
 
-	public int getGroupMenuListCount(Object param) throws Exception {
+	public int getGroupMenuListCount(Object param) throws EgovBizException {
 		return dao.selectGroupMenuListCount(param);
 	}
 
-	public List<GrpBaseVo> getGroupCheckList(EzMap param) throws Exception {
+	public List<GrpBaseVo> getGroupCheckList(EzMap param) throws EgovBizException {
 		return dao.selectGroupCheckList(param);
 	}
 
 	@Override
-	public int delete(Object param) throws Exception {
+	public int delete(Object param) throws EgovBizException {
 		grpUserDao.deleteGrpId(param);
 		grpMenuDao.deleteGrpId(param);
 		grpOrgDao.deleteGrpId(param);
@@ -62,7 +68,7 @@ public class GrpBaseService extends AbstractVocService {
 		return grpOrgDao.selectList(param);
 	}
 
-	public int getGroupOrgListCount(Object param) throws Exception {
+	public int getGroupOrgListCount(Object param) throws EgovBizException {
 		return grpOrgDao.selectListCount(param);
 	}
 
@@ -70,7 +76,7 @@ public class GrpBaseService extends AbstractVocService {
 		return grpEmpDao.selectList(param);
 	}
 
-	public int getGroupEmpListCount(Object param) throws Exception {
+	public int getGroupEmpListCount(Object param) throws EgovBizException {
 		return grpEmpDao.selectListCount(param);
 	}
 }

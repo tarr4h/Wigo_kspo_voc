@@ -4,6 +4,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,17 +58,17 @@ public class VocProcedureCodeSettingController {
     }
 
     @PostMapping(value = "insert")
-    public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.insert(param);
     }
 
     @PostMapping(value = "update")
-    public @ResponseBody Object update(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object update(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.update(param);
     }
 
     @PostMapping(value = "delete")
-    public @ResponseBody Object delete(@RequestBody Map<String, Object> param) throws Exception {
+    public @ResponseBody Object delete(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.delete(param);
     }
 
@@ -82,13 +83,13 @@ public class VocProcedureCodeSettingController {
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})
-    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_code/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
-    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
     }

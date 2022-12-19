@@ -1,6 +1,5 @@
 package com.kspo.voc.sys.controller;
 
-
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Map;
 
@@ -60,7 +59,7 @@ public class ErrController implements ErrorController {
 
 	@GetMapping(value = { "", "index" })
 	public String init(HttpServletRequest request, @RequestParam Map<String, Object> param, ModelMap model)
-			throws Exception {
+			throws EgovBizException {
 //		Exception ex = (Exception) request.getAttribute("javax.servlet.error.exception");
 //		if (ex != null) {
 //
@@ -76,36 +75,44 @@ public class ErrController implements ErrorController {
 
 	@GetMapping(value = { "render" })
 	public String render(HttpServletRequest request, @RequestParam Map<String, Object> param, ModelMap model)
-			throws Exception {
+			throws EgovBizException {
 		return Utilities.getProperty("tiles.voc.black") + "/error/error";
 	}
 
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public @ResponseBody void keyError(SQLIntegrityConstraintViolationException ex, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		if (ex.getErrorCode() == 1)
-			response.sendError(486, "중복된 값이 존재합니다.");
-		else
-			response.sendError(404);
+			HttpServletResponse response) throws EgovBizException {
+		try {
+			if (ex.getErrorCode() == 1)
+				response.sendError(486, "중복된 값이 존재합니다.");
+			else
+				response.sendError(404);
+		} catch (Exception e) {
+			throw new EgovBizException(e.getMessage(), e);
+		}
 
 	}
 
 	@ExceptionHandler(EzLoginException.class)
 	public String ezLoginError(EzLoginException ex, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		return loginService.goSso(response);
+			throws EgovBizException {
+		try {
+			return loginService.goSso(response);
+		} catch (Exception e) {
+			throw new EgovBizException(e.getMessage(), e);
+		}
 	}
 
 	@ExceptionHandler(EzLoginAjaxException.class)
 	public @ResponseBody Object ezAjaxError(EzLoginAjaxException ex, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) throws EgovBizException {
 		response.setStatus(Constants._ERROR_NEED_LOGIN);
 		return ex.toMap();
 	}
 
 	@ExceptionHandler(EzAjaxException.class)
 	public @ResponseBody Object ezAjaxError(EzAjaxException ex, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) throws EgovBizException {
 		response.setStatus(487);
 		hstService.addErrorLog(ex, request, response);
 		return ex.toMap();
@@ -113,24 +120,25 @@ public class ErrController implements ErrorController {
 
 	@ExceptionHandler(EzException.class)
 	public @ResponseBody Object ezError(EzException ex, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+			throws EgovBizException {
 		response.setStatus(487);
 		hstService.addErrorLog(ex, request, response);
 		return ex.toMap();
 	}
+
 	@ExceptionHandler(EgovBizException.class)
 	public @ResponseBody Object error(EgovBizException ex, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+			throws EgovBizException {
 
 		hstService.addErrorLog(ex, request, response);
 		response.setStatus(488);
 		EzException e = new EzException(Constants._ERROR_UNKNOWN, "", ex);
 		return e.toMap();
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	public @ResponseBody Object error(Exception ex, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+			throws EgovBizException {
 
 		hstService.addErrorLog(ex, request, response);
 		response.setStatus(488);

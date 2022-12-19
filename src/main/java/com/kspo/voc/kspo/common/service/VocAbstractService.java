@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kspo.base.common.model.EzMap;
@@ -58,10 +59,10 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @return : insert result(integer)
      */
 //    @SuppressWarnings("unchecked")
-    public void updateRegProcedureStatus(Map<String, Object> param, PrcdStatus requestStatus) throws Exception{
+    public void updateRegProcedureStatus(Map<String, Object> param, PrcdStatus requestStatus) throws EgovBizException{
         String regSeq = (String) param.get("regSeq");
         if(regSeq == null){
-            throw new Exception("*** parameter에 [regSeq]가 존재하지 않습니다. ***");
+            throw new EgovBizException("*** parameter에 [regSeq]가 존재하지 않습니다. ***");
         }
 
         VocRegPrcdVo vo = selectNextRegPrcd(param);

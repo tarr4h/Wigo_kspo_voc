@@ -1,6 +1,5 @@
 package com.kspo.base.common.util.ftp;
 
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +11,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 
 import com.kspo.voc.comn.util.Utilities;
 
@@ -63,14 +63,14 @@ public class FtpClient implements IFtpClient {
 			try {
 				ftpsClient.execPBSZ(0);
 				ftpsClient.execPROT("P");
-			} catch (Exception e) {
+			} catch (IOException e) {
 			}
 
 		}
 	}
 
 	@Override
-	public String sendFile(String localFileName, String serverFileName) throws Exception {
+	public String sendFile(String localFileName, String serverFileName) throws EgovBizException {
 		String path = Utilities.getFilePath(serverFileName);
 		String fileName = Utilities.getFileNameWithoutExtension(serverFileName);
 		String fileExt = Utilities.getFileExtension(serverFileName);
@@ -97,6 +97,8 @@ public class FtpClient implements IFtpClient {
 			}
 			ftpClient.storeFile(serverFileName, bi);
 			return serverFileName;
+		} catch (IOException e) {
+			throw new EgovBizException(e.getMessage(), e);
 		} finally {
 			if (bi != null)
 				try {
@@ -108,7 +110,7 @@ public class FtpClient implements IFtpClient {
 	}
 
 	@Override
-	public String receiveFile(String serverFileNm, String localFileName) throws Exception {
+	public String receiveFile(String serverFileNm, String localFileName) throws EgovBizException {
 		File file = new File(localFileName);
 		String path = Utilities.getFilePath(localFileName);
 
@@ -135,12 +137,14 @@ public class FtpClient implements IFtpClient {
 			fo = new FileOutputStream(localFileName);
 			ftpClient.retrieveFile(serverFileName, fo);
 			return localFileName;
+		} catch (IOException e) {
+			throw new EgovBizException(e.getMessage(), e);
 		} finally {
 			if (fo != null)
 				try {
 					fo.close();
-				} catch (Exception e) {
-
+				} catch (IOException e) {
+					throw new EgovBizException(e.getMessage(), e);
 				}
 		}
 	}
@@ -149,20 +153,19 @@ public class FtpClient implements IFtpClient {
 	public boolean login() {
 		try {
 			return ftpClient.login(ID, PWD);
-		} catch (Exception ioe) {
-//	            ioe.printStackTrace(); 
+		} catch (IOException ioe) {
+			return false;
 		}
-		return false;
+
 	}
 
 	// 서버로부터 로그아웃
 	public boolean logout() {
 		try {
 			return ftpClient.logout();
-		} catch (Exception ioe) {
-//	            ioe.printStackTrace(); 
+		} catch (IOException ioe) {
+			return false;
 		}
-		return false;
 	}
 
 	// 서버로 연결

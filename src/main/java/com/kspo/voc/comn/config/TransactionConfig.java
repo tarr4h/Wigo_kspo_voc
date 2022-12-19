@@ -1,12 +1,12 @@
 package com.kspo.voc.comn.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class TransactionConfig {
 //	private UserTransaction transaction;
 //	
 //	@Bean(name = "logTransactionManager")
-//	public DataSourceTransactionManager txManager(@Qualifier("logDataSource") DataSource dataSource) throws Exception {
+//	public DataSourceTransactionManager txManager(@Qualifier("logDataSource") DataSource dataSource) throws EgovBizException {
 //		return new DataSourceTransactionManager(dataSource);
 //	}
 	@Bean(name = "txManager")

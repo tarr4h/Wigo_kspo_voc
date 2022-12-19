@@ -1,5 +1,10 @@
 package com.kspo.voc.comn.log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -21,10 +26,6 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.model.LoginUserVo;
 import com.kspo.voc.sys.model.MenuBaseVo;
 import com.kspo.voc.sys.service.ChngHstService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <pre>

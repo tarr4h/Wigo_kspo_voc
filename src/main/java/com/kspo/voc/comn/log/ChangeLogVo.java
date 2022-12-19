@@ -1,14 +1,14 @@
 package com.kspo.voc.comn.log;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.model.ChngHstVo;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

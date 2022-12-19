@@ -1,19 +1,21 @@
 package com.kspo.base.common.util.security;
+
+import java.security.InvalidKeyException;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
-* <pre>
-* com.wigo.crm.common.util.security
-*	- ARIAProvider.java
-* </pre>
-*
-* @ClassName	: ARIAProvider 
-* @Description	: ARIAProvider 
-* @author 		: 김성태
-* @date 		: 2021. 1. 5.
-* @Version 		: 1.0 
-* @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
+ * <pre>
+ * com.wigo.crm.common.util.security - ARIAProvider.java
+ * </pre>
+ *
+ * @ClassName : ARIAProvider
+ * @Description : ARIAProvider
+ * @author : 김성태
+ * @date : 2021. 1. 5.
+ * @Version : 1.0
+ * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
 public class ARIAProvider {
@@ -23,9 +25,10 @@ public class ARIAProvider {
 	private int keySize = 256;
 	private ARIA aria;
 
-	private static char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	private static char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+			'f' };
 
-	public ARIAProvider(int keySize) throws Exception {
+	public ARIAProvider(int keySize) throws InvalidKeyException {
 
 		this.keySize = keySize;
 		this.aria = new ARIA(this.keySize);
@@ -37,20 +40,17 @@ public class ARIAProvider {
 		byte[] temp = key.getBytes();
 		if (temp.length == byteSize) {
 			this.masterKey = temp;
-		}
-		else if (temp.length > byteSize) {
+		} else if (temp.length > byteSize) {
 			byte[] buffer = new byte[byteSize];
 			System.arraycopy(temp, 0, temp, 0, 16);
 			this.masterKey = buffer;
-		}
-		else {
+		} else {
 			byte[] buffer = new byte[byteSize];
 			int cnt = 0;
 			while (cnt < byteSize) {
 				if (cnt + temp.length <= byteSize) {
 					System.arraycopy(temp, 0, buffer, cnt, temp.length);
-				}
-				else {
+				} else {
 					System.arraycopy(temp, 0, buffer, cnt, byteSize - cnt);
 				}
 				cnt += temp.length;
@@ -59,7 +59,7 @@ public class ARIAProvider {
 		}
 	}
 
-	public String encryptToString(String inputString) throws Exception {
+	public String encryptToString(String inputString) throws InvalidKeyException {
 
 		if (StringUtils.isEmpty(inputString)) {
 			return inputString;
@@ -73,7 +73,7 @@ public class ARIAProvider {
 		return sb.toString().replace(" ", "");
 	}
 
-	public String decryptFromString(String inputString) throws Exception {
+	public String decryptFromString(String inputString) throws  InvalidKeyException {
 
 		byte[] dest = new byte[inputString.length() / 2];
 
@@ -88,7 +88,7 @@ public class ARIAProvider {
 		return new String(dest).trim();
 	}
 
-	private void decrypt(String inputText) throws Exception {
+	private void decrypt(String inputText) throws InvalidKeyException {
 
 		this.aria.setKey(this.masterKey);
 		this.aria.setupRoundKeys();
@@ -118,7 +118,7 @@ public class ARIAProvider {
 		return returnValue;
 	}
 
-	private void decrypt() throws Exception {
+	private void decrypt() throws InvalidKeyException {
 
 		this.plainTextBlock = new byte[this.cipherTextBlock.length][];
 		for (int i = 0; i < this.cipherTextBlock.length; i++) {
@@ -127,7 +127,7 @@ public class ARIAProvider {
 		}
 	}
 
-	private void encrypt(String inputText) throws Exception {
+	private void encrypt(String inputText) throws InvalidKeyException {
 
 		this.aria.setKey(this.masterKey);
 		this.aria.setupRoundKeys();
@@ -147,7 +147,7 @@ public class ARIAProvider {
 		}
 	}
 
-	private void encrypt() throws Exception {
+	private void encrypt() throws InvalidKeyException {
 
 		this.cipherTextBlock = new byte[this.plainTextBlock.length][];
 		for (int i = 0; i < this.plainTextBlock.length; i++) {
@@ -158,7 +158,8 @@ public class ARIAProvider {
 
 	private byte[] createBlock(byte[] byteArray) {
 
-		if (byteArray.length % 16 == 0) return byteArray;
+		if (byteArray.length % 16 == 0)
+			return byteArray;
 		byte[] temp = new byte[((byteArray.length / 16) + 1) * 16];
 		System.arraycopy(byteArray, 0, temp, 0, byteArray.length);
 		for (int i = byteArray.length; i < temp.length; i++) {

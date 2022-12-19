@@ -3,6 +3,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,43 +21,46 @@ import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.setting.service.VocProcedureMappingService;
 
 @Controller
-@RequestMapping({"vocProcedureMapping", "{menuId}/vocProcedureMapping"})
+@RequestMapping({ "vocProcedureMapping", "{menuId}/vocProcedureMapping" })
 public class VocProcedureMappingController {
 
-    @Autowired
-    VocProcedureMappingService service;
+	@Autowired
+	VocProcedureMappingService service;
 
-    @GetMapping(value = {"", "index"})
-    public String init(@RequestParam Map<String, Object> param, Model model) {
-        model.addAllAttributes(param);
-        return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_mapping/vocProcedureMapping";
-    }
+	@GetMapping(value = { "", "index" })
+	public String init(@RequestParam Map<String, Object> param, Model model) {
+		model.addAllAttributes(param);
+		return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_mapping/vocProcedureMapping";
+	}
 
-    @PostMapping(value = {"vocManagementCodeTree"})
-    public @ResponseBody Object vocProcedureMappingTree(@RequestBody EzMap param) throws Exception{
-        ManageCodeCategory.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE, ManageCodeCategory.CAUSE, ManageCodeCategory.LOCATION, ManageCodeCategory.TARGET));
-        return service.vocManagementCodeTree(param);
-    }
+	@PostMapping(value = { "vocManagementCodeTree" })
+	public @ResponseBody Object vocProcedureMappingTree(@RequestBody EzMap param) throws EgovBizException {
+		ManageCodeCategory.setComnCdListTreeMap(param,
+				Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE, ManageCodeCategory.CAUSE,
+						ManageCodeCategory.LOCATION, ManageCodeCategory.TARGET));
+		return service.vocManagementCodeTree(param);
+	}
 
-    @PostMapping(value = "vocProcedureMappingTree")
-    public @ResponseBody Object v(@RequestBody EzMap param) throws Exception{
-        return service.vocProcedureMappingTree(param);
-    }
+	@PostMapping(value = "vocProcedureMappingTree")
+	public @ResponseBody Object v(@RequestBody EzMap param) throws EgovBizException {
+		return service.vocProcedureMappingTree(param);
+	}
 
-    @GetMapping(value = { "openModal/{pageNm}"})
-    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws Exception {
-        model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_mapping/" + pageNm;
-    }
+	@GetMapping(value = { "openModal/{pageNm}" })
+	public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model)
+			throws EgovBizException {
+		model.addAttribute("param", param);
+		return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_mapping/" + pageNm;
+	}
 
-    @PostMapping(value = "insert")
-    public @ResponseBody Object insert(@RequestBody EzMap param){
-        return service.insert(param);
-    }
+	@PostMapping(value = "insert")
+	public @ResponseBody Object insert(@RequestBody EzMap param) {
+		return service.insert(param);
+	}
 
-    @PostMapping(value = "delete")
-    public @ResponseBody Object delete(@RequestBody EzMap param) throws Exception {
-        return service.delete(param);
-    }
+	@PostMapping(value = "delete")
+	public @ResponseBody Object delete(@RequestBody EzMap param) throws EgovBizException {
+		return service.delete(param);
+	}
 
 }

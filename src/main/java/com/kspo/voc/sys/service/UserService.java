@@ -1,14 +1,14 @@
 package com.kspo.voc.sys.service;
 
-
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.dao.GrpUserRelDao;
-import com.kspo.voc.sys.dao.UserBaseDao;
 import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.dao.UserBaseDao;
 import com.kspo.voc.sys.model.UserBaseVo;
 
 @Service
@@ -25,10 +25,15 @@ public class UserService extends AbstractVocService {
 	}
 
 	@Override
-	public int insert(Object param) throws Exception {
+	public int insert(Object param) throws EgovBizException {
 		UserBaseVo user = (UserBaseVo) param;
 		if (Utilities.isEmpty(user.getUserId())) {
-			String userId = Utilities.getAutoSeq("USR");
+			String userId;
+			try {
+				userId = Utilities.getAutoSeq("USR");
+			} catch (Exception e) {
+				throw new EgovBizException(e.getMessage(), e);
+			}
 			user.setUserId(userId);
 		}
 		if (Utilities.isEmpty(user.getLoginPwd())) {
@@ -43,16 +48,16 @@ public class UserService extends AbstractVocService {
 		return super.insert(param);
 	}
 
-	public Object savePassword(UserBaseVo param) throws Exception {
+	public Object savePassword(UserBaseVo param) throws EgovBizException {
 		param.setLoginPwd(Utilities.passwordEncode(param.getLoginPwd()));
 		return Utilities.getUpdateResult(dao.updatePassword(param));
 	}
 
-	public EzMap updateMyInfo(EzMap param) throws Exception {
+	public EzMap updateMyInfo(EzMap param) throws EgovBizException {
 		return Utilities.getUpdateResult(dao.updateMyInfo(param));
 	}
 
-	public Object updatePwd(EzMap param) throws Exception {
+	public Object updatePwd(EzMap param) throws EgovBizException {
 		/* user 비밀번호 조회 */
 		UserBaseVo user = dao.select(param);
 		EzMap result = new EzMap();
@@ -73,7 +78,7 @@ public class UserService extends AbstractVocService {
 	}
 
 	@Override
-	public int delete(Object param) throws Exception {
+	public int delete(Object param) throws EgovBizException {
 		grpUserDao.deleteUserId(param);
 		return super.delete(param);
 	}

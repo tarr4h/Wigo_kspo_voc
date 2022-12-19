@@ -3,11 +3,14 @@ package com.kspo.base.common.util.ftp;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Vector;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -69,14 +72,14 @@ public class SFtpClient implements IFtpClient {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public String sendFile(String localFileName, String serverFileName) throws Exception {
+	public String sendFile(String localFileName, String serverFileName) throws EgovBizException {
 		String path = Utilities.getFilePath(serverFileName);
 		String fileName = Utilities.getFileNameWithoutExtension(serverFileName);
 		String fileExt = Utilities.getFileExtension(serverFileName);
 		try {
 			sftpAttrs = channelSftp.stat(path);
-		} catch (Exception e) {
-			log.debug("path not found : " + path);
+		} catch (SftpException e) {
+			log.warn(e.getMessage());
 		}
 		if (sftpAttrs == null) {
 			try {
@@ -88,7 +91,7 @@ public class SFtpClient implements IFtpClient {
 						cPath += "/" + str;
 						try {
 							channelSftp.stat(cPath);
-						} catch (Exception e) {
+						} catch (SftpException e) {
 							channelSftp.mkdir(cPath);
 						}
 					}
@@ -96,14 +99,14 @@ public class SFtpClient implements IFtpClient {
 
 			} catch (SftpException e) {
 				log.debug("Could not create path : " + path);
-				throw e;
+				throw new EgovBizException(e.getMessage(),e);
 			}
 		}
 //		중복파일 확인
 		Vector v = null;
 		try {
 			v = channelSftp.ls(serverFileName);
-		} catch (Exception ex) {
+		} catch (SftpException ex) {
 			v = null;
 		}
 
@@ -126,13 +129,13 @@ public class SFtpClient implements IFtpClient {
 			log.debug("sendFile OK");
 			return serverFileName;
 
-		} catch (Exception e) {
-			throw e;
+		} catch (SftpException | FileNotFoundException e) {
+			throw new EgovBizException(e.getMessage(),e);
 		} finally {
 			try {
 				if (in != null)
 					in.close();
-			} catch (Exception e) {
+			} catch ( IOException e) {
 				log.error(e.toString());
 			}
 
@@ -141,7 +144,7 @@ public class SFtpClient implements IFtpClient {
 	}
 
 	@Override
-	public String receiveFile(String serverFileNm, String localFileName) throws Exception {
+	public String receiveFile(String serverFileNm, String localFileName) throws EgovBizException {
 		File file = new File(localFileName);
 		String path = Utilities.getFilePath(localFileName);
 		String fileName = Utilities.getFileNameWithoutExtension(localFileName);
@@ -167,8 +170,8 @@ public class SFtpClient implements IFtpClient {
 			}
 			return localFileName;
 
-		} catch (Exception se) {
-			throw se;
+		} catch (SftpException | IOException e) {
+			throw new EgovBizException(e.getMessage(),e);
 		} finally {
 			try {
 				if (in != null)

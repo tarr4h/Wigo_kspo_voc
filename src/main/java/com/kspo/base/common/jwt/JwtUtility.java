@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kspo.base.common.model.EzApiException;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+
 import com.kspo.voc.comn.util.Utilities;
 
 import io.jsonwebtoken.Claims;
@@ -103,7 +104,7 @@ public abstract class JwtUtility {
 	}
 
 	// 토큰 검증
-	public static Map<String, Object> verifyJWT(String jwt) {
+	public static Map<String, Object> verifyJWT(String jwt) throws EgovBizException {
 		if (Utilities.isEmpty(jwt))
 			return null;
 		Map<String, Object> claimMap = null;
@@ -126,7 +127,7 @@ public abstract class JwtUtility {
 		} catch (RuntimeException e) { // 그외 에러났을 경우
 			throw e;
 		} catch (Exception e) {
-			throw new EzApiException("IAR0200", e.getMessage(), e);
+			throw new EgovBizException(e.getMessage(), e);
 		}
 		return claimMap;
 	}

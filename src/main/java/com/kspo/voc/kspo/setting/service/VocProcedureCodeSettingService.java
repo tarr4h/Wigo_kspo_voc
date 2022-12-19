@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +32,13 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
     }
 
     @Override
-    public int insert(Object param) throws Exception {
+    public int insert(Object param) throws EgovBizException {
         param = VocUtils.setCodeSettingParam(param);
         return super.insert(param);
     }
 
     @Override
-    public int update(Object param) throws Exception {
+    public int update(Object param) throws EgovBizException {
         return super.update(param);
     }
 
@@ -47,10 +48,10 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
      *  - 트리거명 : trig_voc_procedure_bas_delete
      * @param param
      * @return
-     * @throws Exception
+     * @throws EgovBizException
      */
     @Override
-    public int delete(Object param) throws Exception {
+    public int delete(Object param) throws EgovBizException {
         return super.delete(param);
     }
 

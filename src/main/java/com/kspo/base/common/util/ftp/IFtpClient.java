@@ -1,5 +1,7 @@
 package com.kspo.base.common.util.ftp;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+
 /**
  * 
 * <pre>
@@ -21,22 +23,22 @@ public interface IFtpClient {
 	 * 파일전송
 	  * @param serverFileNm
 	 * @param localFileName
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-	String sendFile(String localFileName, String serverFileName) throws Exception ;
+	String sendFile(String localFileName, String serverFileName) throws EgovBizException ;
 	
 	/**
 	 * 파일다운로드
 	 * @param serverFileNm
 	 * @param localFileName
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-	String receiveFile(String serverFileNm, String localFileName) throws Exception ;
+	String receiveFile(String serverFileNm, String localFileName) throws  EgovBizException ;
 
 	/**
 	 * 접속종료
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-	void disconnect() throws Exception ;
+	void disconnect() throws EgovBizException ;
 	
 }

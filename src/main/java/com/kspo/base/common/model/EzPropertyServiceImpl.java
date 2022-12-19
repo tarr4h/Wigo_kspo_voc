@@ -15,7 +15,15 @@
  */
 package com.kspo.base.common.model;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
 import org.apache.commons.collections.ExtendedProperties;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.egovframe.rte.fdl.cmmn.exception.FdlException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -29,25 +37,22 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.Assert;
 
-import java.io.IOException;
-import java.util.*;
-
 /**
  * 
-* <pre>
-* com.wigo.crm.common.model
-*	- EzPropertyServiceImpl.java
-* </pre>
-*
-* @ClassName	: EzPropertyServiceImpl 
-* @Description	: 프로퍼티 서비스Impl
-* @author 		: 김성태
-* @date 		: 2021. 1. 5.
-* @Version 		: 1.0 
-* @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
+ * <pre>
+ * com.wigo.crm.common.model - EzPropertyServiceImpl.java
+ * </pre>
+ *
+ * @ClassName : EzPropertyServiceImpl
+ * @Description : 프로퍼티 서비스Impl
+ * @author : 김성태
+ * @date : 2021. 1. 5.
+ * @Version : 1.0
+ * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
-public class EzPropertyServiceImpl implements EzPropertyService, ApplicationContextAware, InitializingBean, DisposableBean, ResourceLoaderAware {
+public class EzPropertyServiceImpl
+		implements EzPropertyService, ApplicationContextAware, InitializingBean, DisposableBean, ResourceLoaderAware {
 
 //	private static final Logger LOGGER = LoggerFactory.getLogger(EzPropertyServiceImpl.class);
 
@@ -280,13 +285,13 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 				loadPropertyResources(fileName, enc);
 			}
 
-//		} catch (Exception e) {
+//		} catch (EgovBizException e) {
 //			throw new Exception(new String[] { fileName }.toString(), e);
 		} catch (FdlException e) {
 //			LOGGER.error(messageSource.getMessage("error.properties.refresh.files", new String[] { fileName }, Locale.getDefault()));
 //			LOGGER.error(messageSource.getMessage("error.properties.refresh.files.reason", new String[] {}, Locale.getDefault()));
 			throw new FdlException(new String[] { fileName }.toString(), e);
-		} catch (IOException e){
+		} catch (IOException e) {
 			throw new IOException(new String[] { fileName }.toString(), e);
 		}
 	}
@@ -294,10 +299,10 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 	/**
 	 * Bean 초기화 함수로 최초 생성시 필요한 Property 세티처리
 	 * 
-	 * @throws Exception fail to initialize
+	 * @throws EgovBizException fail to initialize
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws EgovBizException {
 		try {
 
 			fwProperties = new ExtendedProperties();
@@ -319,15 +324,16 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 
 					if (key == null || key.equals("")) {
 //						LOGGER.error(messageSource.getMessage("error.properties.check.essential", new String[] {}, Locale.getDefault()));
-						throw new Exception("error.properties.check.essential");
+						throw new EgovBizException("error.properties.check.essential");
 					}
 
 					fwProperties.put(key, value);
 				}
 			}
-		} catch (Exception e) {
-//			LOGGER.error(messageSource.getMessage("error.properties.initialize.reason", new String[] {}, Locale.getDefault()));
+		} catch (EgovBizException e) {
 			throw e;
+		} catch (Exception e) {
+			throw new EgovBizException(e.getMessage(), e);
 		}
 	}
 
@@ -377,9 +383,9 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 	 * 
 	 * @param location 파일위치
 	 * @param encoding Encoding 정보
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-//	private void loadPropertyResources(String location, String encoding) throws Exception {
+//	private void loadPropertyResources(String location, String encoding) throws EgovBizException {
 	private void loadPropertyResources(String location, String encoding) throws FdlException, IOException {
 
 		if (resourceLoader instanceof ResourcePatternResolver) {
@@ -404,9 +410,9 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 	 * 
 	 * @param resources 리소스정보
 	 * @param encoding  인코딩정보
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-//	private void loadPropertyLoop(Resource[] resources, String encoding) throws Exception {
+//	private void loadPropertyLoop(Resource[] resources, String encoding) throws EgovBizException {
 	private void loadPropertyLoop(Resource[] resources, String encoding) throws FdlException, IOException {
 		Assert.notNull(resources, "Resource array must not be null");
 		for (int i = 0; i < resources.length; i++) {
@@ -419,9 +425,9 @@ public class EzPropertyServiceImpl implements EzPropertyService, ApplicationCont
 	 * 
 	 * @param resources 리소스정보
 	 * @param encoding  인코딩정보
-	 * @throws Exception
+	 * @throws EgovBizException
 	 */
-//	private void loadPropertyRes(Resource resource, String encoding) throws Exception {
+//	private void loadPropertyRes(Resource resource, String encoding) throws EgovBizException {
 	private void loadPropertyRes(Resource resource, String encoding) throws FdlException, IOException {
 //		LOGGER.debug(messageSource.getMessage("debug.properties.filename", new String[] { resource.getFilename(), encoding }, Locale.getDefault()));
 		ExtendedProperties fwProperty = new ExtendedProperties();

@@ -2,6 +2,7 @@ package com.kspo.voc.kspo.process.controller;
 
 import java.util.Map;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,12 +72,12 @@ public class VocRegistrationController {
     }
 
     @PostMapping(value = "registerComplete")
-    public @ResponseBody Object registerComplete(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object registerComplete(@RequestBody EzMap param) throws EgovBizException{
         return service.register(param, PrcdStatus.COMPLETE);
     }
 
     @PostMapping(value = "registerTemporary")
-    public @ResponseBody Object registerTemporary(@RequestBody EzMap param) throws Exception{
+    public @ResponseBody Object registerTemporary(@RequestBody EzMap param) throws EgovBizException{
         return service.register(param, PrcdStatus.ONGOING);
     }
 

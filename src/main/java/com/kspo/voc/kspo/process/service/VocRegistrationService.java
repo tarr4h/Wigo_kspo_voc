@@ -1,6 +1,9 @@
 package com.kspo.voc.kspo.process.service;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Map;
+
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,7 @@ import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
 import com.kspo.voc.sys.dao.IVocDao;
 
-import java.util.List;
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -32,7 +34,7 @@ public class VocRegistrationService extends VocAbstractService {
         return dao;
     }
 
-    public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws Exception {
+    public Object register(Map<String, Object> param, PrcdStatus prcdStatus) throws EgovBizException {
         log.debug("param = {}", param);
         String regSeq = (String) param.get("regSeq");
         boolean result;
@@ -57,9 +59,9 @@ public class VocRegistrationService extends VocAbstractService {
      * voc 등록(insert 통해서) + 채널에 해당하는 절차 등록
      * @param param - regSeq
      * @return boolean true/false
-     * @throws Exception
+     * @throws EgovBizException
      */
-    public boolean insertRegstration(Map<String, Object> param) throws Exception{
+    public boolean insertRegstration(Map<String, Object> param) throws EgovBizException{
         boolean insert = insert(param);
         if(!insert){
             return false;
