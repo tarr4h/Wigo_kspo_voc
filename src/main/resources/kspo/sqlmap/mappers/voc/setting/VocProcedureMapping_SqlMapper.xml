@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocProcedureMappingDao">
+
+    <select id="select" resultType="com.kspo.voc.kspo.setting.model.VocProcedureMappingVo">
+        select
+            vmrm.*,
+            vmc.*
+        from
+            voc_mc_relation_mapping vmrm inner join voc_management_code vmc
+            on vmrm.management_cd = vmc.management_cd
+        <where>
+            <if test="mappingSeq != null and !mappingSeq.equals('')">
+                mapping_seq = #{mappingSeq}
+            </if>
+            <if test="managementCd != null and !managementCd.equals('')">
+                and
+                management_cd = #{managementCd}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureMappingVo">
+        select
+            vmrm.*,
+            vmc.*
+        from
+            voc_mc_relation_mapping vmrm inner join voc_management_code vmc
+            on vmrm.management_cd = vmc.management_cd
+        <where>
+            <if test="prntsMappingSeq != null and !prntsMappingSeq.equals('')">
+                and
+                prnts_mapping_seq = #{prntsMappingSeq}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMaxCd" resultType="String">
+        select
+            max(mapping_seq)
+        from
+            VOC_MC_RELATION_MAPPING
+    </select>
+
+    <insert id="insert">
+        insert into VOC_MC_RELATION_MAPPING
+        (MAPPING_SEQ, MANAGEMENT_CD, PRNTS_MAPPING_SEQ, LVL, REG_USR)
+        values
+            (
+             #{mappingSeq},
+             #{managementCd},
+             #{prntsMappingSeq},
+             #{lvl},
+             #{loginUsr}
+            )
+    </insert>
+    
+    <delete id="delete">
+        delete from VOC_MC_RELATION_MAPPING
+        where
+            mapping_seq in
+            <foreach collection="list" item="vo" open="(" separator="," close=")">
+                #{vo.mappingSeq}
+            </foreach>
+    </delete>
+</mapper>

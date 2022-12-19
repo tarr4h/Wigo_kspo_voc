@@ -6,7 +6,7 @@
   <short-name>ezTagLib</short-name>
   <tag>
     <name>btnGroup</name>
-    <tag-class>com.egov.voc.comn.taglib.BtnGroupTag</tag-class>
+    <tag-class>com.kspo.voc.comn.taglib.BtnGroupTag</tag-class>
     <body-content>empty</body-content>
     <description>btnGroup</description>
     <attribute>
@@ -103,7 +103,7 @@
   </tag>
   <tag>
     <name>menuName</name>
-    <tag-class>com.egov.voc.comn.taglib.MenuNameTag</tag-class>
+    <tag-class>com.kspo.voc.comn.taglib.MenuNameTag</tag-class>
     <body-content>empty</body-content>
     <description>Menu Name</description>
     <attribute>
@@ -114,7 +114,7 @@
   </tag>
   <tag>
     <name>commCodeName</name>
-    <tag-class>com.egov.voc.comn.taglib.CommCodeNameTag</tag-class>
+    <tag-class>com.kspo.voc.comn.taglib.CommCodeNameTag</tag-class>
     <body-content>empty</body-content>
     <description>Common code Name</description>
     <attribute>
@@ -135,7 +135,7 @@
   </tag>
   <tag>
     <name>commCode</name>
-    <tag-class>com.egov.voc.comn.taglib.CommCodeTag</tag-class>
+    <tag-class>com.kspo.voc.comn.taglib.CommCodeTag</tag-class>
     <body-content>empty</body-content>
     <description>Common code combo</description>
     <attribute>
@@ -301,7 +301,7 @@
   </tag>
    <tag>
     <name>file</name>
-    <tag-class>com.egov.voc.comn.taglib.FileInfoTag</tag-class>
+    <tag-class>com.kspo.voc.comn.taglib.FileInfoTag</tag-class>
     <body-content>empty</body-content>
     <description>file attatchment</description>
     <attribute>

@@ -17,7 +17,7 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="파일아이디" field="fileCd" type="char" maxLength="10" width="60" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
+    <column name="파일아이디" field="fileId" type="char" maxLength="10" width="60" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
     <column name="파일순번" field="fileOdrg" type="int" maxLength="2" width="20" textAlignment="center" required="Y" Pk="Y" readOnly="Y" digit="2" place="0" hidden="N"/>
     <column name="파일명" field="fileNm" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="N"/>
     <column name="파일크기" field="fileSize" type="int" maxLength="10" width="100" textAlignment="right" required="Y" defaultValue="0" digit="10" place="0" hidden="Y"/>

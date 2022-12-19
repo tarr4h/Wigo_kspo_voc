@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.kspo.common.dao.VocComnDao">
+
+    <!--  공통코드 관련  -->
+    <select id="selectComnCd" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
+        select
+            *
+        from
+            crm_comn_cd_bas
+        where
+            top_comn_cd = #{topComnCd}
+            and
+            comn_cd = #{comnCd}
+            and
+            use_yn = 'Y'
+    </select>
+
+    <select id="selectComnCdList" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
+        select
+            *
+        from
+            crm_comn_cd_bas
+        where
+            top_comn_cd = #{topComnCd}
+            and
+            comn_cd != #{topComnCd}
+            and
+            use_yn = 'Y'
+            <if test="existCd != null and !existCd.isEmpty()">
+                and
+                comn_cd not in
+                <foreach collection="existCd" item="item" separator="," open="(" close=")">
+                    #{item.comnCd}
+                </foreach>
+            </if>
+    </select>
+
+    <!--  부서/사원 관련  -->
+    <select id="selectOrg" resultType="com.kspo.voc.sys.model.OrgBaseVo">
+        select
+            *
+        from
+            crm_org_bas
+        where
+            org_id = #{orgId}
+    </select>
+
+    <select id="selectEmp" resultType="com.kspo.voc.sys.model.EmpBaseVo">
+        select
+            *
+        from
+            TB_SYS_EMP_BAS
+        where
+            emp_id = #{empId}
+    </select>
+
+    <select id="selectOrgList" resultType="com.kspo.voc.sys.model.OrgBaseVo">
+        select
+            *
+        from
+            crm_org_bas
+        where
+            org_nm like '%' || #{keyword} || '%'
+    </select>
+
+    <select id="selectEmpList" resultType="com.kspo.voc.sys.model.EmpBaseVo">
+        select
+        ceb.*,
+        (select org_nm from crm_org_bas where org_id = ceb.org_id) orgNm
+        from
+        crm_emp_bas ceb
+        where
+        <if test="orgId != null">
+            org_id = #{orgId}
+        </if>
+    </select>
+
+    <!--  list 관련  -->
+    <sql id="registrationListCols">
+        reg_seq,
+        channel,
+        status_cd,
+        title,
+        content,
+        reg_comment,
+        cust_id,
+        issue_yn,
+        issue_grade,
+        reg_usr,
+        reg_dt,
+        rec_usr,
+        rec_org,
+        rec_dt,
+        ownership_org,
+        del_yn,
+        (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
+    </sql>
+    <sql id="registrationListStatusCondition">
+        <if test="statusCd instanceof String">
+            status_cd = #{statusCd}
+        </if>
+        <if test="statusCd instanceof java.util.ArrayList">
+            status_cd in
+            <foreach collection="statusCd" open="(" separator="," close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+</mapper>

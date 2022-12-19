@@ -17,11 +17,11 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="메뉴아이디" field="menuCd" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="메뉴아이디" field="menuId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
     <column name="메뉴명" field="menuNm" type="char" maxLength="1000" width="60" textAlignment="left" required="Y" hidden="N"/>
     <column name="메뉴주소" field="menuUrl" type="char" maxLength="1000" width="120" textAlignment="left" required="N" hidden="N"/>
-    <column name="상위메뉴아이디" field="uprMenuCd" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
-    <column name="1단계메뉴아이디" field="rtMenuCd" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="상위메뉴아이디" field="uprMenuId" type="char" maxLength="10" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="1단계메뉴아이디" field="rtMenuId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" hidden="Y"/>
     <column name="메뉴레벨" field="menuLevel" type="int" maxLength="3" width="80" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
     <column name="메뉴순번" field="menuSeq" type="int" maxLength="3" width="40" textAlignment="center" required="Y" digit="3" place="0" hidden="N"/>
     <column name="메뉴보이기" field="menuShowYn" type="checkbox" maxLength="1" width="40" textAlignment="center" required="Y" hidden="N"/>

@@ -1,5 +1,8 @@
 server:
   port: '8080'
+  servlet:
+    session:
+        timeout: 1800
 spring:
   main:
     allow-bean-definition-overriding: 'true'
@@ -55,5 +58,5 @@ spring:
 logging:
   config: classpath:logback-local.xml
   level:
-    com.egov: DEBUG
+    com.kspo: DEBUG
     org.springframework.web: INFO

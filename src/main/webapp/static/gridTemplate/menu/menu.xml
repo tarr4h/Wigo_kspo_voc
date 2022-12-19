@@ -17,12 +17,12 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="메뉴코드" field="menuCd" type="char" maxLength="20" width="60" textAlignment="center" required="Y" Pk="Y" hidden="N"/>
+    <column name="메뉴코드" field="menuId" type="char" maxLength="20" width="60" textAlignment="center" required="Y" Pk="Y" hidden="N"/>
     <column name="메뉴명" field="menuNm" type="char" maxLength="1000" width="150" textAlignment="left" required="Y" hidden="N"/>
     <column name="메뉴URL" field="menuUrl" type="char" maxLength="1000" width="100" textAlignment="left" required="N" hidden="N"/>
     <column name="메뉴설명" field="menuExpln" type="char" maxLength="4000" width="200" textAlignment="left" required="N" hidden="N"/>
-    <column name="최상위메뉴코드" field="topMenuCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" hidden="Y"/>
-    <column name="부모메뉴코드" field="prntsMenuCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="최상위메뉴코드" field="topMenuId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" hidden="Y"/>
+    <column name="부모메뉴코드" field="prntsMenuId" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
     <column name="메뉴레벨번호" field="menuLvlNo" type="int" maxLength="3" width="60" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
     <column name="메뉴순번" field="menuOdrg" type="int" maxLength="3" width="80" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
     <column name="메뉴아이콘코드" field="menuIconCd" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="Y"/>

@@ -19,7 +19,7 @@
     </meta>
     <column name="로그인일시" field="loginDt" type="datetime" width="100" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
     <column name="조직명" field="orgNm" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="N"/>
-    <column name="사번" field="userCd" type="char" maxLength="20" width="20" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
+    <column name="사번" field="userId" type="char" maxLength="20" width="20" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="N"/>
     <column name="직위" field="empGradeCd" type="combo" codeId="C030" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="로그인ID" field="loginId" type="char" maxLength="100" width="20" textAlignment="center" required="N"  hidden="N"/>
     <column name="사용자명" field="userNm" type="char" maxLength="100" width="50" textAlignment="center" required="N" hidden="N"/>

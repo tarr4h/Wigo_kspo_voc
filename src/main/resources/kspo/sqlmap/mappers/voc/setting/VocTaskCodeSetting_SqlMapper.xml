@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao">
+
+    <sql id="prcdCols">
+        prcd_seq,
+        prcd_nm,
+        deadline,
+        nvl(duty_org_nm, '-') dutyOrgNm,
+        nvl(duty_emp_nm, '-') dutyEmpNm,
+        nvl(duty_role, '-') dutyRole
+    </sql>
+
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocTaskCodeVo">
+        select
+            task_seq,
+            task_nm,
+            deadline,
+            nvl(duty_org, '-') dutyOrg,
+            nvl(duty_emp, '-') dutyEmp,
+            nvl(duty_role, '-') dutyRole,
+            use_yn,
+            duty_chng_yn,
+            auto_apply_yn,
+            auto_apply_all_yn,
+            auto_apply_prcd_seq,
+            auto_apply_prcd_nm,
+            mod_dt,
+            mod_usr,
+            nvl(duty_org_nm, '-') dutyOrgNm,
+            nvl(duty_emp_nm, '-') dutyEmpNm
+        from
+            voc_task_bas
+        order by
+            1
+    </select>
+
+    <insert id="insert">
+        insert into voc_task_bas
+        (task_seq, task_nm, deadline, duty_org, duty_emp, duty_role, duty_chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_org_nm, duty_emp_nm)
+        values(
+                  concat('TB', lpad(seq_voc_task_bas.nextval, 8, 0)),
+                  #{taskNm},
+                  #{deadline},
+                  #{dutyOrg},
+                  #{dutyEmp},
+                  #{dutyRole},
+                  #{dutyChngYn},
+                  #{autoApplyYn},
+                  #{autoApplyAllYn},
+                  #{autoApplyPrcdSeq},
+                  #{autoApplyPrcdNm},
+                  sysdate,
+                  #{loginUsr},
+                  #{dutyOrgNm},
+                  #{dutyEmpNm}
+              )
+    </insert>
+
+    <update id="update">
+        <foreach collection="rows" item="item" open="DECLARE BEGIN" close=";END;" separator=";">
+            update voc_task_bas
+            set
+                task_nm = #{item.taskNm},
+                deadline = #{item.deadline},
+                use_yn = #{item.useYn},
+                duty_chng_yn = #{item.dutyChngYn},
+                auto_apply_yn = #{item.autoApplyYn},
+                auto_apply_all_yn = #{item.autoApplyAllYn},
+                <if test='item.autoApplyYn.equals("N") or item.autoApplyAllYn.equals("Y")'>
+                    auto_apply_prcd_seq = null,
+                    auto_apply_prcd_nm = null,
+                </if>
+                mod_dt = sysdate,
+                mod_usr = #{loginUsr}
+            where
+                task_seq = #{item.taskSeq}
+        </foreach>
+    </update>
+
+    <delete id="delete">
+        delete from voc_task_bas
+        where
+        task_seq in
+        <foreach collection="rows" item="item" open="(" close=")" separator=",">
+            #{item.taskSeq}
+        </foreach>
+    </delete>
+
+    <update id="chngTaskDuty">
+        update voc_task_bas
+        set
+            ${targetInfo.col} = #{chngMap.id},
+            ${targetInfo.col}_nm = #{chngMap.nm},
+            mod_dt = sysdate,
+            mod_usr = #{loginUsr}
+        where
+            task_seq = #{targetInfo.taskSeq}
+    </update>
+
+    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            <include refid="prcdCols"/>
+        from
+            voc_procedure_bas
+        where
+            prcd_seq = #{prcdSeq}
+    </select>
+
+    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+        select
+            <include refid="prcdCols"/>
+        from
+            voc_procedure_bas
+        where
+            task_yn = 'Y'
+            <if test="prcdSeq != null and prcdSeq != ''">
+                and
+                prcd_seq != #{prcdSeq}
+            </if>
+    </select>
+
+    <update id="updateAutoApplyPrcd">
+        update
+            voc_task_bas
+        set
+            auto_apply_all_yn = 'N',
+            auto_apply_prcd_nm = #{prcdNm},
+            auto_apply_prcd_seq = #{prcdSeq}
+        where
+            task_seq = #{taskSeq}
+    </update>
+</mapper>

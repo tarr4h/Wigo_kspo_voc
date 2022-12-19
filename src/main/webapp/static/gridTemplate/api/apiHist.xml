@@ -18,7 +18,7 @@
         <setSort value="none"/>
     </meta>
     <column name="채널" field="regrId" type="combo" maxLength="20" width="50" textAlignment="center" required="N" codeId="S000" hidden="N"/>
-    <column name="API이력코드" field="apiHstCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="API이력코드" field="apiHstId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
     <column name="API코드" field="apiCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
     <column name="호출URL" field="apiCallUrl" type="char" maxLength="1000" width="400" textAlignment="left" required="N" hidden="N"/>
     <column name="결과코드" field="apiRsltCd" type="char" maxLength="20" width="80" textAlignment="center" required="N" hidden="N"/>

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.egov.voc.kspo.process.service.VocRegistrationService;
+import com.kspo.voc.kspo.process.service.VocRegistrationService;
 
 import lombok.extern.slf4j.Slf4j;
 

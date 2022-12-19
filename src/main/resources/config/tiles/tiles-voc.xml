@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>    
+	<definition name="_voc_main_index" template="/WEB-INF/jsp/tiles/voc/index.jsp" />
+	<definition name="_voc_index_type2" template="/WEB-INF/jsp/tiles/voc/index_type2.jsp" />
+<definition name="_voc_blank_index" template="/WEB-INF/jsp/tiles/voc/blank.jsp" />
+<definition name="_voc_blank_body_index" template="/WEB-INF/jsp/tiles/voc/blankBody.jsp" />
+
+    
+    <definition name="error" extends="_voc_blank_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/voc/error/error.jsp" type="template" />
+    </definition>    
+
+    <definition name="voc/blank/*/**" extends="_voc_blank_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/voc/{1}/{2}.jsp" type="template" />
+    </definition>
+    <definition name="voc/blankBody/*/**" extends="_voc_blank_body_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/voc/{1}/{2}.jsp" type="template" />
+    </definition>
+    
+    <definition name="voc/*/**" extends="_voc_main_index">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/voc/{1}/{2}.jsp" type="template" />
+    </definition>
+    <definition name="voc/type2/*/**" extends="_voc_index_type2">
+        <put-attribute name="content" value="/WEB-INF/jsp/view/voc/{1}/{2}.jsp" type="template" />
+    </definition>
+    
+    <definition name="main" template="/WEB-INF/jsp/tiles/voc/main.jsp" />
+    <definition name="login" template="/WEB-INF/jsp/tiles/voc/login.jsp" />
+
+</tiles-definitions>
