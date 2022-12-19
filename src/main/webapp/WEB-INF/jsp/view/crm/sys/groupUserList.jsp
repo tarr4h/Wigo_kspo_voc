@@ -21,7 +21,7 @@
 		<div class="searchBox">
 			<form role="form" id="frmSearch">
 				<input type="hidden" name="currentPageNo" id="currentPageNo" value="1" />
-				<input type="hidden" name="exGrpCd" id="exGrpCd" value="${grpCd }" />
+				<input type="hidden" name="exGrpId" id="exGrpId" value="${grpId }" />
 				<ul>
 					<li>
 						<label for="userNm">사용자명</label>
@@ -76,7 +76,7 @@ function addSelected(){
         return;
     }
     for(var i=0;i<list.length;i++){
-        list[i].grpCd = "${grpCd}";
+        list[i].grpId = "${grpId}";
         list[i].stat = "n";
         list[i]._attributes.checked = false;
     }

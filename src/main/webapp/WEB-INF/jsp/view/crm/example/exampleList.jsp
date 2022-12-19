@@ -20,7 +20,7 @@
             </li>
             <li>
                 <label for="postNm">멀티콤보</label>
-                	<code:commCode codeCd="E030" id="combo2" name="menuCd" multiple="true"/>
+                	<code:commCode codeCd="E030" id="combo2" name="menuId" multiple="true"/>
             </li>
         	<li>
               <label for="postNm">연계콤보</label>

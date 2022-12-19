@@ -37,41 +37,41 @@ public class BaseDaoAspect {
 	@Before(value = "execution(* *..*Dao.insert*(..))")
 	public void insertBefore(JoinPoint jp) {
 		try {
-			String userCd="";
+			String userId="";
 			HttpServletRequest req =  Utilities.getRequest();
 			if(req != null) {
 				Map<String,Object> info = (Map<String, Object>) req.getAttribute("ticketInfo");
 				if(info != null)
 				{
-					userCd = (String) info.get("userCd");
-					if(Utilities.isEmpty(userCd) || "SYSTEM".equals(userCd))
-						userCd = req.getParameter("tutorId");
+					userId = (String) info.get("userId");
+					if(Utilities.isEmpty(userId) || "SYSTEM".equals(userId))
+						userId = req.getParameter("tutorId");
 				}
 			}
-			if(Utilities.isEmpty(userCd) || "SYSTEM".equals(userCd)) {
+			if(Utilities.isEmpty(userId) || "SYSTEM".equals(userId)) {
 				CrmLoginUserVo user = SessionUtil.getLoginUser();
-//				userCd = user==null? null : user.getLoginId();
-				userCd = user==null? null : user.getUserCd();
-				if (Utilities.isEmpty(userCd)) {
-					userCd = "SYSTEM";
+//				userId = user==null? null : user.getLoginId();
+				userId = user==null? null : user.getUserId();
+				if (Utilities.isEmpty(userId)) {
+					userId = "SYSTEM";
 				}
 			}
 			String dt = Utilities.getDateTimeString();
 			Map map = getMapObject(jp.getArgs());
 			if (map != null) {
 				map.put("peerIp", Utilities.getPeerIp());
-				map.put("regrId", userCd);
+				map.put("regrId", userId);
 				map.put("regDt", dt);
-				map.put("amdrId", userCd);
+				map.put("amdrId", userId);
 				map.put("amdDt", dt);
 				return;
 			}
 			BaseVo bo = getBaseVo(jp.getArgs());
 			if (bo != null) {
 				bo.setPeerIp(Utilities.getPeerIp());
-				bo.setRegrId(userCd);
+				bo.setRegrId(userId);
 				bo.setRegDt(dt);
-				bo.setAmdrId(userCd);
+				bo.setAmdrId(userId);
 				bo.setAmdDt(dt);
 				return;
 			}

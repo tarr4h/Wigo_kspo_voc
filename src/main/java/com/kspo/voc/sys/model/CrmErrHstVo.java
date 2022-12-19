@@ -15,11 +15,11 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>오류이력코드</p> 
     */
-    private String errHstCd;
+    private String errHstId;
     /**
     * <p>메뉴코드</p> 
     */
-    private String menuCd;
+    private String menuId;
     /**
     * <p>메뉴URL</p> 
     */

@@ -194,11 +194,11 @@
     function onGridCellDblClick(gridView,itemIndex, column, json, value){
         // 페이지이동
         let menu = {
-            menuCd: "0104030200",
+            menuId: "0104030200",
             menuLvlNo: 4,
             menuNm: "VOC 접수",
             menuUrl: "vocReceipt?regSeq=" + json.regSeq,
-            topMenuCd: "0100000000"
+            topMenuId: "0100000000"
         };
 
         openMenu(menu);
@@ -212,7 +212,7 @@
             win.location.reload();
         }
 
-        topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
+        topWin.openMenuTab(menu.menuId, menu.menuNm, menu.menuUrl);
     }
 
     $('.list_searchBtn').on('click', function(){

@@ -21,16 +21,16 @@ public class CrmGrpUserRelService extends AbstractCrmService {
 		return dao;
 	}
 
-	public Object saveUserGroup(String userCd, List<CrmGrpUserRelVo> list) throws Exception {
+	public Object saveUserGroup(String userId, List<CrmGrpUserRelVo> list) throws Exception {
 		EzMap param = new EzMap();
-		param.setString("userCd", userCd);
-		dao.deleteUserCd(param);
+		param.setString("userId", userId);
+		dao.deleteUserId(param);
 		return insertList(list);
 	}
-	public Object saveGroupUser(String grpCd, List<CrmGrpUserRelVo> list) throws Exception{
+	public Object saveGroupUser(String grpId, List<CrmGrpUserRelVo> list) throws Exception{
 		EzMap param = new EzMap();
-		param.setString("grpCd", grpCd);
-		dao.deleteGrpCd(param);
+		param.setString("grpId", grpId);
+		dao.deleteGrpId(param);
 		return insertList(list);
 	}
 	

@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpOrgHstDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_ORG_HST_CD    =       #{grpOrgHstCd}
+                WHERE GRP_ORG_HST_ID    =       #{grpOrgHstId}
     </sql>
     <sql id="sqlCols">
-                      GRP_ORG_HST_CD                    /*그룹조직이력코드        */
-                    , GRP_CD                    /*그룹코드        */
+                      GRP_ORG_HST_ID                    /*그룹조직이력코드        */
+                    , GRP_ID                    /*그룹코드        */
                     , ORG_ID                    /*조직ID        */
                     , DEL_YN                    /*삭제여부        */
                     , REGR_ID                    /*등록자ID        */
@@ -16,27 +16,27 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpOrgHstCd != null and grpOrgHstCd != ''">
+        <if test="grpOrgHstId != null and grpOrgHstId != ''">
             <choose>
-                <when test="grpOrgHstCd instanceof String">
-                              AND A.GRP_ORG_HST_CD    =       #{grpOrgHstCd}
+                <when test="grpOrgHstId instanceof String">
+                              AND A.GRP_ORG_HST_ID    =       #{grpOrgHstId}
                 </when>
                 <otherwise>
-                    AND A.GRP_ORG_HST_CD    IN
-                    <foreach item="item" index="index" collection="grpOrgHstCd" open="(" separator="," close=")">
+                    AND A.GRP_ORG_HST_ID    IN
+                    <foreach item="item" index="index" collection="grpOrgHstId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND A.GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND A.GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND A.GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND A.GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -64,14 +64,14 @@
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
                  FROM TB_SYS_GRP_ORG_HST A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID
                 INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpOrgHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_ORG_HST_CD                    /*그룹조직이력코드        */
-                    , A.GRP_CD                    /*그룹코드        */
+               SELECT A.GRP_ORG_HST_ID                    /*그룹조직이력코드        */
+                    , A.GRP_ID                    /*그룹코드        */
                     , A.ORG_ID                    /*조직ID        */
                     , A.DEL_YN                    /*삭제여부        */
                     , A.REGR_ID                    /*등록자ID        */
@@ -81,7 +81,7 @@
                     , B.GRP_NM
                     , C.ORG_NM
                  FROM TB_SYS_GRP_ORG_HST A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID
                 INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
@@ -97,7 +97,7 @@
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GOH')
-                     , #{grpCd}
+                     , #{grpId}
                      , #{orgId}
                      , 'N'
                      , #{regrId}
@@ -111,7 +111,7 @@
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GOH')
-                     , #{grpCd}
+                     , #{grpId}
                      , #{orgId}
                      , 'Y'
                      , #{regrId}
@@ -122,7 +122,7 @@
     </insert>
     <update id="update">
                UPDATE TB_SYS_GRP_ORG_HST
-                  SET GRP_CD              =         #{grpCd}
+                  SET GRP_ID              =         #{grpId}
                     , ORG_ID              =         #{orgId}
                     , DEL_YN              =         #{delYn}
                     , AMDR_ID             =         #{amdrId}

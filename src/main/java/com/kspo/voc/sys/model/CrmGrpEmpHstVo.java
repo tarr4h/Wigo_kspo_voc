@@ -13,7 +13,7 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>그룹사원이력코드</p> 
     */
-    private String grpEmpHstCd;
+    private String grpEmpHstId;
     
     /**
     * <p>삭제여부</p> 

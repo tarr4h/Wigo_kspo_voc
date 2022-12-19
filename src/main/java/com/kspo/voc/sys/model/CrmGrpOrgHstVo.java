@@ -13,7 +13,7 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>그룹조직이력코드</p> 
     */
-    private String grpOrgHstCd;
+    private String grpOrgHstId;
     	
     /**
     * <p>삭제여부</p> 

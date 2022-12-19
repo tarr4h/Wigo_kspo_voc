@@ -1,16 +1,11 @@
 package com.kspo.base.common.util;
 
 
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.*;
-
-import com.kspo.base.common.model.EzMap;
-import com.kspo.base.common.model.IExcelVo;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +13,30 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.kspo.base.common.model.EzMap;
+import com.kspo.base.common.model.IExcelVo;
+import com.kspo.voc.comn.util.Utilities;
 
 
 /**
@@ -45,7 +64,7 @@ public abstract class ExcelUtil {
 			return false;
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
-		String ext = BaseUtilities.getFileExtension(fileName);
+		String ext = Utilities.getFileExtension(fileName);
 		if ("xls".equalsIgnoreCase(ext))
 			return createWorkbookH(vo, response.getOutputStream());
 		else
@@ -56,16 +75,16 @@ public abstract class ExcelUtil {
 			return false;
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
-		String ext = BaseUtilities.getFileExtension(fileName);
+		String ext = Utilities.getFileExtension(fileName);
 		if ("xls".equalsIgnoreCase(ext))
 			return createWorkbookH(list, response.getOutputStream());
 		else
 			return createWorkbookX(list, response.getOutputStream());
 	}
 	public static boolean createWorkbook(IExcelVo vo, String fileName) {
-		if (vo == null || BaseUtilities.isEmpty(fileName))
+		if (vo == null || Utilities.isEmpty(fileName))
 			return false;
-		String ext = BaseUtilities.getFileExtension(fileName);
+		String ext = Utilities.getFileExtension(fileName);
 
 		if ("xls".equalsIgnoreCase(ext))
 			return createWorkbookH(vo, fileName);
@@ -194,14 +213,14 @@ public abstract class ExcelUtil {
 			workbook.write(os);
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		} finally {
 			try {
 				if (workbook != null)
 					workbook.close();
 			} catch (Exception ex) {
-				BaseUtilities.trace(ex);
+				Utilities.trace(ex);
 			}
 
 		}
@@ -240,14 +259,14 @@ public abstract class ExcelUtil {
 			workbook.write(os);
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		} finally {
 			try {
 				if (workbook != null)
 					workbook.close();
 			} catch (Exception ex) {
-				BaseUtilities.trace(ex);
+				Utilities.trace(ex);
 			}
 
 		}
@@ -258,7 +277,7 @@ public abstract class ExcelUtil {
 			return false;
 
 		List<Entry<String, String>> cols = vo.getColumns();
-		if (BaseUtilities.isEmpty(cols))
+		if (Utilities.isEmpty(cols))
 			return false;
 		List<EzMap> list = vo.getData();
 		String title = vo.getTitle();
@@ -272,7 +291,7 @@ public abstract class ExcelUtil {
 
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 	}
@@ -282,7 +301,7 @@ public abstract class ExcelUtil {
 			return false;
 
 		List<Entry<String, String>> cols = vo.getColumns();
-		if (BaseUtilities.isEmpty(cols))
+		if (Utilities.isEmpty(cols))
 			return false;
 		List<EzMap> list = vo.getData();
 		String title = vo.getTitle();
@@ -296,13 +315,13 @@ public abstract class ExcelUtil {
 
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 	}
 
 	private static boolean creatData(HSSFSheet sheet, List<EzMap> list, List<Entry<String, String>> cols, int rownum) {
-		if (BaseUtilities.isEmpty(list))
+		if (Utilities.isEmpty(list))
 			return true;
 		try {
 			HSSFFont font = sheet.getWorkbook().createFont();
@@ -329,7 +348,7 @@ public abstract class ExcelUtil {
 			}
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 	}
@@ -358,7 +377,7 @@ public abstract class ExcelUtil {
 			}
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 
@@ -392,7 +411,7 @@ public abstract class ExcelUtil {
 			return true;
 
 		} catch (Exception ex) {
-			BaseUtilities.trace(ex);
+			Utilities.trace(ex);
 			return false;
 		}
 
@@ -422,14 +441,14 @@ public abstract class ExcelUtil {
 			}
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 
 	}
 
 	private static boolean creatData(XSSFSheet sheet, List<EzMap> list, List<Entry<String, String>> cols, int rownum) {
-		if (BaseUtilities.isEmpty(list))
+		if (Utilities.isEmpty(list))
 			return true;
 		try {
 			XSSFFont font = sheet.getWorkbook().createFont();
@@ -452,12 +471,12 @@ public abstract class ExcelUtil {
 				for (int j = 0; j < cols.size(); j++) {
 					XSSFCell cell = row.createCell(j);
 					cell.setCellStyle(cs);
-					cell.setCellValue(BaseUtilities.nullCheck(data.get(cols.get(j).getKey())));
+					cell.setCellValue(Utilities.nullCheck(data.get(cols.get(j).getKey())));
 				}
 			}
 			return true;
 		} catch (Exception e) {
-			BaseUtilities.trace(e);
+			Utilities.trace(e);
 			return false;
 		}
 	}
@@ -490,7 +509,7 @@ public abstract class ExcelUtil {
 			return true;
 
 		} catch (Exception ex) {
-			BaseUtilities.trace(ex);
+			Utilities.trace(ex);
 			return false;
 		}
 
@@ -514,7 +533,7 @@ public abstract class ExcelUtil {
 	public static List<EzMap> excelToList(File file, List<String> header, int sheetIndex) throws Exception{
 		if (file == null || !file.isFile())
 			return null;
-		String ext = BaseUtilities.getFileExtension(file.getAbsolutePath());
+		String ext = Utilities.getFileExtension(file.getAbsolutePath());
 		if ("xls".equalsIgnoreCase(ext))
 			return excelToListH(file,header, sheetIndex);
 		else
@@ -562,7 +581,7 @@ public abstract class ExcelUtil {
 		}
 		catch(Exception ex)
 		{
-			BaseUtilities.trace(ex);
+			Utilities.trace(ex);
 		}
 		finally {
 			if(workbook!=null)
@@ -626,7 +645,7 @@ public abstract class ExcelUtil {
 	public static List<List<Object>> excelToList(File file, int sheet) throws Exception {
 		if (file == null || !file.isFile())
 			return null;
-		String ext = BaseUtilities.getFileExtension(file.getAbsolutePath());
+		String ext = Utilities.getFileExtension(file.getAbsolutePath());
 		if ("xls".equalsIgnoreCase(ext))
 			return excelToListH(file, sheet);
 		else
@@ -743,14 +762,14 @@ public abstract class ExcelUtil {
 			} catch (Exception e) {
 				try {
 					value = cell.getStringCellValue();
-					if (BaseUtilities.isNotEmpty(value))
+					if (Utilities.isNotEmpty(value))
 						value = value.toString().trim();
 				} catch (Exception ex) {
 				}
 			}
 		} else {
 			value = cell.getStringCellValue();
-			if (BaseUtilities.isNotEmpty(value))
+			if (Utilities.isNotEmpty(value))
 				value = value.toString().trim();
 		}
 		return value;
@@ -785,14 +804,14 @@ public abstract class ExcelUtil {
 			} catch (Exception e) {
 				try {
 					value = cell.getStringCellValue();
-					if (BaseUtilities.isNotEmpty(value))
+					if (Utilities.isNotEmpty(value))
 						value = value.toString().trim();
 				} catch (Exception ex) {
 				}
 			}
 		} else {
 			value = cell.getStringCellValue();
-			if (BaseUtilities.isNotEmpty(value))
+			if (Utilities.isNotEmpty(value))
 				value = value.toString().trim();
 		}
 		return value;

@@ -50,7 +50,7 @@
 									<c:forEach var="menu3" items="${subMenu.children }" >
 									<c:if test='${menu3.menuShowYn eq "Y" }'>
 									
-									<c:set var="menu3Data">data-top-menu-cd="${ menu3.topMenuCd}" data-menu-cd="${menu3.menuCd }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
+									<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
 									
 									
 <!-- 									<div class="ls"><button class="iFavor1 active"></button> <a href="#;">통합고객 기본정보</a></div> -->
@@ -110,7 +110,7 @@
 				<ul id="ulMyMenu">
 				
 				<c:forEach var="menu3" items="${ wdgtList}" varStatus="status">
-					<c:set var="menu3Data">data-top-menu-cd="${ menu3.topMenuCd}" data-menu-cd="${menu3.menuCd }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
+					<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
 					<li ${menu3Data}><a href="#;"   data-click="showThirdMenu" ${menu3Data} >${menu3.menuNm }</a> <button class="delete" data-click="removeWdgt" ${ menu3Data}>삭제</button></li>
 				</c:forEach>	
 
@@ -140,13 +140,13 @@
 				<c:if test='${topLevelMenu.menuShowYn eq "Y" }'>
 					<c:forEach var="subMenu" items="${ topLevelMenu.children}">
 						<c:if test='${subMenu.menuShowYn eq "Y" }'>
-						<c:set var="subMenuData">data-top-menu-cd="${ subMenu.topMenuCd}" data-menu-cd="${subMenu.menuCd }" data-menu-lvl-no="${subMenu.menuLvlNo }" data-menu-url="${subMenu.menuUrl }" data-menu-nm="${subMenu.menuNm }"</c:set>
+						<c:set var="subMenuData">data-top-menu-id="${ subMenu.topMenuId}" data-menu-id="${subMenu.menuId }" data-menu-lvl-no="${subMenu.menuLvlNo }" data-menu-url="${subMenu.menuUrl }" data-menu-nm="${subMenu.menuNm }"</c:set>
 						<li data-menu-depth="2" style="<c:if test='${cnt > 1 }'><c:set value="2" var="cnt" />display:none</c:if>" ${subMenuData }>
                 			<a data-click="showSubMenu" href="#;" class="dep1" ${subMenuData }>${subMenu.menuNm }</a>
                 			<c:if test="${!empty subMenu.children}">
                 			<ul data-menu-depth="3" ${subMenuData }>
                 				<c:forEach var="menu3" items="${ subMenu.children}">
-                				<c:set var="menu3Data">data-top-menu-cd="${ menu3.topMenuCd}" data-menu-cd="${menu3.menuCd }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
+                				<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
                 					<c:if test='${menu3.menuShowYn eq "Y" }'>
                 			 <li ${menu3Data }>
                 			 	<a href="#;" data-click="showThirdMenu" class="" ${menu3Data }>${menu3.menuNm }</a>
@@ -154,7 +154,7 @@
                 			 		<ul class="" ${menu3Data }> 
                 			 		<c:forEach var="menu4" items="${ menu3.children}">
                 			 			<c:if test='${menu4.menuShowYn eq "Y" }'>
-                			 			<c:set var="menu4Data">data-top-menu-cd="${ menu4.topMenuCd}" data-menu-cd="${menu4.menuCd }" data-menu-lvl-no="${menu4.menuLvlNo }" data-menu-url="${menu4.menuUrl }" data-menu-nm="${menu4.menuNm }"</c:set>
+                			 			<c:set var="menu4Data">data-top-menu-id="${ menu4.topMenuId}" data-menu-id="${menu4.menuId }" data-menu-lvl-no="${menu4.menuLvlNo }" data-menu-url="${menu4.menuUrl }" data-menu-nm="${menu4.menuNm }"</c:set>
                 			 			<li ${menu4Data }>
                 			 				<a href="#;" data-click="showFourthMenu" class="" ${menu4Data }>${menu4.menuNm }</a>
                 			 			</li>
@@ -227,21 +227,21 @@ var _TAB_SLIDE = new Swiper("#swiperTab", {
 
 function showToplevelMenu(element,data){
 	$("li[data-menu-depth=2]").hide();
-	$("li[data-menu-depth=2][data-top-menu-cd="+data.topMenuCd+"]").show();
+	$("li[data-menu-depth=2][data-top-menu-id="+data.topMenuId+"]").show();
 	
 // 	const toggleHeader = $('#full-toggle'), sideHeader = $('.header_side');
 	
 // 	sideHeader.addClass('show-side');
 //     toggleHeader.addClass('open-side');
-	$("ul[data-menu-depth=3][data-menu-cd]").hide();
-	$("li[data-menu-depth=2][data-menu-cd]").removeClass("active");
-    showSecondMenu(data.menuCd,true);
+	$("ul[data-menu-depth=3][data-menu-id]").hide();
+	$("li[data-menu-depth=2][data-menu-id]").removeClass("active");
+    showSecondMenu(data.menuId,true);
 }
-function showSecondMenu(menuCd,forceOpen){
+function showSecondMenu(menuId,forceOpen){
 	
 	
-	let ul = $("ul[data-menu-depth=3][data-menu-cd="+menuCd+"]");
-	let li = $("li[data-menu-depth=2][data-menu-cd="+menuCd+"]");
+	let ul = $("ul[data-menu-depth=3][data-menu-id="+menuId+"]");
+	let li = $("li[data-menu-depth=2][data-menu-id="+menuId+"]");
 	if(ul.length){
 		if(li.hasClass("active")){
 			if(!forceOpen){
@@ -265,7 +265,7 @@ function showFourthMenu(element,data){
 	goMenu(data);
 }
 function showSubMenu(element,data){
-	showSecondMenu(data.menuCd);
+	showSecondMenu(data.menuId);
 	if(data.menuUrl){
 		goMenu(data);
 	}
@@ -286,7 +286,7 @@ function goMenu(menu){
 
 
 function openContentsTab(menu){
-	let id = menu.menuCd;
+	let id = menu.menuId;
 	let url =  "/" + menu.menuUrl;
 	let title = menu.menuNm;
 	openMenuTab(id,title,url,false);
@@ -330,9 +330,9 @@ function removeTab(id){
 	
 }
 function createTab(id,title,url,disableClose){
-	let btn = disableClose ? '' : $('<button class="delete" data-menu-cd="'+id+'" data-btn-type="removeTab">삭제</button>');
-	let divTitle = $('<a href="#;" data-btn-type="activeTab" data-menu-cd="'+id+'">'+title+'</a>');
-		let html =$('<div class="swiper-slide" id="" data-tab-type="menuTab" data-menu-cd="'+id+'"></div>');
+	let btn = disableClose ? '' : $('<button class="delete" data-menu-id="'+id+'" data-btn-type="removeTab">삭제</button>');
+	let divTitle = $('<a href="#;" data-btn-type="activeTab" data-menu-id="'+id+'">'+title+'</a>');
+		let html =$('<div class="swiper-slide" id="" data-tab-type="menuTab" data-menu-id="'+id+'"></div>');
 	html.append(divTitle);
 	 
 	 if(btn){
@@ -347,7 +347,7 @@ function createTab(id,title,url,disableClose){
 		 activeTab(id);
 	 });
 	 
-	 let iHtml = $('<iframe data-tab-type="iframe" id="jsContent" scrolling="no" data-menu-cd="'+id+'" src='+url+' style="width:100%;min-height:500px;border:0px"></iframe>');
+	 let iHtml = $('<iframe data-tab-type="iframe" id="jsContent" scrolling="no" data-menu-id="'+id+'" src='+url+' style="width:100%;min-height:500px;border:0px"></iframe>');
 	 $("#divMain").append(iHtml);
 	 //divMain
 	 addTabHist(id);
@@ -356,11 +356,11 @@ function createTab(id,title,url,disableClose){
 
 function activeTab(id){
 	Utilities.blockUI();
-	$("[data-tab-type=menuTab][data-menu-cd]").removeClass("active");
-	$("[data-tab-type=menuTab][data-menu-cd="+id+"]").addClass("active");
+	$("[data-tab-type=menuTab][data-menu-id]").removeClass("active");
+	$("[data-tab-type=menuTab][data-menu-id="+id+"]").addClass("active");
 	
-	$("[data-tab-type=iframe][data-menu-cd]").hide();
-	$("[data-tab-type=iframe][data-menu-cd="+id+"]").show();
+	$("[data-tab-type=iframe][data-menu-id]").hide();
+	$("[data-tab-type=iframe][data-menu-id="+id+"]").show();
 	Utilities.unblockUI();
 // 	swiper.activeIndex
 	addTabHist(id);
@@ -370,27 +370,27 @@ function activeTab(id){
 
 }
 function getActiveTabId(){
-	var div = $(".active[data-tab-type=menuTab][data-menu-cd]");
+	var div = $(".active[data-tab-type=menuTab][data-menu-id]");
 	if(div.length)
-		return div.attr("data-menu-cd");
+		return div.attr("data-menu-id");
 	else return null;
 }
 function findTab(id){
-	let div = $("#menuTabWrap").find("[data-tab-type=menuTab][data-menu-cd="+id+"]");
+	let div = $("#menuTabWrap").find("[data-tab-type=menuTab][data-menu-id="+id+"]");
 	if(div.length)
 		return div;
 	else null;
 }
 function findIndex(id){
-	let arr = $("#menuTabWrap").find("[data-tab-type=menuTab][data-menu-cd]");
+	let arr = $("#menuTabWrap").find("[data-tab-type=menuTab][data-menu-id]");
 	for(let i=0;i<arr.length;i++){
-		if($(arr[i]).attr("data-menu-cd")==id)
+		if($(arr[i]).attr("data-menu-id")==id)
 			return i;
 	}
 	return -1;
 }
 function findIframe(id){
-	let div = $("[data-tab-type=iframe][data-menu-cd="+id+"]");
+	let div = $("[data-tab-type=iframe][data-menu-id="+id+"]");
 	if(div.length)
 		return div;
 	else null;
@@ -400,7 +400,7 @@ function resizeTabWnd(width,height){
 	var id = getActiveTabId();
 	if(!id)
 		return;
-	$("[data-tab-type=iframe][data-menu-cd="+id+"]").height(height);
+	$("[data-tab-type=iframe][data-menu-id="+id+"]").height(height);
 }
 function showLeftMenu(){
 	$( "#jsMenu1").addClass("active");
@@ -418,9 +418,9 @@ function togMyMenu(el,data){
 }
 function addMyMenu(data){
 	
-	var el = $("[data-btn-type=myMenuBtn][data-menu-cd="+data.menuCd+"]");
+	var el = $("[data-btn-type=myMenuBtn][data-menu-id="+data.menuId+"]");
 	el.addClass("active");
-	var dataStr = 'data-menu-cd="'+data.menuCd+'" data-menu-nm="'+data.menuNm+'" data-menu-url="'+data.menuUrl+'"';
+	var dataStr = 'data-menu-id="'+data.menuId+'" data-menu-nm="'+data.menuNm+'" data-menu-url="'+data.menuUrl+'"';
 	var html = $('<li '+dataStr+'></li>');
 	
 	var a = $('<a href="#;" '+dataStr+'>'+data.menuNm+'</a>');
@@ -452,9 +452,9 @@ function addMyMenu(data){
 
 function removeMyMenu(data){
 	
-	var el = $("[data-btn-type=myMenuBtn][data-menu-cd="+data.menuCd+"]");
+	var el = $("[data-btn-type=myMenuBtn][data-menu-id="+data.menuId+"]");
 	el.removeClass("active");
-	$("#ulMyMenu").find("li[data-menu-cd="+data.menuCd+"]").remove();
+	$("#ulMyMenu").find("li[data-menu-id="+data.menuId+"]").remove();
 	
 	var url = "/removeWdgt";
 	

@@ -109,8 +109,8 @@ function newFileInfo(){
 //     Utilities.openModal(url,900,550);
 }
 function grdList_btnFileinfo_buttonClicked(gridView,row,col,json){
-	Utilities.openFilePopup(json.fileCd,null,'Y');
-//     var url = "<c:url value='file/fileInfo${urlSuffix}'/>?fileCd=" + json.fileCd;
+	Utilities.openFilePopup(json.fileId,null,'Y');
+//     var url = "<c:url value='file/fileInfo${urlSuffix}'/>?fileId=" + json.fileId;
     /* Utilities.windowOpen(url,"fileInfo",700,550); */
 //     Utilities.openModal(url,900,550);
 }

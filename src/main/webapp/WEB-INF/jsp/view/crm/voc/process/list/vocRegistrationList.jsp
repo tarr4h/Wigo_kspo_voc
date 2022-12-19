@@ -142,11 +142,11 @@
 
         // 페이지이동
         let menu = {
-            menuCd: "0104020100",
+            menuId: "0104020100",
             menuLvlNo: 4,
             menuNm: "VOC 신규등록",
             menuUrl: "vocRegistration?regSeq=" + json.regSeq,
-            topMenuCd: "0100000000"
+            topMenuId: "0100000000"
         };
 
         openMenu(menu);
@@ -160,7 +160,7 @@
             win.location.reload();
         }
 
-        topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
+        topWin.openMenuTab(menu.menuId, menu.menuNm, menu.menuUrl);
         // topWin.removeTab("0104020100");
     }
 

@@ -1,13 +1,13 @@
 package com.kspo.voc.sys.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 import java.util.Map;
 
 import com.kspo.base.common.model.ITreeVo;
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public class CrmMenuVo extends CrmMenuBaseVo {
 
 	@Override
 	public String getIcon() {
-		if (!BaseUtilities.isEmpty(getMenuIconCd()))
+		if (!Utilities.isEmpty(getMenuIconCd()))
 			return getMenuIconCd();
 		if (getLevel() < 3 || getChildrenCount() > 0)
 			return "far fa-folder";
@@ -54,7 +54,7 @@ public class CrmMenuVo extends CrmMenuBaseVo {
 	}
 
 	public boolean hasLinkedMenu() {
-		if (BaseUtilities.isNotEmpty(getMenuUrl()))
+		if (Utilities.isNotEmpty(getMenuUrl()))
 			return true;
 		List<ITreeVo> list = getChildren();
 		for (int i = 0; list != null && i < list.size(); i++) {

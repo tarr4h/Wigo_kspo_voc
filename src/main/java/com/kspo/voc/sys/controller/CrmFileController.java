@@ -37,7 +37,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = { "file", "{menuCd}/file" })
+@RequestMapping(value = { "file", "{menuId}/file" })
 public class CrmFileController {
 	@Autowired
 	CrmFileService service;
@@ -51,14 +51,14 @@ public class CrmFileController {
 	@GetMapping(value = { "add", "mod", "fileInfo" })
 	public String add(@RequestParam Map<String, Object> param, ModelMap model) throws Exception {
 		model.addAllAttributes(param);
-		String fileCd = (String) param.get("fileCd");
+		String fileId = (String) param.get("fileId");
 		EzMap ezMap = new EzMap();
-		if (Utilities.isEmpty(fileCd))
-			ezMap.setString("fileCd", Utilities.getFileCd());
+		if (Utilities.isEmpty(fileId))
+			ezMap.setString("fileId", Utilities.getFileId());
 		else
-			ezMap.setString("fileCd", fileCd);
+			ezMap.setString("fileId", fileId);
 		model.addAttribute("fileInfo", ezMap);
-		model.addAttribute("fileCd", fileCd);
+		model.addAttribute("fileId", fileId);
 		if("view".equals(param.get("mode")))
 			return Utilities.getProperty("tiles.crm.blank") + "sys/fileViewPopup";
 		else

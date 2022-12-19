@@ -21,7 +21,7 @@ import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.service.VocTaskCodeSettingService;
 
 @Controller
-@RequestMapping({"vocTaskCodeSetting", "{menuCd}/vocTaskCodeSetting"})
+@RequestMapping({"vocTaskCodeSetting", "{menuId}/vocTaskCodeSetting"})
 public class VocTaskCodeSettingController {
 
     @Autowired

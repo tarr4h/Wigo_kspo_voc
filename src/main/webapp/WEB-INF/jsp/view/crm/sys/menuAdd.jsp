@@ -26,8 +26,8 @@
         <div class="mBoard2">
         <form id="frmMain">
             <input type="hidden" name="useYn" id="useYn" value="Y"/>
-            <input type="hidden"  value='<c:out value="${topMenuCd }"/>' readonly="readonly" id="topMenuCd" name="topMenuCd"  placeholder="시스템메뉴">
-		    <input type="hidden"  value='<c:out value="${prntsMenuCd }"/>' readonly="readonly" id="prntsMenuCd" name="prntsMenuCd"  placeholder="상위메뉴" />
+            <input type="hidden"  value='<c:out value="${topMenuId }"/>' readonly="readonly" id="topMenuId" name="topMenuId"  placeholder="시스템메뉴">
+		    <input type="hidden"  value='<c:out value="${prntsMenuId }"/>' readonly="readonly" id="prntsMenuId" name="prntsMenuId"  placeholder="상위메뉴" />
 		    
 		    <input type="hidden" value='<c:out value="${menuIcon }"/>' required="required" id="menuIcon" name="menuIcon"  placeholder="메뉴아이콘">	
 		    <input type="hidden" value="${empty menuPopupYn ? 'N' :menuPopupYn }" required="required" id="menuPopupYn" name="menuPopupYn"  placeholder="높이">
@@ -52,7 +52,7 @@
                     <tr>
                         <th scope="row" class="left"><span class="iMust">메뉴ID</span></th>
                         <td >
-                            <input required="required" class="it" type="text" id="menuCd" name="menuCd" readonly value='<c:out value="${menuCd }"/>' placeholder="menuCd">
+                            <input required="required" class="it" type="text" id="menuId" name="menuId" readonly value='<c:out value="${menuId }"/>' placeholder="menuId">
                         
                         </td>
                         <th scope="row" class="left"><span class="iMust"> 메뉴명</span></th>
@@ -122,8 +122,8 @@ $("#btnSave").click(function(){
 	var param = Utilities.formToMap("frmMain");
 	if(param.menuLvlNo==1)
 	{
-		param.topMenuCd = param.menuCd;
-		param.prntsMenuCd = "";
+		param.topMenuId = param.menuId;
+		param.prntsMenuId = "";
 	}
 	param.stat="c";
 	if(!validate(param))
@@ -139,9 +139,9 @@ $("#btnSave").click(function(){
 	});
 });
 function validate(param){
-	if(!param.menuCd){
+	if(!param.menuId){
 		alert("메뉴 아이디는 필수 입니다.");
-		$("#menuCd").focus();
+		$("#menuId").focus();
 		return false;
 	}
 	if(!param.menuNm){

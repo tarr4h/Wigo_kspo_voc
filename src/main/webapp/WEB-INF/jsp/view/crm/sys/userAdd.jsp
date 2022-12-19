@@ -12,7 +12,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form class="form-horizontal" id="frmMain">
-                <input type="hidden" name="userCd" id="userCd" value="${user.userCd }" />
+                <input type="hidden" name="userId" id="userId" value="${user.userId }" />
                 <div class="card-body">
                  <div class="form-group row">
                     <label for="userName" class="col-sm-2 col-form-label right">사용자명</label>
@@ -108,8 +108,8 @@
             	var param = Utilities.formToMap("frmMain");
             	if(param.userLevel==1)
             	{
-            		param.rtUserCd = param.userCd;
-            		param.uprUserCd = "";
+            		param.rtUserId = param.userId;
+            		param.uprUserId = "";
             	}
             	
             	if(!validate(param))
@@ -127,7 +127,7 @@
             function validate(param){
             	if(!param.loginId){
             		alert("사용자 아이디는 필수 입니다.");
-            		$("#userCd").focus();
+            		$("#userId").focus();
             		return false;
             	}
             	if($("#chkId").val() != $("#loginId").val()){ 

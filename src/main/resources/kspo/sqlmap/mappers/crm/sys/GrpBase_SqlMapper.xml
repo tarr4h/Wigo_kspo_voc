@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpBaseDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_CD            =       #{grpCd}
+                WHERE GRP_ID            =       #{grpId}
     </sql>
     <sql id="sqlCols">
-                      GRP_CD                    /*그룹코드        */
+                      GRP_ID                    /*그룹코드        */
                     , GRP_NM                    /*그룹명        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -14,14 +14,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -53,7 +53,7 @@
                 INSERT INTO TB_SYS_GRP_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{grpCd}
+                       #{grpId}
                      , #{grpNm}
                      , #{regrId}
                      , SYSDATE
@@ -86,30 +86,30 @@
                FROM TB_SYS_GRP_BAS A
                   , TB_SYS_GRP_USER_REL B
                   , TB_SYS_USER_BAS C
-              WHERE A.GRP_CD = B.GRP_CD
-                AND B.USER_CD = C.USER_CD
+              WHERE A.GRP_ID = B.GRP_ID
+                AND B.USER_ID = C.USER_ID
              <choose>
                 <when test="exGroupCd != null and exGroupCd != ''">
-                AND A.GRP_CD != #{exGroupCd}
+                AND A.GRP_ID != #{exGroupCd}
                 </when>
                 <otherwise>
-                AND A.GRP_CD = #{grpCd}
+                AND A.GRP_ID = #{grpId}
                 </otherwise>
              </choose> 
                 AND C.DEL_YN = 'N'
     </select>
     <select id="selectGroupCheckList" resultType="com.kspo.voc.sys.model.CrmGrpBaseVo">
-        SELECT A.GRP_CD
+        SELECT A.GRP_ID
              , A.GRP_NM
-             , DECODE( NVL(B.GRP_CD,C.GRP_CD),NULL,'N','Y') CHECK_YN
+             , DECODE( NVL(B.GRP_ID,C.GRP_ID),NULL,'N','Y') CHECK_YN
           FROM TB_SYS_GRP_BAS A
-          LEFT JOIN TB_SYS_GRP_USER_REL B ON A.GRP_CD = B.GRP_CD AND B.USER_CD = #{userCd}
-          LEFT JOIN TB_SYS_GRP_MENU_REL C ON A.GRP_CD = C.GRP_CD AND C.MENU_CD = #{menuCd}
+          LEFT JOIN TB_SYS_GRP_USER_REL B ON A.GRP_ID = B.GRP_ID AND B.USER_ID = #{userId}
+          LEFT JOIN TB_SYS_GRP_MENU_REL C ON A.GRP_ID = C.GRP_ID AND C.MENU_ID = #{menuId}
     </select>
     <select id="selectGroupUserList" resultType="com.kspo.voc.sys.model.CrmGrpUserRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-       SELECT A.GRP_CD
-            , C.USER_CD
+       SELECT A.GRP_ID
+            , C.USER_ID
             , C.LOGIN_ID
             , C.USER_NM
             , C.EMAIL_ADDR
@@ -117,14 +117,14 @@
          FROM TB_SYS_GRP_BAS A
             , TB_SYS_GRP_USER_REL B
             , TB_SYS_USER_BAS C
-       WHERE A.GRP_CD = B.GRP_CD
-         AND B.USER_CD = C.USER_CD
+       WHERE A.GRP_ID = B.GRP_ID
+         AND B.USER_ID = C.USER_ID
          <choose>
             <when test="exGroupCd != null and exGroupCd != ''">
-         AND A.GRP_CD != #{exGroupCd}
+         AND A.GRP_ID != #{exGroupCd}
             </when>
             <otherwise>
-         AND A.GRP_CD = #{grpCd}
+         AND A.GRP_ID = #{grpId}
             </otherwise>
          </choose> 
          AND C.DEL_YN = 'N'
@@ -136,18 +136,18 @@
           FROM TB_SYS_GRP_BAS A
              , TB_SYS_GRP_MENU_REL B
              , TB_SYS_MENU_BAS C
-        WHERE A.GRP_CD = B.GRP_CD
-          AND B.MENU_CD = C.MENU_CD
+        WHERE A.GRP_ID = B.GRP_ID
+          AND B.MENU_ID = C.MENU_ID
          <choose>
             <when test="exGroupCd != null and exGroupCd != ''">
-            AND A.GRP_CD != #{exGroupCd}
+            AND A.GRP_ID != #{exGroupCd}
             </when>
             <otherwise>
-            AND A.GRP_CD = #{grpCd}
+            AND A.GRP_ID = #{grpId}
             </otherwise>
          </choose> 
-         <if test="topMenuCd != null and topMenuCd != ''">
-            AND C.TOP_MENU_CD = #{topMenuCd}
+         <if test="topMenuId != null and topMenuId != ''">
+            AND C.TOP_MENU_ID = #{topMenuId}
          </if>
             AND C.MENU_URL IS NOT NULL
             AND C.MENU_LVL_NO > 1
@@ -155,11 +155,11 @@
     </select>
     <select id="selectGroupMenuList" resultType="com.kspo.voc.sys.model.CrmGrpMenuRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-       SELECT A.GRP_CD
-            , C.MENU_CD
+       SELECT A.GRP_ID
+            , C.MENU_ID
             , C.MENU_NM
             , C.MENU_URL
-            , C.TOP_MENU_CD
+            , C.TOP_MENU_ID
             , B.MENU_REG_AUTH_YN
             , B.MENU_READ_AUTH_YN
             , B.MENU_AMD_AUTH_YN
@@ -167,28 +167,28 @@
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
                          WHERE 1=1
-                         START WITH MENU_CD = C.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                         START WITH MENU_ID = C.MENU_ID 
+                       CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
          FROM TB_SYS_GRP_BAS A
             , TB_SYS_GRP_MENU_REL B
             , TB_SYS_MENU_BAS C
-        WHERE A.GRP_CD = B.GRP_CD
-          AND B.MENU_CD = C.MENU_CD
+        WHERE A.GRP_ID = B.GRP_ID
+          AND B.MENU_ID = C.MENU_ID
           <choose>
             <when test="exGroupCd != null and exGroupCd != ''">
-          AND A.GRP_CD != #{exGroupCd}
+          AND A.GRP_ID != #{exGroupCd}
             </when>
             <otherwise>
-          AND A.GRP_CD = #{grpCd}
+          AND A.GRP_ID = #{grpId}
             </otherwise>
          </choose> 
-         <if test="topMenuCd != null and topMenuCd != ''">
-          AND C.TOP_MENU_CD = #{topMenuCd}
+         <if test="topMenuId != null and topMenuId != ''">
+          AND C.TOP_MENU_ID = #{topMenuId}
          </if>
           AND C.MENU_URL IS NOT NULL
           AND C.MENU_LVL_NO > 1
           AND C.MENU_AUTH_YN = 'Y'
-        ORDER BY C.MENU_CD
+        ORDER BY C.MENU_ID
           
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>

@@ -13,7 +13,7 @@ public class CrmGrpMenuRelVo extends CrmMenuVo {
 	/**
     * <p>그룹코드</p> 
     */
-    private String grpCd;
+    private String grpId;
     
     private String grpNm;
 

@@ -1,13 +1,13 @@
 package com.kspo.base.common.model;
 
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
+
+import lombok.Data;
 
 /**
  * 
@@ -42,15 +42,15 @@ public class BaseVo implements Serializable {
 	}
 
 	public BaseVo(Map<String,Object> param) {
-		BaseUtilities.mapToBean(param,this);
+		Utilities.mapToBean(param,this);
 	}
 	public String getRegDtNm() {
-		if(BaseUtilities.isNotEmpty(regDt)) {
+		if(Utilities.isNotEmpty(regDt)) {
 			if(regDt.length()==14) {
-				return _DATE_FORMAT.format(BaseUtilities.parseDate(regDt));
+				return _DATE_FORMAT.format(Utilities.parseDate(regDt));
 			}
 			else if(regDt.length()==8) {
-				return _DATE_FORMAT.format(BaseUtilities.parseDate(regDt, _DATE_FORMAT2));
+				return _DATE_FORMAT.format(Utilities.parseDate(regDt, _DATE_FORMAT2));
 			}
 		}
 		return regDt;
@@ -58,12 +58,12 @@ public class BaseVo implements Serializable {
 		
 	}
 	public String getAmdDtNm() {
-		if(BaseUtilities.isNotEmpty(amdDt)) {
+		if(Utilities.isNotEmpty(amdDt)) {
 			if(amdDt.length()==14) {
-				return _DATE_FORMAT.format(BaseUtilities.parseDate(amdDt));
+				return _DATE_FORMAT.format(Utilities.parseDate(amdDt));
 			}
 			else if(amdDt.length()==8) {
-				return _DATE_FORMAT.format(BaseUtilities.parseDate(amdDt, _DATE_FORMAT2));
+				return _DATE_FORMAT.format(Utilities.parseDate(amdDt, _DATE_FORMAT2));
 			}
 		}
 		return amdDt;

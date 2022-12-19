@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmMenuBaseDao">
     <sql id="sqlPkConditions">
-                WHERE MENU_CD           =       #{menuCd}
+                WHERE MENU_ID           =       #{menuId}
     </sql>
     <sql id="sqlCols">
-                      MENU_CD                    /*메뉴코드        */
+                      MENU_ID                    /*메뉴코드        */
                     , MENU_NM                    /*메뉴명        */
                     , MENU_URL                    /*메뉴URL        */
-                    , TOP_MENU_CD                    /*최상위메뉴코드        */
-                    , PRNTS_MENU_CD                    /*부모메뉴코드        */
+                    , TOP_MENU_ID                    /*최상위메뉴코드        */
+                    , PRNTS_MENU_ID                    /*부모메뉴코드        */
                     , MENU_LVL_NO                    /*메뉴레벨번호        */
                     , MENU_ODRG                    /*메뉴순번        */
                     , MENU_ICON_CD                    /*메뉴아이콘코드        */
@@ -28,14 +28,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="menuCd != null and menuCd != ''">
+        <if test="menuId != null and menuId != ''">
             <choose>
-                <when test="menuCd instanceof String">
-                              AND MENU_CD           =       #{menuCd}
+                <when test="menuId instanceof String">
+                              AND MENU_ID           =       #{menuId}
                 </when>
                 <otherwise>
-                    AND MENU_CD           IN
-                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                    AND MENU_ID           IN
+                    <foreach item="item" index="index" collection="menuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -50,27 +50,27 @@
         <if test="menuUrl != null and menuUrl != ''">
                       AND MENU_URL          =       #{menuUrl}
         </if>
-        <if test="topMenuCd != null and topMenuCd != ''">
+        <if test="topMenuId != null and topMenuId != ''">
             <choose>
-                <when test="topMenuCd instanceof String">
-                              AND TOP_MENU_CD       =       #{topMenuCd}
+                <when test="topMenuId instanceof String">
+                              AND TOP_MENU_ID       =       #{topMenuId}
                 </when>
                 <otherwise>
-                    AND TOP_MENU_CD       IN
-                    <foreach item="item" index="index" collection="topMenuCd" open="(" separator="," close=")">
+                    AND TOP_MENU_ID       IN
+                    <foreach item="item" index="index" collection="topMenuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="prntsMenuCd != null and prntsMenuCd != ''">
+        <if test="prntsMenuId != null and prntsMenuId != ''">
             <choose>
-                <when test="prntsMenuCd instanceof String">
-                              AND PRNTS_MENU_CD     =       #{prntsMenuCd}
+                <when test="prntsMenuId instanceof String">
+                              AND PRNTS_MENU_ID     =       #{prntsMenuId}
                 </when>
                 <otherwise>
-                    AND PRNTS_MENU_CD     IN
-                    <foreach item="item" index="index" collection="prntsMenuCd" open="(" separator="," close=")">
+                    AND PRNTS_MENU_ID     IN
+                    <foreach item="item" index="index" collection="prntsMenuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -119,8 +119,8 @@
         <if test="useYn != null and useYn != ''">
                       AND USE_YN            =       #{useYn}
         </if>
-        <if test="exGrpCd != null and exGrpCd != ''">
-           AND MENU_CD NOT IN (SELECT MENU_CD FROM TB_SYS_GRP_MENU_REL WHERE GRP_CD = #{exGrpCd})
+        <if test="exGrpId != null and exGrpId != ''">
+           AND MENU_ID NOT IN (SELECT MENU_ID FROM TB_SYS_GRP_MENU_REL WHERE GRP_ID = #{exGrpId})
            AND MENU_URL IS NOT NULL
            AND MENU_LVL_NO > 1
            AND MENU_AUTH_YN = 'Y'
@@ -141,13 +141,13 @@
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
                          WHERE 1=1
-                         START WITH MENU_CD = A.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                         START WITH MENU_ID = A.MENU_ID 
+                       CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                  FROM TB_SYS_MENU_BAS A
         <include refid="sqlConditions"/>
                 ORDER BY MENU_LVL_NO
                     , MENU_ODRG
-                    , MENU_CD
+                    , MENU_ID
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmMenuVo">
@@ -163,11 +163,11 @@
                 INSERT INTO TB_SYS_MENU_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{menuCd}
+                       #{menuId}
                      , #{menuNm}
                      , #{menuUrl}
-                     , #{topMenuCd}
-                     , #{prntsMenuCd}
+                     , #{topMenuId}
+                     , #{prntsMenuId}
                      , #{menuLvlNo}
                      , #{menuOdrg}
                      , #{menuIconCd}
@@ -216,16 +216,16 @@
     
     
     <select id="selectMaxInfo" resultType="com.kspo.voc.sys.model.CrmMenuVo">
-             SELECT MAX(MENU_CD) MENU_CD
+             SELECT MAX(MENU_ID) MENU_ID
                   , MAX(MENU_ODRG) MENU_ODRG 
                FROM TB_SYS_MENU_BAS  
               WHERE 1=1
          <choose>
-            <when test="menuCd == '0000000000'">
+            <when test="menuId == '0000000000'">
                 AND MENU_LVL_NO = 1
             </when>
-            <when test="menuCd != null and menuCd != ''">
-                AND PRNTS_MENU_CD = #{menuCd}
+            <when test="menuId != null and menuId != ''">
+                AND PRNTS_MENU_ID = #{menuId}
             </when>
             <otherwise>
                 AND MENU_LVL_NO = 1
@@ -233,11 +233,11 @@
          </choose>
     </select>
     <select id="selectTreeList" resultType="com.kspo.voc.sys.model.CrmMenuVo">
-        SELECT  MENU_CD
+        SELECT  MENU_ID
              , MENU_NM
              , MENU_URL
-             , PRNTS_MENU_CD
-             , TOP_MENU_CD
+             , PRNTS_MENU_ID
+             , TOP_MENU_ID
              , MENU_LVL_NO
              , MENU_ODRG
              , MENU_SHOW_YN
@@ -260,20 +260,20 @@
           FROM TB_SYS_MENU_BAS A
         <include refid="sqlConditions"/>
         ORDER BY MENU_ODRG
-               , MENU_CD
+               , MENU_ID
     </select>
     
     <select id="selectUserMenuList" resultType="com.kspo.voc.sys.model.CrmMenuVo">
     WITH GRP_USR AS
-    (   SELECT GRP_CD, USER_CD
+    (   SELECT GRP_ID, USER_ID
           FROM TB_SYS_GRP_USER_REL
             UNION ALL
-        SELECT GRP_CD, EMP_ID
+        SELECT GRP_ID, EMP_ID
           FROM  TB_SYS_GRP_EMP_REL
          UNION ALL
-        SELECT GRP_CD, EMP_ID 
+        SELECT GRP_ID, EMP_ID 
           FROM ( SELECT A.ORG_ID
-                      , B.GRP_CD 
+                      , B.GRP_ID 
                     FROM TB_SYS_ORG_BAS A
                        , TB_SYS_GRP_ORG_REL B
                    START WITH B.ORG_ID = A.ORG_ID
@@ -286,11 +286,11 @@
                , B.MENU_AMD_AUTH_YN
                , B.MENU_DEL_AUTH_YN
         FROM    ( 
-                SELECT A.MENU_CD
+                SELECT A.MENU_ID
                      , A.MENU_NM
                      , A.MENU_URL
-                     , A.PRNTS_MENU_CD
-                     , A.TOP_MENU_CD
+                     , A.PRNTS_MENU_ID
+                     , A.TOP_MENU_ID
                      , A.MENU_LVL_NO
                      , A.MENU_ODRG
                      , A.MENU_SHOW_YN
@@ -306,13 +306,13 @@
                      , A.AMDR_ID
                      , A.AMD_DT
                      , A.CHNG_LOG_YN
-                     , DECODE(B.MENU_CD , NULL,'N','Y') WDGT_YN
+                     , DECODE(B.MENU_ID , NULL,'N','Y') WDGT_YN
                   FROM TB_SYS_MENU_BAS A
-                   LEFT JOIN TB_SYS_USER_WDGT_BAS B ON A.MENU_CD = B.MENU_CD AND B.USER_CD = #{userCd}
-                 WHERE TOP_MENU_CD          =           #{topMenuCd}
+                   LEFT JOIN TB_SYS_USER_WDGT_BAS B ON A.MENU_ID = B.MENU_ID AND B.USER_ID = #{userId}
+                 WHERE TOP_MENU_ID          =           #{topMenuId}
                    AND USE_YN                =           'Y'
                    AND (  A.MENU_AUTH_YN = 'N' 
-                       OR A.MENU_CD IN (SELECT MENU_CD FROM TB_SYS_GRP_MENU_REL WHERE GRP_CD IN (SELECT GRP_CD FROM GRP_USR WHERE USER_CD = #{userCd}))
+                       OR A.MENU_ID IN (SELECT MENU_ID FROM TB_SYS_GRP_MENU_REL WHERE GRP_ID IN (SELECT GRP_ID FROM GRP_USR WHERE USER_ID = #{userId}))
                        OR A.MENU_URL IS NULL 
                        OR A.MENU_LVL_NO = 1
                        )
@@ -321,18 +321,18 @@
                             , MAX (MENU_READ_AUTH_YN)     MENU_READ_AUTH_YN
                            , MAX (MENU_AMD_AUTH_YN)     MENU_AMD_AUTH_YN
                            , MAX (MENU_DEL_AUTH_YN)     MENU_DEL_AUTH_YN
-                            , MENU_CD
+                            , MENU_ID
                         FROM GRP_USR GU
                            , TB_SYS_GRP_MENU_REL GM
-                       WHERE GU.GRP_CD = GM.GRP_CD AND GU.USER_CD = #{userCd}
-                       GROUP BY MENU_CD
+                       WHERE GU.GRP_ID = GM.GRP_ID AND GU.USER_ID = #{userId}
+                       GROUP BY MENU_ID
                   ) B
-                  WHERE A.MENU_CD = B.MENU_CD(+)
-                 ORDER BY A.TOP_MENU_CD, A.MENU_LVL_NO, A.MENU_ODRG
+                  WHERE A.MENU_ID = B.MENU_ID(+)
+                 ORDER BY A.TOP_MENU_ID, A.MENU_LVL_NO, A.MENU_ODRG
     </select>
     <select id="selectChildrenCount" resultType="int">
             SELECT COUNT(1) 
               FROM TB_SYS_MENU_BAS
-             WHERE PRNTS_MENU_CD = #{menuCd}
+             WHERE PRNTS_MENU_ID = #{menuId}
     </select>
 </mapper>

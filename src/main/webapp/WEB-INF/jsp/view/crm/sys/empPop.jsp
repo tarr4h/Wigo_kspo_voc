@@ -45,7 +45,7 @@
 			
 <!-- 			<div class="mBoard2 " > -->
 			<form name="frmDetail" id="frmDetail">
-	   		   	<input type="hidden" id="upOrgCd" name="prntsMenuCd" /> 
+	   		   	<input type="hidden" id="upOrgCd" name="prntsMenuId" /> 
 	   	<input type="hidden" id="orgLvlNo" name="menuLvlNo" />
 	   	<input type="hidden" id="regrId" name="regrId" />
 	   	<input type="hidden" id="regDt" name="regDt" />

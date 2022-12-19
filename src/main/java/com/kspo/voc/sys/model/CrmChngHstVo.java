@@ -15,9 +15,9 @@ public class CrmChngHstVo extends CrmUserBaseVo {
 	 * 변경이력코드
 	 * </p>
 	 */
-	private String chngHstCd;
+	private String chngHstId;
 
-	private String menuCd;
+	private String menuId;
 	private String menuPath;
 	/**
 	 * <p>

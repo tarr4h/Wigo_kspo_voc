@@ -165,7 +165,7 @@ public class NasUtil {
 //		S3Object obj = amazonS3Client.getObject(getBuketName(fileName), fileName);
 //		String contentsType = obj.getObjectMetadata().getContentType();
 //		int nLength = (int) obj.getObjectMetadata().getContentLength();
-//		if (BaseUtilities.isEmpty(contentsType))
+//		if (Utilities.isEmpty(contentsType))
 //			contentsType = "application/octet-stream";
 //		try {
 //			response.setContentType(contentsType);
@@ -173,7 +173,7 @@ public class NasUtil {
 //					"attachment;filename=\"" + URLEncoder.encode(strDisplayName, "UTF-8") + "\";");
 //			response.setContentLength(nLength);
 //		    s3is = obj.getObjectContent();
-//			BaseUtilities.DownloadStream(response.getOutputStream(),s3is);
+//			Utilities.DownloadStream(response.getOutputStream(),s3is);
 //			
 //		} catch (Exception ex) {
 //			try {

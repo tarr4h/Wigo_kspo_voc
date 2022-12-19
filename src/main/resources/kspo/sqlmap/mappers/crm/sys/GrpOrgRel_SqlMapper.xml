@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpOrgRelDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_CD            =       #{grpCd}
+                WHERE GRP_ID            =       #{grpId}
                   AND ORG_ID            =       #{orgId}
     </sql>
     <sql id="sqlCols">
-                      GRP_CD                    /*그룹코드        */
+                      GRP_ID                    /*그룹코드        */
                     , ORG_ID                    /*조직ID        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -15,14 +15,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND A.GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND A.GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND A.GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND A.GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -31,20 +31,20 @@
         <if test="orgId != null and orgId != ''">
                       AND A.ORG_ID            =       #{orgId}
         </if>
-         <if test="exGrpCd != null and exGrpCd != ''">
-           AND ORG_ID NOT IN (SELECT ORG_ID FROM TB_SYS_GRP_ORG_REL WHERE GRP_CD = #{exGrpCd})
+         <if test="exGrpId != null and exGrpId != ''">
+           AND ORG_ID NOT IN (SELECT ORG_ID FROM TB_SYS_GRP_ORG_REL WHERE GRP_ID = #{exGrpId})
          </if>
     </sql>
     <select id="selectListCount" resultType="int">
                SELECT COUNT(1)
                  FROM TB_SYS_GRP_ORG_REL A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID 
                 INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpOrgRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_CD                    /*그룹코드        */
+               SELECT A.GRP_ID                    /*그룹코드        */
                     , A.ORG_ID                    /*조직ID        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
@@ -53,7 +53,7 @@
                     , B.GRP_NM
                     , C.ORG_NM
                  FROM TB_SYS_GRP_ORG_REL A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD 
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID 
                 INNER JOIN TB_SYS_ORG_BAS C ON A.ORG_ID = C.ORG_ID
         <include refid="sqlConditions"/>
                ORDER BY C.ORG_NM
@@ -68,7 +68,7 @@
                 INSERT INTO TB_SYS_GRP_ORG_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{grpCd}
+                       #{grpId}
                      , #{orgId}
                      , #{regrId}
                      , SYSDATE
@@ -86,9 +86,9 @@
                DELETE FROM TB_SYS_GRP_ORG_REL
         <include refid="sqlPkConditions"/>
     </delete>
-    <delete id="deleteGrpCd">
+    <delete id="deleteGrpId">
                DELETE FROM TB_SYS_GRP_ORG_REL
-                WHERE GRP_CD            =       #{grpCd}
+                WHERE GRP_ID            =       #{grpId}
     </delete>
     
 </mapper>

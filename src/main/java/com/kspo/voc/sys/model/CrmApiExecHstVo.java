@@ -13,7 +13,7 @@ public class CrmApiExecHstVo extends CrmApiInfoBaseVo{
 	/**
     * <p>API이력코드</p> 
     */
-    private String apiHstCd;
+    private String apiHstId;
     /**
     * <p>API코드</p> 
     */

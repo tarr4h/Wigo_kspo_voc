@@ -71,7 +71,7 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>파일코드</p> 
     */
-    private String fileCd;
+    private String fileId;
     /**
     * <p>게시물비밀번호</p> 
     */

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "authChgLog", "{menuCd}/authChgLog" })
+@RequestMapping(value = { "authChgLog", "{menuId}/authChgLog" })
 public class CrmGrpChgHstController{
 
 @Autowired

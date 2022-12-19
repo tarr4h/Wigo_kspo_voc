@@ -44,7 +44,7 @@
 			
 			<div class="mBoard2 ">
 			<form name="frmDetail" id="frmDetail">
-	   	<input type="hidden" id="upOrgCd" name="prntsMenuCd" /> 
+	   	<input type="hidden" id="upOrgCd" name="prntsMenuId" /> 
 	   	<input type="hidden" id="orgLvlNo" name="menuLvlNo" />
 	   	<input type="hidden" id="regrId" name="regrId" />
 	   	<input type="hidden" id="regDt" name="regDt" />
@@ -120,7 +120,7 @@ function onTreeSelect(data,node,tree){
 	grdList.loadUrl("",param);
 }		
 function getToken(element,data){
-	var systemCd = $("#topMenuCd").val();
+	var systemCd = $("#topMenuId").val();
 	  var url = "<c:url value='${urlPrefix}/menu/getToken${urlSuffix}'/>";
 	  var param = {systemCd : systemCd};
       Utilities.getAjax(url,param,false,function(data,jqXHR){
@@ -167,8 +167,8 @@ function saveMenu(element,saveJson){
                 
                 for(var i=0;i<saveJson.length;i++){
             		var json = saveJson[i];
-            		$("#divTree").setText(json.menuCd,json.menuNm);
-        			$("#divTree").setNodeData(json.menuCd,json);
+            		$("#divTree").setText(json.menuId,json.menuNm);
+        			$("#divTree").setNodeData(json.menuId,json);
             	}
                 grdList.resetAllRowStatus();
             }
@@ -198,27 +198,27 @@ function newMenuDetail(){
 function newMenu(){
 	var node = $("#divTree").getSelectedNode();
 	var menuLvlNo =1;
-	var prntsMenuCd = "";
-	var topMenuCd = "";
-	if(node&&node.menuLvlNo && node.menuCd)
+	var prntsMenuId = "";
+	var topMenuId = "";
+	if(node&&node.menuLvlNo && node.menuId)
 	{
 		menuLvlNo += node.menuLvlNo;
-		prntsMenuCd = node.menuCd;
-		topMenuCd = node.topMenuCd;
+		prntsMenuId = node.menuId;
+		topMenuId = node.topMenuId;
 	}
-	 var url = "<c:url value='${urlPrefix}/add${urlSuffix}'/>?menuLvlNo=" + menuLvlNo  + "&prntsMenuCd=" + prntsMenuCd + "&topMenuCd=" + topMenuCd;
+	 var url = "<c:url value='${urlPrefix}/add${urlSuffix}'/>?menuLvlNo=" + menuLvlNo  + "&prntsMenuId=" + prntsMenuId + "&topMenuId=" + topMenuId;
 //	 Utilities.windowOpen(url,"addMenu",900,930);
 	 Utilities.openModal(url,900,749);
 }
 
 
 function addMenu(json){
-	var parentId = json.prntsMenuCd;
+	var parentId = json.prntsMenuId;
 	if(!parentId)
 		parentId = "0000000000";
 	
 // 	grdList.addRow(json);
-// 	json.id = json.menuCd;
+// 	json.id = json.menuId;
 // 	json.text = json.menuNm;
 // 	json.ord = json.menuOdrg;
 // 	json.stat = "n";
@@ -245,7 +245,7 @@ function removeMenu(){
                 alert("조직 삭제에  성공했습니다.");
                 grdList.removeCheckRow();
                 for(var i=0;i<saveJson.length;i++){
-                 	$("#divTree").removeNode(saveJson[i].menuCd);
+                 	$("#divTree").removeNode(saveJson[i].menuId);
                  }
             }
         });
@@ -266,7 +266,7 @@ function removeMenuDetail(){
                 
                 alert("조직 삭제에  성공했습니다.");
 
-                $("#divTree").removeNode(saveJson.menuCd);
+                $("#divTree").removeNode(saveJson.menuId);
 
             }
         });
@@ -274,25 +274,25 @@ function removeMenuDetail(){
 }
 function groupPop(){
 	var json =Utilities.formToMap("frmDetail");
-	if(!json.menuCd)
+	if(!json.menuId)
 		return;
 	if(json.menuLvlNo == 1)
 		return;
 	if(!json.menuUrl)
 		return;
-	var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?menuCd="+json.menuCd;
+	var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?menuId="+json.menuId;
     /* Utilities.windowOpen(url,"groupPopup",500,580); */
     //Utilities.windowOpen(url,"addGroupUser",700,680);
     Utilities.openModal(url,500,685);
 }
 function grdList_btnGroup_buttonClicked(gridView,row,col,json){
-    var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?menuCd="+json.menuCd;
+    var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?menuId="+json.menuId;
     /* Utilities.windowOpen(url,"groupPopup",500,580); */
     //Utilities.windowOpen(url,"addGroupUser",700,680);
     Utilities.openModal(url,500,685);
 }
-function saveGroupChecked(menuCd,saveJson){
-    var url = "<c:url value='${urlPrefix}/group/setMenuGroup${urlSuffix}'/>?menuCd="+ menuCd;
+function saveGroupChecked(menuId,saveJson){
+    var url = "<c:url value='${urlPrefix}/group/setMenuGroup${urlSuffix}'/>?menuId="+ menuId;
     
     Utilities.getAjax(url,saveJson,true,function(data,jqXHR){
         if(Utilities.processResult(data,jqXHR,"그룹 설정에 실패했습니다."))

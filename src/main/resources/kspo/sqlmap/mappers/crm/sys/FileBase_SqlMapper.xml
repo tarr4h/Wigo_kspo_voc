@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmFileBaseDao">
     <sql id="sqlPkConditions">
-                WHERE FILE_CD           =       #{fileCd}
+                WHERE FILE_ID           =       #{fileId}
                   AND FILE_ODRG         =       #{fileOdrg}
     </sql>
     <sql id="sqlCols">
-                      FILE_CD                    /*파일코드        */
+                      FILE_ID                    /*파일코드        */
                     , FILE_ODRG                    /*파일순번        */
                     , FILE_NM                    /*파일명        */
                     , FILE_SIZE                    /*파일크기        */
@@ -21,14 +21,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="fileCd != null and fileCd != ''">
+        <if test="fileId != null and fileId != ''">
             <choose>
-                <when test="fileCd instanceof String">
-                              AND FILE_CD           =       #{fileCd}
+                <when test="fileId instanceof String">
+                              AND FILE_ID           =       #{fileId}
                 </when>
                 <otherwise>
-                    AND FILE_CD           IN
-                    <foreach item="item" index="index" collection="fileCd" open="(" separator="," close=")">
+                    AND FILE_ID           IN
+                    <foreach item="item" index="index" collection="fileId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -67,7 +67,7 @@
                     , TO_CHAR(REG_DT, 'YYYYMMDDHH24MISS') UPL_DT
                  FROM TB_SYS_FILE_BAS
         <include refid="sqlConditions"/>
-               ORDER BY <if test="fileCd != null and fileCd != ''">
+               ORDER BY <if test="fileId != null and fileId != ''">
                     FILE_ODRG ,
                 </if> REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
@@ -82,13 +82,13 @@
         <selectKey order="BEFORE" keyProperty="fileOdrg" resultType="int">
             SELECT NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
               FROM TB_SYS_FILE_BAS
-             WHERE FILE_CD = TO_CHAR(#{fileCd}) 
+             WHERE FILE_ID = TO_CHAR(#{fileId}) 
         </selectKey>
         
                 INSERT INTO TB_SYS_FILE_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{fileCd}
+                       #{fileId}
                      , #{fileOdrg}
                      , #{fileNm}
                      , #{fileSize}
@@ -116,7 +116,7 @@
     </update>
     <delete id="delete">
                DELETE FROM TB_SYS_FILE_BAS
-                WHERE FILE_CD            =       TO_CHAR(#{fileCd})
+                WHERE FILE_ID            =       TO_CHAR(#{fileId})
                 <if test="fileOdrg != null and fileOdrg != ''">
                   AND FILE_ODRG           =       #{fileOdrg} 
                 </if>
@@ -124,6 +124,6 @@
     <select id="selectMaxfileOdrg" resultType="int">
         SELECT NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
               FROM TB_SYS_FILE_BAS
-             WHERE FILE_CD = TO_CHAR(#{fileCd})
+             WHERE FILE_ID = TO_CHAR(#{fileId})
     </select>
 </mapper>

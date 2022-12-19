@@ -124,7 +124,7 @@ function onGridCellDblClick(gridView,itemIndex, column, json, value){
 }
 
 function showDetail(json){
-	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.chngHstCd;
+	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.chngHstId;
     Utilities.openModal(url,1500,750);
 }
 

@@ -1,14 +1,19 @@
 package com.kspo.base.common.jwt;
 
 
-import io.jsonwebtoken.*;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.kspo.base.common.model.EzApiException;
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 
 /**
  * 
@@ -28,16 +33,16 @@ public abstract class JwtUtility {
 	final static String key = "1qaz@WSX";
 //	final static String key = "!234";
 
-	public static String createToken(String userCd, String systemCd, long hours) {
+	public static String createToken(String userId, String systemCd, long hours) {
 		Map<String, Object> headers = new HashMap<>();
 		headers.put("typ", "JWT");
 		headers.put("alg", "HS256");
 
 		// payload 부분 설정
 		Map<String, Object> payloads = new HashMap<>();
-		if (BaseUtilities.isNotEmpty(userCd))
-			payloads.put("userCd", userCd);
-		if (BaseUtilities.isNotEmpty(systemCd))
+		if (Utilities.isNotEmpty(userId))
+			payloads.put("userId", userId);
+		if (Utilities.isNotEmpty(systemCd))
 			payloads.put("systemCd", systemCd);
 
 		Long expiredTime = 1000 * 60L * 60L * hours; // 토큰 유효 시간 (2시간)
@@ -56,8 +61,8 @@ public abstract class JwtUtility {
 		return jwt;
 	}
 
-	public static String createToken(String userCd, String systemCd) {
-		return createToken(userCd, systemCd, 3650 * 24);
+	public static String createToken(String userId, String systemCd) {
+		return createToken(userId, systemCd, 3650 * 24);
 	}
 
 	// 토큰 생성
@@ -99,7 +104,7 @@ public abstract class JwtUtility {
 
 	// 토큰 검증
 	public static Map<String, Object> verifyJWT(String jwt) {
-		if (BaseUtilities.isEmpty(jwt))
+		if (Utilities.isEmpty(jwt))
 			return null;
 		Map<String, Object> claimMap = null;
 		try {

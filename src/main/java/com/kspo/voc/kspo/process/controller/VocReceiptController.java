@@ -28,7 +28,7 @@ import java.util.Map;
 */
 
 @Controller
-@RequestMapping({"vocReceipt", "{menuCd}/vocReceipt"})
+@RequestMapping({"vocReceipt", "{menuId}/vocReceipt"})
 @Slf4j
 public class VocReceiptController {
 

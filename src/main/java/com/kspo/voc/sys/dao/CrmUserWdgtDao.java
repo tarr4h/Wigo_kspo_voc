@@ -5,6 +5,6 @@ import com.kspo.voc.sys.mapper.CrmMapper;
 @CrmMapper
 public interface CrmUserWdgtDao extends ICrmDao {
 
-	int deleteMenuCd(Object param);
+	int deleteMenuId(Object param);
 
 }

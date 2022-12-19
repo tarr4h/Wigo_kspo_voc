@@ -18,6 +18,6 @@
         <setSort value="none" />
     </meta>
     <column name="체크" field="checkYn" type="checkbox" maxLength="100" width="80" textAlignment="left" required="Y" hidden="Y" />
-    <column name="그룹아이디" field="grpCd" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="N" />
+    <column name="그룹아이디" field="grpId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="N" />
     <column name="그룹명" field="grpNm" type="char" maxLength="100" width="80" textAlignment="left" required="Y" hidden="N" />
 </grid>

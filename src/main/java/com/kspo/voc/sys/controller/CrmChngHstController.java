@@ -44,7 +44,7 @@ public class CrmChngHstController {
 	
 	@GetMapping(value = { "detail/{hstCd}" })
 	public String detail(CrmChngHstVo vo, @PathVariable("hstCd") String hstCd , @RequestParam Map<String, Object> param, ModelMap model) throws Exception {
-		vo.setChngHstCd(hstCd);
+		vo.setChngHstId(hstCd);
 		model.addAttribute("hist", service.get(vo));
 		model.addAllAttributes(param);
 		return Utilities.getProperty("tiles.crm.blank") + "sys/changeHistDetail";

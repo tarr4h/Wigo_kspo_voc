@@ -169,7 +169,7 @@
             win.location.reload();
         }
 
-        topWin.openMenuTab(menu.menuCd, menu.menuNm, menu.menuUrl);
+        topWin.openMenuTab(menu.menuId, menu.menuNm, menu.menuUrl);
         topWin.removeTab("0104020100");
     }
 
@@ -201,11 +201,11 @@
                 if(res.result){
                     // 페이지이동
                     let menu = {
-                        menuCd: "0104010200",
+                        menuId: "0104010200",
                         menuLvlNo: 4,
                         menuNm: "VOC 등록",
                         menuUrl: "vocRegistrationList",
-                        topMenuCd: "0100000000"
+                        topMenuId: "0100000000"
                     };
                     afterReg(menu);
                 }
@@ -241,11 +241,11 @@
                 if(res.result){
                     // 페이지이동
                     let menu = {
-                        menuCd: "0104010100",
+                        menuId: "0104010100",
                         menuLvlNo: 4,
                         menuNm: "VOC 통합검색",
                         menuUrl: "vocIntergrationList",
-                        topMenuCd: "0100000000"
+                        topMenuId: "0100000000"
                     };
                     afterReg(menu);
                 }

@@ -1342,7 +1342,7 @@
         else 
         {
         	strJava += "@Controller\n";
-        	strJava += '@RequestMapping(value = { "'+javaName+'", "{menuCd}/'+javaName+'" })\n';
+        	strJava += '@RequestMapping(value = { "'+javaName+'", "{menuId}/'+javaName+'" })\n';
         	 strJava += "public class "+getJavaName(false,"controller")+"{\n";
         }
         

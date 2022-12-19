@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpEmpRelDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_CD            =       #{grpCd}
+                WHERE GRP_ID            =       #{grpId}
                   AND EMP_ID            =       #{empId}
     </sql>
     <sql id="sqlCols">
-                      GRP_CD                    /*그룹코드        */
+                      GRP_ID                    /*그룹코드        */
                     , EMP_ID                    /*사원ID        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -15,14 +15,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND A.GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND A.GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND A.GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND A.GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -41,7 +41,7 @@
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpEmpRelVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_CD                    /*그룹코드        */
+               SELECT A.GRP_ID                    /*그룹코드        */
                     , A.EMP_ID                    /*사원ID        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
@@ -67,7 +67,7 @@
                 INSERT INTO TB_SYS_GRP_EMP_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{grpCd}
+                       #{grpId}
                      , #{empId}
                      , #{regrId}
                      , SYSDATE
@@ -85,8 +85,8 @@
                DELETE FROM TB_SYS_GRP_EMP_REL
         <include refid="sqlPkConditions"/>
     </delete>
-     <delete id="deleteGrpCd">
+     <delete id="deleteGrpId">
                DELETE FROM TB_SYS_GRP_EMP_REL
-                WHERE GRP_CD            =       #{grpCd}
+                WHERE GRP_ID            =       #{grpId}
     </delete>
 </mapper>

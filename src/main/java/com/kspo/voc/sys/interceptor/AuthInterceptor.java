@@ -87,9 +87,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 			if (HandlerUtils.isInstance(handler, CrmMainController.class))
 				return true;
 
-			String menuCd = (String) request.getAttribute("currentMenuCd");
+			String menuId = (String) request.getAttribute("currentMenuId");
 			EzMap menuMap = (EzMap) request.getAttribute("menuMap");
-			if (menuMap.containsKey(menuCd)) {
+			if (menuMap.containsKey(menuId)) {
 				return true;
 			} else {
 				response.sendError(Constants._ERROR_HAS_NO_RIGHT, "권한이 없습니다.");

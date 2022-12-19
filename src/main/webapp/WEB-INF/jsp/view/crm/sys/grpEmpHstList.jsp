@@ -52,7 +52,7 @@
 												그룹
 											</th>
 											<td scope="row" class="left">
-												<code:commCode codeCd="groupCd" codeType="groupCd" id="grpCd" name="grpCd" multiple="true"/>
+												<code:commCode codeCd="groupCd" codeType="groupCd" id="grpId" name="grpId" multiple="true"/>
 											</td>
 											<th>
 												사용자명
@@ -114,7 +114,7 @@ function grdList_load(gridView,gridId){
 // }
 
 // function showDetail(json){
-// 	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.apiHstCd;
+// 	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.apiHstId;
 //     Utilities.openModal(url,1500,550);
 // }
 

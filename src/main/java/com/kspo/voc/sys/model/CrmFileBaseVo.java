@@ -17,7 +17,7 @@ public class CrmFileBaseVo extends BaseVo {
 	 * 파일코드
 	 * </p>
 	 */
-	private String fileCd;
+	private String fileId;
 	/**
 	 * <p>
 	 * 파일순번

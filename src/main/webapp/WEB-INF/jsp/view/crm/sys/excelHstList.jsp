@@ -114,7 +114,7 @@ function grdList_load(gridView,gridId){
 // }
 
 // function showDetail(json){
-// 	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.apiHstCd;
+// 	var url = "<c:url value='${urlPrefix}/detail${urlSuffix}'/>/"+ json.apiHstId;
 //     Utilities.openModal(url,1500,550);
 // }
 

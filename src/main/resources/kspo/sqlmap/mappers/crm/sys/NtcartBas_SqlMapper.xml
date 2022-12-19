@@ -19,7 +19,7 @@
                     , POST_END_DT                    /*게시종료일시        */
                     , NOTE_STA_DT                    /*공지시작일시        */
                     , NOTE_END_DT                    /*공지종료일시        */
-                    , FILE_CD                    /*파일코드        */
+                    , FILE_ID                    /*파일코드        */
                     , NTCART_PWD                    /*게시물비밀번호        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -90,14 +90,14 @@
         <if test="noteEndDt != null and noteEndDt != ''">
                       AND NOTE_END_DT       =       #{noteEndDt}
         </if>
-        <if test="fileCd != null and fileCd != ''">
+        <if test="fileId != null and fileId != ''">
             <choose>
-                <when test="fileCd instanceof String">
-                              AND FILE_CD           =       #{fileCd}
+                <when test="fileId instanceof String">
+                              AND FILE_ID           =       #{fileId}
                 </when>
                 <otherwise>
-                    AND FILE_CD           IN
-                    <foreach item="item" index="index" collection="fileCd" open="(" separator="," close=")">
+                    AND FILE_ID           IN
+                    <foreach item="item" index="index" collection="fileId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -129,7 +129,7 @@
                     , /*TO_CHAR(POST_END_DT,'YYYYMMDDHH24MISS')*/       POST_END_DT              /*게시종료일시        */
                     , /*TO_CHAR(NOTE_STA_DT,'YYYYMMDDHH24MISS')*/       NOTE_STA_DT              /*공지시작일시        */
                     , /*TO_CHAR(NOTE_END_DT,'YYYYMMDDHH24MISS')*/       NOTE_END_DT              /*공지종료일시        */
-                    , FILE_CD                    /*파일코드        */
+                    , FILE_ID                    /*파일코드        */
                     , NTCART_PWD                    /*게시물비밀번호        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -163,7 +163,7 @@
                      , DECODE(#{postEndDt},NULL,NULL,TO_DATE(SUBSTR(#{postEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
                      , DECODE(#{noteStaDt},NULL,NULL,TO_DATE(SUBSTR(#{noteStaDt} || '000000',1,14) ,'YYYYMMDDHH24MISS'))
                      , DECODE(#{noteEndDt},NULL,NULL,TO_DATE(SUBSTR(#{noteEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
-                     , NVL(#{fileCd},#{ntcartId})
+                     , NVL(#{fileId},#{ntcartId})
                      , #{ntcartPwd}
                      , #{regrId}
                      , SYSDATE
@@ -186,7 +186,7 @@
                     , POST_END_DT         =         DECODE(#{postEndDt} ,NULL ,NULL, TO_DATE(SUBSTR(#{postEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
                     , NOTE_STA_DT         =         DECODE(#{noteStaDt} ,NULL ,NULL, TO_DATE(SUBSTR(#{noteStaDt} || '000000',1,14) ,'YYYYMMDDHH24MISS'))
                     , NOTE_END_DT         =         DECODE(#{noteEndDt} ,NULL ,NULL, TO_DATE(SUBSTR(#{noteEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
-<!--                     , FILE_CD             =         #{fileCd} -->
+<!--                     , FILE_ID             =         #{fileId} -->
                     , NTCART_PWD          =         #{ntcartPwd}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE

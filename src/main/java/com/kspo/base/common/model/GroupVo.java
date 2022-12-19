@@ -1,7 +1,7 @@
 package com.kspo.base.common.model;
 
 
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -63,10 +63,10 @@ public class GroupVo extends AbstractTreeVo {
 	}
 
 	public GroupVo findGroupByName(String group1Name, String group2Name) {
-		if (BaseUtilities.isEmpty(group1Name))
+		if (Utilities.isEmpty(group1Name))
 			return null;
 		if (group1Name.equals(name)) {
-			if (BaseUtilities.isEmpty(group2Name))
+			if (Utilities.isEmpty(group2Name))
 				return this;
 			for (int i = 0; getChildren() != null && i < getChildren().size(); i++) {
 				GroupVo vo = ((GroupVo) getChildren().get(i)).findGroupByName(group2Name);
@@ -85,7 +85,7 @@ public class GroupVo extends AbstractTreeVo {
 	}
 
 	public GroupVo findGroupByName(String groupName) {
-		if (BaseUtilities.isEmpty(groupName))
+		if (Utilities.isEmpty(groupName))
 			return null;
 		if (groupName.equals(name))
 			return this;

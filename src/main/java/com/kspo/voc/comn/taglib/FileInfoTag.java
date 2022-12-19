@@ -35,7 +35,7 @@ public class FileInfoTag extends TagSupport {
 	private static final long serialVersionUID = 5810949506019349503L;
 
 	private String name;
-	private String fileCd;
+	private String fileId;
 	private int fileSeq = 0;
 	private String acceptFileTypes="";
 	private String acceptExts="";
@@ -51,7 +51,7 @@ public class FileInfoTag extends TagSupport {
 			idNm += " id='"+id+"'";
 		if(Utilities.isNotEmpty(name))
 			idNm += " name='"+name+"'";
-		String dataInfo = "data-file-cd='"+fileCd+"' data-file-seq='"+fileSeq+"' data-file-category='"+fileCategory+"' data-accept-ext='"+acceptExts+"' data-accept-types='"+acceptFileTypes+"' "+idNm;
+		String dataInfo = "data-file-id='"+fileId+"' data-file-seq='"+fileSeq+"' data-file-category='"+fileCategory+"' data-accept-ext='"+acceptExts+"' data-accept-types='"+acceptFileTypes+"' "+idNm;
 		String info = "<span "+dataInfo+" data-file-info='info' >";
 		String button = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" type=\"button\" data-click=\"onFileInfo\" data-file-info='button'>첨부</button>";
 		String cancel = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" style='display:none'  type=\"button\" data-click=\"onCancelFileInfo\"  data-file-info='cancel'>취소</button>";
@@ -59,7 +59,7 @@ public class FileInfoTag extends TagSupport {
 		String download = "&nbsp;<button "+dataInfo+" style='display:none' class=\"btnInner gray btnSubmit\" data-file-url='' type=\"button\" data-click=\"onDownloadFileInfo\"  data-file-info='download'>받기</button>";
 
 		EzMap param = new EzMap();
-		param.setString("fileCd", fileCd);
+		param.setString("fileId", fileId);
 		if (fileSeq > 0) {
 			param.setInt("fileSeq", fileSeq);
 		}
@@ -114,12 +114,12 @@ public class FileInfoTag extends TagSupport {
 		this.name = name;
 	}
 
-	public String getFileCd() {
-		return fileCd;
+	public String getFileId() {
+		return fileId;
 	}
 
-	public void setFileCd(String fileCd) {
-		this.fileCd = fileCd;
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public int getFileSeq() {

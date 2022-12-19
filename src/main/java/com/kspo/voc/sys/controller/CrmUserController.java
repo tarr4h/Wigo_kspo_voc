@@ -30,7 +30,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = {"user","{menuCd}/user"})
+@RequestMapping(value = {"user","{menuId}/user"})
 public class CrmUserController {
 	@Autowired
 	CrmUserService userService;

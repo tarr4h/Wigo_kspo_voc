@@ -95,7 +95,7 @@
 <script type="text/javascript">
 
 var _urlSuffix = "${urlSuffix}";
-var _PROGRAM_ID ='${currentMenuCd}';
+var _PROGRAM_ID ='${currentMenuId}';
 var _SYSTEM_ID  ='${currentSystemId}';
 var _basePath = "<c:url value='${urlPrefix}' />";
 var _code_url = "<c:url value='${urlPrefix}/commCode/getComboCode'/>${urlSuffix}";
@@ -132,10 +132,10 @@ function excelDownload(elem,data){
 		name = data.name;
 	grid.exportExcel(name+".xlsx",true);
 }
-function openFileModal(fileCd,fileCtgryCd){
+function openFileModal(fileId,fileCtgryCd){
 	if(!fileCtgryCd)
 		fileCtgryCd = "";
-	var url = "<c:url value='${urlPrefix}/file/fileInfo${urlSuffix}'/>?fileCd=" + fileCd + "&fileCtgryCd=" + fileCtgryCd;
+	var url = "<c:url value='${urlPrefix}/file/fileInfo${urlSuffix}'/>?fileId=" + fileId + "&fileCtgryCd=" + fileCtgryCd;
 	Utilities.openModal(url,800,600);
 }
 function goMenu(el,data){

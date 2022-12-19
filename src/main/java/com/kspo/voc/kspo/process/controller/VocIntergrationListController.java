@@ -37,7 +37,7 @@ import com.kspo.voc.kspo.process.service.VocIntergrationListService;
 
 
 @Controller
-@RequestMapping({"vocIntergrationList", "{menuCd}/vocIntergrationList"})
+@RequestMapping({"vocIntergrationList", "{menuId}/vocIntergrationList"})
 public class VocIntergrationListController {
 
     @Autowired

@@ -23,7 +23,7 @@ import com.kspo.voc.kspo.setting.model.VocProcedureCodeVo;
 import com.kspo.voc.kspo.setting.service.VocProcedureCodeSettingService;
 
 @Controller
-@RequestMapping({"vocProcedureCodeSetting", "{menuCd}/vocProcedureCodeSetting"})
+@RequestMapping({"vocProcedureCodeSetting", "{menuId}/vocProcedureCodeSetting"})
 public class VocProcedureCodeSettingController {
 
     @Autowired

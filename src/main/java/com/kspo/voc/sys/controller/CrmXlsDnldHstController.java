@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "excelLog", "{menuCd}/excelLog" })
+@RequestMapping(value = { "excelLog", "{menuId}/excelLog" })
 public class CrmXlsDnldHstController{
 
 @Autowired

@@ -31,7 +31,7 @@ public class CrmMainController {
 	@GetMapping(value = { "", "index" })
 	public String init(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Map<String, Object> param, ModelMap map) throws Exception {
-		param.put("userCd", SessionUtil.getLoginUserCd());
+		param.put("userId", SessionUtil.getLoginUserId());
 
 		map.addAttribute("wdgtList", menuService.getWdgtList(param));
 		return "main";
@@ -94,9 +94,9 @@ public class CrmMainController {
 //	public @ResponseBody Object createToken(@RequestBody EzMap param) 
 //	{
 //		String systemCd = param.getString("systemCd");
-//		String userCd = Utilities.getLoginUserCd();
+//		String userId = Utilities.getLoginUserId();
 //		EzMap ret = new EzMap();
-//		ret.setString("token", jwtProvider.createToken(userCd, systemCd));
+//		ret.setString("token", jwtProvider.createToken(userId, systemCd));
 //		return ret;
 //	}
 

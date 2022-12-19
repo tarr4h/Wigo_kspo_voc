@@ -5,6 +5,6 @@ import com.kspo.voc.sys.mapper.CrmMapper;
 @CrmMapper
 public interface CrmGrpOrgRelDao extends ICrmDao {
 
-	void deleteGrpCd(Object param) throws Exception;
+	void deleteGrpId(Object param) throws Exception;
 
 }

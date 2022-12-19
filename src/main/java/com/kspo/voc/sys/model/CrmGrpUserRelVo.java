@@ -13,6 +13,6 @@ public class CrmGrpUserRelVo extends CrmUserBaseVo {
     /**
     * <p>그룹코드</p> 
     */
-    private String grpCd;
+    private String grpId;
     
 }

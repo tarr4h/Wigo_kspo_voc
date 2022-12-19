@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpMenuRelDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_CD            =       #{grpCd}
-                  AND MENU_CD           =       #{menuCd}
+                WHERE GRP_ID            =       #{grpId}
+                  AND MENU_ID           =       #{menuId}
     </sql>
     <sql id="sqlCols">
-                      GRP_CD                    /*그룹코드        */
-                    , MENU_CD                    /*메뉴코드        */
+                      GRP_ID                    /*그룹코드        */
+                    , MENU_ID                    /*메뉴코드        */
                     , MENU_REG_AUTH_YN                    /*메뉴등록권한여부        */
                     , MENU_READ_AUTH_YN                    /*메뉴읽기권한여부        */
                     , MENU_AMD_AUTH_YN                    /*메뉴수정권한여부        */
@@ -19,27 +19,27 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="menuCd != null and menuCd != ''">
+        <if test="menuId != null and menuId != ''">
             <choose>
-                <when test="menuCd instanceof String">
-                              AND MENU_CD           =       #{menuCd}
+                <when test="menuId instanceof String">
+                              AND MENU_ID           =       #{menuId}
                 </when>
                 <otherwise>
-                    AND MENU_CD           IN
-                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                    AND MENU_ID           IN
+                    <foreach item="item" index="index" collection="menuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -80,8 +80,8 @@
                 INSERT INTO TB_SYS_GRP_MENU_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{grpCd}
-                     , #{menuCd}
+                       #{grpId}
+                     , #{menuId}
                      , #{menuRegAuthYn}
                      , #{menuReadAuthYn}
                      , #{menuAmdAuthYn}
@@ -106,14 +106,14 @@
                DELETE FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlPkConditions"/>
     </delete>
-    <delete id="deleteMenuCd">
+    <delete id="deleteMenuId">
                DELETE 
                  FROM TB_SYS_GRP_MENU_REL
-                WHERE MENU_CD  =  #{menuCd}
+                WHERE MENU_ID  =  #{menuId}
     </delete>
-    <delete id="deleteGrpCd">
+    <delete id="deleteGrpId">
                DELETE 
                  FROM TB_SYS_GRP_MENU_REL
-                WHERE GRP_CD  =  #{grpCd}
+                WHERE GRP_ID  =  #{grpId}
     </delete>
 </mapper>

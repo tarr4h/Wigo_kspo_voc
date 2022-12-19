@@ -125,7 +125,7 @@ public class VocManagementCodeService extends VocAbstractService {
         String maxChildCd = dao.maxChildCd(param);
 
         param.put("lvl", prntsRow.getLvl() + 1);
-        param.put("regUsr", Utilities.getLoginUserCd());
+        param.put("regUsr", Utilities.getLoginId());
 
         String prntsCd = prntsRow.getManagementCd();
         String prntsCdGrp = prntsCd.substring(2, 4);

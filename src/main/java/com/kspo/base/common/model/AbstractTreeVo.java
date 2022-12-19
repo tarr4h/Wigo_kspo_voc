@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -107,13 +107,13 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 	public static List<ITreeVo> makeHierarchy(List<? extends ITreeVo> list,EzMap itemMap){
 		List<ITreeVo> ret = new ArrayList<ITreeVo>();
 
-		if (BaseUtilities.isEmpty(list))
+		if (Utilities.isEmpty(list))
 			return ret;
 		if(itemMap == null)
 			itemMap = new EzMap(false);
 		for (int i = 0; i < list.size(); i++) {
 			ITreeVo vo = list.get(i);
-			if (BaseUtilities.isEmpty(vo.getId()))
+			if (Utilities.isEmpty(vo.getId()))
 				continue;
 			itemMap.put(vo.getId(), vo);
 		}
@@ -183,7 +183,7 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 
 	public String getIcon() {
 		List<ITreeVo> list = getChildren();
-		if (BaseUtilities.isEmpty(list))
+		if (Utilities.isEmpty(list))
 			return getLeafIcon();
 		else
 			return getFolderIcon();

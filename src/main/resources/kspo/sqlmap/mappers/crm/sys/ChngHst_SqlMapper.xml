@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmChngHstDao">
     <sql id="sqlPkConditions">
-                WHERE CHNG_HST_CD       =       #{chngHstCd}
+                WHERE CHNG_HST_ID       =       #{chngHstId}
     </sql>
     <sql id="sqlCols">
-                      CHNG_HST_CD                    /*변경이력코드        */
-                    , MENU_CD                    /*메뉴코드        */
+                      CHNG_HST_ID                    /*변경이력코드        */
+                    , MENU_ID                    /*메뉴코드        */
                     , CHNG_CALL_URL                    /*변경호출URL        */
                     , CHNG_RSLT_TXN                    /*변경결과내역        */
                     , CHNG_PARAM_TXN                    /*변경파라미터내역        */
@@ -21,27 +21,27 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="chngHstCd != null and chngHstCd != ''">
+        <if test="chngHstId != null and chngHstId != ''">
             <choose>
-                <when test="chngHstCd instanceof String">
-                              AND A.CHNG_HST_CD       =       #{chngHstCd}
+                <when test="chngHstId instanceof String">
+                              AND A.CHNG_HST_ID       =       #{chngHstId}
                 </when>
                 <otherwise>
-                    AND A.CHNG_HST_CD       IN
-                    <foreach item="item" index="index" collection="chngHstCd" open="(" separator="," close=")">
+                    AND A.CHNG_HST_ID       IN
+                    <foreach item="item" index="index" collection="chngHstId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="menuCd != null and menuCd != ''">
+        <if test="menuId != null and menuId != ''">
             <choose>
-                <when test="menuCd instanceof String">
-                              AND A.MENU_CD           =       #{menuCd}
+                <when test="menuId instanceof String">
+                              AND A.MENU_ID           =       #{menuId}
                 </when>
                 <otherwise>
-                    AND A.MENU_CD           IN
-                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                    AND A.MENU_ID           IN
+                    <foreach item="item" index="index" collection="menuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -83,8 +83,8 @@
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
                  FROM TB_SYS_CHNG_HST A
-                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmChngHstVo">
@@ -92,13 +92,13 @@
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                    FROM TB_SYS_MENU_BAS
                   WHERE 1=1
-                  START WITH MENU_CD = A.MENU_CD 
-                CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD
+                  START WITH MENU_ID = A.MENU_ID 
+                CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID
                 ) MENU_PATH
         FROM (
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.CHNG_HST_CD                    /*변경이력코드        */
-                    , A.MENU_CD                    /*메뉴코드        */
+               SELECT A.CHNG_HST_ID                    /*변경이력코드        */
+                    , A.MENU_ID                    /*메뉴코드        */
                     , A.CHNG_CALL_URL                    /*변경호출URL        */
                     , A.CHNG_RSLT_TXN                    /*변경결과내역        */
                     , A.CHNG_PARAM_TXN                    /*변경파라미터내역        */
@@ -111,20 +111,20 @@
                     , A.AMDR_ID                    /*수정자ID        */
                     , A.AMD_DT                    /*수정일시        */
                     , B.MENU_NM
-                    , C.USER_CD
+                    , C.USER_ID
                     , C.USER_NM
                     , C.LOGIN_ID
                  FROM TB_SYS_CHNG_HST A
-                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_ID
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
         ) A
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.CrmChngHstVo">
-               SELECT A.CHNG_HST_CD                    /*변경이력코드        */
-                    , A.MENU_CD                    /*메뉴코드        */
+               SELECT A.CHNG_HST_ID                    /*변경이력코드        */
+                    , A.MENU_ID                    /*메뉴코드        */
                     , A.CHNG_CALL_URL                    /*변경호출URL        */
                     , A.CHNG_RSLT_TXN                    /*변경결과내역        */
                     , A.CHNG_PARAM_TXN                    /*변경파라미터내역        */
@@ -139,23 +139,23 @@
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
                          WHERE 1=1
-                         START WITH MENU_CD = A.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                         START WITH MENU_ID = A.MENU_ID 
+                       CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                     , B.MENU_NM
-                    , C.USER_CD
+                    , C.USER_ID
                     , C.USER_NM
                     , C.LOGIN_ID
                  FROM TB_SYS_CHNG_HST A
-                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_CD = B.MENU_CD
-                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_CD
+                INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
+                INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_ID
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
                 INSERT INTO TB_SYS_CHNG_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       NVL(#{chngHstCd},FN_VOC_AUTO_SEQ('C'))
-                     , #{menuCd}
+                       NVL(#{chngHstId},FN_VOC_AUTO_SEQ('C'))
+                     , #{menuId}
                      , #{chngCallUrl}
                      , #{chngRsltTxn}
                      , #{chngParamTxn}
@@ -171,7 +171,7 @@
     </insert>
     <update id="update">
                UPDATE TB_SYS_CHNG_HST
-                  SET MENU_CD             =         #{menuCd}
+                  SET MENU_ID             =         #{menuId}
                     , CHNG_CALL_URL       =         #{chngCallUrl}
                     , CHNG_RSLT_TXN       =         #{chngRsltTxn}
                     , CHNG_PARAM_TXN      =         #{chngParamTxn}

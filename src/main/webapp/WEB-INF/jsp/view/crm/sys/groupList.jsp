@@ -95,7 +95,7 @@ function clearRefRows(){
 }
 function grdList_rowChanged(grdView,oldRow,newRow,rowData){
 	clearRefRows();
-	_current_group_cd = rowData.grpCd;
+	_current_group_cd = rowData.grpId;
 	g_currentJson = rowData;
     if(newRow > -1 && rowData.stat != "c"){
     	searchMenu(1);
@@ -106,8 +106,8 @@ function grdList_rowChanged(grdView,oldRow,newRow,rowData){
 }
 function searchMenu(currentPageNo){
     var param = {
-        grpCd : _current_group_cd,
-        topMenuCd : $("#selectCodeCombo").val(),
+        grpId : _current_group_cd,
+        topMenuId : $("#selectCodeCombo").val(),
         currentPageNo : currentPageNo?currentPageNo : 1 
     };
     url = "<c:url value='${urlPrefix}/getGroupMenuList'/>${urlSuffix}";
@@ -116,7 +116,7 @@ function searchMenu(currentPageNo){
 
 function searchUser(currentPageNo){
 // 	var param = {
-// 	        grpCd : _current_group_cd,
+// 	        grpId : _current_group_cd,
 // 	        currentPageNo : currentPageNo?currentPageNo : 1 
 // 	    };
 // 	var url = "<c:url value='${urlPrefix}/getGroupUserList'/>${urlSuffix}";
@@ -125,7 +125,7 @@ function searchUser(currentPageNo){
 
 function searchOrg(currentPageNo){
     var param = {
-        grpCd : _current_group_cd
+        grpId : _current_group_cd
     };
     url = "<c:url value='${urlPrefix}/getGroupOrgList'/>${urlSuffix}";
     grdOrg.loadUrl(url,param);
@@ -133,7 +133,7 @@ function searchOrg(currentPageNo){
 
 function searchEmp(currentPageNo){
     var param = {
-        grpCd : _current_group_cd
+        grpId : _current_group_cd
     };
     url = "<c:url value='${urlPrefix}/getGroupEmpList'/>${urlSuffix}";
     grdEmp.loadUrl(url,param);
@@ -263,7 +263,7 @@ function addGroupOrg(list){
 		}
 		var arr = [];
 		for(var i=0;i<list.length;i++){
-			list[i].grpCd = _current_group_cd;
+			list[i].grpId = _current_group_cd;
 			if(map[list[i].orgId])
 				continue;
 			arr.push(list[i]);
@@ -282,7 +282,7 @@ function addGroupEmp(list){
 		}
 		var arr = [];
 		for(var i=0;i<list.length;i++){
-			list[i].grpCd = _current_group_cd;
+			list[i].grpId = _current_group_cd;
 			if(map[list[i].orgId])
 				continue;
 			arr.push(list[i]);
@@ -409,7 +409,7 @@ function newGroupMenu(){
 		alert("먼저 그룹을 선택하세요");
 		return false;
 	}
-	var url = "<c:url value='${urlPrefix}/groupMenuPopup${urlSuffix}'/>?grpCd="+_current_group_cd+"&topMenuCd="+$("#selectCodeCombo").val();
+	var url = "<c:url value='${urlPrefix}/groupMenuPopup${urlSuffix}'/>?grpId="+_current_group_cd+"&topMenuId="+$("#selectCodeCombo").val();
 	Utilities.openModal(url,1200,798);
 //    Utilities.windowOpen(url,"addGroupMenu",700,680);
 }
@@ -419,7 +419,7 @@ function newGroupUser(){
         alert("먼저 그룹을 선택하세요");
         return false;
     }
-    var url = "<c:url value='${urlPrefix}/groupUserPopup${urlSuffix}'/>?grpCd="+_current_group_cd;
+    var url = "<c:url value='${urlPrefix}/groupUserPopup${urlSuffix}'/>?grpId="+_current_group_cd;
     Utilities.openModal(url,700,798);
 }
 

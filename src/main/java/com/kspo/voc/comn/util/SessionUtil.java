@@ -36,7 +36,7 @@ public class SessionUtil {
 		session.removeAttribute(Constants._USER_MENU_LIST_NAME);
 		session.removeAttribute(Constants._USER_MENU_MAP_NAME);
 		session.removeAttribute(Constants._LOGIN_SESSION_NAME);
-		session.removeAttribute("userCd");
+		session.removeAttribute("userId");
 		Utilities.setCookie("lumode", "0");
 
 	}
@@ -58,14 +58,14 @@ public class SessionUtil {
 		return (CrmLoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
 	}
 
-	public static String getLoginUserCd() {
+	public static String getLoginUserId() {
 		HttpSession session = Utilities.getSession();
 		if (session == null)
 			return null;
 		CrmLoginUserVo user = (CrmLoginUserVo) session.getAttribute(Constants._LOGIN_SESSION_NAME);
 		if (user == null)
 			return null;
-		return (String) user.getUserCd();
+		return (String) user.getUserId();
 	}
 
 	public static boolean isAjaxRequest() {
@@ -123,7 +123,7 @@ public class SessionUtil {
 	}
 
 	public static boolean isLogin() {
-		return Utilities.isNotEmpty(getLoginUserCd());
+		return Utilities.isNotEmpty(getLoginUserId());
 	}
 
 	public static void touch(HttpServletResponse response) {

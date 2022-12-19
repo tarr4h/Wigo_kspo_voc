@@ -22,7 +22,7 @@ import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.service.VocManagementCodeService;
 
 @Controller
-@RequestMapping({"vocManagementCode", "{menuCd}/vocManagementCode"})
+@RequestMapping({"vocManagementCode", "{menuId}/vocManagementCode"})
 public class VocManagementCodeController {
 
     @Autowired

@@ -13,6 +13,6 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>그룹코드</p> 
     */
-    private String grpCd;
+    private String grpId;
     private String grpNm;
 }

@@ -8,6 +8,7 @@ import com.kspo.base.common.model.EzAjaxException;
 import com.kspo.base.common.model.address.EzAddressResult;
 import com.kspo.base.common.model.address.EzAddressSo;
 import com.kspo.base.common.model.address.EzAdressResultVo;
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -36,11 +37,11 @@ public abstract class AddressUtil {
 	}
 
 	public static String getKey() {
-		return getKey(BaseUtilities.getLangCd());
+		return getKey(Utilities.getLangCd());
 	}
 
 	public static String getUrl() {
-		return getUrl(BaseUtilities.getLangCd());
+		return getUrl(Utilities.getLangCd());
 	}
 
 	public static String getKey(String lang) {
@@ -74,9 +75,9 @@ public abstract class AddressUtil {
 	}
 	public static EzAdressResultVo searchAddr(String keyword, int page, int recordCountPerPage, String language)
 			throws Exception {
-		if (BaseUtilities.isEmpty(language))
+		if (Utilities.isEmpty(language))
 			language = "KO";
-		if (BaseUtilities.isEmpty(keyword))
+		if (Utilities.isEmpty(keyword))
 			return null;
 		if(recordCountPerPage < 1)
 			recordCountPerPage = _COUNT_PER_PAGE;
@@ -84,7 +85,7 @@ public abstract class AddressUtil {
 			page = 1;
 		String url = getUrl(language) + "?countPerPage="+ recordCountPerPage + "&currentPage=" + page + "&resultType=json&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&confmKey=" + getKey(language)   
 				 ;
-		EzAddressResult result = BaseUtilities.wgetJson(url, EzAddressResult.class);
+		EzAddressResult result = Utilities.wgetJson(url, EzAddressResult.class);
 		if (result == null)
 			return null;
 		EzAdressResultVo vo = result.getResults();

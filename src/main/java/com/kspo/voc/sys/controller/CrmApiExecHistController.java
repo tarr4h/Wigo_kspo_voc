@@ -31,7 +31,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = { "apiHist","{menuCd}/apiHist"})
+@RequestMapping(value = { "apiHist","{menuId}/apiHist"})
 public class CrmApiExecHistController {
 	@Autowired
 	CrmApiHistService service;
@@ -41,9 +41,9 @@ public class CrmApiExecHistController {
 		model.addAllAttributes(param);
 		return Utilities.getProperty("tiles.crm") + "sys/apiHistList";
 	}
-	@GetMapping(value = { "detail/{apiHstCd}" })
-	public String detail(CrmApiExecHstVo vo, @PathVariable("apiHstCd") String apiHstCd , @RequestParam Map<String, Object> param, ModelMap model) throws Exception {
-		vo.setApiHstCd(apiHstCd);
+	@GetMapping(value = { "detail/{apiHstId}" })
+	public String detail(CrmApiExecHstVo vo, @PathVariable("apiHstId") String apiHstId , @RequestParam Map<String, Object> param, ModelMap model) throws Exception {
+		vo.setApiHstId(apiHstId);
 		model.addAttribute("hist", service.get(vo));
 		model.addAllAttributes(param);
 		return Utilities.getProperty("tiles.crm.blank") + "sys/apiHistDetail";

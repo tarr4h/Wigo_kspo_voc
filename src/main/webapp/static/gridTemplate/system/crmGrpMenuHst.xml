@@ -13,10 +13,10 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="그룹메뉴이력코드" field="grpMenuHstCd" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
-    <column name="그룹코드" field="grpCd" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="그룹메뉴이력코드" field="grpMenuHstId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
+    <column name="그룹코드" field="grpId" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="그룹" field="grpNm" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
-    <column name="메뉴코드" field="menuCd" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="메뉴코드" field="menuId" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="메뉴Path" field="menuPath" type="char" maxLength="20" width="200" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="메뉴명" field="menuNm" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="구분" field="delYn" type="combo" codeId="S090" maxLength="1" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>

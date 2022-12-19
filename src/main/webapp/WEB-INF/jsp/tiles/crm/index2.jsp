@@ -34,7 +34,7 @@
                         	<li>
                         	<c:forEach var="subMenu" items="${ topLevelMenu.children}">
 							<c:if test='${subMenu.menuShowYn eq "Y" }'>
-								<a href="#" data-click="showToplevelMenu" class="sub_link" data-top-menu-cd="${subMenu.topMenuCd }" data-menu-cd= "${subMenu.menuCd }">${subMenu.menuNm }</a> 
+								<a href="#" data-click="showToplevelMenu" class="sub_link" data-top-menu-id="${subMenu.topMenuId }" data-menu-id= "${subMenu.menuId }">${subMenu.menuNm }</a> 
 							</c:if>
 							</c:forEach>
 							</li>
@@ -58,13 +58,13 @@
 				<c:if test='${topLevelMenu.menuShowYn eq "Y" }'>
 					<c:forEach var="subMenu" items="${ topLevelMenu.children}">
 						<c:if test='${subMenu.menuShowYn eq "Y" }'>
-						<c:set var="subMenuData">data-top-menu-cd="${ subMenu.topMenuCd}" data-menu-cd="${subMenu.menuCd }" data-menu-lvl-no="${subMenu.menuLvlNo }" data-menu-url="${subMenu.menuUrl }"</c:set>
+						<c:set var="subMenuData">data-top-menu-id="${ subMenu.topMenuId}" data-menu-id="${subMenu.menuId }" data-menu-lvl-no="${subMenu.menuLvlNo }" data-menu-url="${subMenu.menuUrl }"</c:set>
 						<li data-menu-depth="2" style="<c:if test='${cnt > 1 }'><c:set value="2" var="cnt" />display:none</c:if>" ${subMenuData }>
                 			<a data-click="showSubMenu" href="#" class="side_depth1 " ${subMenuData }>${subMenu.menuNm }</a>
                 			<c:if test="${!empty subMenu.children}">
                 			<ul data-menu-depth="3" class="sub_depth2" style="display:none" ${subMenuData }>
                 				<c:forEach var="menu3" items="${ subMenu.children}">
-                				<c:set var="menu3Data">data-top-menu-cd="${ menu3.topMenuCd}" data-menu-cd="${menu3.menuCd }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }"</c:set>
+                				<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }"</c:set>
                 					<c:if test='${menu3.menuShowYn eq "Y" }'>
                 			 <li ${menu3Data }>
                 			 	<a href="#" data-click="showThirdMenu" class="side_depth2" ${menu3Data }>${menu3.menuNm }</a>
@@ -72,7 +72,7 @@
                 			 		<ul class="sub_depth3" ${menu3Data }> 
                 			 		<c:forEach var="menu4" items="${ menu3.children}">
                 			 			<c:if test='${menu4.menuShowYn eq "Y" }'>
-                			 			<c:set var="menu4Data">data-top-menu-cd="${ menu4.topMenuCd}" data-menu-cd="${menu4.menuCd }" data-menu-lvl-no="${menu4.menuLvlNo }" data-menu-url="${menu4.menuUrl }"</c:set>
+                			 			<c:set var="menu4Data">data-top-menu-id="${ menu4.topMenuId}" data-menu-id="${menu4.menuId }" data-menu-lvl-no="${menu4.menuLvlNo }" data-menu-url="${menu4.menuUrl }"</c:set>
                 			 			<li ${menu4Data }>
                 			 				<a href="#" data-click="showFourthMenu" class="side_depth3" ${menu4Data }>${menu4.menuNm }</a>
                 			 			</li>
@@ -149,16 +149,16 @@
     
     function showToplevelMenu(element,data){
     	$("li[data-menu-depth=2]").hide();
-    	$("li[data-menu-depth=2][data-top-menu-cd="+data.topMenuCd+"]").show();
+    	$("li[data-menu-depth=2][data-top-menu-id="+data.topMenuId+"]").show();
     	
     	const toggleHeader = $('#full-toggle'), sideHeader = $('.header_side');
 		
     	sideHeader.addClass('show-side');
         toggleHeader.addClass('open-side');
-        showSecondMenu(data.menuCd);
+        showSecondMenu(data.menuId);
     }
     function showSubMenu(element,data){
-    	showSecondMenu(data.menuCd);
+    	showSecondMenu(data.menuId);
     	if(data.menuUrl){
     		goMenu(data);
     	}
@@ -175,13 +175,13 @@
     function openContentsTab(menu){
     	location.href= "/" + menu.menuUrl;
     }
-    function showSecondMenu(menuCd){
-    	var $li = $("li[data-menu-depth=2][data-menu-cd="+menuCd+"]");
+    function showSecondMenu(menuId){
+    	var $li = $("li[data-menu-depth=2][data-menu-id="+menuId+"]");
     	$("ul[data-menu-depth=3]").hide();
-    	$("ul[data-menu-depth=3][data-menu-cd="+menuCd+"]").show();
+    	$("ul[data-menu-depth=3][data-menu-id="+menuId+"]").show();
     	
     	$(".side_depth1").removeClass("active");
-    	$(".side_depth1[data-menu-cd="+menuCd+"]").addClass("active");
+    	$(".side_depth1[data-menu-id="+menuId+"]").addClass("active");
 //     	$(".sub_depth2").removeClass("active");
 //     	$li.find(".sub_depth2").addClass("active");
     	

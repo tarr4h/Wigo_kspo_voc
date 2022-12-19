@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "crmUserWdgt", "{menuCd}/crmUserWdgt" })
+@RequestMapping(value = { "crmUserWdgt", "{menuId}/crmUserWdgt" })
 public class CrmUserWdgtController{
 
 @Autowired

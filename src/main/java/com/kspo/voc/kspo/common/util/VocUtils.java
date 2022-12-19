@@ -1,27 +1,32 @@
 package com.kspo.voc.kspo.common.util;
 
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kspo.base.common.model.AbstractTreeVo;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
-import com.kspo.base.common.util.BaseUtilities;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.service.VocComnService;
 import com.kspo.voc.sys.model.CrmComnCdBaseVo;
 import com.kspo.voc.sys.model.CrmEmpBaseVo;
 import com.kspo.voc.sys.model.CrmOrgBaseVo;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("unchecked")
 @Component
 @Slf4j
-public class VocUtils extends BaseUtilities {
+public class VocUtils extends Utilities {
 
     private static VocComnService comnService;
 

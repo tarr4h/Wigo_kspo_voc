@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping({"vocRegistrationList", "{menuCd}/vocRegistrationList"})
+@RequestMapping({"vocRegistrationList", "{menuId}/vocRegistrationList"})
 public class VocRegistrationListController {
 
     @Autowired

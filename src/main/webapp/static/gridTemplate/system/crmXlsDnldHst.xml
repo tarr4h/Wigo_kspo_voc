@@ -13,8 +13,8 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="다운로드이력코드" field="dnldHstCd" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
-    <column name="메뉴코드" field="menuCd" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="다운로드이력코드" field="dnldHstId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
+    <column name="메뉴코드" field="menuId" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="메뉴경로" field="menuPath" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="메뉴명" field="menuNm" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="다운로드명" field="dnldNm" type="char" maxLength="100" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>

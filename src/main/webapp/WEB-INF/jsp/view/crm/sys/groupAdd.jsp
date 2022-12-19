@@ -23,9 +23,9 @@
 					</colgroup>
 					<tbody>
 			            <tr>
-			                <th><label for="grpCd">그룹아이디</label></th>
+			                <th><label for="grpId">그룹아이디</label></th>
 			                <td>
-			                	<input type="text" required="required" value='<c:out value="${group.grpCd }"/>'  class="form-control" id="grpCd" name="grpCd" placeholder="그룹아이디">
+			                	<input type="text" required="required" value='<c:out value="${group.grpId }"/>'  class="form-control" id="grpId" name="grpId" placeholder="그룹아이디">
 			                </td>
 			            </tr>
 						<tr>
@@ -68,9 +68,9 @@
                 });
             });
             function validate(param){
-                if(!param.grpCd){
+                if(!param.grpId){
                     alert("그룹 아이디는 필수 입니다.");
-                    $("#userCd").focus();
+                    $("#userId").focus();
                     return false;
                 }
                   if(!param.grpNm){

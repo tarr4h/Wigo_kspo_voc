@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = {"myInfo","{menuCd}/myInfo"})
+@RequestMapping(value = {"myInfo","{menuId}/myInfo"})
 public class CrmMyInfoController {
 	@Autowired
 	CrmUserService userService;

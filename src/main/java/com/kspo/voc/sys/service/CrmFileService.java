@@ -42,9 +42,9 @@ public class CrmFileService extends AbstractCrmService {
 		String saveFileName = getSaveFileName( fileInfo.getFileSaveNm());
 		Utilities.deleteFile(new File(saveFileName));
 		int ret = super.delete(param);
-		String fileCd = fileInfo.getFileCd();
+		String fileId = fileInfo.getFileId();
 		EzMap so = new EzMap();
-		so.setString("fileCd", fileCd);
+		so.setString("fileId", fileId);
 		int cnt = getListCount(so);
 		if(cnt == 0) {
 			String dir = Utilities.getFilePath( saveFileName);
@@ -77,7 +77,7 @@ public class CrmFileService extends AbstractCrmService {
 		}
 
 		String ctgryCd = fileInfo.getFileCtgryCd();
-		String subUrl = fileInfo.getFileCd() + "/";
+		String subUrl = fileInfo.getFileId() + "/";
 		String fileName = fileInfo.getFileNm();
 
 		// 완료후
@@ -90,9 +90,9 @@ public class CrmFileService extends AbstractCrmService {
 		if (ctgryCd.endsWith("/"))
 			ctgryCd = ctgryCd.substring(0, ctgryCd.length() - 1);
 
-		String fileCd = fileInfo.getFileCd();
+		String fileId = fileInfo.getFileId();
 
-		subUrl = ctgryCd + "/" + fileCd + "/";
+		subUrl = ctgryCd + "/" + fileId + "/";
 		String subFileName = subUrl + fileName;
 		fileInfo.setFileUrl( getFileUrlName(subFileName));
 		fileInfo.setFileSaveNm( subFileName);
@@ -118,19 +118,19 @@ public class CrmFileService extends AbstractCrmService {
 
 	}
 
-	public void deleteFileCd(String fileCd) throws Exception {
-		if (Utilities.isEmpty(fileCd))
+	public void deleteFileId(String fileId) throws Exception {
+		if (Utilities.isEmpty(fileId))
 			return;
 		EzMap fileSo = new EzMap();
-		fileSo.setString("fileCd", fileCd);
+		fileSo.setString("fileId", fileId);
 		List<CrmFileVo> fileList = dao.selectList(fileSo);
 		deleteList(fileList);
 
 	}
 
-	public int getMaxFileSeq(String fileCd) throws Exception {
+	public int getMaxFileSeq(String fileId) throws Exception {
 		EzMap param = new EzMap();
-		param.setString("fileCd", fileCd);
+		param.setString("fileId", fileId);
 		return dao.selectMaxFileSeq(param);
 	}
 

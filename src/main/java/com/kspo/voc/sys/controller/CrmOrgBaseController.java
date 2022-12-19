@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "organization", "{menuCd}/organization" })
+@RequestMapping(value = { "organization", "{menuId}/organization" })
 public class CrmOrgBaseController{
 
 @Autowired

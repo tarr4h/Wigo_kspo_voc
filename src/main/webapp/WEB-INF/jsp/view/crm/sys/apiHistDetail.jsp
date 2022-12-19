@@ -28,7 +28,7 @@
 						<tr>
                              <th>API이력코드</th>
                             <td>
-                                ${hist.apiHstCd }
+                                ${hist.apiHstId }
                             </td>
                             <th>호출일시</th>
                             <td>

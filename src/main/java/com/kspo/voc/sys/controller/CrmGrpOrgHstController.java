@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "grpOrgHst", "{menuCd}/grpOrgHst" })
+@RequestMapping(value = { "grpOrgHst", "{menuId}/grpOrgHst" })
 public class CrmGrpOrgHstController{
 
 @Autowired

@@ -13,8 +13,8 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="그룹조직이력코드" field="grpOrgHstCd" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
-    <column name="그룹코드" field="grpCd" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="그룹조직이력코드" field="grpOrgHstId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
+    <column name="그룹코드" field="grpId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="그룹" field="grpNm" type="char" maxLength="20" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="조직ID" field="orgId" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="조직명" field="orgNm" type="char" maxLength="10" width="80" textAlignment="center" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="N"/>

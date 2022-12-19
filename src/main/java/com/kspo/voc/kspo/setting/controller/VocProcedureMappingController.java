@@ -20,7 +20,7 @@ import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.setting.service.VocProcedureMappingService;
 
 @Controller
-@RequestMapping({"vocProcedureMapping", "{menuCd}/vocProcedureMapping"})
+@RequestMapping({"vocProcedureMapping", "{menuId}/vocProcedureMapping"})
 public class VocProcedureMappingController {
 
     @Autowired

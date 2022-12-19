@@ -1,12 +1,24 @@
 package com.kspo.base.common.util.ftp;
 
-import com.jcraft.jsch.*;
-import com.kspo.base.common.util.BaseUtilities;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Vector;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpATTRS;
+import com.jcraft.jsch.SftpException;
+import com.kspo.voc.comn.util.Utilities;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.*;
-import java.util.Vector;
 
 /**
  * 
@@ -58,9 +70,9 @@ public class SFtpClient implements IFtpClient {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public String sendFile(String localFileName, String serverFileName) throws Exception {
-		String path = BaseUtilities.getFilePath(serverFileName);
-		String fileName = BaseUtilities.getFileNameWithoutExtension(serverFileName);
-		String fileExt = BaseUtilities.getFileExtension(serverFileName);
+		String path = Utilities.getFilePath(serverFileName);
+		String fileName = Utilities.getFileNameWithoutExtension(serverFileName);
+		String fileExt = Utilities.getFileExtension(serverFileName);
 		try {
 			sftpAttrs = channelSftp.stat(path);
 		} catch (Exception e) {
@@ -72,7 +84,7 @@ public class SFtpClient implements IFtpClient {
 				String[] arr = path.split("/");
 				for (int i = 0; i < arr.length; i++) {
 					String str = arr[i];
-					if (BaseUtilities.isNotEmpty(str)) {
+					if (Utilities.isNotEmpty(str)) {
 						cPath += "/" + str;
 						try {
 							channelSftp.stat(cPath);
@@ -131,16 +143,16 @@ public class SFtpClient implements IFtpClient {
 	@Override
 	public String receiveFile(String serverFileNm, String localFileName) throws Exception {
 		File file = new File(localFileName);
-		String path = BaseUtilities.getFilePath(localFileName);
-		String fileName = BaseUtilities.getFileNameWithoutExtension(localFileName);
-		String fileExt = BaseUtilities.getFileExtension(localFileName);
+		String path = Utilities.getFilePath(localFileName);
+		String fileName = Utilities.getFileNameWithoutExtension(localFileName);
+		String fileExt = Utilities.getFileExtension(localFileName);
 		int cnt = 1;
 		while (file.exists()) {
 			cnt++;
 			localFileName = path + "/" + fileName + "(" + cnt + ")." + fileExt;
 			file = new File(localFileName);
 		}
-		BaseUtilities.createDirectory(path);
+		Utilities.createDirectory(path);
 		InputStream in = null;
 		OutputStream out = null;
 		try {

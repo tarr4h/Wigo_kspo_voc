@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping( value = { "commCode", "{menuCd}/commCode" } )
+@RequestMapping( value = { "commCode", "{menuId}/commCode" } )
 public class CrmComnCdController {
 	@Autowired
     CrmComnCdService service;

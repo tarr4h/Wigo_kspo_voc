@@ -31,7 +31,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = { "address","{menuCd}/address" })
+@RequestMapping(value = { "address","{menuId}/address" })
 public class CrmAddressController {
 	@Autowired
 	CrmAddressService service;

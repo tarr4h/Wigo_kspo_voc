@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpMenuHstDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_MENU_HST_CD   =       #{grpMenuHstCd}
+                WHERE GRP_MENU_HST_ID   =       #{grpMenuHstId}
     </sql>
     <sql id="sqlCols">
-                      GRP_MENU_HST_CD                    /*그룹메뉴이력코드        */
-                    , GRP_CD                    /*그룹코드        */
-                    , MENU_CD                    /*메뉴코드        */
+                      GRP_MENU_HST_ID                    /*그룹메뉴이력코드        */
+                    , GRP_ID                    /*그룹코드        */
+                    , MENU_ID                    /*메뉴코드        */
                     , DEL_YN                    /*삭제여부        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
@@ -16,40 +16,40 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpMenuHstCd != null and grpMenuHstCd != ''">
+        <if test="grpMenuHstId != null and grpMenuHstId != ''">
             <choose>
-                <when test="grpMenuHstCd instanceof String">
-                              AND A.RP_MENU_HST_CD   =       #{grpMenuHstCd}
+                <when test="grpMenuHstId instanceof String">
+                              AND A.RP_MENU_HST_CD   =       #{grpMenuHstId}
                 </when>
                 <otherwise>
-                    AND A.GRP_MENU_HST_CD   IN
-                    <foreach item="item" index="index" collection="grpMenuHstCd" open="(" separator="," close=")">
+                    AND A.GRP_MENU_HST_ID   IN
+                    <foreach item="item" index="index" collection="grpMenuHstId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND A.GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND A.GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND A.GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND A.GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="menuCd != null and menuCd != ''">
+        <if test="menuId != null and menuId != ''">
             <choose>
-                <when test="menuCd instanceof String">
-                              AND A.MENU_CD           =       #{menuCd}
+                <when test="menuId instanceof String">
+                              AND A.MENU_ID           =       #{menuId}
                 </when>
                 <otherwise>
-                    AND A.MENU_CD           IN
-                    <foreach item="item" index="index" collection="menuCd" open="(" separator="," close=")">
+                    AND A.MENU_ID           IN
+                    <foreach item="item" index="index" collection="menuId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -74,15 +74,15 @@
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
                  FROM TB_SYS_GRP_MENU_HST A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN TB_SYS_MENU_BAS C ON A.MENU_CD = C.MENU_CD
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID
+                INNER JOIN TB_SYS_MENU_BAS C ON A.MENU_ID = C.MENU_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.CrmGrpMenuHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT A.GRP_MENU_HST_CD                    /*그룹메뉴이력코드        */
-                    , A.GRP_CD                    /*그룹코드        */
-                    , A.MENU_CD                    /*메뉴코드        */
+               SELECT A.GRP_MENU_HST_ID                    /*그룹메뉴이력코드        */
+                    , A.GRP_ID                    /*그룹코드        */
+                    , A.MENU_ID                    /*메뉴코드        */
                     , A.DEL_YN                    /*삭제여부        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
@@ -93,11 +93,11 @@
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
                          WHERE 1=1
-                         START WITH MENU_CD = A.MENU_CD 
-                       CONNECT BY PRIOR PRNTS_MENU_CD = MENU_CD ) MENU_PATH
+                         START WITH MENU_ID = A.MENU_ID 
+                       CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                  FROM TB_SYS_GRP_MENU_HST A
-                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_CD = B.GRP_CD
-                INNER JOIN TB_SYS_MENU_BAS C ON A.MENU_CD = C.MENU_CD
+                INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID
+                INNER JOIN TB_SYS_MENU_BAS C ON A.MENU_ID = C.MENU_ID
         <include refid="sqlConditions"/>
                ORDER BY A.REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingFooter"/>
@@ -112,8 +112,8 @@
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GMH')
-                     , #{grpCd}
-                     , #{menuCd}
+                     , #{grpId}
+                     , #{menuId}
                      , 'N'
                      , #{regrId}
                      , SYSDATE
@@ -126,8 +126,8 @@
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GMH')
-                     , #{grpCd}
-                     , #{menuCd}
+                     , #{grpId}
+                     , #{menuId}
                      , 'Y'
                      , #{regrId}
                      , SYSDATE
@@ -137,8 +137,8 @@
     </insert>
     <update id="update">
                UPDATE TB_SYS_GRP_MENU_HST
-                  SET GRP_CD              =         #{grpCd}
-                    , MENU_CD             =         #{menuCd}
+                  SET GRP_ID              =         #{grpId}
+                    , MENU_ID             =         #{menuId}
                     , DEL_YN              =         #{delYn}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE

@@ -96,7 +96,7 @@ public class VocRegistrationService extends VocAbstractService {
             regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
             deadline += prcd.getDeadline();
             regPrcd.setDeadlineDt(VocUtils.setDefaultDeadlineDate(deadline));
-            regPrcd.setModUsr(Utilities.getLoginUserCd());
+            regPrcd.setModUsr(Utilities.getLoginId());
 
             dao.insertRegProcedure(regPrcd);
         }

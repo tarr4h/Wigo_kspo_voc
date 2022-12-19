@@ -13,7 +13,7 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>그룹메뉴이력코드</p> 
     */
-    private String grpMenuHstCd;
+    private String grpMenuHstId;
     
     /**
     * <p>삭제여부</p> 

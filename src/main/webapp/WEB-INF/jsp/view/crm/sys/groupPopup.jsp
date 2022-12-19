@@ -41,8 +41,8 @@ function onGridLoad(){
 function search()
 {
     var url = "<c:url value='${urlPrefix}/group/getGroupCheckList${urlSuffix}'/>";
-    var param = {userCd : '<c:out value="${userCd}"/>',
-                 menuCd : '<c:out value="${menuCd}"/>'
+    var param = {userId : '<c:out value="${userId}"/>',
+                 menuId : '<c:out value="${menuId}"/>'
             };
     grdList.loadUrl(url,param);
 }
@@ -51,8 +51,8 @@ function saveGroupChecked(){
     for(var i=0;i<list.length;i++){
         list[i].checkYn='Y';
         
-        list[i].userCd='<c:out value="${userCd}"/>';
-        list[i].menuCd='<c:out value="${menuCd}"/>';
+        list[i].userId='<c:out value="${userId}"/>';
+        list[i].menuId='<c:out value="${menuId}"/>';
         list[i].menuRegAuthYn='Y';
         list[i].menuReadAuthYn='Y';
         list[i].menuAmdAuthYn='Y';
@@ -60,7 +60,7 @@ function saveGroupChecked(){
         
     }
     if(Utilities.getOpener().saveGroupChecked)
-    	Utilities.getOpener().saveGroupChecked('<c:out value="${userCd}"/>' || '<c:out value="${menuCd}"/>',list);
+    	Utilities.getOpener().saveGroupChecked('<c:out value="${userId}"/>' || '<c:out value="${menuId}"/>',list);
     Utilities.closeModal();
 }
 </script>

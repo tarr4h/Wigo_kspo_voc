@@ -27,7 +27,7 @@
     <column name="게시종료일시" field="postEndDt" type="date" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="공지시작일시" field="noteStaDt" type="date" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="공지종료일시" field="noteEndDt" type="date" width="80" textAlignment="center" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
-    <column name="파일코드" field="fileCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="파일코드" field="fileId" type="char" maxLength="20" width="80" textAlignment="left" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="게시물비밀번호" field="ntcartPwd" type="char" maxLength="1000" width="80" textAlignment="left" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="등록자ID" field="regrId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="N"/>
     <column name="등록일시" field="regDt" type="datetime" width="100" textAlignment="center" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="N"/>

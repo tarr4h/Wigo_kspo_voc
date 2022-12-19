@@ -13,6 +13,6 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>사용자코드</p> 
     */
-    private String userCd;
+    private String userId;
 
 }

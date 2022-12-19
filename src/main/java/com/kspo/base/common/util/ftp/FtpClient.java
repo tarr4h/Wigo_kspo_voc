@@ -1,12 +1,21 @@
 package com.kspo.base.common.util.ftp;
 
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
+
+import com.kspo.voc.comn.util.Utilities;
+
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.net.ftp.*;
-
-import com.kspo.base.common.util.BaseUtilities;
-
-import java.io.*;
 
 /**
  * 
@@ -62,16 +71,16 @@ public class FtpClient implements IFtpClient {
 
 	@Override
 	public String sendFile(String localFileName, String serverFileName) throws Exception {
-		String path = BaseUtilities.getFilePath(serverFileName);
-		String fileName = BaseUtilities.getFileNameWithoutExtension(serverFileName);
-		String fileExt = BaseUtilities.getFileExtension(serverFileName);
+		String path = Utilities.getFilePath(serverFileName);
+		String fileName = Utilities.getFileNameWithoutExtension(serverFileName);
+		String fileExt = Utilities.getFileExtension(serverFileName);
 		BufferedInputStream bi = null;
 		try {
 			File f = new File(localFileName);
 			bi = new BufferedInputStream(new FileInputStream(f.getPath()));
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			// FTP 서버의 폴더...
-			if (BaseUtilities.isNotEmpty(path)) {
+			if (Utilities.isNotEmpty(path)) {
 				if (!ftpClient.changeWorkingDirectory(path)) {
 					ftpClient.mkd(path);
 					ftpClient.changeWorkingDirectory(path);
@@ -101,19 +110,19 @@ public class FtpClient implements IFtpClient {
 	@Override
 	public String receiveFile(String serverFileNm, String localFileName) throws Exception {
 		File file = new File(localFileName);
-		String path = BaseUtilities.getFilePath(localFileName);
+		String path = Utilities.getFilePath(localFileName);
 
-		String fileName = BaseUtilities.getFileNameWithoutExtension(localFileName);
-		String fileExt = BaseUtilities.getFileExtension(localFileName);
+		String fileName = Utilities.getFileNameWithoutExtension(localFileName);
+		String fileExt = Utilities.getFileExtension(localFileName);
 		int cnt = 1;
 		while (file.exists()) {
 			cnt++;
 			localFileName = path + "/" + fileName + "(" + cnt + ")." + fileExt;
 			file = new File(localFileName);
 		}
-		String serverPath = BaseUtilities.getFilePath(serverFileNm);
-		String serverFileName = BaseUtilities.getFileName(serverFileNm);
-		if (BaseUtilities.isEmpty(serverPath))
+		String serverPath = Utilities.getFilePath(serverFileNm);
+		String serverFileName = Utilities.getFileName(serverFileNm);
+		if (Utilities.isEmpty(serverPath))
 			serverPath = "/";
 		FileOutputStream fo = null;
 		try {
@@ -121,7 +130,7 @@ public class FtpClient implements IFtpClient {
 			// 로컬경로 및 파일 중복 확인
 			ftpClient.changeWorkingDirectory(serverPath);
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			BaseUtilities.createDirectory(path);
+			Utilities.createDirectory(path);
 
 			fo = new FileOutputStream(localFileName);
 			ftpClient.retrieveFile(serverFileName, fo);

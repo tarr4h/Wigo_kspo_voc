@@ -20,7 +20,7 @@ public class Constants {
 	public static final String _USER_MENU_LIST_NAME = "USER_MENU_LIST";
 	public static final String _USER_MENU_MAP_NAME = "USER_MENU_MAP";
 	public static final String _USER_SYSTEM_LIST_NAME = "USER_SYSTEM_LIST";
-	public static final String _LOGIN_ID = "userCd";
+	public static final String _LOGIN_ID = "userId";
 	public static final String _LOGIN_STATE_KEY = "state";
 
 	public static int _ERROR_NEED_LOGIN = 462;

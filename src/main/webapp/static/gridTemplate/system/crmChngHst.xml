@@ -17,9 +17,9 @@
         <columnMove value="N"/>
         <setSort value="none"/>
     </meta>
-    <column name="변경이력코드" field="chngHstCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="변경이력코드" field="chngHstId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
     <column name="메뉴" field="menuPath" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="N"/>
-    <column name="메뉴코드" field="menuCd" type="char" maxLength="20" width="80" textAlignment="center" required="N" hidden="Y"/>
+    <column name="메뉴코드" field="menuId" type="char" maxLength="20" width="80" textAlignment="center" required="N" hidden="Y"/>
     <column name="URL" field="chngCallUrl" type="char" maxLength="1000" width="200" textAlignment="left" required="N" hidden="N"/>
     <column name="변경결과내역" field="chngRsltTxn" type="char" width="80" textAlignment="left" required="N" hidden="Y"/>
     <column name="변경파라미터내역" field="chngParamTxn" type="char" width="80" textAlignment="left" required="N" hidden="Y"/>

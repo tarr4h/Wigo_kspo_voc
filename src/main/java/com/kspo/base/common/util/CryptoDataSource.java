@@ -2,6 +2,8 @@ package com.kspo.base.common.util;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.kspo.voc.comn.util.Utilities;
+
 /**
  * 
 * <pre>
@@ -21,7 +23,7 @@ public class CryptoDataSource extends DriverManagerDataSource {
 	@Override
     public synchronized void setUrl(String url) {
         try {
-			super.setUrl(BaseUtilities.decrypt(url));
+			super.setUrl(Utilities.decrypt(url));
 		} catch (Exception e) {
 			super.setUrl(url);
 		}
@@ -30,7 +32,7 @@ public class CryptoDataSource extends DriverManagerDataSource {
     @Override
     public void setUsername(String username) {
         try {
-			super.setUsername(BaseUtilities.decrypt(username));
+			super.setUsername(Utilities.decrypt(username));
 		} catch (Exception e) {
 			super.setUsername(username);
 		}
@@ -39,7 +41,7 @@ public class CryptoDataSource extends DriverManagerDataSource {
     @Override
     public void setPassword(String password) {
         try {
-			super.setPassword(BaseUtilities.decrypt(password));
+			super.setPassword(Utilities.decrypt(password));
 		} catch (Exception e) {
 			super.setPassword(password);
 		}

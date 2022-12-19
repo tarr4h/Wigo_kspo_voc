@@ -1,13 +1,5 @@
 package com.kspo.base.common.util;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.mail.Message.RecipientType;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +7,21 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Message.RecipientType;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
+
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -33,18 +40,18 @@ import java.util.Properties;
 
 public class MailUtil {
 	public static boolean sendMail(String emailTo, String subject, String body,List<String> attFiles,List<String> dispnames) throws Exception {
-		boolean ssl = BaseUtilities.getPropertyBoolean("smtp.ssl");
-		String host = BaseUtilities.getProperty("smtp.host");
-		int port = BaseUtilities.getPropertyInt("smtp.port");
-//		String userTmp =  BaseUtilities.encrypt(BaseUtilities.getProperty("smtp.user"));
-		String userTmp = BaseUtilities.getProperty("smtp.user");
-		String user = BaseUtilities.decrypt(userTmp);
-//		String pwdTmp =  BaseUtilities.encrypt(BaseUtilities.getProperty("smtp.pwd"));
-		String pwdTmp = BaseUtilities.getProperty("smtp.pwd");
-		String password = BaseUtilities.decrypt(pwdTmp);
+		boolean ssl = Utilities.getPropertyBoolean("smtp.ssl");
+		String host = Utilities.getProperty("smtp.host");
+		int port = Utilities.getPropertyInt("smtp.port");
+//		String userTmp =  Utilities.encrypt(Utilities.getProperty("smtp.user"));
+		String userTmp = Utilities.getProperty("smtp.user");
+		String user = Utilities.decrypt(userTmp);
+//		String pwdTmp =  Utilities.encrypt(Utilities.getProperty("smtp.pwd"));
+		String pwdTmp = Utilities.getProperty("smtp.pwd");
+		String password = Utilities.decrypt(pwdTmp);
 		// 메일 옵션 설정
-		String nameFrom = BaseUtilities.getProperty("smtp.sender.name");
-		String emailFrom = BaseUtilities.getProperty("smtp.sender.email");
+		String nameFrom = Utilities.getProperty("smtp.sender.name");
+		String emailFrom = Utilities.getProperty("smtp.sender.email");
 		Properties props = new Properties();
 		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.host", host);
@@ -59,7 +66,7 @@ public class MailUtil {
 			props.put("mail.smtp.socketFactory.fallback", "false");
 		}
 		Session session = null;
-		if (BaseUtilities.isEmpty(user) || BaseUtilities.isEmpty(password)) {
+		if (Utilities.isEmpty(user) || Utilities.isEmpty(password)) {
 			session = Session.getInstance(props);
 		} else {
 			session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {

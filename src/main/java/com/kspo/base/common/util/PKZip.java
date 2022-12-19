@@ -1,13 +1,21 @@
 
 package com.kspo.base.common.util;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.List;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
-import java.io.*;
-import java.util.Enumeration;
-import java.util.List;
+import com.kspo.voc.comn.util.Utilities;
 
 
 /**
@@ -67,8 +75,8 @@ public final class PKZip
             //  }
             //  else
                 strTargetFile=strTargetDir+entry.getName();
-                String strDir = BaseUtilities.getFilePath(strTargetFile);
-                BaseUtilities.createDirectory(strDir);
+                String strDir = Utilities.getFilePath(strTargetFile);
+                Utilities.createDirectory(strDir);
                 if(UnZip(zipFile.getInputStream( entry),strTargetFile)==false)
                     return false;
 
@@ -78,11 +86,11 @@ public final class PKZip
 
         catch(FileNotFoundException e)
         {
-            BaseUtilities.trace(e);
+            Utilities.trace(e);
         }
         catch(IOException ex)
         {
-            BaseUtilities.trace(ex);
+            Utilities.trace(ex);
         }
         finally
         {
@@ -119,22 +127,22 @@ public final class PKZip
         }
         catch(FileNotFoundException e)
         {
-            BaseUtilities.trace(e);
+            Utilities.trace(e);
         }
         catch(IOException ex)
         {
-            BaseUtilities.trace(ex);
+            Utilities.trace(ex);
         }
         catch(NullPointerException nex)
         {
-            BaseUtilities.trace(nex);
+            Utilities.trace(nex);
         }
         return false;
 
     }
     static public boolean zip( String zipName, String target ) 
      {
-         if(BaseUtilities.isEmpty(zipName)|| BaseUtilities.isEmpty(target))
+         if(Utilities.isEmpty(zipName)|| Utilities.isEmpty(target))
              return false;
          BufferedInputStream origin = null;
          ZipArchiveOutputStream zout = null;
@@ -158,7 +166,7 @@ public final class PKZip
          }
          catch (Exception e) 
          {
-             BaseUtilities.trace(e);
+             Utilities.trace(e);
              return false;
          }
          finally 
@@ -170,12 +178,12 @@ public final class PKZip
              }
              catch (IOException e) 
              {
-                 BaseUtilities.trace(e);
+                 Utilities.trace(e);
              }
          }
      }
     static public boolean zip(String zipName,List<File> targets,List<String> dispNames){
-        if(BaseUtilities.isEmpty(zipName)|| BaseUtilities.isEmpty(targets))
+        if(Utilities.isEmpty(zipName)|| Utilities.isEmpty(targets))
              return false;
         ZipArchiveOutputStream zout = null;
          File fZip = new File(zipName);
@@ -191,7 +199,7 @@ public final class PKZip
                  String dispName = file.getName();
                  if(!file.isFile())
                      continue;
-                 if(BaseUtilities.isNotEmpty(dispNames) && dispNames.size()> idx){
+                 if(Utilities.isNotEmpty(dispNames) && dispNames.size()> idx){
                      dispName = dispNames.get(idx);
                  }
                  addEntry(zout,dispName,file);
@@ -202,7 +210,7 @@ public final class PKZip
          }
          catch (Exception e) 
          {
-             BaseUtilities.trace(e);
+             Utilities.trace(e);
              return false;
          }
          finally 
@@ -214,13 +222,13 @@ public final class PKZip
              }
              catch (IOException e) 
              {
-                 BaseUtilities.trace(e);
+                 Utilities.trace(e);
              }
          }
     }
     static public boolean zip( String zipName, List<String> targets ) 
      {
-         if(BaseUtilities.isEmpty(zipName)|| BaseUtilities.isEmpty(targets))
+         if(Utilities.isEmpty(zipName)|| Utilities.isEmpty(targets))
              return false;
          BufferedInputStream origin = null;
          ZipArchiveOutputStream zout = null;
@@ -254,7 +262,7 @@ public final class PKZip
          }
          catch (Exception e) 
          {
-             BaseUtilities.trace(e);
+             Utilities.trace(e);
              return false;
          }
          finally 
@@ -266,7 +274,7 @@ public final class PKZip
              }
              catch (IOException e) 
              {
-                 BaseUtilities.trace(e);
+                 Utilities.trace(e);
              }
          }
      }
@@ -295,7 +303,7 @@ public final class PKZip
                     }
                     catch (IOException e) 
                     {
-                        BaseUtilities.trace(e);
+                        Utilities.trace(e);
                     }
                     finally 
                     {
@@ -306,7 +314,7 @@ public final class PKZip
                         }
                         catch (IOException e) 
                         {
-                            BaseUtilities.trace(e);
+                            Utilities.trace(e);
                         }
                     }   
                 }
@@ -336,7 +344,7 @@ public final class PKZip
             }
             catch (IOException e) 
             {
-                BaseUtilities.trace(e);
+                Utilities.trace(e);
             }
             finally
             {
@@ -347,7 +355,7 @@ public final class PKZip
                 }
                 catch (IOException e) 
                 {
-                    BaseUtilities.trace(e);
+                    Utilities.trace(e);
                 }
             }
     }

@@ -72,13 +72,13 @@ public class LogDaoAspect implements Interceptor {
 			return;
 
 		CrmLoginUserVo user = SessionUtil.getLoginUser();
-		String userCd = user == null ? null : user.getLoginId();
-		if (Utilities.isEmpty(userCd))
-			userCd = "SYSTEM";
+		String userId = user == null ? null : user.getLoginId();
+		if (Utilities.isEmpty(userId))
+			userId = "SYSTEM";
 		String reqUrl = Utilities.getRequest() == null ? null : Utilities.getRequest().getRequestURI();
 		hist.setInLogMode(true);
-		hist.setUserCd(userCd);
-		hist.setMenuCd(menu.getMenuCd());
+		hist.setUserId(userId);
+		hist.setMenuId(menu.getMenuId());
 		hist.setChngCallUrl(reqUrl);
 		hist.addStack(jp.getStaticPart().toLongString(), jp.getArgs());
 	}

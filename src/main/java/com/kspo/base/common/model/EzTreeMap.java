@@ -5,7 +5,7 @@ package com.kspo.base.common.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -106,7 +106,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 	@Override
 	public Object put(String key, Object value) {
 		Object ret =  super.put(key, value);
-		key = BaseUtilities.convert2CamelCase(key);
+		key = Utilities.convert2CamelCase(key);
 //		if("lvl".equals(key))
 //			setInt("level",value);
 //		if("icon".equals(key)) 
@@ -146,7 +146,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 		list.add(vo);
 		vo.setParent(this);
 //		setIcon(_FOLDER_ICON);
-//		if(BaseUtilities.isEmpty(getIcon()))
+//		if(Utilities.isEmpty(getIcon()))
 //			put("selectedItem", "fas fa-book");
 		
 	}
@@ -154,7 +154,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 	@Override
 	public int getChildrenCount() {
 		List<ITreeVo> list = getChildren();
-		if(BaseUtilities.isEmpty(list))
+		if(Utilities.isEmpty(list))
 			return 0;
 		return list.size();
 //		int ret = 0;
@@ -176,7 +176,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 	public void setNodes(List<ITreeVo> nodes) {
 //		put("nodes",nodes);
 		put("children",nodes);
-//		if(BaseUtilities.isNotEmpty(nodes))
+//		if(Utilities.isNotEmpty(nodes))
 //			setIcon(_FOLDER_ICON);
 //		else
 //			setIcon(_LEAF_ICON);
@@ -240,10 +240,10 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 	}
 	public String getIcon() {
 		String icon = getString("icon");
-		if(BaseUtilities.isNotEmpty(icon))
+		if(Utilities.isNotEmpty(icon))
 			return icon;
 		List<ITreeVo> list = getChildren();
-		if (BaseUtilities.isEmpty(list))
+		if (Utilities.isEmpty(list))
 			return getLeafIcon();
 		else
 			return getFolderIcon();

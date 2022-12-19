@@ -28,7 +28,7 @@ public class MenuNameTag extends TagSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 6129581713388769101L;
-    private String menuCd;
+    private String menuId;
     
     private CrmMenuService service = Utilities.getBean("menuService");
 	
@@ -36,7 +36,7 @@ public class MenuNameTag extends TagSupport {
     public int doStartTag() throws JspException {
     	
     	EzMap param = new EzMap();
-    	param.put("menuCd",getMenuCd());
+    	param.put("menuId",getMenuId());
     	try {
     		EzMap menu  = service.get(param);
     		if(menu!=null)
@@ -46,11 +46,11 @@ public class MenuNameTag extends TagSupport {
 		}
     	return SKIP_BODY;
     }
-	public String getMenuCd() {
-		return menuCd;
+	public String getMenuId() {
+		return menuId;
 	}
-	public void setMenuCd(String menuCd) {
-		this.menuCd = menuCd;
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
 	}
 	
 	

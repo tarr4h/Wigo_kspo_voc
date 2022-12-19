@@ -13,7 +13,7 @@ import com.kspo.voc.sys.service.CrmGenGridService;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "genGrid","{menuCd}/genGrid" })
+@RequestMapping(value = { "genGrid","{menuId}/genGrid" })
 public class CrmGenGridController {
 	@Autowired
 	CrmGenGridService service;

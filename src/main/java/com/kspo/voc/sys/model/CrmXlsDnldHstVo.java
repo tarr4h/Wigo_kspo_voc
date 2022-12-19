@@ -17,13 +17,13 @@ public class CrmXlsDnldHstVo extends BaseVo {
 	 * 다운로드이력코드
 	 * </p>
 	 */
-	private String dnldHstCd;
+	private String dnldHstId;
 	/**
 	 * <p>
 	 * 메뉴코드
 	 * </p>
 	 */
-	private String menuCd;
+	private String menuId;
 	/**
 	 * <p>
 	 * 다운로드명

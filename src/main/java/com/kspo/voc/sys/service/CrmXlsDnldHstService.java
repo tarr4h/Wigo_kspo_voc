@@ -20,10 +20,10 @@ public class CrmXlsDnldHstService extends AbstractCrmService {
    }
 
 public void addLog(CrmXlsDnldHstVo vo) {
-	String menuCd = Utilities.getCurrentMenuCd();
-	if(Utilities.isEmpty(menuCd))
+	String menuId = Utilities.getCurrentMenuId();
+	if(Utilities.isEmpty(menuId))
 		return ;
-	vo.setMenuCd(menuCd);
+	vo.setMenuId(menuId);
 	dao.insert(vo);
 }
 }

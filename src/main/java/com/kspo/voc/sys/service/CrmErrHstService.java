@@ -29,7 +29,7 @@ public class CrmErrHstService extends AbstractCrmService {
 			CrmErrHstVo vo = new CrmErrHstVo();
 			CrmMenuBaseVo menu = (CrmMenuBaseVo) request.getAttribute("currentMenu");
 			if (menu != null) {
-				vo.setMenuCd(menu.getMenuCd());
+				vo.setMenuId(menu.getMenuId());
 			}
 			ex.getMessage();
 			String nm = ex.getClass().getSimpleName();

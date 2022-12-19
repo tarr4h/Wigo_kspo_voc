@@ -18,7 +18,7 @@ public class ChangeLogVo extends CrmChngHstVo {
 	 * 
 	 */
 	private static final long serialVersionUID = -5373659850987208709L;
-	private String userCd;
+	private String userId;
 
 	private boolean inLogMode = false;
 	private ChangeLogElemement callStack;

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = { "notice", "{menuCd}/notice" })
+@RequestMapping(value = { "notice", "{menuId}/notice" })
 public class CrmNtcartBasController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class CrmNtcartBasController {
 		vo.setBrdId(Constants._NOTICE_BBS_ID);
 		vo.setNtcartId(Utilities.getAutoSeq("BBS"));
 		vo.setTopNtcartId(vo.getNtcartId());
-		vo.setFileCd(vo.getNtcartId());
+		vo.setFileId(vo.getNtcartId());
 		model.addAttribute("vo", vo);
 		model.addAttribute("addMode", true);
 

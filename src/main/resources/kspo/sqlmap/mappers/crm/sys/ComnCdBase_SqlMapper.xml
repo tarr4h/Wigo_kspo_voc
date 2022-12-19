@@ -411,23 +411,23 @@
                       , COMN_CD
     </sql>
      <sql id="sqlSystemCd">
-        SELECT MENU_CD COMN_CD
+        SELECT MENU_ID COMN_CD
              , MENU_NM COMN_CD_NM
           FROM TB_SYS_MENU_BAS
          WHERE  1=1 
            AND MENU_LVL_NO = 1
            AND USE_YN = 'Y'
          ORDER BY MENU_ODRG
-             , MENU_CD
+             , MENU_ID
     </sql>
     
     <sql id="sqlGroupCd">
-        SELECT GRP_CD COMN_CD
+        SELECT GRP_ID COMN_CD
              , GRP_NM COMN_CD_NM
           FROM TB_SYS_GRP_BAS
          WHERE  1=1 
          ORDER BY GRP_NM
-             , GRP_CD
+             , GRP_ID
     </sql>
     
     <select id="selectCodeCombo" resultType="com.kspo.voc.sys.model.CrmComnCdBaseVo">

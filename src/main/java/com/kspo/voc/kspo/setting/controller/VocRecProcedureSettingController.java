@@ -27,7 +27,7 @@ import com.kspo.voc.kspo.setting.model.VocTaskVo;
 import com.kspo.voc.kspo.setting.service.VocRegProcedureSettingService;
 
 @Controller
-@RequestMapping({"vocRecProcedureSetting", "{menuCd}/vocRecProcedureSetting"})
+@RequestMapping({"vocRecProcedureSetting", "{menuId}/vocRecProcedureSetting"})
 public class VocRecProcedureSettingController {
 
     @Autowired

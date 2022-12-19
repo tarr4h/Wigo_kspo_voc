@@ -18,7 +18,7 @@ import com.kspo.voc.sys.model.CrmLoginUserVo;
 import com.kspo.voc.sys.service.CrmLoginService;
 
 @Controller
-@RequestMapping(value = { "login", "logout", "{menuCd}/login", "{menuCd}/logout" })
+@RequestMapping(value = { "login", "logout", "{menuId}/login", "{menuId}/logout" })
 public class CrmLoginController {
 
 	@Autowired

@@ -15,7 +15,7 @@
     	
         
 <form role="form" id="frmSearch">
-<input type="hidden" name="exGrpCd" id="exGrpCd" value="${grpCd }" />
+<input type="hidden" name="exGrpId" id="exGrpId" value="${grpId }" />
 <input type="hidden" name="topCodeCd" id="topCodeCd" value="${topCodeCd }" />
 <div class="mSort2">
 
@@ -72,7 +72,7 @@ function addSelected(){
         return;
     }
     for(var i=0;i<list.length;i++){
-        list[i].grpCd = "${grpCd}";
+        list[i].grpId = "${grpId}";
         list[i].stat = "n";
         list[i]._attributes.checked = false;
     }

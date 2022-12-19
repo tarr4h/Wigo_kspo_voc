@@ -93,28 +93,28 @@
         if (list.length) {
             for(var i=0;i<list.length;i++){
                 var file = list[i];
-                onDownloadfile(file.fileCd,file.fileOdrg,file.fileSize);
+                onDownloadfile(file.fileId,file.fileOdrg,file.fileSize);
             }
         } else {
             alert("다운로드할 파일이 존재하지 않습니다.");  
         }
         
     }
-    function onDownloadfile(fileCd, fileOdrg, fileSize) {
+    function onDownloadfile(fileId, fileOdrg, fileSize) {
         var url = "<c:url value='${urlPrefix}/file/downloadFile'/>${urlSuffix}";
         var fnDownProg = function(loaded, total, percentComplete) {
             if (loaded && !total)
                 total = fileSize;
             if (total && !percentComplete)
                 percentComplete = loaded / total;
-            onDownloadProgress(fileCd, fileOdrg, loaded, total, percentComplete);
+            onDownloadProgress(fileId, fileOdrg, loaded, total, percentComplete);
         };
         var fnDownComp = function(returnValue, jqXHR) {
-            onDownloadComplete(fileCd, fileOdrg, fileSize, returnValue, jqXHR);
+            onDownloadComplete(fileId, fileOdrg, fileSize, returnValue, jqXHR);
         };
         var list = grdList.getJsonRows();
         for (var i = 0; i < list.length; i++) {
-            if (fileCd == list[i].fileCd && fileOdrg == list[i].fileOdrg) {
+            if (fileId == list[i].fileId && fileOdrg == list[i].fileOdrg) {
                 var json = grdList.getJsonRow(i);
                 Utilities.ajaxDownload(url, json, true, fnDownProg, fnDownComp);
 
@@ -180,16 +180,16 @@
         } else
             $("#uploadInfo_" + id).html("전송실패");
     }
-    function onDownloadProgress(fileCd, fileOdrg, loaded, total, percentComplete) {
-        var hDiv = $("div[data-type=downloadInfo][data-file-cd=" + fileCd + "][data-file-seq=" + fileOdrg + "]");
+    function onDownloadProgress(fileId, fileOdrg, loaded, total, percentComplete) {
+        var hDiv = $("div[data-type=downloadInfo][data-file-id=" + fileId + "][data-file-seq=" + fileOdrg + "]");
         var html = "전송준비중";
         if (loaded)
             html = parseInt(percentComplete * 100, 10) + " %";
         hDiv.html(html);
     }
-    function onDownloadComplete(fileCd, fileOdrg, fileSize, returnValue, jqXHR) {
-        var hDiv = $("div[data-type=downloadInfo][data-file-cd=" + fileCd + "][data-file-seq=" + fileOdrg + "]");
-        var html = '<a href="#;" onclick="onDownloadfile(\'' + fileCd + '\',\'' + fileOdrg + '\',' + fileSize
+    function onDownloadComplete(fileId, fileOdrg, fileSize, returnValue, jqXHR) {
+        var hDiv = $("div[data-type=downloadInfo][data-file-id=" + fileId + "][data-file-seq=" + fileOdrg + "]");
+        var html = '<a href="#;" onclick="onDownloadfile(\'' + fileId + '\',\'' + fileOdrg + '\',' + fileSize
                 + ')" id="btnDownload" class="mBtn1 m lWhite"><i class="fas fa-download"></i> 다운로드</a>';
         hDiv.html(html);
     }
@@ -198,9 +198,9 @@
         var url = "<c:url value='${urlPrefix}/file/getList${urlSuffix}'/>";
         var param = {
             recordCountPerPage : 1000000,
-            fileCd : "<c:out value='${fileInfo.fileCd}'/>"
+            fileId : "<c:out value='${fileInfo.fileId}'/>"
         };
-        if (!param.fileCd) {
+        if (!param.fileId) {
             alert("파일정보가 존재하지 않습니다.");
             return false;
         }
@@ -236,7 +236,7 @@
         var file = data.file;
         var fileExt = Utilities.getFileExt(file.name);
         var fileInfo = {
-            fileCd : "<c:out value='${fileInfo.fileCd}'/>",
+            fileId : "<c:out value='${fileInfo.fileId}'/>",
             fileOdrg : _fileOdrg,
             fileNm : file.name,
             fileSize : file.size,
@@ -265,7 +265,7 @@
                 return "전송완료";
             }
             //          var html = "download";
-             var html = '<div data-file-cd="'+data.fileCd+'" data-file-seq="'+data.fileOdrg+'" data-type="downloadInfo"><a href="#;" onclick="onDownloadfile(\'' + data.fileCd + '\',\''
+             var html = '<div data-file-id="'+data.fileId+'" data-file-seq="'+data.fileOdrg+'" data-type="downloadInfo"><a href="#;" onclick="onDownloadfile(\'' + data.fileId + '\',\''
                     + data.fileOdrg + '\',' + data.fileSize + ')" id="btnDownload" class="mBtn1 m lWhite"><i class="fas fa-download"></i> 다운로드</a></div>';
             return html;
         } else {
@@ -282,7 +282,7 @@
         if(opn && opn.onFileClose){
             try{
                 var fileInfo = getFileInfo();
-                opn.onFileClose( "<c:out value='${fileInfo.fileCd}'/>",grdList.getJsonRows(),fileInfo);
+                opn.onFileClose( "<c:out value='${fileInfo.fileId}'/>",grdList.getJsonRows(),fileInfo);
             }catch(e){
                 console.error(e);
             }

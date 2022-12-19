@@ -5,7 +5,7 @@ package com.kspo.base.common.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.kspo.base.common.util.BaseUtilities;
+import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class EzMap extends LinkedHashMap<String, Object> {
 		setCamel(camel);
 	}
 	public EzMap(Object object) {
-		this(BaseUtilities.beanToMap(object));
+		this(Utilities.beanToMap(object));
 	}
 	
 	@Override
@@ -60,56 +60,56 @@ public class EzMap extends LinkedHashMap<String, Object> {
 	@Override
 	public Object put(String key, Object value) {
 		if(camel)
-			key = BaseUtilities.convert2CamelCase(key);
+			key = Utilities.convert2CamelCase(key);
 		return super.put(key, value);
 	}
 
 	public String getString(String key) {
-		return BaseUtilities.nullCheck(get(key));
+		return Utilities.nullCheck(get(key));
 	}
 
 	public int getInt(String key) {
-		return BaseUtilities.parseInt(get(key));
+		return Utilities.parseInt(get(key));
 	}
 
 	public long getLong(String key) {
-		return BaseUtilities.parseLong(get(key));
+		return Utilities.parseLong(get(key));
 	}
 
 	public boolean getBoolean(String key) {
-		return BaseUtilities.parseBoolean(get(key));
+		return Utilities.parseBoolean(get(key));
 	}
 
 	public float getFloat(String key) {
-		return BaseUtilities.parseFloat(get(key));
+		return Utilities.parseFloat(get(key));
 	}
 
 	public double getDouble(String key) {
-		return BaseUtilities.parseDouble(get(key));
+		return Utilities.parseDouble(get(key));
 	}
 
 	public void setString(String key, Object value) {
-		put(key, BaseUtilities.nullCheck(value));
+		put(key, Utilities.nullCheck(value));
 	}
 
 	public void setInt(String key, Object value) {
-		put(key, BaseUtilities.parseInt(value));
+		put(key, Utilities.parseInt(value));
 	}
 
 	public void setLong(String key, Object value) {
-		put(key, BaseUtilities.parseLong(value));
+		put(key, Utilities.parseLong(value));
 	}
 
 	public void setBoolean(String key, Object value) {
-		put(key, BaseUtilities.parseBoolean(value));
+		put(key, Utilities.parseBoolean(value));
 	}
 
 	public void setFloat(String key, Object value) {
-		put(key, BaseUtilities.parseFloat(value));
+		put(key, Utilities.parseFloat(value));
 	}
 
 	public void setDouble(String key, Object value) {
-		put(key, BaseUtilities.parseDouble(value));
+		put(key, Utilities.parseDouble(value));
 	}
 
 	public EzPaginationInfo getPaginationInfo() {
@@ -134,9 +134,9 @@ public class EzMap extends LinkedHashMap<String, Object> {
 			if (currentPageNo < 1)
 				currentPageNo = 1;
 			if (pageSize < 1)
-				pageSize = BaseUtilities.getPropertyInt("pageSize");
+				pageSize = Utilities.getPropertyInt("pageSize");
 			if (recordCountPerPage < 1)
-				recordCountPerPage = BaseUtilities.getPropertyInt("recordCountPerPage");
+				recordCountPerPage = Utilities.getPropertyInt("recordCountPerPage");
 			if (totalRecordCount < 0)
 				totalRecordCount = 0;
 			
@@ -152,7 +152,7 @@ public class EzMap extends LinkedHashMap<String, Object> {
 
 	public void setPaginationInfo(EzPaginationInfo page) {
 		this.page = page;
-		putAll(BaseUtilities.beanToMap(page));
+		putAll(Utilities.beanToMap(page));
 	}
 	/**
 	 * @return the ignoreCamel

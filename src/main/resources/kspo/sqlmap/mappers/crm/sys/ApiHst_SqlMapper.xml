@@ -7,11 +7,11 @@
     </resultMap>
 
     <sql id="sqlPkConditions">
-                WHERE API_HST_CD        =       #{apiHstCd}
+                WHERE API_HST_ID        =       #{apiHstId}
     </sql>
     <sql id="sqlCols">
-                      API_HST_CD                    /*API이력코드        */
-                    , API_CD                    /*API코드        */
+                      API_HST_ID                    /*API이력코드        */
+                    , API_ID                    /*API코드        */
                     , API_CALL_URL                    /*API호출URL        */
                     , API_RSLT_CD                    /*API결과코드        */
                     , API_RSLT_MSG_TXN                    /*API결과메시지내역        */
@@ -27,14 +27,14 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="apiHstCd != null and apiHstCd != ''">
+        <if test="apiHstId != null and apiHstId != ''">
             <choose>
-                <when test="apiHstCd instanceof String">
-                              AND API_HST_CD        =       #{apiHstCd}
+                <when test="apiHstId instanceof String">
+                              AND API_HST_ID        =       #{apiHstId}
                 </when>
                 <otherwise>
-                    AND API_HST_CD        IN
-                    <foreach item="item" index="index" collection="apiHstCd" open="(" separator="," close=")">
+                    AND API_HST_ID        IN
+                    <foreach item="item" index="index" collection="apiHstId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -43,10 +43,10 @@
         <if test="apiCd != null and apiCd != ''">
             <choose>
                 <when test="apiCd instanceof String">
-                              AND API_CD            =       #{apiCd}
+                              AND API_ID            =       #{apiCd}
                 </when>
                 <otherwise>
-                    AND API_CD            IN
+                    AND API_ID            IN
                     <foreach item="item" index="index" collection="apiCd" open="(" separator="," close=")">
                         #{item}
                     </foreach>
@@ -133,8 +133,8 @@
     </select>
     <select id="selectList" resultMap="CrmApiExecHstVo">
         <include refid="com.kspo.voc.sys.dao.CrmCommonDao.pagingHeader"/>
-               SELECT API_HST_CD                    /*API이력코드        */
-                    , API_CD                    /*API코드        */
+               SELECT API_HST_ID                    /*API이력코드        */
+                    , API_ID                    /*API코드        */
                     , API_CALL_URL                    /*API호출URL        */
                     , API_RSLT_CD                    /*API결과코드        */
                     , API_RSLT_MSG_TXN                    /*API결과메시지내역        */
@@ -161,7 +161,7 @@
                 INSERT INTO TB_SYS_API_EXEC_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       NVL(#{apiHstCd},FN_VOC_AUTO_SEQ('API'))
+                       NVL(#{apiHstId},FN_VOC_AUTO_SEQ('API'))
                      , #{apiCd}
                      , #{apiCallUrl}
                      , #{apiRsltCd}
@@ -179,7 +179,7 @@
     </insert>
     <update id="update">
                UPDATE TB_SYS_API_EXEC_HST
-                  SET API_CD              =         #{apiCd}
+                  SET API_ID              =         #{apiCd}
                     , API_CALL_URL        =         #{apiCallUrl}
                     , API_RSLT_CD         =         #{apiRsltCd}
                     , API_RSLT_MSG_TXN    =         #{apiRsltMsgTxn}

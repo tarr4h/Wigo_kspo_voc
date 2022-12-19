@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.CrmGrpUserRelDao">
     <sql id="sqlPkConditions">
-                WHERE GRP_CD            =       #{grpCd}
-                  AND USER_CD           =       #{userCd}
+                WHERE GRP_ID            =       #{grpId}
+                  AND USER_ID           =       #{userId}
     </sql>
     <sql id="sqlCols">
-                      GRP_CD                    /*그룹코드        */
-                    , USER_CD                    /*사용자코드        */
+                      GRP_ID                    /*그룹코드        */
+                    , USER_ID                    /*사용자코드        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
@@ -15,27 +15,27 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="grpCd != null and grpCd != ''">
+        <if test="grpId != null and grpId != ''">
             <choose>
-                <when test="grpCd instanceof String">
-                              AND GRP_CD            =       #{grpCd}
+                <when test="grpId instanceof String">
+                              AND GRP_ID            =       #{grpId}
                 </when>
                 <otherwise>
-                    AND GRP_CD            IN
-                    <foreach item="item" index="index" collection="grpCd" open="(" separator="," close=")">
+                    AND GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
             </choose>
         </if>
-        <if test="userCd != null and userCd != ''">
+        <if test="userId != null and userId != ''">
             <choose>
-                <when test="userCd instanceof String">
-                              AND USER_CD           =       #{userCd}
+                <when test="userId instanceof String">
+                              AND USER_ID           =       #{userId}
                 </when>
                 <otherwise>
-                    AND USER_CD           IN
-                    <foreach item="item" index="index" collection="userCd" open="(" separator="," close=")">
+                    AND USER_ID           IN
+                    <foreach item="item" index="index" collection="userId" open="(" separator="," close=")">
                         #{item}
                     </foreach>
                 </otherwise>
@@ -64,8 +64,8 @@
                 INSERT INTO TB_SYS_GRP_USER_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{grpCd}
-                     , #{userCd}
+                       #{grpId}
+                     , #{userId}
                      , #{regrId}
                      , SYSDATE
                      , #{amdrId}
@@ -83,15 +83,15 @@
         <include refid="sqlPkConditions"/>
     </delete>
     
-    <delete id="deleteUserCd">
+    <delete id="deleteUserId">
                DELETE 
                  FROM TB_SYS_GRP_USER_REL
-                WHERE USER_CD = #{userCd}
+                WHERE USER_ID = #{userId}
     </delete>
     
-    <delete id="deleteGrpCd">
+    <delete id="deleteGrpId">
                DELETE 
                  FROM TB_SYS_GRP_USER_REL
-                WHERE GRP_CD = #{grpCd}
+                WHERE GRP_ID = #{grpId}
     </delete>
 </mapper>

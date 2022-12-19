@@ -10,7 +10,7 @@
 <!-- popup -->
 <div class="popup">
 	<!-- top -->
-	<strong class="title">메뉴 정보${menuCd }</strong>
+	<strong class="title">메뉴 정보${menuId }</strong>
 	<button id="btnCancel" data-btn-type="closeModal" class="btnClose"></button>
 	<!-- //top -->
 

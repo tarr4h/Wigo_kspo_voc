@@ -35,7 +35,7 @@
 	   	<input type="hidden" id="noteYn" name="noteYn" value="${vo.noteYn }"/>
 	   	<input type="hidden" id="noteStaDt" name="noteStaDt" value="${vo.noteStaDt }"/>
 	   	<input type="hidden" id="noteEndDt" name="noteEndDt" value="${vo.noteEndDt }"/>
-	   	<input type="hidden" id="fileCd" name="fileCd" value="${vo.fileCd }"/>
+	   	<input type="hidden" id="fileId" name="fileId" value="${vo.fileId }"/>
 	   	<input type="hidden" id="ntcartPwd" name="ntcartPwd" value="${vo.ntcartPwd }"/>
 	   	
 			<div class="mBoard2">
@@ -50,7 +50,7 @@
 						<tr>
 <!--                              <th>변경이력코드</th> -->
 <!--                             <td> -->
-<%--                                 ${hist.chngHstCd } --%>
+<%--                                 ${hist.chngHstId } --%>
 <!--                             </td> -->
                         <th class="left"><span class="iMust">게시물 제목</span></th>
                             <td class="left" colspan="3">
@@ -71,7 +71,7 @@
                         <tr>
                             <th class="left">첨부파일</th>
                             <td class="left" colspan="3">
-                            <div id="attFiles" class="left" style="min-height:200px" data-type="attachFiles" data-file-cd="${vo.fileCd }" data-file-odrg="1"  data-mode="edit"></div>
+                            <div id="attFiles" class="left" style="min-height:200px" data-type="attachFiles" data-file-id="${vo.fileId }" data-file-odrg="1"  data-mode="edit"></div>
                             </td>
                         </tr>
                         

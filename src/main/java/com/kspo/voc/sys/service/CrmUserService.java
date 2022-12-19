@@ -27,9 +27,9 @@ public class CrmUserService extends AbstractCrmService {
 	@Override
 	public int insert(Object param) throws Exception {
 		CrmUserBaseVo user = (CrmUserBaseVo) param;
-		if (Utilities.isEmpty(user.getUserCd())) {
-			String userCd = Utilities.getAutoSeq("USR");
-			user.setUserCd(userCd);
+		if (Utilities.isEmpty(user.getUserId())) {
+			String userId = Utilities.getAutoSeq("USR");
+			user.setUserId(userId);
 		}
 		if (Utilities.isEmpty(user.getLoginPwd())) {
 			String pwd = user.getLoginId() + "123!@";
@@ -74,7 +74,7 @@ public class CrmUserService extends AbstractCrmService {
 
 	@Override
 	public int delete(Object param) throws Exception {
-		grpUserDao.deleteUserCd(param);
+		grpUserDao.deleteUserId(param);
 		return super.delete(param);
 	}
 }

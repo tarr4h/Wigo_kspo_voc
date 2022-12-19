@@ -85,7 +85,7 @@
 	   	<input type="hidden" id="noteYn" name="noteYn" />
 	   	<input type="hidden" id="noteStaDt" name="noteStaDt" />
 	   	<input type="hidden" id="noteEndDt" name="noteEndDt" />
-	   	<input type="hidden" id="fileCd" name="fileCd" />
+	   	<input type="hidden" id="fileId" name="fileId" />
 	   	<input type="hidden" id="ntcartPwd" name="ntcartPwd" />
 								<table>
 									<caption>선택정보</caption>
@@ -164,9 +164,9 @@ function grdList_rowChanged(grdList, oldRow, newRow, rowData) {
 	$("[data-click=removeNoticeDetail]").show();
 	$("[data-click=saveNoticeDetail]").show();
 	Utilities.mapToForm(rowData,"frmDetail");
-	let fileCd = rowData.fileCd;
+	let fileId = rowData.fileId;
 	const uploader = $("#attFiles")[0].ezFileUploader;
-	uploader.reset(fileCd);
+	uploader.reset(fileId);
 	
 }
 function onSaveNotice(){

@@ -30,7 +30,7 @@ import java.util.Map;
 */
 
 @Controller
-@RequestMapping({"vocReceiptList", "{menuCd}/vocReceiptList"})
+@RequestMapping({"vocReceiptList", "{menuId}/vocReceiptList"})
 public class VocReceiptListController {
 
     @Autowired

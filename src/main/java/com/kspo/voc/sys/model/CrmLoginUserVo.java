@@ -13,7 +13,7 @@ public class CrmLoginUserVo extends CrmJadeHrVo {
 	/*
 	 * <p>사용자 그룹 콤마로 구분</p>
 	 */
-	private String grpCds;
+	private String grpIds;
 	/*
 	 * <p>저장된 아이디</p>
 	 */
@@ -79,12 +79,12 @@ public class CrmLoginUserVo extends CrmJadeHrVo {
 	 * 사용자코드
 	 * </p>
 	 */
-	public String getUserCd() {
+	public String getUserId() {
 		return getEmpId();
 	}
 
-	public void setUserCd(String userCd) {
-		setEmpId(userCd);
+	public void setUserId(String userId) {
+		setEmpId(userId);
 	}
 
 //	public String getLoginId() {

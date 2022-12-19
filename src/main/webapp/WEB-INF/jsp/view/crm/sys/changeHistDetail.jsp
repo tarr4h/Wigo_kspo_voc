@@ -32,7 +32,7 @@
 						<tr>
 <!--                              <th>변경이력코드</th> -->
 <!--                             <td> -->
-<%--                                 ${hist.chngHstCd } --%>
+<%--                                 ${hist.chngHstId } --%>
 <!--                             </td> -->
                             <th>변경자 정보</th>
                             <td>

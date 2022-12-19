@@ -27,9 +27,9 @@ public class VocComnAspect {
         Object[] args = jp.getArgs();
         for(Object arg : args){
             if(arg instanceof EzMap){
-                ((EzMap) arg).put("loginUsr", Utilities.getLoginUserCd());
+                ((EzMap) arg).put("loginUsr", Utilities.getLoginId());
             } else if(arg instanceof Map){
-                ((Map<String, Object>) arg).put("loginUsr", Utilities.getLoginUserCd());
+                ((Map<String, Object>) arg).put("loginUsr", Utilities.getLoginId());
             }
         }
     }

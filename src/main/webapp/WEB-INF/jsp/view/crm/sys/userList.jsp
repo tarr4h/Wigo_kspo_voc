@@ -149,7 +149,7 @@ function removeUser(){
 }
 
 function grdList_btnGroup_buttonClicked(gridView,row,col,json){
-    var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?userCd="+json.userCd;
+    var url = "<c:url value='${urlPrefix}/group/groupPopup${urlSuffix}'/>?userId="+json.userId;
     Utilities.openModal(url,500,685);
     //Utilities.windowOpen(url,"groupPopup",500,580);
 }
@@ -173,8 +173,8 @@ function grdList_btnRestPwd_buttonClicked(gridView,row,col,json){
 // function grdList_secedeUser_ButtonClicked(gridView,row,col){
 //     alert(col);
 // }
-function saveGroupChecked(userCd,saveJson){
-    var url = "<c:url value='${urlPrefix}/group/setUserGroup${urlSuffix}'/>?userCd="+ userCd;
+function saveGroupChecked(userId,saveJson){
+    var url = "<c:url value='${urlPrefix}/group/setUserGroup${urlSuffix}'/>?userId="+ userId;
     
     Utilities.getAjax(url,saveJson,true,function(data,jqXHR){
         if(Utilities.processResult(data,jqXHR,"그룹 설정에 실패했습니다."))

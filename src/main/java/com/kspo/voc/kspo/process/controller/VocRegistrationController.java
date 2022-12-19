@@ -22,7 +22,7 @@ import com.kspo.voc.kspo.process.service.VocRegistrationService;
 import com.kspo.voc.sys.model.CrmEmpBaseVo;
 
 @Controller
-@RequestMapping({"vocRegistration", "{menuCd}/vocRegistration"})
+@RequestMapping({"vocRegistration", "{menuId}/vocRegistration"})
 public class VocRegistrationController {
 
     @Autowired
