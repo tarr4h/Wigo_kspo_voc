@@ -64,7 +64,7 @@ public class DatabaseConfig {
 	private int timeout;
 	@Value("${spring.datasource.hikari.maximum-pool-size}")
 	private int poolSize;
-	
+
 	@Primary
 	@Bean(name = "crmDataSource")
 	DataSource dataSource() {
@@ -85,6 +85,7 @@ public class DatabaseConfig {
 		hikariConfig.setConnectionTimeout(timeout);
 		hikariConfig.setLeakDetectionThreshold(30000);
 		hikariConfig.setPoolName("wigo-voc-pool");
+
 		return new HikariDataSource(hikariConfig);
 	}
 	
