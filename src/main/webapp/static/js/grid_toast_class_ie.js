@@ -265,6 +265,7 @@ function StatusRenderer (props){
     
     function CheckboxRenderer(props) {
         this.constructor=function(props) {
+
             const elem = $('<img src="/static/images/ico_checkbox1.png" style="cursor:pointer" />');
             const el = elem[0];
             this.el = el;
@@ -348,6 +349,7 @@ function StatusRenderer (props){
         }
 
         this.render=function(props) {
+
             // 경로수정(1220)
             // const imgPath = '/static/crm/images/';
             const imgPath = '/static/images/';
