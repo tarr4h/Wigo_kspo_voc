@@ -9,8 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class VocPropKeyEncryptor {
 //	public static void main(String[] args) {
-//		StringEncryptor encryptor = new JasyptConfiguration().stringEncryptor();
-//		String value = "ABCDEFG";
-//		log.info(value + " ==> ENC(" + encryptor.encrypt(value) + ")");
+//		getEncValue("abcdefg");
 //	}
+
+	public static String getEncValue(String value) {
+		StringEncryptor encryptor = new JasyptConfiguration().stringEncryptor();
+		String enc = encryptor.encrypt(value);
+		log.info(value + " ==> ENC(" + enc + ")");
+		return "ENC(" + enc + ")";
+	}
 }
