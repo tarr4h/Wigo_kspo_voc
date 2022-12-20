@@ -101,7 +101,7 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 
-		<!-- 표준프레임워크 실행환경 -->
+        <!-- 표준프레임워크 실행환경 -->
         <dependency>
 		    <groupId>org.egovframe.rte</groupId>
 		    <artifactId>org.egovframe.rte.ptl.mvc</artifactId>
