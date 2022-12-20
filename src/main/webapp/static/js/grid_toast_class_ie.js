@@ -265,7 +265,7 @@ function StatusRenderer (props){
     
     function CheckboxRenderer(props) {
         this.constructor=function(props) {
-            const elem = $('<img src="/static/crm/images/ico_checkbox1.png" style="cursor:pointer" />');
+            const elem = $('<img src="/static/voc/images/ico_checkbox1.png" style="cursor:pointer" />');
             const el = elem[0];
             this.el = el;
             const gridId = props.columnInfo.renderer.gridId;
@@ -348,7 +348,7 @@ function StatusRenderer (props){
         }
 
         this.render=function(props) {
-            const imgPath = '/static/crm/images/';
+            const imgPath = '/static/voc/images/';
 
             var json = props.grid.getRow(props.rowKey);
             if(json)

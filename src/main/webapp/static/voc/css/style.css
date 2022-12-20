@@ -30,7 +30,7 @@ h2 {
 
 h3 {
   font-size: 15px;
-  background: url(/static/crm/images/point.png) no-repeat left center;
+  background: url(/static/voc/images/point.png) no-repeat left center;
   padding-left: 17px;
   color: #2c2c2c;
   margin-bottom: 5px;
@@ -510,7 +510,7 @@ h1 {
 
 .side_depth1.active {
   font-weight: 600;
-  background: url(/static/crm/images/arrow_3.png) no-repeat 95% center;
+  background: url(/static/voc/images/arrow_3.png) no-repeat 95% center;
 }
 
 .header_side .sub_depth2 {
@@ -703,7 +703,7 @@ h1 {
 }
 
 .location {
-  background: url(/static/crm/images/home.png) no-repeat left center;
+  background: url(/static/voc/images/home.png) no-repeat left center;
   color: #2c2c2c;
   padding-left: 20px;
 }
