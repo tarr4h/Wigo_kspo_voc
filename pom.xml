@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>egov</groupId>
-	<artifactId>egovVoc</artifactId>
+	<groupId>kspoVoc</groupId>
+	<artifactId>kspoVoc</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>boot-example</name>
-	<url>http://www.egovframe.go.kr</url>
+	<name>kspo voc</name>
+	<url>https://moara.ai/</url>
 
 	<licenses>
         <license>
