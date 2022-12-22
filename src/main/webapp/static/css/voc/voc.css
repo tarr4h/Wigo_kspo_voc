@@ -289,3 +289,7 @@
 .list_shFrmInput:focus{
     outline: none;
 }
+
+.list_date_slt{
+    width: 100px!important;
+}

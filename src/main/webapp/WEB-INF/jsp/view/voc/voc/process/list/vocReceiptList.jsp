@@ -88,15 +88,14 @@
                     </td>
                     <th>기간</th>
                     <td>
-                        <input class="it list_shFrmInput" type="text" data-type="dateRangeStart" data-range-end="endDt" id="strtDt" name="strtDt" data-enter="search" data-button="Y" value="" />
-                        <input class="it list_shFrmInput" type="text" id="endDt" name="endDt" data-enter="search" data-button="Y" value=""/>
+                        <input class="it list_shFrmInput list_date_slt" type="text" data-type="dateRangeStart" data-range-end="endDt" id="strtDt" name="strtDt" data-enter="search" data-button="Y" value="" />
+                        <input class="it list_shFrmInput list_date_slt" type="text" id="endDt" name="endDt" data-enter="search" data-button="Y" value=""/>
                         <button class="mBtn1 m lWhite" id="setToday" data-click="setToday" style="margin: 1px 0px;">오늘</button>
                         <button class="mBtn1 m lWhite" id="set1Week" data-click="set1Week" style="margin: 1px 0px;" data-default-button="Y">1주일</button>
                         <button class="mBtn1 m lWhite" id="set1month" data-click="set1month" style="margin: 1px 0px;">1개월</button>
                         <button class="mBtn1 m lWhite" id="set3month" data-click="set3month" style="margin: 1px 0px;">3개월</button>
                         <button class="mBtn1 m lWhite" id="set6month" data-click="set6month" style="margin: 1px 0px;">6개월</button>
                         <button class="mBtn1 m lWhite" id="setAllmonth" data-click="setAllmonth" style="margin: 1px 0px;">전체</button>
-
                     </td>
                 </tr>
                 <tr>
