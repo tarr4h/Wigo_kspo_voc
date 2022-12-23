@@ -19,8 +19,10 @@ public class VocManagementCodeVo extends AbstractTreeVo {
 	private int lvl;
 	private String codeNm;
 	private String useYn;
-	private String regUsr;
+	private String regrId;
 	private String regDt;
+	private String amdrId;
+	private String amdDt;
 
 	private String topCdNm;
 	private String prntsCdNm;

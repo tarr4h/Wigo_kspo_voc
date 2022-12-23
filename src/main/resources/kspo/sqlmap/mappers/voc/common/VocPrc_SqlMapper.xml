@@ -16,15 +16,17 @@
         LVL,
         CODE_NM,
         USE_YN,
-        REG_USR,
-        REG_DT
+        REGR_ID,
+        REG_DT,
+        AMDR_ID,
+        AMD_DT
     </sql>
 
     <select id="selectVocManagementCodeTree" resultType="com.kspo.voc.kspo.setting.model.VocManagementCodeVo">
         select
             <include refid="vocManagementCodeCols"/>
         from
-            voc_management_code
+            tb_voc_management_code
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
                 top_comn_cd = #{topComnCd}
@@ -51,7 +53,7 @@
         select
             <include refid="vocManagementCodeCols"/>
         from
-            voc_management_code
+            tb_voc_management_code
         <where>
             <if test="managementCd != null and !managementCd.equals('')">
                 management_cd = #{managementCd}
@@ -67,7 +69,7 @@
         select
             *
         from
-            voc_procedure_bas
+            tb_voc_procedure_bas
         where
             prcd_seq = #{prcdSeq}
     </select>
@@ -76,7 +78,7 @@
         select
             *
         from
-            voc_procedure_bas
+            tb_voc_procedure_bas
         where
             reg_use_yn = 'Y'
         order by
@@ -87,7 +89,7 @@
         select
             *
         from
-            voc_task_bas
+            tb_voc_task_bas
         <where>
             <if test="autoApplyAllYn != null and !autoApplyAllYn.equals('')">
                 AUTO_APPLY_ALL_YN = #{autoApplyAllYn}
@@ -113,13 +115,13 @@
         select
             *
         from
-            voc_activity_func_bas
+            tb_voc_activity_func_bas
         where
             func_cd not in (
             select
                 func_cd
             from
-                voc_activity
+                tb_voc_activity
             where
                 mc_task_seq = #{mcTaskSeq}
             )
@@ -129,7 +131,7 @@
         select
             *
         from
-            voc_procedure
+            tb_voc_procedure
         <where>
             <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
                 mc_prcd_seq = #{mcPrcdSeq}
@@ -151,17 +153,19 @@
             duty_org,
             duty_emp,
             duty_role,
-            reg_usr,
+            regr_id,
             reg_dt,
-            (select task_yn from voc_procedure_bas where prcd_seq = vp.prcd_seq) taskYn
+            amdr_id,
+            amd_dt,
+            (select task_yn from tb_voc_procedure_bas where prcd_seq = vp.prcd_seq) taskYn
         from
-            voc_procedure vp
+            tb_voc_procedure vp
         where
                 vp.mc_prcd_seq in (
                 select
                     mc_prcd_seq
                 from
-                    voc_procedure_dir_conn
+                    tb_voc_procedure_dir_conn
                 where
                     dir_cd = #{dirCd}
             )
@@ -180,10 +184,12 @@
             duty_org,
             duty_emp,
             duty_role,
-            reg_usr,
-            reg_dt
+            regr_id,
+            reg_dt,
+            amdr_id,
+            amd_dt,
         from
-            voc_task
+            tb_voc_task
         <where>
             <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
                 mc_prcd_seq = #{mcPrcdSeq}
@@ -199,9 +205,13 @@
             mc_task_seq,
             func_cd,
             act_nm,
-            explanation
+            explanation,
+            regr_id,
+            reg_dt,
+            amdr_id,
+            amd_dt
         from
-           voc_activity
+           tb_voc_activity
         <where>
             <if test="mcTaskSeq != null and !mcTaskSeq.equals('')">
                 mc_task_seq = #{mcTaskSeq}
@@ -215,7 +225,7 @@
         select
         dir_cd
         from
-        voc_dir_mc_mapping
+        tb_voc_dir_mc_mapping
         <where>
             <if test="managementCd != null and !managementCd.equals('')">
                 management_cd = #{managementCd}
@@ -227,27 +237,27 @@
         select
             *
         from
-            voc_dir_org_mapping
+            tb_voc_dir_org_mapping
         where
             dir_cd = #{dirCd}
         order by
             2 desc, 3
     </select>
 
-    <select id="selectRegPrcd" resultType="com.kspo.voc.kspo.process.model.VocRegPrcdVo">
+    <select id="selectRegPrcd" resultType="com.kspo.voc.kspo.process.model.VocPrcdVo">
         select
             *
         from
-            voc_reg_prcd
+            tb_voc_reg_prcd
         where
             reg_prcd_seq = #{regPrcdSeq}
     </select>
 
-    <select id="selectRegPrcdList" resultType="com.kspo.voc.kspo.process.model.VocRegPrcdVo">
+    <select id="selectRegPrcdList" resultType="com.kspo.voc.kspo.process.model.VocPrcdVo">
         select
             *
         from
-            voc_procedure vp inner join voc_reg_prcd vrp
+            tb_voc_procedure vp inner join tb_voc_reg_prcd vrp
             on vp.mc_prcd_seq = vrp.mc_prcd_seq
         <where>
             <if test="regSeq != null and !regSeq.equals('')">
@@ -265,7 +275,7 @@
             status_nm "statusNm",
             status "status"
         from
-            voc_status
+            tb_voc_status
         <where>
             <if test="prcdSeq != null and !prcdSeq.equals('')">
                 prcd_seq = #{prcdSeq}
@@ -281,7 +291,7 @@
         select
             *
         from
-            VOC_MANAGEMENT_CODE
+            TB_VOC_MANAGEMENT_CODE
         <where>
             comn_cd = #{comnCd}
             <if test="prntsCd != null and !prntsCd.equals('')">
@@ -308,7 +318,7 @@
         select
             *
         from
-            voc_status vs inner join voc_procedure_bas vpb
+            tb_voc_status vs inner join tb_voc_procedure_bas vpb
             on vs.PRCD_SEQ = vpb.PRCD_SEQ
         where
             vpb.top_comn_cd = #{topComnCd}
@@ -322,26 +332,26 @@
         select
             *
         from
-            voc_status
+            tb_voc_status
         order by
             1
     </select>
 
     <!--  upt  -->
     <update id="updateRegistrationStatus">
-        update VOC_REGISTRATION
+        update TB_VOC
         set
             status_cd = #{statusCd}
         where
-            reg_seq = #{regSeq}
+            voc_seq = #{regSeq}
     </update>
 
     <update id="updateRegPrcd">
-        update voc_reg_prcd
+        update tb_voc_prcd
         set
             status = #{status}
         where
-            reg_prcd_seq = #{regPrcdSeq}
+            voc_prcd_seq = #{vocPrcdSeq}
     </update>
 
 

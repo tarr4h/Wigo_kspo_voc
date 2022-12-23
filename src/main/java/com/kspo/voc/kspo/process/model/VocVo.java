@@ -8,10 +8,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocRegistrationVo extends BaseVo {
+public class VocVo extends BaseVo {
 
     private static final long serialVersionUID = 9008776161302071248L;
-	private String regSeq;
+	private String vocSeq;
     private String channel;
     private String statusCd;
     private String title;
@@ -20,20 +20,16 @@ public class VocRegistrationVo extends BaseVo {
     private String custId;
     private String issueYn;
     private String issueGrade;
-    private String regUsr;
-    private String regOrg;
-    private String regDt;
-    private String recUsr;
-    private String recOrg;
-    private String recDt;
+    private String amdrId;
+    private String amdDt;
     private String ownershipOrg;
     private String delYn;
 
     private String statusCdNm;
 
 
-    public String getRegUsrNm(){
-        return VocUtils.getEmpNm(regUsr);
+    public String getAmdrNm(){
+        return VocUtils.getEmpNm(amdrId);
     }
 
 

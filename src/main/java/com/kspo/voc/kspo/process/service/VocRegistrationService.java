@@ -13,8 +13,8 @@ import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.process.dao.VocRegistrationDao;
-import com.kspo.voc.kspo.process.model.VocRegPrcdVo;
-import com.kspo.voc.kspo.process.model.VocRegistrationVo;
+import com.kspo.voc.kspo.process.model.VocPrcdVo;
+import com.kspo.voc.kspo.process.model.VocVo;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
 import com.kspo.voc.sys.dao.IVocDao;
@@ -92,9 +92,9 @@ public class VocRegistrationService extends VocAbstractService {
         // reg_prcd를 등록. deadline을 지정한다.
         int deadline = 0;
         for(VocProcedureVo prcd : prcdList){
-            VocRegPrcdVo regPrcd = new VocRegPrcdVo();
-            regPrcd.setRegPrcdSeq(CodeGeneration.generateCode(dao.selectMaxRegPrcdSeq(), CodeGeneration.REG_PROCEDURE));
-            regPrcd.setRegSeq((String) param.get("regSeq"));
+            VocPrcdVo regPrcd = new VocPrcdVo();
+            regPrcd.setVocPrcdSeq(CodeGeneration.generateCode(dao.selectMaxRegPrcdSeq(), CodeGeneration.REG_PROCEDURE));
+            regPrcd.setVocSeq((String) param.get("regSeq"));
             regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
             deadline += prcd.getDeadline();
             regPrcd.setDeadlineDt(VocUtils.setDefaultDeadlineDate(deadline));
@@ -167,7 +167,7 @@ public class VocRegistrationService extends VocAbstractService {
     }
 
 
-    public VocRegistrationVo select(Map<String, Object> param) {
+    public VocVo select(Map<String, Object> param) {
         return dao.select(param);
     }
 
