@@ -100,7 +100,7 @@ public class LogDatabaseConfig {
 		hikariConfig.setMaximumPoolSize(poolSize);  
 		hikariConfig.setConnectionTimeout(timeout);
 		hikariConfig.setLeakDetectionThreshold(30000);
-		hikariConfig.setPoolName("wigo-voc-pool");
+		hikariConfig.setPoolName("wigo-voc-log-pool");
 		return new HikariDataSource(hikariConfig);
 	}
 	private DataSource getJndiSource() {

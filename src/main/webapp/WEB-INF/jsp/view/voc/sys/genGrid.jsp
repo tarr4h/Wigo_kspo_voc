@@ -16,21 +16,35 @@
 								<table>
 									<caption>기본정보</caption>
 									<colgroup>
-										<col width="10%" />
-										<col width="25%" />
-										<col width="10%" />
-										<col width="20%"  />
+										<col width="7%" />
+										<col width="13%" />
+										<col width="7%" />
+										<col width="13%" />
+										<col width="7%" />
+										<col width="13%"  />
+										<col width="5%"  />
 										<col width="35%" />
 									</colgroup>
 									<tbody>
 										<tr>
+											<th scope="row" class="left"><span class="iMust">사용자명</span></th>
+											<td>
+												<input type="text" name="userName" id="userName" class="it" placeholder="사용자명" value="user">
+											</td>
+											
 											<th scope="row" class="left"><span class="iMust">package 명</span></th>
 											<td>
-												<input type="text" name="packageName" id="packageName" class="it" placeholder="package name" value="com.kspo.voc.example">
+												<input type="text" name="packageName" id="packageName" class="it" placeholder="package name" value="com.ceragem.crm.example">
 											</td>
 											<th scope="row" class="left">테이블명</th>
 											<td>
 												<input type="text" name="tableName" id="tableName" class="it" placeholder="table name">
+											</td>
+											<td class="left">
+												<label class="mCheckbox1">
+													<input type="checkbox" title="API" id='apiDev' name="apiDev" value="Y">
+													<span class="label">API개발</span>
+												</label>
 											</td>
 											
 											<th scope="row" class="left">
@@ -40,6 +54,8 @@
 											<a href="#;" class="mBtn1 m lWhite" id="btnSave">Grid</a>
 											<a href="#;" class="mBtn1 m lWhite" id="btnDb">Mapper</a>
 											<a href="#;" class="mBtn1 m lWhite" id="btnModel">Model</a>
+											<a href="#;" class="mBtn1 m lWhite" id="btnModelSo">ModelSo</a>
+											
 											<a href="#;" class="mBtn1 m lWhite" id="btnDao" data-click="generateDaoXml">Dao</a>
 											<a href="#;" class="mBtn1 m lWhite" id="btnService" data-click="generateServiceXml">Service</a>
 											<a href="#;" class="mBtn1 m lWhite" id="btnController" data-click="generateControllerXml">Controller</a>
@@ -56,7 +72,7 @@
 								</table>
 							</div>
 							</div>
-							<div class="mBox1 ">
+							<div class="mBox1 btnTopMargin">
 							
 							<div class="mBoard2">
 							<form id="frmMeta">
@@ -152,7 +168,7 @@
 							</div>
 	
 	</div> 
-	<div class="mBox1 ">
+	<div class="mBox1 btnTopMargin">
 		<div id="divGridList" style="height: 620px"
 				data-get-url="<c:url value='${urlPrefix}/getList'/>${urlSuffix}"
 				data-grid-id="grdList" data-pagenation="N" data-type="grid"
@@ -170,13 +186,18 @@
 	cookie = Utilities.getCookie("gengrid.table.name");
 	if(cookie)
 		$("#tableName").val(cookie)
+	cookie = Utilities.getCookie("gengrid.user.name");
+	if(cookie)
+		$("#userName").val(cookie)
+	cookie = Utilities.getCookie("gengrid.api.checked");
+		$("#apiDev").prop("checked",cookie=="Y");
 		
-	var _NULL_ANN = false;
-    var _INDEX_ = 0;
+	var _INDEX_ = 0;
     var _TABLE_INFO = null;
     var _TABLE_NAME = null;
     var _SAVE_FILE_NAME = null;
     var _TABLE_COMMENT = null;
+    var _CODE_MAP = {};
     $("#tableName").keydown(function(key) {
         if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
             searchTable();
@@ -200,6 +221,9 @@
     });
     $("#btnModel").click(function() {
     	generateModel();
+    });
+    $("#btnModelSo").click(function() {
+    	generateModelSoXml();
     });
     
     $("#btnDelete").click(function() {
@@ -225,6 +249,24 @@
         Utilities.downloadText($("#printXml").val(), _SAVE_FILE_NAME);
     });
 
+    
+//     _CODE_MAP
+    Utilities.getAjax("${urlPrefix}/getCodeList", {}, true, function(data, result) {
+        if (Utilities.processResult(data, result, "에러발생.")) {
+        	for(var i=0;i<data.length;i++){
+        		var cd = data[i];
+        		if(_CODE_MAP[cd.topComnCd]){
+        			_CODE_MAP[cd.topComnCd].children.push(cd)
+        		}else{
+        			_CODE_MAP[cd.topComnCd] = cd;
+        			cd.children=[];
+        			
+        		}
+        	}
+        }
+    });
+    
+    
     function addColumn() {
     	if(!validate())
     	{
@@ -252,15 +294,27 @@
             alert("테이블명을 입력하세요");
             return false;
         }
-        
+        grdList.clear();
+        _INDEX_ = 0;
+        _TABLE_INFO = null;
+        _TABLE_NAME = null;
+        _SAVE_FILE_NAME = null;
+        _TABLE_COMMENT = null;
         Utilities.blockUI();
         Utilities.getAjax(url, param, true, function(data, result) {
         	Utilities.unblockUI();
             if (Utilities.processResult(data, result, "에러발생.")) {
+            	if(!data || !data.length){
+            		alert("검색된 테이블이 존재하지 않습니다.");
+            		return;
+            	}
             	Utilities.setCookie("gengrid.package.name",$("#packageName").val(),1000);
             	Utilities.setCookie("gengrid.table.name",$("#tableName").val(),1000);
             	
+            	Utilities.setCookie("gengrid.user.name",$("#userName").val(),1000);
+            	Utilities.setCookie("gengrid.api.checked",$("#apiDev").prop("checked")? "Y" : "N",1000);
                 _TABLE_INFO = data;
+                
                 _TABLE_NAME = param.tableName.toUpperCase();
                 parseTable(data);
             }
@@ -272,6 +326,7 @@
         	if(i==0)
         		_TABLE_COMMENT = list[i].tblCmt;
             var data = convertColumn(list[i]);
+            
             appendRow(data);
         }
     }
@@ -324,6 +379,10 @@
     }
 
     function appendRow(data) {
+    	if(data.field == "regChlCd"){
+    		data.codeId = "S000";
+    		data.type = "combo";
+    	}
     	grdList.addRow(data);
     	return;
         var tbdCols = $("#tbdCols");
@@ -715,7 +774,7 @@
     	{
     		return;
     	}
-    	
+    	var namespace = getPackageName() + ".dao." + getDaoName()+"."
     	var prfIdx = getPrefixIndex();
         _SAVE_FILE_NAME = Utilities.convert2CamelCase(_TABLE_NAME).substring(prfIdx)  + "_SqlMapper.xml";
         _SAVE_FILE_NAME = _SAVE_FILE_NAME.substring(0,1).toUpperCase() + _SAVE_FILE_NAME.substring(1);
@@ -732,21 +791,33 @@
 
         var cols = doc.createElement("sql");
         cols.setAttribute("id", "sqlCols");
-        $(cols).append(getColsSql(cols));
+        $(cols).append(getColsSql());
         mapper.appendChild(cols);
+        
+        var selCols = doc.createElement("sql");
+        selCols.setAttribute("id", "sqlSelectCols");
+        $(selCols).append(getColsSql(true));
+        mapper.appendChild(selCols);
 
         var cond = doc.createElement("sql");
         cond.setAttribute("id", "sqlConditions");
         getDbCondSql(cond, doc)
         mapper.appendChild(cond);
-
+        if(!isApiMode()){
+        	var sort = doc.createElement("sql");
+            sort.setAttribute("id", "sqlOrderBy");
+            getDbOrderSql(sort, doc)
+            mapper.appendChild(sort);
+	
+        }
+        
         getSelectSql(mapper, doc);
         
         var tblName = Utilities.convert2CamelCase(_TABLE_NAME).substring(prfIdx);
 
         var ins = doc.createElement("insert");
         ins.setAttribute("id", "insert" /*+ tblName*/);
-        $(ins).append("\n        INSERT INTO "+_TABLE_NAME+" (\n");
+        $(ins).append("\n        INSERT /* "+namespace+"insert */ INTO "+_TABLE_NAME+" (\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlCols");
         $(ins).append(inc);
@@ -760,14 +831,21 @@
             if (name == "regDt" || name == "amdDt")
                 $(ins).append(prefix + "SYSDATE\n");
             else
-                $(ins).append(prefix + "#" + "{" + name + "}\n");
+            {
+            	if(name.substr(-2) == "Dt")
+            		$(ins).append(prefix + "TO_DATE(#" + "{" + name + "},'YYYYMMDDHH24MISS')\n");
+            	else if(name.substr(-2) == "Yn")
+                		$(ins).append(prefix + "NVL(#" + "{" + name + "},'N')\n");
+            	else
+            		$(ins).append(prefix + "#" + "{" + name + "}\n");
+            }
         }
         $(ins).append("         )\n");
         mapper.appendChild(ins);
 
         var upd = doc.createElement("update");
         upd.setAttribute("id", "update" /*+ tblName*/);
-        $(upd).append("\n       UPDATE " + _TABLE_NAME + "\n");
+        $(upd).append("\n       UPDATE /* "+namespace+"update */ " + _TABLE_NAME + "\n");
         var fst = false;
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
@@ -782,11 +860,18 @@
 
             var prefix = !fst ? "          SET " : "            , ";
             fst = true;
-            var str = prefix + paddingRight(column, 20) + "=         ";
+            var str = prefix + paddingRight(column, 40) + "=         ";
             if (name == "amdDt")
                 $(upd).append(str + "SYSDATE\n");
             else
-                $(upd).append(str + "#" + "{" + name + "}\n");
+            {
+            	if(name.substr(-2) == "Dt")
+            		$(upd).append(str + "TO_DATE(#" + "{" + name + "},'YYYYMMDDHH24MISS')\n");
+            	else if(name.substr(-2) == "Yn")
+            		$(upd).append(str + "NVL(#" + "{" + name + "},'N')\n");
+            	else
+            		$(upd).append(str + "#" + "{" + name + "}\n");
+            }
         }
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlPkConditions");
@@ -796,7 +881,8 @@
 
         var del = doc.createElement("delete");
         del.setAttribute("id", "delete" /*+ tblName*/);
-        $(del).append("\n       DELETE FROM " + _TABLE_NAME + "\n");
+        $(del).append("\n       DELETE /* "+namespace+"delete */");
+        $(del).append("\n         FROM " + _TABLE_NAME + "\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlPkConditions");
         del.appendChild(inc);
@@ -829,29 +915,122 @@
         }
         return sql + "\n";
     }
-    function getColsSql() {
+    function getFirstCode(code){
+    	var cinfo  = _CODE_MAP[code];
+    	if(cinfo){
+    		cinfo = cinfo.children;
+    		for(var j=0;j<cinfo.length;j++){
+    			return cinfo[j].comnCd;
+    		}
+    		
+    	}
+    	return "";
+    }
+    function getCodeText(code){
+    	var cinfo  = _CODE_MAP[code];
+    	var ctext = "";
+    	if(cinfo){
+    		cinfo = cinfo.children;
+    		for(var j=0;j<cinfo.length;j++){
+    			var c = cinfo[j];
+    			if(ctext)
+    				ctext+=" , ";
+    			else
+    				ctext+="[";
+    			ctext += c.comnCd +  " : " + c.comnCdNm ;
+    		}
+    		ctext+= "]";
+    	}
+    	return ctext;
+    }
+    function getCodeArr(code){
+    	var cinfo  = _CODE_MAP[code];
+    	var ctext = "";
+    	if(cinfo){
+    		cinfo = cinfo.children;
+    		for(var j=0;j<cinfo.length;j++){
+    			var c = cinfo[j];
+    			if(ctext)
+    				ctext+=",";
+    			ctext += '"'+ c.comnCd + '"' ;
+    		}
+    	}
+    	return ctext;
+    }
+    
+    function getColsSql(bSelect) {
         var list = _TABLE_INFO;
         var w = "\n              ";
         var a = "\n            , ";
         var sql = "";
+        var rows = grdList.getJsonRows();
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
             var column = col.columnName;
+//             var name = Utilities.convert2CamelCase(col.columnName);
             var ext = "";
             if(col.comments)
             	ext = col.comments+"        ";
-            var code = $('input[name="codeId"][data-col-type="codeId"][data-col-id="'+col.columnId+'"]').val();
+            var code = rows[i].codeId;
             if(code)
-                ext += "공통코드 : " + code + "        "
+            {
+            	var ctext  = getCodeText(code);
+            	ext += "공통코드 : " + code + "        "+ ctext;
+            }
             sql += sql == "" ? w : a;
+            if(bSelect){
+            	if(column.substr(-3)=="_DT")
+                	column = "TO_CHAR(A."+column+",'YYYYMMDDHH24MISS')    "+ column ;
+            	else
+            		column = "A." + column;
+            	
+            }
             sql += column;
             sql += "                    /*"+ext+"*/";
         }
         return sql + "\n";
     }
-    function getDbCondSql(cont, doc) {
+    
+    function getDbOrderSql(cont,doc){
+    	var colSortName = "colSortName";
+    	var colSortDir = "colSortDir";
+    	 var list = _TABLE_INFO;
+//     	 $(cont).append("        ORDER BY \n");
+    	 var $choose = $(doc.createElement("choose"));
+//     	 iF.attr("test", colSortName + " != null and " + colSortName + " != ''");
+    	 $(cont).append($choose);
+    	 
+    	 
+    	 var $when = $(doc.createElement("when"));
+  	    $choose.append($when);
+  	    $when.attr("test", "colSortName ==null or colSortName == ''");
+  	    $when.append("ORDER BY      REG_DT DESC \n");
+    	 
+    	 for (var i = 0; i < list.length; i++) {
+    		var col = list[i];
+     	    var column = col.columnName;
+     	    var name = Utilities.convert2CamelCase(col.columnName);
+    		
+     	    $when = $(doc.createElement("when"));
+     	    $choose.append($when);
+     	    $when.attr("test", colSortName+".equals('"+name+"')");
+     	    $when.append("ORDER BY      "+col.columnName +"\n");
+    	 }
+    	 var $otherwise = $(doc.createElement("otherwise"));
+    	 $otherwise.append( "ORDER BY      REG_DT \n");
+    	 $choose.append($otherwise);
+    	 
+    	 $desc = $(doc.createElement("if"));
+    	 $desc.attr("test", "colSortName !=null and colSortDir !='' and colSortDir !=null and colSortDir !='' and " +colSortDir+".equals('desc')");
+    	 $desc.append("DESC\n");
+    	 $(cont).append($desc);
+    	 
+    } 
+    function getDbCondSql(condition, doc) {
         var list = _TABLE_INFO;
-        $(cont).append("\n        WHERE 1 = 1\n");
+        const cont = $(doc.createElement("where"));
+        $(condition).append(cont);
+//         $(cont).append("\n        WHERE 1 = 1\n");
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
             var column = col.columnName;
@@ -865,11 +1044,11 @@
             	choose = $(doc.createElement("choose"));
             	whn = $(doc.createElement("when"));
             	whn.attr("test", name + " instanceof String");
-            	$(whn).append("\n          AND " + paddingRight(column, 18) + "=       " + "#" + "{" + name + "}\n");
+            	$(whn).append("\nAND " + paddingRight("A."+column, 18) + "=       " + "#" + "{" + name + "}\n");
             	choose.append(whn);
 
             	otherwise = $(doc.createElement("otherwise"));
-            	$(otherwise).append("\n          AND " + paddingRight(column, 18) + "IN \n");
+            	$(otherwise).append("\nAND " + paddingRight("A."+column, 18) + "IN \n");
             	feach = $(doc.createElement("foreach"));
             	feach.attr('item','item');
             	feach.attr('index','index');
@@ -884,7 +1063,10 @@
             	 iF.append(choose);
             }
             else {
-            	$(iF).append("\n          AND " + paddingRight(column, 18) + "=       " + "#" + "{" + name + "}\n");
+            	if(name.substr(-2)=="Dt")
+            		$(iF).append("\n      AND " + paddingRight("A."+column, 18) + "=       " + "TO_DATE(#" + "{" + name + "},'YYYYMMDDHH24MISS')\n");
+            	else
+            		$(iF).append("\n      AND " + paddingRight("A."+column, 18) + "=       " + "#" + "{" + name + "}\n");
              }
             
             $(cont).append(iF);
@@ -893,11 +1075,12 @@
     }
     function getSelectSql(mapper, doc) {
 
+    	var namespace = getPackageName() + ".dao." + getDaoName()+"."
         var s1 = doc.createElement("select");
         $(s1).attr("id", "selectListCount");
         $(s1).attr("resultType", "int");
-        $(s1).append("\n        SELECT COUNT(1)\n");
-        $(s1).append("         FROM " + _TABLE_NAME + "\n");
+        $(s1).append("\n        SELECT /* "+namespace+"selectListCount */ COUNT(1)\n");
+        $(s1).append("         FROM " + _TABLE_NAME + " A\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlConditions");
         s1.appendChild(inc);
@@ -909,28 +1092,35 @@
 
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.kspo.api.voc.dao.CommonDao.pagingHeader");
+        	$(inc).attr("refid", "com.ceragem.api.crm.dao.CrmCommonDao.pagingHeader");
         else
-        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingHeader");
+        	$(inc).attr("refid", "com.ceragem.crm.sys.dao.CrmCommonDao.pagingHeader");
         s1.appendChild(inc);
-        $(s1).append("\n       SELECT ");
+        $(s1).append("\n       SELECT /* "+namespace+"selectList */ ");
 
         var inc = doc.createElement("include");
-        $(inc).attr("refid", "sqlCols");
+        $(inc).attr("refid", "sqlSelectCols");
         s1.appendChild(inc);
 
-        $(s1).append("         FROM " + _TABLE_NAME + "\n");
+        $(s1).append("         FROM " + _TABLE_NAME + " A\n");
         
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlConditions");
         s1.appendChild(inc);
-        $(s1).append('\n       ORDER BY REG_DT DESC\n');
-
+        if(isApiMode()){
+            $(s1).append('\n       ORDER BY REG_DT DESC\n');	
+        }
+        else{
+        	var sInc = doc.createElement("include");
+            $(sInc).attr("refid", "sqlOrderBy");
+            s1.appendChild(sInc);	
+        }
+        
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.kspo.api.voc.dao.CommonDao.pagingFooter");
+        	$(inc).attr("refid", "com.ceragem.api.crm.dao.CrmCommonDao.pagingFooter");
         else
-        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingFooter");
+        	$(inc).attr("refid", "com.ceragem.crm.sys.dao.CrmCommonDao.pagingFooter");
         s1.appendChild(inc);
         mapper.appendChild(s1);
         var prfIdx = getPrefixIndex();
@@ -939,15 +1129,15 @@
         var s1 = doc.createElement("select");
         $(s1).attr("id", "select" /* + tbl */);
         $(s1).attr("resultType", getModelName(true));
-        $(s1).append("\n       SELECT ");
+        $(s1).append("\n       SELECT /* "+namespace+"select */ ");
 
         var inc = doc.createElement("include");
-        $(inc).attr("refid", "sqlCols");
+        $(inc).attr("refid", "sqlSelectCols");
         s1.appendChild(inc);
 
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlPkConditions");
-        $(s1).append("\n         FROM "+_TABLE_NAME+"\n");
+        $(s1).append("\n         FROM "+_TABLE_NAME+" A\n");
         s1.appendChild(inc);
         mapper.appendChild(s1);
     }
@@ -961,29 +1151,32 @@
     	
         var strJava = "";
         _SAVE_FILE_NAME =  getModelName()  + ".java";
-    	
-
+    	var hasMaxByte = false;
+		var hasYnValue = false;
+		var hasDtValue = false;
+		var hasCodeValue = false;
         var list = _TABLE_INFO;
         var str = "";
         var hasNull = false;
+        var rows = grdList.getJsonRows();
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
-            var nullable = _NULL_ANN && col.nullable=="N"
+            var nullable = isApiMode() && col.nullable=="N"
             var column = col.columnName;
             var name = Utilities.convert2CamelCase(col.columnName);
             if (name == "regDt" || name == "regrId" || name == "amdDt" || name == "amdrId")
                 continue;
             var jData = convertColumn(col);
             var defaultValue = jData.defaultValue? jData.defaultValue.replace("NULL","").replaceAll("'","").replace("SYSDATE","") : "";
-			if(defaultValue)
-            var code = $('input[name="codeId"][data-col-type="codeId"][data-col-id="'+col.columnId+'"]').val();
+// 			if(defaultValue)
+            var code = rows[i].codeId;
             if(col.comments ||code )
         		str+= "    /**\n";
             if(col.comments){
             	str+= "    * "+col.comments+" \n";
             }
             if(code){
-            	str += "    * 공통코드 : " + code + " \n";
+            	str += "    * 공통코드 : " + code + " "+getCodeText(code)+"\n";
             }
             if(col.comments ||code )
             str+= "    */\n";
@@ -993,7 +1186,31 @@
             	if(!exampleValue){
             		
             	}
-            	str +=  '    @Schema(description = "'+col.comments+'", example = "'+exampleValue+'", hidden = false, required = '+nullable+', nullable = '+!nullable+')\n';
+            	var codeText = "";
+            	if(code){
+            		codeText ="  " +getCodeText(code);
+            		if(!exampleValue)
+            			exampleValue = getFirstCode(code);
+            	}
+            	var dtFormat = "";
+            	if(isApiMode() && "Dt" == name.substr(-2)){
+            		dtFormat =" (YYYYMMDDHH24MISS)";
+            		if(!exampleValue)
+            			exampleValue = moment().format("YYYYMMDDHHmmss");
+            		
+            	}
+            	var ynFormat = "";
+            	if(isApiMode() && "Yn" == name.substr(-2)){
+            		ynFormat =" [Y/N]";
+            		if(!exampleValue)
+            			exampleValue = "N";
+            	}
+            	var mLen = "";
+            	if(isApiMode() && col.dataType == "VARCHAR2"){
+            		mLen =' , maxLength=' + col.dataLength;
+            	}
+            	
+            	str +=  '    @Schema(description = "'+col.comments+codeText+dtFormat+ynFormat+'", example = "'+exampleValue+'", hidden = false, required = '+nullable+', nullable = '+!nullable+mLen+')\n';
             }
             
             if(jData.type == "int")
@@ -1017,9 +1234,31 @@
                 
             	if(nullable)
                 {
-                    str+="    @NonNull\n";
+                    str+="    @NotEmpty\n";
                     hasNull= true;
                 }
+            	if(isApiMode() &&"Dt" == name.substr(-2)){
+            		hasDtValue = true;
+            		str+="    @DatetimeValue\n";
+            	}
+            	if(isApiMode() &&code){
+            		codeText = getCodeText(code);
+            		if(codeText)
+            		{
+            			hasCodeValue = true;
+            			var codeArr = getCodeArr(code);
+            			var codeMsg = codeText+' 등록된 코드가 아닙니다. '
+            			str +=  '    @CodeValue(codeId = "'+code+'", codes = {'+codeArr+'}, message = "'+codeMsg+'")\n';
+            		}
+            	}
+            	if(isApiMode() && "Yn" == name.substr(-2)){
+            		hasYnValue = true;
+            		str+="    @YnValue\n";
+            	}
+            	if(isApiMode() && col.dataType == "VARCHAR2"){
+            		hasMaxByte = true;
+            		str+='    @MaxByte(max='+col.dataLength+')\n';
+            	}
             	if(defaultValue && defaultValue.toLowerCase() == "sysdate")
                 	str +=  "    private " +"String " + name + " = \""+ defaultValue +"\";\n";
                 else
@@ -1031,14 +1270,25 @@
 		strJava += "package "+getPackageName()+".model;\n"
 		strJava += "\n"
 		if(isApiMode())
-			strJava += "import com.wigo.api.base.model.ApiBaseVo;\n"
+			strJava += "import com.ceragem.api.base.model.ApiBaseVo;\n"
 		else
-			strJava += "import com.kspo.voc.common.model.BaseVo;\n"
+			strJava += "import com.ceragem.crm.common.model.BaseVo;\n"
 			
 		if(hasNull)
-			strJava += "import lombok.NonNull;\n"
+			strJava += "import javax.validation.constraints.NotEmpty;\n"
+		
 		if(isApiMode())
+		{
 			strJava += "import io.swagger.v3.oas.annotations.media.Schema;\n"
+			if(hasYnValue)
+				strJava += "import com.ceragem.api.crm.validate.YnValue;\n";
+			if(hasCodeValue)
+				strJava += "import com.ceragem.api.crm.validate.CodeValue;\n";
+			if(hasDtValue)
+				strJava += "import com.ceragem.api.crm.validate.DatetimeValue;\n";
+			if(hasMaxByte)
+				strJava += "import com.ceragem.api.crm.validate.MaxByte;\n";
+		}
 		strJava += "import lombok.Getter;\n"
 		strJava += "import lombok.Setter;\n"
 			
@@ -1052,11 +1302,15 @@
 			strJava += "public class "+getModelName()+" extends ApiBaseVo {\n";
 		}
 		else
+		{
 			strJava += "public class "+getModelName()+" extends BaseVo {\n";
-		strJava += "    /**\n";
-		strJava += "    *\n"; 
-		strJava += "    */\n";
-		strJava += "private static final long serialVersionUID = 1L;\n";
+			strJava += "    /**\n";
+			strJava += "    *\n"; 
+			strJava += "    */\n";
+			strJava += "private static final long serialVersionUID = 1L;\n";
+		}
+			
+		
 		strJava += str ;
 		strJava += "}\n"
 
@@ -1069,13 +1323,16 @@
    
 }
     
-    
+    function generateModelSoXml(){
+    	generateModelSo();
+    }
     function generateModelSo(cancelPopup){
     	if(!validate())
     	{
     		return;
     	}
-    	
+    	var hasYnValue = false;
+    	var hasCodeValue = false;
         var strJava = "";
         var soName = getJavaName(false,"So");
         _SAVE_FILE_NAME =  getJavaName(false,"So")  + ".java";
@@ -1084,24 +1341,25 @@
         var list = _TABLE_INFO;
         var str = "";
         var hasNull = false;
+        var rows = grdList.getJsonRows();
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
-            var nullable = _NULL_ANN && col.nullable=="N"
+            var nullable = false ; //  && col.nullable=="N"
             var column = col.columnName;
             var name = Utilities.convert2CamelCase(col.columnName);
             if (name == "regDt" || name == "regrId" || name == "amdDt" || name == "amdrId")
                 continue;
             var jData = convertColumn(col);
             var defaultValue = jData.defaultValue? jData.defaultValue.replace("NULL","").replaceAll("'","").replace("SYSDATE","") : "";
-			if(defaultValue)
-            var code = $('input[name="codeId"][data-col-type="codeId"][data-col-id="'+col.columnId+'"]').val();
+// 			if(defaultValue)
+            var code =rows[i].codeId;
             if(col.comments ||code )
         		str+= "    /**\n";
             if(col.comments){
             	str+= "    * "+col.comments+" \n";
             }
             if(code){
-            	str += "    * 공통코드 : " + code + " \n";
+            	str += "    * 공통코드 : " + code + " "+getCodeText(code)+"\n";
             }
             if(col.comments ||code )
             str+= "    */\n";
@@ -1111,7 +1369,20 @@
             	if(!exampleValue){
             		
             	}
-            	str +=  '    @Schema(description = "'+col.comments+'", example = "'+exampleValue+'", hidden = false, required = '+nullable+', nullable = '+!nullable+')\n';
+            	var codeText = "";
+            	if(code){
+            		codeText = "  "+getCodeText(code);
+            	}
+            	var dtFormat = "";
+            	if(isApiMode() && "Dt" == name.substr(-2)){
+            		dtFormat =" (YYYYMMDDHH24MISS)"
+            	}
+            	var ynFormat = "";
+            	if(isApiMode() && "Yn" == name.substr(-2)){
+            		ynFormat =" [Y/N]"
+            	}
+            	str +=  '    @Parameter(description = "'+col.comments+codeText+dtFormat+ynFormat+'", example = "'+exampleValue+'", hidden = true, required = '+nullable+')\n';
+            	str +=  '    @Schema(description = "'+col.comments+codeText+dtFormat+ynFormat+'", example = "'+exampleValue+'", hidden = true, required = '+nullable+', nullable = '+!nullable+')\n';
             }
             
             if(jData.type == "int")
@@ -1135,9 +1406,23 @@
                 
             	if(nullable)
                 {
-                    str+="    @NonNull\n";
+                    str+="    @NotEmpty\n";
                     hasNull= true;
                 }
+            	if(isApiMode() && "Yn" == name.substr(-2)){
+            		hasYnValue = true;
+            		str+="    @YnValue\n";
+            	}
+            	if(isApiMode() &&code){
+            		codeText = getCodeText(code);
+            		if(codeText)
+            		{
+            			hasCodeValue = true;
+            			var codeArr = getCodeArr(code);
+            			var codeMsg = codeText+' 등록된 코드가 아닙니다. '
+            			str +=  '    @CodeValue(codeId = "'+code+'", codes = {'+codeArr+'}, message = "'+codeMsg+'")\n';
+            		}
+            	}
             	if(defaultValue && defaultValue.toLowerCase() == "sysdate")
                 	str +=  "    private " +"String " + name + " = \""+ defaultValue +"\";\n";
                 else
@@ -1149,11 +1434,17 @@
 		strJava += "package "+getPackageName()+".model;\n"
 		strJava += "\n"
 		if(hasNull)
-			strJava += "import lombok.NonNull;\n"
+			strJava += "import javax.validation.constraints.NotEmpty;\n"
 		if(isApiMode())
 		{
 			strJava += "import io.swagger.v3.oas.annotations.media.Schema;\n";
-				strJava += "import com.wigo.api.base.model.ApiPagination;\n";
+			strJava += "import io.swagger.v3.oas.annotations.Parameter;\n";
+			
+			strJava += "import com.ceragem.api.base.model.ApiPagination;\n";
+			if(hasYnValue)
+				strJava += "import com.ceragem.api.crm.validate.YnValue;\n";
+			if(hasCodeValue)
+				strJava += "import com.ceragem.api.crm.validate.CodeValue;\n";
 		}
 		strJava += "import lombok.Getter;\n"
 		strJava += "import lombok.Setter;\n"
@@ -1201,14 +1492,14 @@
          strJava += "import org.springframework.stereotype.Service;\n";
          
          if(isApiMode())
-         	strJava += "import com.wigo.api.base.service.AbstractCrmService;\n";
+         	strJava += "import com.ceragem.api.base.service.AbstractCrmService;\n";
         else
-        	strJava += "import com.kspo.voc.sys.service.AbstractCrmService;\n";
+        	strJava += "import com.ceragem.crm.sys.service.AbstractCrmService;\n";
          strJava += "import "+getJavaName(true,"dao")+";\n";
          if(isApiMode())
-         	strJava += "import com.kspo.api.voc.dao.ICrmDao;\n";
+         	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
         else
-        	strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
+        	strJava += "import com.ceragem.crm.sys.dao.ICrmDao;\n";
          strJava += "\n";
          strJava += getClassAnn("Service");
          strJava += "@Service\n";
@@ -1241,13 +1532,13 @@
         strJava += "package "+getPackageName()+".dao;\n";
         strJava += "\n";
         if(isApiMode())
-        	strJava += "import com.wigo.api.config.annotation.Mapper;\n";
+        	strJava += "import com.ceragem.api.config.annotation.CrmMapper;\n";
         else
-           	strJava += "import com.kspo.voc.sys.mapper.Mapper;\n";
+           	strJava += "import com.ceragem.crm.sys.mapper.CrmMapper;\n";
 		if(isApiMode())
-		 	strJava += "import com.kspo.api.voc.dao.ICrmDao;\n";
+		 	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
 		else
-			strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
+			strJava += "import com.ceragem.crm.sys.dao.ICrmDao;\n";
         strJava += "\n";
 //         strJava += getClassAnn("Dao");
        	strJava += "@CrmMapper\n";
@@ -1263,6 +1554,7 @@
     	generateController();
     }
     function generateController(cancelPopup){
+    	var username = $("#userName").val() ? $("#userName").val() : 'user';
     	if(!validate())
     	{
     		return;
@@ -1280,28 +1572,46 @@
         strJava += "package "+getPackageName()+".controller;\n";
         strJava += "\n";
         
-        
+        var pkList = [];
+        for(var i=0;i<_TABLE_INFO.length;i++){
+        	var col = _TABLE_INFO[i];
+        	if(col.pk=="PK"){
+        		pkList.push(col);
+        	}
+        }
+        if(!pkList.length)
+        	pkList.push(_TABLE_INFO[0]);
         if(apiMode)
         {
-        	
-        	
         	strJava += 'import java.util.List;\n';
         	strJava += 'import java.util.Map;\n';
         	strJava += 'import javax.validation.Valid;\n';
         	strJava += 'import org.springframework.beans.factory.annotation.Autowired;\n';
         	strJava += 'import org.springframework.http.ResponseEntity;\n';
+        	strJava += "import org.springframework.web.bind.annotation.DeleteMapping;\n";
         	strJava += 'import org.springframework.web.bind.annotation.GetMapping;\n';
+        	strJava += 'import org.springframework.web.bind.annotation.PathVariable;\n';
+        	strJava += 'import org.springframework.web.bind.annotation.PostMapping;\n';
+       		strJava += 'import org.springframework.web.bind.annotation.PutMapping;\n';
+       		strJava += 'import org.springframework.web.bind.annotation.RequestBody;\n';
         	strJava += 'import org.springframework.web.bind.annotation.RequestMapping;\n';
         	strJava += 'import org.springframework.web.bind.annotation.RequestParam;\n';
         	strJava += 'import org.springframework.web.bind.annotation.RestController;\n';
-        	strJava += 'import com.wigo.api.base.controller.BaseRestController;\n';
-        	strJava += 'import com.wigo.api.base.model.ApiResultVo;\n';
+        	strJava += 'import com.ceragem.api.base.controller.BaseRestController;\n';
+        	strJava += 'import com.ceragem.api.base.model.ApiPagingPayload;\n';
+        	strJava += 'import com.ceragem.api.base.model.ApiResultVo;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.Operation;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.Parameter;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.tags.Tag;\n';
-        	strJava += 'import com.kspo.api.voc.model.'+moduleName+'So;\n';
-        	strJava += 'import com.kspo.api.voc.model.'+moduleName+'Vo;\n';
-        	strJava += 'import com.kspo.api.voc.service.'+moduleName+'Service;\n';
+        	strJava += 'import org.springdoc.api.annotations.ParameterObject;\n';
+        	
+        	strJava += 'import com.ceragem.api.crm.model.'+moduleName+'So;\n';
+        	strJava += 'import com.ceragem.api.crm.model.'+moduleName+'Vo;\n';
+        	strJava += 'import com.ceragem.api.crm.service.'+moduleName+'Service;\n';
+        	strJava += 'import com.ceragem.api.base.util.Utilities;\n';
+        	strJava += 'import com.ceragem.api.base.constant.Constants;\n';
+        	strJava += 'import com.ceragem.crm.common.model.EzApiException;\n';
+        	strJava += "import com.ceragem.crm.common.model.EzMap;\n";
         }
         else
         {
@@ -1310,16 +1620,16 @@
             strJava += "import org.springframework.beans.factory.annotation.Autowired;\n";
             strJava += "import org.springframework.stereotype.Controller;\n";
         	strJava += "import org.springframework.ui.ModelMap;\n";
-        	strJava += "import com.kspo.voc.common.util.Utilities;\n";
-
+        	strJava += "import com.ceragem.crm.common.util.Utilities;\n";
+        	
             strJava += "import org.springframework.web.bind.annotation.GetMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.PostMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.RequestBody;\n";
             strJava += "import org.springframework.web.bind.annotation.RequestMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.RequestParam;\n";
             strJava += "import org.springframework.web.bind.annotation.ResponseBody;\n";
-            strJava += "import com.kspo.voc.common.model.EzMap;\n";
-            strJava += "import com.kspo.voc.common.model.EzPaginationInfo;\n";
+            strJava += "import com.ceragem.crm.common.model.EzMap;\n";
+            strJava += "import com.ceragem.crm.common.model.EzPaginationInfo;\n";
             
             strJava += "import "+getModelName(true)+";\n";
             strJava += "import "+getJavaName(true,"service")+";\n";
@@ -1333,16 +1643,16 @@
         if(apiMode)
         {
         	var mappingUrl = _TABLE_NAME.replaceAll("_","-").toLowerCase();
-        	strJava += "@Tag(name = \""+_TABLE_COMMENT+"\", description = \""+_TABLE_COMMENT+" API입니다.\")\n";
+        	strJava += "@Tag(name = \""+_TABLE_COMMENT+"\", description = \""+_TABLE_COMMENT+" API\")\n";
         	strJava += "@RestController\n";
-        	strJava += "@RequestMapping(\"/voc/v1.0/"+mappingUrl+"\")\n";
+        	strJava += "@RequestMapping(\"/crm/v1.0/"+mappingUrl+"\")\n";
         	 strJava += "public class "+getJavaName(false,"controller")+" extends BaseRestController {\n";
         	
         }
         else 
         {
         	strJava += "@Controller\n";
-        	strJava += '@RequestMapping(value = { "'+javaName+'", "{menuId}/'+javaName+'" })\n';
+        	strJava += '@RequestMapping(value = { "'+javaName+'", "{menuCd}/'+javaName+'" })\n';
         	 strJava += "public class "+getJavaName(false,"controller")+"{\n";
         }
         
@@ -1350,28 +1660,185 @@
         strJava += "@Autowired\n";
         strJava += getJavaName(false,"service") + " service;\n";
         strJava += "\n";
+        var dt = moment().format('YYYY. M. D.');
         if(apiMode)
         {
-			strJava += '	@GetMapping("get'+moduleName+'List")\n';
-			strJava += '	@Operation(summary = "멤버쉽 검색", description = "통합회원을 검색 검색합니다.")\n';
-			strJava += '	public ResponseEntity<ApiResultVo<List<'+getModelName()+'>>> get'+moduleName+'List(\n';
-			strJava += '			@Parameter(description = "'+_TABLE_COMMENT+' 검색객체") @Valid '+moduleName+'So so,\n';
-			strJava += '			@Parameter(description = "검색객체", hidden = true) @RequestParam Map<String, Object> param)\n';
+        	var apiPath = "";
+        	var apiParam = "";
+        	for(var i=0;i<pkList.length;i++){
+        		var ci = pkList[i];
+        		var cn = Utilities.convert2CamelCase(ci.columnName); 
+        		apiPath+='/{'+cn+'}'
+        		if(apiParam)
+        			apiParam += ',\n';
+        		apiParam += '			@Parameter(description = "'+ci.comments+'") @PathVariable("'+cn+'") String '+cn;
+	
+        	}
+        	if(apiParam)
+    			apiParam += ')\n';
+    			
+    			
+        	var apiModule = _TABLE_NAME.split("_").join("-").toLowerCase();
+			strJava += '	 /**\n';
+			strJava += '	*\n' ;
+			strJava += '	* @author '+username+'\n';
+			strJava += '	* @date ' + dt + '\n';
+			strJava += '	* @param so\n';
+			strJava += '	* @param param\n';
+			strJava += '	* @return\n';
+			strJava += '	* @throws Exception\n';
+			strJava += '	* @description '+_TABLE_COMMENT+' 검색\n';
+			strJava += '	*\n';
+			strJava += '	*/\n';        	
+			strJava += '	@GetMapping("list")\n';
+			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 검색", description = "'+_TABLE_COMMENT+' 검색")\n';
+			
+			strJava += '	public ResponseEntity<ApiResultVo<ApiPagingPayload<'+moduleName+'Vo>>> getCrmCustBasList(\n';
+// 			strJava += '	public ResponseEntity<ApiResultVo<List<'+getModelName()+'>>> get'+moduleName+'List(\n';
+			strJava += '			@Parameter(description = "'+_TABLE_COMMENT+' 검색객체") @ParameterObject @Valid '+moduleName+'So so)\n';
+// 			strJava += '			@Parameter(description = "검색객체", hidden = true) @RequestParam Map<String, Object> param)\n';
 			strJava += '			throws Exception {\n';
+			strJava += '		EzMap param = new EzMap(so);\n';
 			strJava += '		List<'+getModelName()+'> list = service.getList(param);\n';
-			strJava += '		return successResponse(list);\n';
+			strJava += '		int cnt = service.getListCount(param);\n';
+			strJava += '		so.setTotalRecordCount(cnt);\n';
+			strJava += '		if(Utilities.isEmpty(list))\n';
+			strJava += '			throw new EzApiException(Constants._API_CODE_NO_DATA, Constants._API_CODE_NO_DATA_MSG);\n';
+			strJava += '		return successResponse(list,so);\n';
+			strJava += "}\n";
+		    strJava += "\n";
+		    
+			strJava += '	/**\n';
+			strJava += '	*\n' ;
+		    strJava += '	* @author '+username+'\n';
+			strJava += '	* @date ' + dt + '\n';
+			strJava += '	* @param id\n';
+			strJava += '	* @return\n';
+			strJava += '	* @throws Exception\n';
+			strJava += '	* @description '+_TABLE_COMMENT+'단건 검색\n';
+			strJava += '	*\n';
+			strJava += '	*/\n';        	
+			strJava += '	@GetMapping("'+apiPath+'")\n';
+			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 단건", description = "'+_TABLE_COMMENT+' 단건 검색")\n';
+			strJava += '	public ResponseEntity<ApiResultVo<'+getModelName()+'>> get'+moduleName+'(\n';
+			strJava += apiParam;
+			strJava += '			throws Exception {\n';
+			strJava += '		'+moduleName+'So so  = new '+moduleName+'So();\n';
+			for(var i=0;i<pkList.length;i++){
+				var ci = pkList[i];			
+				var cn = Utilities.convert2CamelCase(ci.columnName);  
+				strJava += '		'+ "so.set" + cn.substring(0,1).toUpperCase() + cn.substring(1)+"("+cn+");\n";
+			}
+			strJava += '		'+getModelName()+' vo = service.get(so);\n';
+			strJava += '		if(vo == null)\n';
+			strJava += '			throw new EzApiException(Constants._API_CODE_NO_DATA, Constants._API_CODE_NO_DATA_MSG);\n';
+			strJava += '		return successResponse(vo);\n';
+			strJava += "}\n";
+		    strJava += "\n";
+		    
+		    strJava += '	/**\n';
+			strJava += '	*\n' ;
+		    strJava += '	* @author '+username+'\n';
+			strJava += '	* @date ' + dt + '\n';
+			strJava += '	* @param vo\n';
+			strJava += '	* @return\n';
+			strJava += '	* @throws Exception\n';
+			strJava += '	* @description '+_TABLE_COMMENT+' 입력\n';
+			strJava += '	*\n';
+			strJava += '	*/\n';        	
+			strJava += '	@PostMapping("")\n';
+			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 입력", description = "'+_TABLE_COMMENT+' 입력")\n';
+			strJava += '	public ResponseEntity<ApiResultVo<'+getModelName()+'>> register'+moduleName+'(\n';
+			strJava += '			@Parameter(description = "'+_TABLE_COMMENT+' 객체") @RequestBody @Valid '+moduleName+'Vo vo)\n';
+			strJava += '			throws Exception {\n';
+			strJava += '		int ret = service.insert(vo);\n';
+			strJava += '		if(ret == 0)\n';
+			strJava += '			throw new EzApiException(Constants._API_CODE_NO_DATA, Constants._API_CODE_NO_DATA_MSG);\n';
+			strJava += '		return successResponse(service.get(vo));\n';
+			strJava += "}\n";
+		    strJava += "\n";
+		    
+		    strJava += '	/**\n';
+			strJava += '	*\n' ;
+		    strJava += '	* @author '+username+'\n';
+			strJava += '	* @date ' + dt + '\n';
+			strJava += '	* @param vo\n';
+			strJava += '	* @param param\n';
+			strJava += '	* @return\n';
+			strJava += '	* @throws Exception\n';
+			strJava += '	* @description '+_TABLE_COMMENT+' 수정\n';
+			strJava += '	*\n';
+			strJava += '	*/\n';        	
+			strJava += '	@PutMapping("")\n';
+			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 수정", description = "'+_TABLE_COMMENT+' 수정")\n';
+			strJava += '	public ResponseEntity<ApiResultVo<'+getModelName()+'>> modify'+moduleName+'(\n';
+			strJava += '			@Parameter(description = "'+_TABLE_COMMENT+' 객체") @RequestBody @Valid '+moduleName+'Vo vo)\n';
+			strJava += '			throws Exception {\n';
+			strJava += '		int ret = service.update(vo);\n';
+			strJava += '		if(ret == 0)\n';
+			strJava += '			throw new EzApiException(Constants._API_CODE_NO_DATA, Constants._API_CODE_NO_DATA_MSG);\n';
+			strJava += '		return successResponse(service.get(vo));\n';
+			strJava += "}\n";
+		    strJava += "\n";
+		    
+		    
+		    strJava += '	/**\n';
+			strJava += '	*\n' ;
+		    strJava += '	* @author '+username+'\n';
+			strJava += '	* @date ' + dt + '\n';
+			strJava += '	* @param id\n';
+			strJava += '	* @return\n';
+			strJava += '	* @throws Exception\n';
+			strJava += '	* @description '+_TABLE_COMMENT+' 삭제\n';
+			strJava += '	*\n';
+			strJava += '	*/\n';        	
+			strJava += '	@DeleteMapping("'+apiPath+'")\n';
+			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 삭제", description = "'+_TABLE_COMMENT+' 삭제")\n';
+			strJava += '	public ResponseEntity<ApiResultVo<Object>> remove'+moduleName+'(\n';
+			strJava += apiParam;
+			strJava += '			throws Exception {\n';
+			strJava += '		'+getModelName()+' vo = new '+getModelName()+'();\n';
+			for(var i=0;i<pkList.length;i++){
+				var ci = pkList[i];			
+				var cn = Utilities.convert2CamelCase(ci.columnName);  
+				strJava += '		'+ "vo.set" + cn.substring(0,1).toUpperCase() + cn.substring(1)+"("+cn+");\n";
+			}
+			strJava += '		int ret = service.delete(vo);\n';
+			strJava += '		if(ret == 0)\n';
+			strJava += '			throw new EzApiException(Constants._API_CODE_NO_DATA, Constants._API_CODE_NO_DATA_MSG);\n';
+			strJava += '		return successResponse(null);\n';
 			strJava += "}\n";
 		    strJava += "\n";
         }
+        
         else{
-        	
+        	strJava += '/**\n';
+        	strJava += ' * \n';
+        	strJava += ' * @author '+username+'\n';
+        	strJava += ' * @date ' + dt + '';
+        	strJava += ' * @param param\n';
+        	strJava += ' * @param model\n';
+        	strJava += ' * @return\n';
+        	strJava += ' * @throws Exception\n';
+        	strJava += ' * @description '+_TABLE_COMMENT+' 목록페이지\n';
+        	strJava += ' *\n';
+        	strJava += ' */\n';
             strJava += "@GetMapping(value = { \"\", \"index\" })\n";
             strJava += "public String init(@RequestParam Map<String, Object> param, ModelMap model) throws Exception {\n";
             strJava += "    model.addAllAttributes(param);\n";
             strJava += "    return Utilities.getProperty(\"tiles.crm\") + \""+lastPack+"/"+javaName+"List\";\n";
             strJava += "}\n";
             strJava += "\n";
-            
+            strJava += '/**\n';
+            strJava += ' * \n';
+            strJava += ' * @author '+username+'\n';
+            strJava += ' * @date ' + dt + '';
+            strJava += ' * @param param\n';
+            strJava += ' * @return\n';
+            strJava += ' * @throws Exception\n';
+            strJava += ' * @description '+_TABLE_COMMENT+' 목록검색\n';
+            strJava += ' *\n';
+            strJava += ' */\n';
             strJava += "@PostMapping(value = { \"getList\" })\n";
             strJava += "public @ResponseBody Object getList(@RequestBody EzMap param) throws Exception {\n";
             strJava += "    EzPaginationInfo page = param.getPaginationInfo();\n";
@@ -1380,20 +1847,64 @@
             strJava += "    return Utilities.getGridData(list,page);\n";
             strJava += "}\n";
             strJava += "\n";
+            strJava += '/**\n';
+            strJava += ' * \n';
+            strJava += ' * @author '+username+'\n';
+            strJava += ' * @date ' + dt + '';
+            strJava += ' * @param rparam\n';
+            strJava += ' * @return\n';
+            strJava += ' * @throws Exception\n';
+            strJava += ' * @description '+_TABLE_COMMENT+' 1건검색\n';
+            strJava += ' *\n';
+            strJava += ' */\n';
             strJava += "@GetMapping(value = { \"get\" })\n";
             strJava += "public @ResponseBody Object get(@RequestParam Map<String, Object> rparam) throws Exception {\n";
             strJava += "    EzMap param = new EzMap(rparam);\n";
             strJava += "    return service.get(param);\n";
             strJava += "}\n";
+            
+            strJava += '/**\n';
+            strJava += ' * \n';
+            strJava += ' * @author '+username+'\n';
+            strJava += ' * @date ' + dt + '';
+            strJava += ' * @param vo\n';
+            strJava += ' * @return\n';
+            strJava += ' * @throws Exception\n';
+            strJava += ' * @description '+_TABLE_COMMENT+' 저장\n';
+            strJava += ' *';
+            strJava += ' */';
             strJava += "@PostMapping(value = {\"save\" })\n";
             strJava += "public @ResponseBody Object save(@RequestBody "+voName+" vo) throws Exception {\n";
             strJava += "    return service.save(vo);\n";
             strJava += "}\n";   
             strJava += "\n";
+            
+            strJava += '/**\n';
+            strJava += ' * \n';
+            strJava += ' * @author '+username+'\n';
+            strJava += ' * @date ' + dt + '';
+            strJava += ' * @param list\n';
+            strJava += ' * @return\n';
+            strJava += ' * @throws Exception\n';
+            strJava += ' * @description '+_TABLE_COMMENT+' 리스트 저장\n';
+            strJava += ' *\n';
+            strJava += ' */\n';
             strJava += "@PostMapping(value = { \"saveList\" })\n";
             strJava += "public @ResponseBody Object saveList(@RequestBody List<"+voName+"> list) throws Exception {\n";
             strJava += "    return service.saveList(list);\n";
             strJava += "}\n";
+            
+            
+            strJava += '/**\n';
+            strJava += ' * \n';
+            strJava += ' * @author '+username+'\n';
+            strJava += ' * @date ' + dt + '\n';
+            strJava += ' * @param list\n';
+            strJava += ' * @return\n';
+            strJava += ' * @throws Exception\n';
+            strJava += ' * @description '+_TABLE_COMMENT+' 리스트 삭제\n';
+            strJava += ' *\n';
+            strJava += ' */\n';
             strJava += "@PostMapping(value = { \"deleteList\" })\n";
             strJava += "public @ResponseBody Object deleteList(@RequestBody List<"+voName+"> list) throws Exception {\n";
             strJava += "    return service.deleteList(list);\n";
@@ -1461,7 +1972,7 @@
     	var javaName = Utilities.convert2CamelCase(_TABLE_NAME).substring(getPrefixIndex());
     	javaName = javaName.substring(0,1).toUpperCase() + javaName.substring(1)+typeName;
     	var dt = moment().format('YYYY. M. D.');
-    	 var username = 'user';
+    	var username = $("#userName").val() ? $("#userName").val() : 'user';
     	var ann = ''
 				+ '/**\n'
 				+ ' * \n'
@@ -1499,7 +2010,9 @@
     }
     
 	function isApiMode(){
-		return $("#packageName").val().indexOf("com.wigo.api.") == 0;
+		return $("#apiDev").prop("checked");	
+	
+// 		return $("#packageName").val().indexOf("com.ceragem.api.") == 0;
 	}
 	function validate(){
 		if(!_TABLE_NAME)
@@ -1507,6 +2020,7 @@
 			alert("먼저 테이블을 검색해 주세요");
 			return false;
 		}
+		
 		return true;
 	}
 </script>
