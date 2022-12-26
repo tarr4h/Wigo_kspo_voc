@@ -16,6 +16,7 @@ spring:
     url: /
   jwt:
     secret: 1qaz@WSX
+    auth-validation : true
   datasource:
     # Pool
     hikari:

@@ -51,4 +51,7 @@ public class ApiExecHstVo extends ApiInfoBaseVo{
      * <p>API호출IP주소</p> 
      */
      private String apiCallIpAddr;
+     
+     
+     private String apiCallToken;
 }

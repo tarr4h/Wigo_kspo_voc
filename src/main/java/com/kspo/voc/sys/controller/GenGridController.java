@@ -40,4 +40,8 @@ public class GenGridController {
 	public @ResponseBody Object colInfo(@RequestBody EzMap param) throws EgovBizException {
 		return service.getList(param);
 	} 
+	@PostMapping(value = { "getCodeList" })
+	public @ResponseBody Object getCodeList(@RequestBody EzMap param) throws Exception {
+		return service.getCodeList(param);
+	}
 }

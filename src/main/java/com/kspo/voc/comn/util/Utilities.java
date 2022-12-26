@@ -2889,4 +2889,8 @@ public class Utilities {
 			return null;
 		return menu.getMenuId();
 	}
+	
+	public static String getTimeStamp() {
+		return Constants._TIMESTAMP_FORMAT.format(new Date());
+	}
 }

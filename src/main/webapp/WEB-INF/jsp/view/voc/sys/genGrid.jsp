@@ -34,7 +34,7 @@
 											
 											<th scope="row" class="left"><span class="iMust">package 명</span></th>
 											<td>
-												<input type="text" name="packageName" id="packageName" class="it" placeholder="package name" value="com.ceragem.crm.example">
+												<input type="text" name="packageName" id="packageName" class="it" placeholder="package name" value="com.kspo.voc.sys">
 											</td>
 											<th scope="row" class="left">테이블명</th>
 											<td>
@@ -94,8 +94,8 @@
 											<th scope="row" class="left">읽기 전용</th>
 											<td>
 												<select id="readOnly" name="readOnly" class="select"> 
-													<option value="Y">Y</option>
-				                        			<option value="N" selected>N</option>
+													<option value="Y" selected>Y</option>
+				                        			<option value="N" >N</option>
 				                    			</select>
 											</td>
 											<th scope="row" class="left">체크박스 표시</th>
@@ -1092,9 +1092,9 @@
 
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.ceragem.api.crm.dao.CrmCommonDao.pagingHeader");
+        	$(inc).attr("refid", "com.kspo.voc.api.dao.CommonDao.pagingHeader");
         else
-        	$(inc).attr("refid", "com.ceragem.crm.sys.dao.CrmCommonDao.pagingHeader");
+        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingHeader");
         s1.appendChild(inc);
         $(s1).append("\n       SELECT /* "+namespace+"selectList */ ");
 
@@ -1118,9 +1118,9 @@
         
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.ceragem.api.crm.dao.CrmCommonDao.pagingFooter");
+        	$(inc).attr("refid", "com.kspo.voc.api.dao.CommonDao.pagingFooter");
         else
-        	$(inc).attr("refid", "com.ceragem.crm.sys.dao.CrmCommonDao.pagingFooter");
+        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingFooter");
         s1.appendChild(inc);
         mapper.appendChild(s1);
         var prfIdx = getPrefixIndex();
@@ -1272,7 +1272,7 @@
 		if(isApiMode())
 			strJava += "import com.ceragem.api.base.model.ApiBaseVo;\n"
 		else
-			strJava += "import com.ceragem.crm.common.model.BaseVo;\n"
+			strJava += "import com.kspo.voc.common.model.BaseVo;\n"
 			
 		if(hasNull)
 			strJava += "import javax.validation.constraints.NotEmpty;\n"
@@ -1494,12 +1494,12 @@
          if(isApiMode())
          	strJava += "import com.ceragem.api.base.service.AbstractCrmService;\n";
         else
-        	strJava += "import com.ceragem.crm.sys.service.AbstractCrmService;\n";
+        	strJava += "import com.kspo.voc.sys.service.AbstractCrmService;\n";
          strJava += "import "+getJavaName(true,"dao")+";\n";
          if(isApiMode())
          	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
         else
-        	strJava += "import com.ceragem.crm.sys.dao.ICrmDao;\n";
+        	strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
          strJava += "\n";
          strJava += getClassAnn("Service");
          strJava += "@Service\n";
@@ -1534,11 +1534,11 @@
         if(isApiMode())
         	strJava += "import com.ceragem.api.config.annotation.CrmMapper;\n";
         else
-           	strJava += "import com.ceragem.crm.sys.mapper.CrmMapper;\n";
+           	strJava += "import com.kspo.voc.sys.mapper.CrmMapper;\n";
 		if(isApiMode())
 		 	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
 		else
-			strJava += "import com.ceragem.crm.sys.dao.ICrmDao;\n";
+			strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
         strJava += "\n";
 //         strJava += getClassAnn("Dao");
        	strJava += "@CrmMapper\n";
@@ -1610,8 +1610,8 @@
         	strJava += 'import com.ceragem.api.crm.service.'+moduleName+'Service;\n';
         	strJava += 'import com.ceragem.api.base.util.Utilities;\n';
         	strJava += 'import com.ceragem.api.base.constant.Constants;\n';
-        	strJava += 'import com.ceragem.crm.common.model.EzApiException;\n';
-        	strJava += "import com.ceragem.crm.common.model.EzMap;\n";
+        	strJava += 'import com.kspo.voc.common.model.EzApiException;\n';
+        	strJava += "import com.kspo.voc.common.model.EzMap;\n";
         }
         else
         {
@@ -1620,7 +1620,7 @@
             strJava += "import org.springframework.beans.factory.annotation.Autowired;\n";
             strJava += "import org.springframework.stereotype.Controller;\n";
         	strJava += "import org.springframework.ui.ModelMap;\n";
-        	strJava += "import com.ceragem.crm.common.util.Utilities;\n";
+        	strJava += "import com.kspo.voc.common.util.Utilities;\n";
         	
             strJava += "import org.springframework.web.bind.annotation.GetMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.PostMapping;\n";
@@ -1628,8 +1628,8 @@
             strJava += "import org.springframework.web.bind.annotation.RequestMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.RequestParam;\n";
             strJava += "import org.springframework.web.bind.annotation.ResponseBody;\n";
-            strJava += "import com.ceragem.crm.common.model.EzMap;\n";
-            strJava += "import com.ceragem.crm.common.model.EzPaginationInfo;\n";
+            strJava += "import com.kspo.base.common.model.EzMap;\n";
+            strJava += "import com.kspo.base.common.model.EzPaginationInfo;\n";
             
             strJava += "import "+getModelName(true)+";\n";
             strJava += "import "+getJavaName(true,"service")+";\n";
