@@ -20,7 +20,7 @@ import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.process.model.VocRegistrationVo;
+import com.kspo.voc.kspo.process.model.VocVo;
 import com.kspo.voc.kspo.process.service.VocIntergrationListService;
 
 /**
@@ -54,7 +54,7 @@ public class VocIntergrationListController {
     @PostMapping(value = "selectList")
     public @ResponseBody Object selectList(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocRegistrationVo> list = service.selectList(param);
+        List<VocVo> list = service.selectList(param);
         page.setTotalRecordCount(service.selectListCount(param));
         return Utilities.getGridData(list, page);
     }

@@ -29,6 +29,8 @@
         <column name="공통코드" field="comnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="순번" field="odrg" type="char" maxLength="1000" width="20" textAlignment="center" required="Y" hidden="N"/>
         <column name="사용유무" field="useYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="등록자" field="regUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="등록자" field="regrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="수정자" field="amdrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="수정일시" field="amdDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
 </grid>

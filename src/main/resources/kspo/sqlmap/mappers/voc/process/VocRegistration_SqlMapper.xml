@@ -3,10 +3,10 @@
 <mapper namespace="com.kspo.voc.kspo.process.dao.VocRegistrationDao">
 
     <insert id="insert">
-        insert into VOC_REGISTRATION
-        (REG_SEQ, CHANNEL, TITLE, CONTENT, REG_COMMENT, CUST_ID, REG_USR)
+        insert into TB_VOC
+        (VOC_SEQ, CHANNEL, TITLE, CONTENT, REG_COMMENT, CUST_ID, AMDR_ID)
         values(
-               #{regSeq},
+               #{vocSeq},
                #{channel},
                #{title},
                #{content},
@@ -17,50 +17,50 @@
     </insert>
 
     <update id="update">
-        update VOC_REGISTRATION
+        update TB_VOC
         set
             channel = #{channel},
             title = #{title},
             content = #{content},
             reg_comment = #{regComment},
-            reg_usr = #{regUsr}
+            amdr_id = #{amdrId}
         where
-            reg_seq = #{regSeq}
+            voc_seq = #{vocSeq}
     </update>
 
     <select id="selectMaxSeq" resultType="string">
         select
-            max(REG_SEQ)
+            max(voc_seq)
         from
-            VOC_REGISTRATION
+            tb_voc
     </select>
 
     <select id="selectMaxRegPrcdSeq" resultType="string">
         select
-            max(reg_prcd_seq)
+            max(voc_prcd_seq)
         from
-            voc_reg_prcd
+            tb_voc_prcd
     </select>
 
     <insert id="insertRegProcedure">
-        insert into voc_reg_prcd
-        (REG_PRCD_SEQ, REG_SEQ, MC_PRCD_SEQ, DEADLINE_DT, MOD_USR)
+        insert into tb_voc_prcd
+        (voc_prcd_seq, voc_seq, mc_prcd_seq, deadline_dt, amdr_id)
         values
             (
-             #{regPrcdSeq},
-             #{regSeq},
+             #{vocPrcdSeq},
+             #{vocSeq},
              #{mcPrcdSeq},
              #{deadlineDt},
-             #{modUsr}
+             #{amdrId}
             )
     </insert>
 
-    <select id="select" resultType="com.kspo.voc.kspo.process.model.VocRegistrationVo">
+    <select id="select" resultType="com.kspo.voc.kspo.process.model.VocVo">
         select
             *
         from
-            VOC_REGISTRATION
+            TB_VOC
         where
-            reg_seq = #{regSeq}
+            voc_seq = #{vocSeq}
     </select>
 </mapper>

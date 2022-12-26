@@ -15,7 +15,7 @@ import com.kspo.voc.kspo.common.dao.IVocPrcDao;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
-import com.kspo.voc.kspo.process.model.VocRegPrcdVo;
+import com.kspo.voc.kspo.process.model.VocPrcdVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
 import com.kspo.voc.sys.service.AbstractVocService;
 
@@ -35,7 +35,7 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @return updateResult
      */
     public int updateY2N(Map<String, Object> param){
-        VocRegPrcdVo vo = selectNextRegPrcd(param);
+        VocPrcdVo vo = selectNextRegPrcd(param);
 
         Map<String, Object> map = new HashMap<>();
         map.put("prntsSeq", vo.getMcPrcdSeq());
@@ -46,7 +46,7 @@ public abstract class VocAbstractService extends AbstractVocService {
         if(nextStatus == null){
             nextStatus = selectVocStatus(null, PrcdStatus.CLOSE.getStatus());
         }
-        nextStatus.put("regSeq", param.get("regSeq"));
+        nextStatus.put("vocSeq", param.get("vocSeq"));
 
         return dao.updateRegistrationStatus(nextStatus);
     }
@@ -60,12 +60,12 @@ public abstract class VocAbstractService extends AbstractVocService {
      */
 //    @SuppressWarnings("unchecked")
     public void updateRegProcedureStatus(Map<String, Object> param, PrcdStatus requestStatus) throws EgovBizException{
-        String regSeq = (String) param.get("regSeq");
-        if(regSeq == null){
+        String vocSeq = (String) param.get("vocSeq");
+        if(vocSeq == null){
             throw new EgovBizException("*** parameter에 [regSeq]가 존재하지 않습니다. ***");
         }
 
-        VocRegPrcdVo vo = selectNextRegPrcd(param);
+        VocPrcdVo vo = selectNextRegPrcd(param);
         vo.setStatus(requestStatus.getStatus());
         dao.updateRegPrcd(vo);
 
@@ -79,7 +79,7 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @param requestStatus : PrcdStatus 타입
      */
     public void updateRegistrationStatus(Map<String, Object> param, PrcdStatus requestStatus){
-        VocRegPrcdVo regPrcd = dao.selectRegPrcd(param);
+        VocPrcdVo regPrcd = dao.selectRegPrcd(param);
         VocProcedureVo prcd = dao.selectProcedure(regPrcd);
 
         Map<String, Object> status = dao.selectVocStatus(prcd.getPrcdSeq(), requestStatus.getStatus());
@@ -92,12 +92,12 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @param param : reqSeq(등록시퀀스) 필수 포함
      * @return VocRegPrcdVo - 등록절차 정보
      */
-    public VocRegPrcdVo selectNextRegPrcd(Object param){
-        List<VocRegPrcdVo> regPrcdList = dao.selectRegPrcdList(param);
+    public VocPrcdVo selectNextRegPrcd(Object param){
+        List<VocPrcdVo> regPrcdList = dao.selectRegPrcdList(param);
 
         int cntN = 0;
         int index = 0;
-        for(VocRegPrcdVo regPrcd : regPrcdList){
+        for(VocPrcdVo regPrcd : regPrcdList){
             if(regPrcd.getStatus().equals(PrcdStatus.STNDBY.getStatus())){
                 cntN++;
             }
@@ -116,7 +116,7 @@ public abstract class VocAbstractService extends AbstractVocService {
             }
         }
         // 3. 모두 N이라면 0번 index
-        VocRegPrcdVo vo = regPrcdList.get(index);
+        VocPrcdVo vo = regPrcdList.get(index);
         return vo;
     }
 

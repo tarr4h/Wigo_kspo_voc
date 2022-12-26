@@ -9,22 +9,23 @@ import com.kspo.voc.kspo.setting.model.VocProcedureVo;
 
 @Getter
 @Setter
-public class VocRegPrcdVo extends VocProcedureVo {
+public class VocPrcdVo extends VocProcedureVo {
 
     private static final long serialVersionUID = 235109878386090833L;
-	private String regPrcdSeq;
-    private String regSeq;
+	private String vocPrcdSeq;
+    private String vocSeq;
     private String mcPrcdSeq;
     private Date deadlineDt;
+    private String processOrg;
+    private String processor;
     private String status;
-    private String modUsr;
-    private String modDt;
-
-    public VocRegPrcdVo() {
+    private String amdrId;
+    private String amdDt;
+    public VocPrcdVo() {
     }
 
-    public VocRegPrcdVo(String regPrcdSeq, String status) {
-        this.regPrcdSeq = regPrcdSeq;
+    public VocPrcdVo(String vocPrcdSeq, String status) {
+        this.vocPrcdSeq = vocPrcdSeq;
         this.status = status;
     }
 

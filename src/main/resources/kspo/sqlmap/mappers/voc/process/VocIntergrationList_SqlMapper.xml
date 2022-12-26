@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.kspo.process.dao.VocIntergrationListDao">
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.process.model.VocRegistrationVo">
+    <select id="selectList" resultType="com.kspo.voc.kspo.process.model.VocVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
         select
-            <include refid="com.kspo.voc.kspo.common.dao.VocComnDao.registrationListCols"/>
+            <include refid="com.kspo.voc.kspo.common.dao.VocComnDao.vocListCols"/>
         from
             VOC_REGISTRATION vr
         where

@@ -7,7 +7,7 @@
         select
             *
         from
-            crm_comn_cd_bas
+            tb_sys_comn_cd_bas
         where
             top_comn_cd = #{topComnCd}
             and
@@ -20,7 +20,7 @@
         select
             *
         from
-            crm_comn_cd_bas
+            tb_sys_comn_cd_bas
         where
             top_comn_cd = #{topComnCd}
             and
@@ -41,7 +41,7 @@
         select
             *
         from
-            crm_org_bas
+            tb_sys_org_bas
         where
             org_id = #{orgId}
     </select>
@@ -59,7 +59,7 @@
         select
             *
         from
-            crm_org_bas
+            tb_sys_org_bas
         where
             org_nm like '%' || #{keyword} || '%'
     </select>
@@ -67,9 +67,9 @@
     <select id="selectEmpList" resultType="com.kspo.voc.sys.model.EmpBaseVo">
         select
         ceb.*,
-        (select org_nm from crm_org_bas where org_id = ceb.org_id) orgNm
+        (select org_nm from tb_sys_org_bas where org_id = ceb.org_id) orgNm
         from
-        crm_emp_bas ceb
+        tb_sys_emp_bas ceb
         where
         <if test="orgId != null">
             org_id = #{orgId}
@@ -77,8 +77,8 @@
     </select>
 
     <!--  list 관련  -->
-    <sql id="registrationListCols">
-        reg_seq,
+    <sql id="vocListCols">
+        voc_seq,
         channel,
         status_cd,
         title,
@@ -87,16 +87,14 @@
         cust_id,
         issue_yn,
         issue_grade,
-        reg_usr,
-        reg_dt,
-        rec_usr,
-        rec_org,
-        rec_dt,
         ownership_org,
+        amdr_id,
+        amd_dt,
+        public_yn,
         del_yn,
         (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
     </sql>
-    <sql id="registrationListStatusCondition">
+    <sql id="vocListStatusCondition">
         <if test="statusCd instanceof String">
             status_cd = #{statusCd}
         </if>

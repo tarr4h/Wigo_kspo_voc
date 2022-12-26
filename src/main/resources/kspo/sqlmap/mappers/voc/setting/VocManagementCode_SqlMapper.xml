@@ -13,13 +13,15 @@
             LVL,
             CODE_NM,
             USE_YN,
-            REG_USR,
+            REGR_ID,
             REG_DT,
+            AMDR_ID,
+            AMD_DT,
             nvl((
                 select
                     code_nm
                 from
-                    voc_management_code
+                    tb_voc_management_code
                 where
                     management_cd = vmc.prnts_cd
             ), '-') prntsCdNm,
@@ -27,12 +29,12 @@
                 select
                     code_nm
                 from
-                    voc_management_code
+                    tb_voc_management_code
                 where
                     management_cd = vmc.top_cd
             ) topCdNm
         from
-            voc_management_code vmc
+            tb_voc_management_code vmc
         where
             <if test="prntsCd != null and !prntsCd.equals('')">
                 prnts_cd = #{prntsCd}
@@ -45,8 +47,8 @@
     </select>
 
     <insert id="insert">
-        insert into voc_management_code
-        (MANAGEMENT_CD, TOP_CD, PRNTS_CD, TOP_COMN_CD, COMN_CD, ODRG, LVL, CODE_NM, REG_USR)
+        insert into tb_voc_management_code
+        (MANAGEMENT_CD, TOP_CD, PRNTS_CD, TOP_COMN_CD, COMN_CD, ODRG, LVL, CODE_NM, REGR_ID, AMDR_ID)
         values(
                #{managementCd},
                #{topCd},
@@ -56,13 +58,14 @@
                #{odrg},
                #{lvl},
                #{codeNm},
+               #{loginUsr},
                #{loginUsr}
               )
     </insert>
 
     <update id="update">
         <foreach collection="rows" item="item" open="DECLARE BEGIN" separator=";" close="; END;">
-            update voc_management_code
+            update tb_voc_management_code
             set
                 odrg = #{item.odrg},
                 code_nm = #{item.codeNm},
@@ -73,7 +76,7 @@
     </update>
 
     <delete id="delete">
-        delete from voc_management_code
+        delete from tb_voc_management_code
         where
             management_cd in
             <foreach collection="list" separator="," item="item" open="(" close=")">
@@ -85,7 +88,7 @@
         select
             max(management_cd)
         from
-            voc_management_code
+            tb_voc_management_code
         where
             <if test="prntsCd != null">
             prnts_cd = #{prntsCd}

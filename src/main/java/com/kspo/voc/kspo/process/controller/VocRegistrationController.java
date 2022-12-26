@@ -18,7 +18,7 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.process.model.VocRegistrationVo;
+import com.kspo.voc.kspo.process.model.VocVo;
 import com.kspo.voc.kspo.process.service.VocRegistrationService;
 import com.kspo.voc.sys.model.EmpBaseVo;
 
@@ -35,7 +35,7 @@ public class VocRegistrationController {
 
         String regSeq = (String) param.get("regSeq");
         if(regSeq != null){
-            VocRegistrationVo registration = service.select(param);
+            VocVo registration = service.select(param);
             model.addAttribute("registration", registration);
 
             String channel = registration.getChannel();
