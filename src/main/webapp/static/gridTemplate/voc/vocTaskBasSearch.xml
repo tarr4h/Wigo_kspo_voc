@@ -18,7 +18,7 @@
         <setSort value="none"/>
 <!--        <headerRows value="1"/>-->
     </meta>
-        <column name="시퀀스" field="taskSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="시퀀스" field="taskId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="TASK명" field="taskNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
         <column name="처리기한(분)" field="deadline" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한" field="deadlineConvert" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>

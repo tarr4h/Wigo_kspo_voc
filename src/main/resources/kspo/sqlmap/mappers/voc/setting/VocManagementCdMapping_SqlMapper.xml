@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.kspo.setting.dao.VocProcedureMappingDao">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocManagementCdMappingDao">
 
-    <select id="select" resultType="com.kspo.voc.kspo.setting.model.VocProcedureMappingVo">
+    <select id="select" resultType="com.kspo.voc.kspo.setting.model.VocManagementCdMappingVo">
         select
-            vmrm.*,
-            vmc.*
+            *
         from
-            voc_mc_relation_mapping vmrm inner join voc_management_code vmc
-            on vmrm.management_cd = vmc.management_cd
+            TB_VOC_MANAGEMENT_CD_REL tvmcr inner join TB_VOC_MANAGEMENT_CD_BAS tvmcb
+            on tvmcr.management_cd = tvmcb.management_cd
         <where>
             <if test="mappingSeq != null and !mappingSeq.equals('')">
                 mapping_seq = #{mappingSeq}
@@ -20,13 +19,12 @@
         </where>
     </select>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureMappingVo">
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocManagementCdMappingVo">
         select
-            vmrm.*,
-            vmc.*
+            *
         from
-            voc_mc_relation_mapping vmrm inner join voc_management_code vmc
-            on vmrm.management_cd = vmc.management_cd
+            TB_VOC_MANAGEMENT_CD_REL tvmcr inner join TB_VOC_MANAGEMENT_CD_BAS tvmcb
+            on tvmcr.management_cd = tvmcb.management_cd
         <where>
             <if test="prntsMappingSeq != null and !prntsMappingSeq.equals('')">
                 and
@@ -39,12 +37,12 @@
         select
             max(mapping_seq)
         from
-            VOC_MC_RELATION_MAPPING
+            TB_VOC_MANAGEMENT_CD_REL
     </select>
 
     <insert id="insert">
-        insert into VOC_MC_RELATION_MAPPING
-        (MAPPING_SEQ, MANAGEMENT_CD, PRNTS_MAPPING_SEQ, LVL, REG_USR)
+        insert into TB_VOC_MANAGEMENT_CD_REL
+        (MAPPING_SEQ, MANAGEMENT_CD, PRNTS_MAPPING_SEQ, LVL, REGR_ID)
         values
             (
              #{mappingSeq},
@@ -56,7 +54,7 @@
     </insert>
     
     <delete id="delete">
-        delete from VOC_MC_RELATION_MAPPING
+        delete from TB_VOC_MANAGEMENT_CD_REL
         where
             mapping_seq in
             <foreach collection="list" item="vo" open="(" separator="," close=")">

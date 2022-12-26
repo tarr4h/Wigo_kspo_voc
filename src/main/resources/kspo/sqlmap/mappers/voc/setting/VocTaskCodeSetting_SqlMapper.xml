@@ -3,7 +3,7 @@
 <mapper namespace="com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao">
 
     <sql id="prcdCols">
-        prcd_seq,
+        prcd_id,
         prcd_nm,
         deadline,
         nvl(duty_org_nm, '-') dutyOrgNm,
@@ -11,9 +11,9 @@
         nvl(duty_role, '-') dutyRole
     </sql>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocTaskCodeVo">
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocTaskBasVo">
         select
-            task_seq,
+            task_id,
             task_nm,
             deadline,
             nvl(duty_org, '-') dutyOrg,
@@ -23,43 +23,47 @@
             duty_chng_yn,
             auto_apply_yn,
             auto_apply_all_yn,
-            auto_apply_prcd_seq,
+            auto_apply_prcd_id,
             auto_apply_prcd_nm,
-            mod_dt,
-            mod_usr,
+            regr_id,
+            reg_dt,
+            amdr_id,
+            amd_dt,
             nvl(duty_org_nm, '-') dutyOrgNm,
             nvl(duty_emp_nm, '-') dutyEmpNm
         from
-            voc_task_bas
+            tb_voc_task_bas
         order by
             1
     </select>
 
     <insert id="insert">
-        insert into voc_task_bas
-        (task_seq, task_nm, deadline, duty_org, duty_emp, duty_role, duty_chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_seq, auto_apply_prcd_nm, mod_dt, mod_usr, duty_org_nm, duty_emp_nm)
+        insert into tb_voc_task_bas
+        (task_id, task_nm, deadline, duty_org, duty_org_nm, duty_emp, duty_emp_nm, duty_role, duty_chng_yn, auto_apply_yn, auto_apply_all_yn, auto_apply_prcd_id, auto_apply_prcd_nm, regr_id, reg_dt, amdr_id, amd_dt)
         values(
-                  concat('TB', lpad(seq_voc_task_bas.nextval, 8, 0)),
+                  #{taskId},
                   #{taskNm},
                   #{deadline},
                   #{dutyOrg},
+                  #{dutyOrgNm},
                   #{dutyEmp},
+                  #{dutyEmpNm},
                   #{dutyRole},
                   #{dutyChngYn},
                   #{autoApplyYn},
                   #{autoApplyAllYn},
-                  #{autoApplyPrcdSeq},
+                  #{autoApplyPrcdId},
                   #{autoApplyPrcdNm},
+                  #{loginUsr},
                   sysdate,
                   #{loginUsr},
-                  #{dutyOrgNm},
-                  #{dutyEmpNm}
+                  sysdate
               )
     </insert>
 
     <update id="update">
         <foreach collection="rows" item="item" open="DECLARE BEGIN" close=";END;" separator=";">
-            update voc_task_bas
+            update tb_voc_task_bas
             set
                 task_nm = #{item.taskNm},
                 deadline = #{item.deadline},
@@ -68,66 +72,73 @@
                 auto_apply_yn = #{item.autoApplyYn},
                 auto_apply_all_yn = #{item.autoApplyAllYn},
                 <if test='item.autoApplyYn.equals("N") or item.autoApplyAllYn.equals("Y")'>
-                    auto_apply_prcd_seq = null,
+                    auto_apply_prcd_id = null,
                     auto_apply_prcd_nm = null,
                 </if>
-                mod_dt = sysdate,
-                mod_usr = #{loginUsr}
+                amdr_id = #{loginUsr},
+                amd_dt = sysdate
             where
-                task_seq = #{item.taskSeq}
+                task_id = #{item.taskId}
         </foreach>
     </update>
 
     <delete id="delete">
-        delete from voc_task_bas
+        delete from tb_voc_task_bas
         where
-        task_seq in
+        task_id in
         <foreach collection="rows" item="item" open="(" close=")" separator=",">
-            #{item.taskSeq}
+            #{item.taskId}
         </foreach>
     </delete>
 
+    <select id="selectMaxCd" resultType="string">
+        select
+            max(task_id)
+        from
+            tb_voc_task_bas
+    </select>
+
     <update id="chngTaskDuty">
-        update voc_task_bas
+        update tb_voc_task_bas
         set
             ${targetInfo.col} = #{chngMap.id},
             ${targetInfo.col}_nm = #{chngMap.nm},
-            mod_dt = sysdate,
-            mod_usr = #{loginUsr}
+            amdr_id = #{loginUsr},
+            amd_dt = sysdate
         where
-            task_seq = #{targetInfo.taskSeq}
+            task_id = #{targetInfo.taskId}
     </update>
 
-    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
         select
             <include refid="prcdCols"/>
         from
-            voc_procedure_bas
+            tb_voc_prcd_bas
         where
-            prcd_seq = #{prcdSeq}
+            prcd_id = #{prcdId}
     </select>
 
-    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
         select
             <include refid="prcdCols"/>
         from
-            voc_procedure_bas
+            tb_voc_prcd_bas
         where
             task_yn = 'Y'
-            <if test="prcdSeq != null and prcdSeq != ''">
+            <if test="prcdId != null and prcdId != ''">
                 and
-                prcd_seq != #{prcdSeq}
+                prcd_id != #{prcdId}
             </if>
     </select>
 
     <update id="updateAutoApplyPrcd">
         update
-            voc_task_bas
+            tb_voc_task_bas
         set
             auto_apply_all_yn = 'N',
             auto_apply_prcd_nm = #{prcdNm},
-            auto_apply_prcd_seq = #{prcdSeq}
+            auto_apply_prcd_id = #{prcdId}
         where
-            task_seq = #{taskSeq}
+            task_id = #{taskId}
     </update>
 </mapper>

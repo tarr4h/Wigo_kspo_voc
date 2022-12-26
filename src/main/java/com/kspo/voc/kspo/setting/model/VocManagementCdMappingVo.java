@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocProcedureMappingVo extends VocManagementCodeVo {
+public class VocManagementCdMappingVo extends VocManagementCodeVo {
 
     private static final long serialVersionUID = 5198406220369039570L;
 	private String mappingSeq;

@@ -74,7 +74,7 @@
 <script>
     function onGridLoad(){
         let param = {};
-        param.prcdSeq = '${param.prcdSeq}';
+        param.prcdId = '${param.prcdId}';
         appliedPrcdGrid.loadUrl('', param);
         availablePrcdGrid.loadUrl('', param);
     }
@@ -87,11 +87,11 @@
 
     function onGridButtonClicked(gridView, row, col, json) {
         let prcdNm = json.prcdNm;
-        let prcdSeq = json.prcdSeq;
+        let prcdId = json.prcdId;
 
         let param = {
             prcdNm,
-            prcdSeq
+            prcdId
         };
 
         let opnr = Utilities.getOpener();

@@ -1,12 +1,5 @@
 package com.kspo.voc.kspo.process.service;
 
-import java.util.List;
-import java.util.Map;
-
-import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.stnd.CodeGeneration;
@@ -18,8 +11,13 @@ import com.kspo.voc.kspo.process.model.VocVo;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
 import com.kspo.voc.kspo.setting.model.VocProcedureVo;
 import com.kspo.voc.sys.dao.IVocDao;
-
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -98,7 +96,7 @@ public class VocRegistrationService extends VocAbstractService {
             regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
             deadline += prcd.getDeadline();
             regPrcd.setDeadlineDt(VocUtils.setDefaultDeadlineDate(deadline));
-            regPrcd.setModUsr(Utilities.getLoginId());
+            regPrcd.setAmdrId(Utilities.getLoginId());
 
             dao.insertRegProcedure(regPrcd);
         }

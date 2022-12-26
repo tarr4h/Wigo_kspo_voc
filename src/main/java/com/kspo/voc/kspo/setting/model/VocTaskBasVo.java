@@ -10,10 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 //@Slf4j
-public class VocTaskCodeVo extends BaseVo {
+public class VocTaskBasVo extends BaseVo {
 
     private static final long serialVersionUID = 8950672182287295915L;
-	private String taskSeq;
+	private String taskId;
     private String taskNm;
     private int deadline;
     private String dutyOrg;
@@ -25,10 +25,12 @@ public class VocTaskCodeVo extends BaseVo {
     private String dutyChngYn;
     private String autoApplyYn;
     private String autoApplyAllYn;
-    private String autoApplyPrcdSeq;
+    private String autoApplyPrcdId;
     private String autoApplyPrcdNm;
-    private String modDt;
-    private String modUsr;
+    private String regrId;
+    private String regDt;
+    private String amdrId;
+    private String amdDt;
 
 
     public String getDeadlineConvert() {

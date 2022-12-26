@@ -1,21 +1,21 @@
 package com.kspo.voc.kspo.setting.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.kspo.base.common.model.EzMap;
+import com.kspo.voc.kspo.common.stnd.CodeGeneration;
+import com.kspo.voc.kspo.common.util.VocUtils;
+import com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao;
+import com.kspo.voc.kspo.setting.model.VocProcedureBasVo;
+import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
+import com.kspo.voc.sys.dao.IVocDao;
+import com.kspo.voc.sys.service.AbstractVocService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kspo.base.common.model.EzMap;
-import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao;
-import com.kspo.voc.kspo.setting.model.VocProcedureCodeVo;
-import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
-import com.kspo.voc.sys.dao.IVocDao;
-import com.kspo.voc.sys.service.AbstractVocService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class VocTaskCodeSettingService extends AbstractVocService {
@@ -41,6 +41,8 @@ public class VocTaskCodeSettingService extends AbstractVocService {
             return returnMap;
         }
 
+        String maxCd = dao.selectMaxCd();
+        ((Map<String, Object>) param).put("taskId", CodeGeneration.generateCode(maxCd, CodeGeneration.TASK_BAS));
         int result = dao.insert(param);
         returnMap.put("msg", result + "건이 등록되었습니다.");
         return returnMap;
@@ -53,13 +55,13 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         String autoApplyAllYn = (String) param.get("autoApplyAllYn");
 
         // task를 허용하는 절차 리스트 조회
-        List<VocProcedureCodeVo> prcdBasList = dao.selectAvailablePrcdList(param);
+        List<VocProcedureBasVo> prcdBasList = dao.selectAvailablePrcdList(param);
 
         int deadlineSum = 0;
-        List<VocTaskCodeVo> taskBasList = dao.selectList(param);
+        List<VocTaskBasVo> taskBasList = dao.selectList(param);
         
         // 전체절차적용 task 조회, 처리기한의 합 구하기
-        for(VocTaskCodeVo taskBas : taskBasList){
+        for(VocTaskBasVo taskBas : taskBasList){
             if(taskBas.getAutoApplyAllYn().equals("Y")){
                 deadlineSum += taskBas.getDeadline();
             }
@@ -69,13 +71,13 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         if(autoApplyAllYn.equals("Y")){
             // prcd에 적용되는 task의 합이 prcd의 deadline을 초과하는지 확인
             deadlineSum += deadline;
-            for(VocProcedureCodeVo prcdBas : prcdBasList){
-                List<VocTaskCodeVo> tempTaskBasList = new ArrayList<>(taskBasList);
-                tempTaskBasList.removeIf(taskBas -> taskBas.getAutoApplyPrcdSeq() != null && !taskBas.getAutoApplyPrcdSeq().equals(prcdBas.getPrcdSeq()));
+            for(VocProcedureBasVo prcdBas : prcdBasList){
+                List<VocTaskBasVo> tempTaskBasList = new ArrayList<>(taskBasList);
+                tempTaskBasList.removeIf(taskBas -> taskBas.getAutoApplyPrcdId() != null && !taskBas.getAutoApplyPrcdId().equals(prcdBas.getPrcdId()));
 
                 int currDeadline = deadlineSum;
                 if(tempTaskBasList.size() != 0){
-                    for(VocTaskCodeVo taskBas : tempTaskBasList){
+                    for(VocTaskBasVo taskBas : tempTaskBasList){
                         currDeadline += taskBas.getDeadline();
                     }
                 }
@@ -91,14 +93,14 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         // 2. 특정절차 적용인 경우
         String autoApplyYn = (String) param.get("autoApplyYn");
         if(autoApplyYn.equals("Y") && autoApplyAllYn.equals("N")){
-            String autoApplyPrcdSeq = (String) param.get("autoApplyPrcdSeq");
+            String autoApplyPrcdId = (String) param.get("autoApplyPrcdId");
             // task의 합이 prcd의 deadline을 초과하는지 확인
-            for(VocProcedureCodeVo prcdBas : prcdBasList){
+            for(VocProcedureBasVo prcdBas : prcdBasList){
                 int currDeadline = deadlineSum;
-                if(prcdBas.getPrcdSeq().equals(autoApplyPrcdSeq)){
+                if(prcdBas.getPrcdId().equals(autoApplyPrcdId)){
                     currDeadline += deadline;
-                    for(VocTaskCodeVo taskBas : taskBasList){
-                        if(taskBas.getAutoApplyPrcdSeq() != null && taskBas.getAutoApplyPrcdSeq().equals(prcdBas.getPrcdSeq())){
+                    for(VocTaskBasVo taskBas : taskBasList){
+                        if(taskBas.getAutoApplyPrcdId() != null && taskBas.getAutoApplyPrcdId().equals(prcdBas.getPrcdId())){
                             currDeadline += taskBas.getDeadline();
                         }
                     }

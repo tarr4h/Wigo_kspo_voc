@@ -1,11 +1,11 @@
 package com.kspo.voc.kspo.setting.dao;
 
-import java.util.List;
-import java.util.Map;
-
-import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
+import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
+
+import java.util.List;
+import java.util.Map;
 
 @VocMapper
 public interface VocProcedureCodeSettingDao extends IVocDao {
@@ -14,5 +14,7 @@ public interface VocProcedureCodeSettingDao extends IVocDao {
 
     int updateDeadline(Map<String, Object> param);
 
-    int deleteAutoApplyPrcd(List<VocTaskCodeVo> autoApplyPrcdList);
+    int deleteAutoApplyPrcd(List<VocTaskBasVo> autoApplyPrcdList);
+
+    String selectMaxCd();
 }

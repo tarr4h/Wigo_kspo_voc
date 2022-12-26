@@ -21,7 +21,7 @@
                 select
                     code_nm
                 from
-                    tb_voc_management_code
+                    tb_voc_management_cd_bas
                 where
                     management_cd = vmc.prnts_cd
             ), '-') prntsCdNm,
@@ -29,12 +29,12 @@
                 select
                     code_nm
                 from
-                    tb_voc_management_code
+                    tb_voc_management_cd_bas
                 where
                     management_cd = vmc.top_cd
             ) topCdNm
         from
-            tb_voc_management_code vmc
+            tb_voc_management_cd_bas vmc
         where
             <if test="prntsCd != null and !prntsCd.equals('')">
                 prnts_cd = #{prntsCd}
@@ -47,7 +47,7 @@
     </select>
 
     <insert id="insert">
-        insert into tb_voc_management_code
+        insert into tb_voc_management_cd_bas
         (MANAGEMENT_CD, TOP_CD, PRNTS_CD, TOP_COMN_CD, COMN_CD, ODRG, LVL, CODE_NM, REGR_ID, AMDR_ID)
         values(
                #{managementCd},
@@ -65,7 +65,7 @@
 
     <update id="update">
         <foreach collection="rows" item="item" open="DECLARE BEGIN" separator=";" close="; END;">
-            update tb_voc_management_code
+            update tb_voc_management_cd_bas
             set
                 odrg = #{item.odrg},
                 code_nm = #{item.codeNm},
@@ -76,7 +76,7 @@
     </update>
 
     <delete id="delete">
-        delete from tb_voc_management_code
+        delete from tb_voc_management_cd_bas
         where
             management_cd in
             <foreach collection="list" separator="," item="item" open="(" close=")">
@@ -88,7 +88,7 @@
         select
             max(management_cd)
         from
-            tb_voc_management_code
+            tb_voc_management_cd_bas
         where
             <if test="prntsCd != null">
             prnts_cd = #{prntsCd}
