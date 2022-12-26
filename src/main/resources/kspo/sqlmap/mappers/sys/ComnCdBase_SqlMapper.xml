@@ -249,7 +249,8 @@
     <select id="selectList" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
-                 FROM TB_SYS_COMN_CD_BAS
+                    , (SELECT COMN_CD_NM FROM TB_SYS_COMN_CD_BAS WHERE TOP_COMN_CD = A.TOP_COMN_CD  AND COMN_CD = A.TOP_COMN_CD AND COMN_CD_LVL_NO = 1) TOP_COMN_CD_NM
+                 FROM TB_SYS_COMN_CD_BAS A
         <include refid="sqlConditions"/>
                ORDER BY COMN_CD_LVL_NO
                       , TOP_COMN_CD
@@ -259,7 +260,8 @@
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
                SELECT <include refid="sqlCols"/>
-                 FROM TB_SYS_COMN_CD_BAS
+                    , (SELECT COMN_CD_NM FROM TB_SYS_COMN_CD_BAS WHERE TOP_COMN_CD = A.TOP_COMN_CD  AND COMN_CD = A.TOP_COMN_CD AND COMN_CD_LVL_NO = 1) TOP_COMN_CD_NM
+                 FROM TB_SYS_COMN_CD_BAS A
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">

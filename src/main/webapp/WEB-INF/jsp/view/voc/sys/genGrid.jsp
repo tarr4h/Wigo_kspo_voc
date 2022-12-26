@@ -195,6 +195,7 @@
 	var _INDEX_ = 0;
     var _TABLE_INFO = null;
     var _TABLE_NAME = null;
+    var _ORG_TABLE_NAME = null;
     var _SAVE_FILE_NAME = null;
     var _TABLE_COMMENT = null;
     var _CODE_MAP = {};
@@ -285,6 +286,7 @@
     function searchTable() {
         _TABLE_INFO = null;
         _TABLE_NAME = null;
+        _ORG_TABLE_NAME = null;
         var url = "<c:url value='${urlPrefix}/selectColInfo${urlSuffix}'/>";
         var param = {
             tableName : $("#tableName").val()
@@ -298,6 +300,7 @@
         _INDEX_ = 0;
         _TABLE_INFO = null;
         _TABLE_NAME = null;
+        _ORG_TABLE_NAME = null;
         _SAVE_FILE_NAME = null;
         _TABLE_COMMENT = null;
         Utilities.blockUI();
@@ -314,8 +317,8 @@
             	Utilities.setCookie("gengrid.user.name",$("#userName").val(),1000);
             	Utilities.setCookie("gengrid.api.checked",$("#apiDev").prop("checked")? "Y" : "N",1000);
                 _TABLE_INFO = data;
-                
-                _TABLE_NAME = param.tableName.toUpperCase();
+                _ORG_TABLE_NAME = param.tableName.toUpperCase();
+                _TABLE_NAME = _ORG_TABLE_NAME.replace("TB_SYS_","").replace("TB_","");
                 parseTable(data);
             }
         });
@@ -817,7 +820,7 @@
 
         var ins = doc.createElement("insert");
         ins.setAttribute("id", "insert" /*+ tblName*/);
-        $(ins).append("\n        INSERT /* "+namespace+"insert */ INTO "+_TABLE_NAME+" (\n");
+        $(ins).append("\n        INSERT /* "+namespace+"insert */ INTO "+_ORG_TABLE_NAME+" (\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlCols");
         $(ins).append(inc);
@@ -845,7 +848,7 @@
 
         var upd = doc.createElement("update");
         upd.setAttribute("id", "update" /*+ tblName*/);
-        $(upd).append("\n       UPDATE /* "+namespace+"update */ " + _TABLE_NAME + "\n");
+        $(upd).append("\n       UPDATE /* "+namespace+"update */ " + _ORG_TABLE_NAME + "\n");
         var fst = false;
         for (var i = 0; i < list.length; i++) {
             var col = list[i];
@@ -882,7 +885,7 @@
         var del = doc.createElement("delete");
         del.setAttribute("id", "delete" /*+ tblName*/);
         $(del).append("\n       DELETE /* "+namespace+"delete */");
-        $(del).append("\n         FROM " + _TABLE_NAME + "\n");
+        $(del).append("\n         FROM " + _ORG_TABLE_NAME + "\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlPkConditions");
         del.appendChild(inc);
@@ -1080,7 +1083,7 @@
         $(s1).attr("id", "selectListCount");
         $(s1).attr("resultType", "int");
         $(s1).append("\n        SELECT /* "+namespace+"selectListCount */ COUNT(1)\n");
-        $(s1).append("         FROM " + _TABLE_NAME + " A\n");
+        $(s1).append("         FROM " + _ORG_TABLE_NAME + " A\n");
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlConditions");
         s1.appendChild(inc);
@@ -1092,7 +1095,7 @@
 
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.kspo.voc.api.dao.CommonDao.pagingHeader");
+        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingHeader");
         else
         	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingHeader");
         s1.appendChild(inc);
@@ -1102,7 +1105,7 @@
         $(inc).attr("refid", "sqlSelectCols");
         s1.appendChild(inc);
 
-        $(s1).append("         FROM " + _TABLE_NAME + " A\n");
+        $(s1).append("         FROM " + _ORG_TABLE_NAME + " A\n");
         
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlConditions");
@@ -1118,7 +1121,7 @@
         
         var inc = doc.createElement("include");
         if(isApiMode())
-        	$(inc).attr("refid", "com.kspo.voc.api.dao.CommonDao.pagingFooter");
+        	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingFooter");
         else
         	$(inc).attr("refid", "com.kspo.voc.sys.dao.CommonDao.pagingFooter");
         s1.appendChild(inc);
@@ -1137,7 +1140,7 @@
 
         var inc = doc.createElement("include");
         $(inc).attr("refid", "sqlPkConditions");
-        $(s1).append("\n         FROM "+_TABLE_NAME+" A\n");
+        $(s1).append("\n         FROM "+_ORG_TABLE_NAME+" A\n");
         s1.appendChild(inc);
         mapper.appendChild(s1);
     }
@@ -1270,9 +1273,9 @@
 		strJava += "package "+getPackageName()+".model;\n"
 		strJava += "\n"
 		if(isApiMode())
-			strJava += "import com.ceragem.api.base.model.ApiBaseVo;\n"
+			strJava += "import com.kspo.base.api.model.ApiBaseVo;\n"
 		else
-			strJava += "import com.kspo.voc.common.model.BaseVo;\n"
+			strJava += "import com.kspo.base.common.model.BaseVo;\n"
 			
 		if(hasNull)
 			strJava += "import javax.validation.constraints.NotEmpty;\n"
@@ -1281,13 +1284,13 @@
 		{
 			strJava += "import io.swagger.v3.oas.annotations.media.Schema;\n"
 			if(hasYnValue)
-				strJava += "import com.ceragem.api.crm.validate.YnValue;\n";
+				strJava += "import com.kspo.base.common.validate.YnValue;\n";
 			if(hasCodeValue)
-				strJava += "import com.ceragem.api.crm.validate.CodeValue;\n";
+				strJava += "import com.kspo.base.common.validate.CodeValue;\n";
 			if(hasDtValue)
-				strJava += "import com.ceragem.api.crm.validate.DatetimeValue;\n";
+				strJava += "import com.kspo.base.common.validate.DatetimeValue;\n";
 			if(hasMaxByte)
-				strJava += "import com.ceragem.api.crm.validate.MaxByte;\n";
+				strJava += "import com.kspo.base.common.validate.MaxByte;\n";
 		}
 		strJava += "import lombok.Getter;\n"
 		strJava += "import lombok.Setter;\n"
@@ -1440,11 +1443,11 @@
 			strJava += "import io.swagger.v3.oas.annotations.media.Schema;\n";
 			strJava += "import io.swagger.v3.oas.annotations.Parameter;\n";
 			
-			strJava += "import com.ceragem.api.base.model.ApiPagination;\n";
+			strJava += "import com.kspo.base.api.model.ApiPagination;\n";
 			if(hasYnValue)
-				strJava += "import com.ceragem.api.crm.validate.YnValue;\n";
+				strJava += "import com.kspo.base.common.validate.YnValue;\n";
 			if(hasCodeValue)
-				strJava += "import com.ceragem.api.crm.validate.CodeValue;\n";
+				strJava += "import com.kspo.base.common.validate.CodeValue;\n";
 		}
 		strJava += "import lombok.Getter;\n"
 		strJava += "import lombok.Setter;\n"
@@ -1492,23 +1495,23 @@
          strJava += "import org.springframework.stereotype.Service;\n";
          
          if(isApiMode())
-         	strJava += "import com.ceragem.api.base.service.AbstractCrmService;\n";
+         	strJava += "import com.kspo.voc.sys.service.AbstractVocService;\n";
         else
-        	strJava += "import com.kspo.voc.sys.service.AbstractCrmService;\n";
+        	strJava += "import com.kspo.voc.sys.service.AbstractVocService;\n";
          strJava += "import "+getJavaName(true,"dao")+";\n";
          if(isApiMode())
-         	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
+         	strJava += "import com.kspo.voc.sys.dao.IVocDao;\n";
         else
-        	strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
+        	strJava += "import com.kspo.voc.sys.dao.IVocDao;\n";
          strJava += "\n";
          strJava += getClassAnn("Service");
          strJava += "@Service\n";
-         strJava += "public class "+getJavaName(false,"service")+" extends AbstractCrmService {\n";
+         strJava += "public class "+getJavaName(false,"service")+" extends AbstractVocService {\n";
          strJava += "   @Autowired\n";
          strJava += "   "+getJavaName(false,"dao")+" dao;\n";
          strJava += "\n";
          strJava += "   @Override\n";
-         strJava += "   public ICrmDao getDao() {\n";
+         strJava += "   public IVocDao getDao() {\n";
          strJava += "       return dao;\n";
          strJava += "   }\n";
          strJava += "}\n";
@@ -1532,17 +1535,17 @@
         strJava += "package "+getPackageName()+".dao;\n";
         strJava += "\n";
         if(isApiMode())
-        	strJava += "import com.ceragem.api.config.annotation.CrmMapper;\n";
+        	strJava += "import com.kspo.voc.sys.mapper.VocMapper;\n";
         else
-           	strJava += "import com.kspo.voc.sys.mapper.CrmMapper;\n";
+           	strJava += "import com.kspo.voc.sys.mapper.VocMapper;\n";
 		if(isApiMode())
-		 	strJava += "import com.ceragem.api.crm.dao.ICrmDao;\n";
+		 	strJava += "import com.kspo.voc.sys.dao.IVocDao;\n";
 		else
-			strJava += "import com.kspo.voc.sys.dao.ICrmDao;\n";
+			strJava += "import com.kspo.voc.sys.dao.IVocDao;\n";
         strJava += "\n";
 //         strJava += getClassAnn("Dao");
-       	strJava += "@CrmMapper\n";
-        strJava += "public interface "+getJavaName(false,"dao")+" extends ICrmDao {\n";
+       	strJava += "@VocMapper\n";
+        strJava += "public interface "+getJavaName(false,"dao")+" extends IVocDao {\n";
         strJava += "\n";
         strJava += "}\n";
         if(cancelPopup)
@@ -1584,7 +1587,7 @@
         if(apiMode)
         {
         	strJava += 'import java.util.List;\n';
-        	strJava += 'import java.util.Map;\n';
+//         	strJava += 'import java.util.Map;\n';
         	strJava += 'import javax.validation.Valid;\n';
         	strJava += 'import org.springframework.beans.factory.annotation.Autowired;\n';
         	strJava += 'import org.springframework.http.ResponseEntity;\n';
@@ -1595,23 +1598,24 @@
        		strJava += 'import org.springframework.web.bind.annotation.PutMapping;\n';
        		strJava += 'import org.springframework.web.bind.annotation.RequestBody;\n';
         	strJava += 'import org.springframework.web.bind.annotation.RequestMapping;\n';
-        	strJava += 'import org.springframework.web.bind.annotation.RequestParam;\n';
+//         	strJava += 'import org.springframework.web.bind.annotation.RequestParam;\n';
         	strJava += 'import org.springframework.web.bind.annotation.RestController;\n';
-        	strJava += 'import com.ceragem.api.base.controller.BaseRestController;\n';
-        	strJava += 'import com.ceragem.api.base.model.ApiPagingPayload;\n';
-        	strJava += 'import com.ceragem.api.base.model.ApiResultVo;\n';
+        	strJava += 'import com.kspo.base.api.controller.BaseRestController;\n';
+        	strJava += 'import com.kspo.base.api.model.ApiPagingPayload;\n';
+        	strJava += 'import com.kspo.base.api.model.ApiResultVo;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.Operation;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.Parameter;\n';
         	strJava += 'import io.swagger.v3.oas.annotations.tags.Tag;\n';
         	strJava += 'import org.springdoc.api.annotations.ParameterObject;\n';
-        	
-        	strJava += 'import com.ceragem.api.crm.model.'+moduleName+'So;\n';
-        	strJava += 'import com.ceragem.api.crm.model.'+moduleName+'Vo;\n';
-        	strJava += 'import com.ceragem.api.crm.service.'+moduleName+'Service;\n';
-        	strJava += 'import com.ceragem.api.base.util.Utilities;\n';
-        	strJava += 'import com.ceragem.api.base.constant.Constants;\n';
-        	strJava += 'import com.kspo.voc.common.model.EzApiException;\n';
-        	strJava += "import com.kspo.voc.common.model.EzMap;\n";
+       	
+            strJava += "import "+getModelSoName(true)+";\n";
+            strJava += "import "+getModelName(true)+";\n";
+            strJava += "import "+getJavaName(true,"service")+";\n";
+             
+        	strJava += 'import com.kspo.voc.comn.util.Utilities;\n';
+        	strJava += 'import com.kspo.voc.comn.util.Constants;\n';
+        	strJava += 'import com.kspo.base.common.model.EzApiException;\n';
+        	strJava += "import com.kspo.base.common.model.EzMap;\n";
         }
         else
         {
@@ -1620,7 +1624,7 @@
             strJava += "import org.springframework.beans.factory.annotation.Autowired;\n";
             strJava += "import org.springframework.stereotype.Controller;\n";
         	strJava += "import org.springframework.ui.ModelMap;\n";
-        	strJava += "import com.kspo.voc.common.util.Utilities;\n";
+        	strJava += "import com.kspo.voc.comn.util.Utilities;\n";
         	
             strJava += "import org.springframework.web.bind.annotation.GetMapping;\n";
             strJava += "import org.springframework.web.bind.annotation.PostMapping;\n";
@@ -1645,7 +1649,7 @@
         	var mappingUrl = _TABLE_NAME.replaceAll("_","-").toLowerCase();
         	strJava += "@Tag(name = \""+_TABLE_COMMENT+"\", description = \""+_TABLE_COMMENT+" API\")\n";
         	strJava += "@RestController\n";
-        	strJava += "@RequestMapping(\"/crm/v1.0/"+mappingUrl+"\")\n";
+        	strJava += "@RequestMapping(\"/voc/v1.0/"+mappingUrl+"\")\n";
         	 strJava += "public class "+getJavaName(false,"controller")+" extends BaseRestController {\n";
         	
         }
@@ -1693,8 +1697,7 @@
 			strJava += '	@GetMapping("list")\n';
 			strJava += '	@Operation(summary = "'+_TABLE_COMMENT+' 검색", description = "'+_TABLE_COMMENT+' 검색")\n';
 			
-			strJava += '	public ResponseEntity<ApiResultVo<ApiPagingPayload<'+moduleName+'Vo>>> getCrmCustBasList(\n';
-// 			strJava += '	public ResponseEntity<ApiResultVo<List<'+getModelName()+'>>> get'+moduleName+'List(\n';
+			strJava += '	public    ResponseEntity<ApiResultVo<ApiPagingPayload<'+getModelName()+'>>> get'+moduleName+'List(\n';
 			strJava += '			@Parameter(description = "'+_TABLE_COMMENT+' 검색객체") @ParameterObject @Valid '+moduleName+'So so)\n';
 // 			strJava += '			@Parameter(description = "검색객체", hidden = true) @RequestParam Map<String, Object> param)\n';
 			strJava += '			throws Exception {\n';
@@ -1826,7 +1829,7 @@
             strJava += "@GetMapping(value = { \"\", \"index\" })\n";
             strJava += "public String init(@RequestParam Map<String, Object> param, ModelMap model) throws Exception {\n";
             strJava += "    model.addAllAttributes(param);\n";
-            strJava += "    return Utilities.getProperty(\"tiles.crm\") + \""+lastPack+"/"+javaName+"List\";\n";
+            strJava += "    return Utilities.getProperty(\"tiles.voc\") + \""+lastPack+"/"+javaName+"List\";\n";
             strJava += "}\n";
             strJava += "\n";
             strJava += '/**\n';
@@ -2012,7 +2015,6 @@
 	function isApiMode(){
 		return $("#apiDev").prop("checked");	
 	
-// 		return $("#packageName").val().indexOf("com.ceragem.api.") == 0;
 	}
 	function validate(){
 		if(!_TABLE_NAME)

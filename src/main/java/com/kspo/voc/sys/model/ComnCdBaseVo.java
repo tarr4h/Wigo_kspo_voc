@@ -26,6 +26,12 @@ public class ComnCdBaseVo extends BaseVo {
 	private String topComnCd;
 	/**
 	 * <p>
+	 * 최상위공통코드명
+	 * </p>
+	 */
+	private String topComnCdNm;
+	/**
+	 * <p>
 	 * 공통코드레벨번호
 	 * </p>
 	 */
