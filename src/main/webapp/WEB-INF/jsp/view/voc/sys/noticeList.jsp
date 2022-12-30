@@ -74,7 +74,7 @@
 			<div class="mBoard2 " >
 			<form name="frmDetail" id="frmDetail">
 
-	   	<input type="hidden" id="brdId" name="brdId" />
+	   	<input type="hidden" id="bltId" name="bltId" />
 	   	<input type="hidden" id=ntcartId name="ntcartId" />
 	   	<input type="hidden" id=upNtcartId name="upNtcartId" /> 
 	   	<input type="hidden" id="topNtcartId" name="topNtcartId" />

@@ -24,7 +24,7 @@
 		
 		<form id="frmMain">
 		<input type="hidden" id="stat" name="stat" value="${addMode ? 'c' : 'u'}"/>
-		<input type="hidden" id="brdId" name="brdId" value="${vo.brdId }"/>
+		<input type="hidden" id="bltId" name="bltId" value="${vo.bltId }"/>
 	   	<input type="hidden" id=ntcartId name="ntcartId" value="${vo.ntcartId }"/>
 	   	<input type="hidden" id=upNtcartId name="upNtcartId" value="${vo.upNtcartId }" /> 
 	   	<input type="hidden" id="topNtcartId" name="topNtcartId" value="${vo.topNtcartId }" />

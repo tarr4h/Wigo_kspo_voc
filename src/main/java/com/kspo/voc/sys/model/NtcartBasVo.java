@@ -19,7 +19,7 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>게시판ID</p> 
     */
-    private String brdId;
+    private String bltId;
     /**
     * <p>상위게시물ID</p> 
     */
