@@ -9,10 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocProcedureCodeVo extends BaseVo {
+public class VocProcedureBasVo extends BaseVo {
 
     private static final long serialVersionUID = -4401868272090337403L;
-	private String prcdSeq;
+	private String prcdId;
     private String prcdNm;
     private String topComnCd;
     private String comnCd;
@@ -23,13 +23,15 @@ public class VocProcedureCodeVo extends BaseVo {
     private String dutyEmpNm;
     private String dutyRole;
     private String dutyChngYn;
-    private String regUseYn;
-    private String recUseYn;
-    private String regCompulsoryYn;
-    private String recCompulsoryYn;
+    private String vocUseYn;
+    private String vocDtlUseYn;
+    private String vocCompulsoryYn;
+    private String vocDtlCompulsoryYn;
     private String taskYn;
-    private String modDt;
-    private String modUsr;
+    private String regrId;
+    private String regDt;
+    private String amdrId;
+    private String amdDt;
 
 
 
@@ -38,10 +40,10 @@ public class VocProcedureCodeVo extends BaseVo {
     }
 
     public String getRequestCompulsoryYn(String target){
-        if(target.equals("reg")){
-            return this.getRegCompulsoryYn();
-        } else if(target.equals("rec")){
-            return this.getRecCompulsoryYn();
+        if(target.equals("voc")){
+            return this.getVocCompulsoryYn();
+        } else if(target.equals("vocDtl")){
+            return this.getVocDtlCompulsoryYn();
         }
 
         return null;

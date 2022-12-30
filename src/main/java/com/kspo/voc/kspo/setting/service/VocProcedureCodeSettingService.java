@@ -1,21 +1,22 @@
 package com.kspo.voc.kspo.setting.service;
 
 
+import com.kspo.voc.kspo.common.service.VocAbstractService;
+import com.kspo.voc.kspo.common.stnd.CodeGeneration;
+import com.kspo.voc.kspo.common.util.VocUtils;
+import com.kspo.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
+import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
+import com.kspo.voc.sys.dao.IVocDao;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.kspo.voc.kspo.common.service.VocAbstractService;
-import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
-import com.kspo.voc.kspo.setting.model.VocTaskCodeVo;
-import com.kspo.voc.sys.dao.IVocDao;
-
+@SuppressWarnings("unchecked")
 @Service
 public class VocProcedureCodeSettingService extends VocAbstractService {
 
@@ -34,6 +35,8 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
     @Override
     public int insert(Object param) throws EgovBizException {
         param = VocUtils.setCodeSettingParam(param);
+        String maxCd = dao.selectMaxCd();
+        ((Map<String, Object>) param).put("prcdId", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
         return super.insert(param);
     }
 
@@ -68,7 +71,7 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         		selectPrcdBas(param);
 
         int taskDeadlineSum = 0;
-        List<VocTaskCodeVo> taskList = selectTaskBasList(param);
+        List<VocTaskBasVo> taskList = selectTaskBasList(param);
 
         // 1. taskList가 존재하지 않는다면 : 변경
         if(taskList.size() == 0){
@@ -79,9 +82,9 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         }
 
         // 전체적용 task deadline의 합 구하기
-        List<VocTaskCodeVo> autoApplyAllList = new ArrayList<>(taskList);
+        List<VocTaskBasVo> autoApplyAllList = new ArrayList<>(taskList);
         autoApplyAllList.removeIf(task -> task.getAutoApplyAllYn().equals("N"));
-        for(VocTaskCodeVo task : autoApplyAllList){
+        for(VocTaskBasVo task : autoApplyAllList){
             taskDeadlineSum += task.getDeadline();
         }
 
@@ -93,9 +96,9 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         }
 
         // 전체적용 deadline 합에 요청 prcd를 target으로 하는 task의 처리기한 합 구하기
-        List<VocTaskCodeVo> autoApplyPrcdList = new ArrayList<>(taskList);
-        autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdSeq() == null || !task.getAutoApplyPrcdSeq().equals(param.get("prcdSeq")));
-        for(VocTaskCodeVo task : autoApplyPrcdList){
+        List<VocTaskBasVo> autoApplyPrcdList = new ArrayList<>(taskList);
+        autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdId() == null || !task.getAutoApplyPrcdId().equals(param.get("prcdId")));
+        for(VocTaskBasVo task : autoApplyPrcdList){
             taskDeadlineSum += task.getDeadline();
         }
 

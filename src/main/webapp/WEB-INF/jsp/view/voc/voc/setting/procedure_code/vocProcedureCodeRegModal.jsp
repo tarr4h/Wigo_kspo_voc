@@ -113,61 +113,61 @@
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">통합프로세스 사용여부</span>
+                <span class="form_row_title">VOC 적용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>사용</label>
-                    <input type="radio" name="regUseYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocUseYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미사용</label>
-                    <input type="radio" name="regUseYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocUseYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">상세프로세스 사용여부</span>
+                <span class="form_row_title">상세VOC 사용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>사용</label>
-                    <input type="radio" name="recUseYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocDtlUseYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미사용</label>
-                    <input type="radio" name="recUseYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocDtlUseYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">통합프로세스 필수여부</span>
+                <span class="form_row_title">VOC 필수여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>예</label>
-                    <input type="radio" name="regCompulsoryYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocCompulsoryYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="regCompulsoryYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocCompulsoryYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">상세프로세스 필수여부</span>
+                <span class="form_row_title">VOC상세 필수여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>예</label>
-                    <input type="radio" name="recCompulsoryYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocDtlCompulsoryYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="recCompulsoryYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocDtlCompulsoryYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>

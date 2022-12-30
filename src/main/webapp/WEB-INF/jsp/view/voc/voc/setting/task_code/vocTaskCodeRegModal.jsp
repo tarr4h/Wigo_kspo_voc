@@ -235,7 +235,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="autoApplyPrcdNm" class="form_row_input_short">
-                <input type="text" name="autoApplyPrcdSeq" class="form_row_dpn">
+                <input type="text" name="autoApplyPrcdId" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="prcdSearch">조회</button>
             </div>
         </div>
@@ -402,8 +402,8 @@
      * @param data
      */
     function empSearchCallback(data){
-        $('input[name="dutyEmpNm"').val(data.empNm);
-        $('input[name="dutyEmp"').val(data.empId);
+        $('input[name="dutyEmpNm"]').val(data.empNm);
+        $('input[name="dutyEmp"]').val(data.empId);
     }
 
     /**
@@ -412,7 +412,7 @@
      */
     function prcdSearchCallback(data){
         $('input[name="autoApplyPrcdNm"]').val(data.prcdNm);
-        $('input[name="autoApplyPrcdSeq"]').val(data.prcdSeq);
+        $('input[name="autoApplyPrcdId"]').val(data.prcdId);
     }
 
 
@@ -444,8 +444,8 @@
      * 절차 검색 모달 호출
      */
     function openPrcdBasSearchModal(){
-        let prcdSeq = $('input[name="autoApplyPrcdSeq"]').val();
-        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdSeq=" + prcdSeq;
+        let prcdId = $('input[name="autoApplyPrcdId"]').val();
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdId=" + prcdId;
         Utilities.openModal(url, 900, 600);
     }
 

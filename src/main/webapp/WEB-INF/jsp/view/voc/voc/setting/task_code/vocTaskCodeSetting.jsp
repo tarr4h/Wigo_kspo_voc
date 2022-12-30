@@ -69,7 +69,7 @@
              data-grid-id="taskCdGrid"
              data-type="grid"
              data-grid-callback="onGridLoad"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTaskCode.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTaskBas.xml${urlSuffix}'/>"
              style="width:100%;height:735px;"
         >
         </div>
