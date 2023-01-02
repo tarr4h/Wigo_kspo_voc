@@ -35,7 +35,7 @@
 
 <div id="divTree"
      data-type="tree"
-     data-get-url="<c:url value='${urlPrefix}/vocManagementCodeTree${urlSuffix}'/>"
+     data-get-url="<c:url value='${urlPrefix}/vocMgmtCdTree${urlSuffix}'/>"
      data-change-seq="Y"
 >
 </div>
@@ -56,9 +56,9 @@
             return false;
         }
 
-        let managementCd = treeNode.id;
+        let mgmtCd = treeNode.id;
         let param = {
-            managementCd
+            mgmtCd
         };
 
         let opnr = Utilities.getOpener();

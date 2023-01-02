@@ -6,15 +6,15 @@
         <result property="explanation"  column="EXPLANATION"  jdbcType="CLOB" javaType="java.lang.String" />
     </resultMap>
 
-    <sql id="vocManagementCodeCols">
-        MANAGEMENT_CD,
-        TOP_CD,
-        PRNTS_CD,
+    <sql id="vocMgmtCdCols">
+        MGMT_CD,
+        TOP_MGMT_CD,
+        PRNTS_MGMT_CD,
         TOP_COMN_CD,
         COMN_CD,
         ODRG,
-        LVL,
-        CODE_NM,
+        MGMT_CD_LVL_NO,
+        MGMT_CD_NM,
         USE_YN,
         REGR_ID,
         REG_DT,
@@ -22,11 +22,11 @@
         AMD_DT
     </sql>
 
-    <select id="selectVocManagementCodeTree" resultType="com.kspo.voc.kspo.setting.model.VocManagementCodeVo">
+    <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
         select
-            <include refid="vocManagementCodeCols"/>
+            <include refid="vocMgmtCdCols"/>
         from
-            tb_voc_management_cd_bas
+            TB_VOC_MGMT_CD_BAS
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
                 top_comn_cd = #{topComnCd}
@@ -46,26 +46,26 @@
             </if>
         </where>
         order by
-            MANAGEMENT_CD
+            MGMT_CD
     </select>
 
-    <select id="selectManagementCode" resultType="com.kspo.voc.kspo.setting.model.VocManagementCodeVo">
+    <select id="selectMgmtCd" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
         select
-            <include refid="vocManagementCodeCols"/>
+            <include refid="vocMgmtCdCols"/>
         from
-            tb_voc_management_cd_bas
+            TB_VOC_MGMT_CD_BAS
         <where>
-            <if test="managementCd != null and !managementCd.equals('')">
-                management_cd = #{managementCd}
+            <if test="mgmtCd != null and !mgmtCd.equals('')">
+                MGMT_CD = #{mgmtCd}
             </if>
-            <if test="managementCd == null and prntsCd != null and !prntsCd.equals('')">
+            <if test="mgmtCd == null and prntsCd != null and !prntsCd.equals('')">
                 and
-                management_cd = #{prntsCd}
+                MGMT_CD = #{prntsCd}
             </if>
         </where>
     </select>
 
-    <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
+    <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
         select
             *
         from
@@ -74,7 +74,7 @@
             prcd_id = #{prcdId}
     </select>
 
-    <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
+    <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
         select
             *
         from
@@ -127,7 +127,7 @@
             )
     </select>
 
-    <select id="selectProcedure" resultType="com.kspo.voc.kspo.setting.model.VocProcedureVo">
+    <select id="selectProcedure" resultType="com.kspo.voc.kspo.setting.model.VocMcPrcdVo">
         select
             *
         from
@@ -143,7 +143,7 @@
         </where>
     </select>
 
-    <select id="selectProcedureList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureVo">
+    <select id="selectProcedureList" resultType="com.kspo.voc.kspo.setting.model.VocMcPrcdVo">
         select
             mc_prcd_seq,
             prnts_seq,
@@ -227,8 +227,8 @@
         from
         tb_voc_dir_mc_mapping
         <where>
-            <if test="managementCd != null and !managementCd.equals('')">
-                management_cd = #{managementCd}
+            <if test="mgmtCd != null and !mgmtCd.equals('')">
+                MGMT_CD = #{mgmtCd}
             </if>
         </where>
     </select>
@@ -244,7 +244,7 @@
             2 desc, 3
     </select>
 
-    <select id="selectRegPrcd" resultType="com.kspo.voc.kspo.process.model.VocPrcdVo">
+    <select id="selectRegPrcd" resultType="com.kspo.voc.kspo.process.model.VocApplyPrcdVo">
         select
             *
         from
@@ -253,7 +253,7 @@
             reg_prcd_seq = #{regPrcdSeq}
     </select>
 
-    <select id="selectRegPrcdList" resultType="com.kspo.voc.kspo.process.model.VocPrcdVo">
+    <select id="selectRegPrcdList" resultType="com.kspo.voc.kspo.process.model.VocApplyPrcdVo">
         select
             *
         from
@@ -287,28 +287,28 @@
         </where>
     </select>
 
-    <select id="getManagementCodeSelect" resultType="com.kspo.voc.kspo.setting.model.VocManagementCodeVo">
+    <select id="getMgmtCdSelect" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
         select
             *
         from
-            TB_VOC_MANAGEMENT_CODE
+            TB_VOC_MGMT_CD_BAS
         <where>
             comn_cd = #{comnCd}
             <if test="prntsCd != null and !prntsCd.equals('')">
                 and
-                prnts_cd = #{prntsCd}
+                PRNTS_MGMT_CD = #{prntsCd}
             </if>
             <if test="prntsCd == null">
                 and
-                prnts_cd = (
+                PRNTS_MGMT_CD = (
                     select
-                        management_cd
+                        MGMT_CD
                     from
-                        voc_management_code
+                        TB_VOC_MGMT_CD_BAS
                     where
                         comn_cd = #{comnCd}
                         and
-                        management_cd = top_cd
+                        MGMT_CD = TOP_MGMT_CD
                 )
             </if>
         </where>

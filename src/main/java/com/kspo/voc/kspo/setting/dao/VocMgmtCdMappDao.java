@@ -4,6 +4,6 @@ import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
 @VocMapper
-public interface VocManagementCdMappingDao extends IVocDao {
+public interface VocMgmtCdMappDao extends IVocDao {
     String selectMaxCd();
 }

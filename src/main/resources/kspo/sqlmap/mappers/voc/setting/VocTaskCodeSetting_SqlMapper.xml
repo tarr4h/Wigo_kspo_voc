@@ -109,7 +109,7 @@
             task_id = #{targetInfo.taskId}
     </update>
 
-    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
+    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
         select
             <include refid="prcdCols"/>
         from
@@ -118,7 +118,7 @@
             prcd_id = #{prcdId}
     </select>
 
-    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
+    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
         select
             <include refid="prcdCols"/>
         from

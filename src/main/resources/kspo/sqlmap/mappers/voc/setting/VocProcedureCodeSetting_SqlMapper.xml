@@ -9,7 +9,7 @@
             tb_voc_prcd_bas
     </select>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
         select
             PRCD_ID,
             PRCD_NM,

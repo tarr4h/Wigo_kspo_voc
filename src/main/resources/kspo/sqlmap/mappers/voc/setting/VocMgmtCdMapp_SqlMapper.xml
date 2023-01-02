@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.kspo.setting.dao.VocManagementCdMappingDao">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocMgmtCdMappDao">
 
-    <select id="select" resultType="com.kspo.voc.kspo.setting.model.VocManagementCdMappingVo">
+    <select id="select" resultType="com.kspo.voc.kspo.setting.model.VocMgmgCdMappVo">
         select
             *
         from
-            TB_VOC_MANAGEMENT_CD_REL tvmcr inner join TB_VOC_MANAGEMENT_CD_BAS tvmcb
-            on tvmcr.management_cd = tvmcb.management_cd
+            TB_VOC_MGMT_CD_REL tvmcr inner join TB_VOC_MGMT_CD_BAS tvmcb
+            on tvmcr.MGMT_CD = tvmcb.MGMT_CD
         <where>
             <if test="mappingSeq != null and !mappingSeq.equals('')">
                 mapping_seq = #{mappingSeq}
             </if>
-            <if test="managementCd != null and !managementCd.equals('')">
+            <if test="mgmtCd != null and !mgmtCd.equals('')">
                 and
-                management_cd = #{managementCd}
+                MGMT_CD = #{mgmtCd}
             </if>
         </where>
     </select>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocManagementCdMappingVo">
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocMgmgCdMappVo">
         select
             *
         from
-            TB_VOC_MANAGEMENT_CD_REL tvmcr inner join TB_VOC_MANAGEMENT_CD_BAS tvmcb
-            on tvmcr.management_cd = tvmcb.management_cd
+            TB_VOC_MGMT_CD_REL tvmcr inner join TB_VOC_MGMT_CD_BAS tvmcb
+            on tvmcr.MGMT_CD = tvmcb.MGMT_CD
         <where>
             <if test="prntsMappingSeq != null and !prntsMappingSeq.equals('')">
                 and
@@ -37,16 +37,16 @@
         select
             max(mapping_seq)
         from
-            TB_VOC_MANAGEMENT_CD_REL
+            TB_VOC_MGMT_CD_REL
     </select>
 
     <insert id="insert">
-        insert into TB_VOC_MANAGEMENT_CD_REL
-        (MAPPING_SEQ, MANAGEMENT_CD, PRNTS_MAPPING_SEQ, LVL, REGR_ID)
+        insert into TB_VOC_MGMT_CD_REL
+        (MAPPING_SEQ, MGMT_CD, PRNTS_MAPPING_SEQ, MGMT_CD_LVL_NO, REGR_ID)
         values
             (
              #{mappingSeq},
-             #{managementCd},
+             #{mgmtCd},
              #{prntsMappingSeq},
              #{lvl},
              #{loginUsr}
@@ -54,7 +54,7 @@
     </insert>
     
     <delete id="delete">
-        delete from TB_VOC_MANAGEMENT_CD_REL
+        delete from TB_VOC_MGMT_CD_REL
         where
             mapping_seq in
             <foreach collection="list" item="vo" open="(" separator="," close=")">

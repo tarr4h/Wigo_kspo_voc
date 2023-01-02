@@ -61,12 +61,12 @@ public class VocIntergrationListController {
 
     @GetMapping(value = "selectChannel")
     public @ResponseBody Object selectChannel(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategory.CHANNEL);
+        return service.getMgmtCdSelect(param, ManageCodeCategory.CHANNEL);
     }
 
     @GetMapping(value = "selectType")
     public @ResponseBody Object selectType(@RequestParam Map<String, Object> param){
-        return service.getManagementCodeSelect(param, ManageCodeCategory.TYPE);
+        return service.getMgmtCdSelect(param, ManageCodeCategory.TYPE);
     }
 
     @GetMapping(value = "selectStatusList")

@@ -118,7 +118,7 @@
         </div>
         <div id="divTree"
             data-type="tree"
-            data-get-url="<c:url value='${urlPrefix}/vocRegistrationManagementCodeTree${urlSuffix}'/>"
+            data-get-url="<c:url value='${urlPrefix}/vocRegistrationMgmtCdTree${urlSuffix}'/>"
             data-change-seq="Y"
         >
         </div>
@@ -250,9 +250,9 @@
      * @param tree
      */
     function onTreeSelect(data,node,tree){
-        let managementCd = data.id;
+        let mgmtCd = data.id;
         let param = {
-            managementCd
+            mgmtCd
         };
 
         $(".v_area_section:nth-child(1)").css('width', '100%');
@@ -262,7 +262,7 @@
         loadGrid('procedureGrid', param);
         loadGrid('orgGrid', param);
 
-        validateRequiredPrcd(managementCd);
+        validateRequiredPrcd(mgmtCd);
     }
 
     /**
@@ -282,11 +282,11 @@
 
     /**
      * 분류코드에 필수절차가 등록되어있는지 여부 조회 후 안내문구 표시
-     * @param managementCd
+     * @param mgmtCd
      * @returns {Promise<void>}
      */
-    async function validateRequiredPrcd(managementCd){
-        let dirCd = await selectDirCd(managementCd);
+    async function validateRequiredPrcd(mgmtCd){
+        let dirCd = await selectDirCd(mgmtCd);
         $.ajax({
             url: '<c:url value="${urlPrefix}/validateRequiredPrcd${urlSuffix}"/>',
             data: {
@@ -315,8 +315,8 @@
 
         let grid = window['procedureGrid'];
         let prcdList = grid.getCheckedJson();
-        let managementCd = $('#divTree').getSelectedNode().id;
-        let dirCd = await selectDirCd(managementCd);
+        let mgmtCd = $('#divTree').getSelectedNode().id;
+        let dirCd = await selectDirCd(mgmtCd);
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/deleteProcedure${urlSuffix}"/>',
@@ -460,7 +460,7 @@
      * @param param
      */
     async function loadGrid(gridId, param){
-        let dirCd = await selectDirCd(param.managementCd);
+        let dirCd = await selectDirCd(param.mgmtCd);
         param.dirCd = dirCd;
 
         $.each(window.gridArray, (i, e) => {
@@ -490,11 +490,11 @@
 
     /**
      * dirCd 조회
-     * @param managementCd
+     * @param mgmtCd
      * @returns {Promise<unknown>}
      */
-    function selectDirCd(managementCd){
-        let param = {managementCd};
+    function selectDirCd(mgmtCd){
+        let param = {mgmtCd};
         return new Promise(function(resolve){
             $.ajax({
                 url: '<c:url value="${urlPrefix}/selectDirCd${urlSuffix}"/>',
@@ -512,8 +512,8 @@
      * @returns {Promise<string>}
      */
     async function setDirOrgListParam(){
-        let managementCd = $('#divTree').getSelectedNode().id;
-        let dirCd = await selectDirCd(managementCd);
+        let mgmtCd = $('#divTree').getSelectedNode().id;
+        let dirCd = await selectDirCd(mgmtCd);
         let orgList = window['orgGrid'].getJsonRows();
 
         let param = JSON.stringify({
@@ -578,7 +578,7 @@
      * @param orgId
      */
     function insertDirOrg(orgId){
-        let managementCd = $('#divTree').getSelectedNode().id;
+        let mgmtCd = $('#divTree').getSelectedNode().id;
 
         $.ajax({
             url: '<c:url value="${urlPrefix}/insertDirOrg${urlSuffix}"/>',
@@ -586,7 +586,7 @@
             contentType: 'application/json',
             data: JSON.stringify({
                 orgId,
-                managementCd
+                mgmtCd
             }),
             success(res, status, jqXHR){
                 if(jqXHR.status === 200){
@@ -642,9 +642,9 @@
     async function openProcedureRegModal(width, height){
         let pageNm = 'vocRegProcedureModal';
         let treeNode = $('#divTree').getSelectedNode();
-        let managementCd = treeNode.managementCd;
+        let mgmtCd = treeNode.mgmtCd;
 
-        let dirCd = await selectDirCd(managementCd);
+        let dirCd = await selectDirCd(mgmtCd);
         let dutyOrgList = await selectDutyOrgList(dirCd);
 
         if(dutyOrgList == null || dutyOrgList.length === 0){
