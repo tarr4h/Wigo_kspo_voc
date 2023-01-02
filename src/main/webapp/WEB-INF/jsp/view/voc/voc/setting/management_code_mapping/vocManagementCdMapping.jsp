@@ -61,7 +61,7 @@
         </div>
         <div id="divTree"
              data-type="tree"
-             data-get-url="<c:url value='${urlPrefix}/vocManagementCdMappingTree${urlSuffix}'/>"
+             data-get-url="<c:url value='${urlPrefix}/vocMgmtCdMappingTree${urlSuffix}'/>"
              data-change-seq="Y"
         >
         </div>
@@ -73,7 +73,7 @@
     $('.func_btn').on('click', function(){
         let evt = $(this).data('event');
         switch(evt){
-            case 'add' : openModal('vocManagementCdMappingAddModal', 600, 500);break;
+            case 'add' : openModal('vocMgmtCdMappingAddModal', 600, 500);break;
             case 'delete' : deleteMapping(); break;
         }
     });
@@ -105,15 +105,15 @@
 
     /**
      * 매핑 추가
-     * @param managementCd
+     * @param mgmtCd
      */
-    function addMapping(managementCd){
+    function addMapping(mgmtCd){
         let target = $('#divTree');
         let node = target.getSelectedNode();
         let prntsCd = node == null ? null : node.id;
         let param = {
             prntsCd,
-            managementCd
+            mgmtCd
         };
 
         $.ajax({
@@ -139,7 +139,7 @@
      * @param data
      */
     function addMappingCallback(data){
-        addMapping(data.managementCd);
+        addMapping(data.mgmtCd);
     }
 
     function openModal(pageNm, width, height){

@@ -65,11 +65,11 @@
     <div class="mBox1">
         <div class="gTitle1">
             <h3 class="mTitle1">VOC 분류코드</h3>
-            <button class="gRt tree_btn func_btn" data-event="manage_grp">그룹관리</button>
+            <button class="gRt tree_btn func_btn" data-event="grp">그룹관리</button>
         </div>
         <div id="divTree"
              data-type="tree"
-             data-get-url="<c:url value='${urlPrefix}/vocManagementCodeTree${urlSuffix}'/>"
+             data-get-url="<c:url value='${urlPrefix}/vocMgmtCdTree${urlSuffix}'/>"
              data-change-seq="Y"
         >
         </div>
@@ -94,10 +94,10 @@
         </div>
         <div class="grid_wrapper">
             <div id="divGrid1"
-                 data-get-url="<c:url value='${urlPrefix}/vocManagementCodeGrid${urlSuffix}'/>"
-                 data-grid-id="managementCdGrid"
+                 data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
+                 data-grid-id="mgmtCdGrid"
                  data-type="grid"
-                 data-tpl-url="<c:url value='/static/gridTemplate/voc/vocManagementCode.xml${urlSuffix}'/>"
+                 data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtCd.xml${urlSuffix}'/>"
                  style="width:100%;height:735px;"
             >
             </div>
@@ -116,14 +116,14 @@
         };
         switch(event){
             case 'save' : saveRows(); break;
-            case 'add'  : openRegModal('vocManagementRegModal', 500, 180, selectedCd); break;
+            case 'add'  : openRegModal('vocMgmtCdRegModal', 500, 180, selectedCd); break;
             case 'delete' : deleteRows(); break;
-            case 'manage_grp' : openRegModal('vocManagementManageGrpModal', 900, 600); break;
+            case 'grp' : openRegModal('vocMgmtCdGrpModal', 900, 600); break;
         }
     });
 
     function deleteRows(){
-        let rows = managementCdGrid.getCheckedJson();
+        let rows = mgmtCdGrid.getCheckedJson();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
@@ -145,7 +145,7 @@
     }
 
     function saveRows(){
-        let rows = managementCdGrid.getJsonRows();
+        let rows = mgmtCdGrid.getJsonRows();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
@@ -166,8 +166,8 @@
         })
     }
 
-    function openRegModal(pageNm, width, height, prntsCd){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}` + "?prntsCd=" + prntsCd;
+    function openRegModal(pageNm, width, height, prntsMgmtCd){
+        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}` + "?prntsMgmtCd=" + prntsMgmtCd;
         Utilities.openModal(url, width, height);
     }
 
@@ -180,22 +180,22 @@
             return false;
         }
 
-        let prntsCd = data.id;
+        let prntsMgmtCd = data.id;
         let codeNm = data.text;
 
-        selectedCd = prntsCd;
+        selectedCd = prntsMgmtCd;
         $("#grid_title").text(codeNm);
 
         loadGrid(prntsCd);
     }
 
-    function loadGrid(prntsCd){
+    function loadGrid(prntsMgmtCd){
         let param = {
-            prntsCd,
+            prntsMgmtCd,
             recordCountPerPage : 10
         };
 
-        managementCdGrid.loadUrl('', param);
+        mgmtCdGrid.loadUrl('', param);
     }
 
 </script>

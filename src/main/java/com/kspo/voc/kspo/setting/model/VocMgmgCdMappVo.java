@@ -5,20 +5,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocManagementCdMappingVo extends VocManagementCodeVo {
+public class VocMgmgCdMappVo extends VocMgmtCdVo {
 
     private static final long serialVersionUID = 5198406220369039570L;
-	private String mappingSeq;
-    private String managementCd;
+	private String mappCd;
+    private String mgmtCd;
+    private String prntsMappCd;
+    private int mappLvlNo;
     private String codeNm;
-    private String prntsMappingSeq;
-    private int lvl;
-    private String regUsr;
+    private String regrId;
     private String regDt;
+    private String amdrId;
+    private String amdDt;
 
     @Override
     public String getId() {
-        return getMappingSeq();
+        return getMappCd();
     }
 
     @Override
@@ -28,12 +30,12 @@ public class VocManagementCdMappingVo extends VocManagementCodeVo {
 
     @Override
     public String getParentId() {
-        return getPrntsMappingSeq();
+        return getPrntsMappCd();
     }
 
     @Override
     public int getLevel() {
-        return getLvl();
+        return getMappLvlNo();
     }
 
     @Override
@@ -42,13 +44,13 @@ public class VocManagementCdMappingVo extends VocManagementCodeVo {
     }
 
     @Override
-    public String getTopCd() {
-        return super.getTopCd();
+    public String getTopMgmtCd() {
+        return super.getTopMgmtCd();
     }
 
     @Override
-    public String getPrntsCd() {
-        return super.getPrntsCd();
+    public String getPrntsMgmtCd() {
+        return super.getPrntsMgmtCd();
     }
 
     @Override
@@ -62,8 +64,8 @@ public class VocManagementCdMappingVo extends VocManagementCodeVo {
     }
 
     @Override
-    public int getOdrg() {
-        return super.getOdrg();
+    public int getMgmtCdOdrd() {
+        return super.getMgmtCdOdrd();
     }
 
     @Override
@@ -82,13 +84,13 @@ public class VocManagementCdMappingVo extends VocManagementCodeVo {
     }
 
     @Override
-    public void setTopCd(String topCd) {
-        super.setTopCd(topCd);
+    public void setTopMgmtCd(String topCd) {
+        super.setTopMgmtCd(topCd);
     }
 
     @Override
-    public void setPrntsCd(String prntsCd) {
-        super.setPrntsCd(prntsCd);
+    public void setPrntsMgmtCd(String prntsCd) {
+        super.setPrntsMgmtCd(prntsCd);
     }
 
     @Override
@@ -102,8 +104,8 @@ public class VocManagementCdMappingVo extends VocManagementCodeVo {
     }
 
     @Override
-    public void setOdrg(int odrg) {
-        super.setOdrg(odrg);
+    public void setMgmtCdOdrd(int odrg) {
+        super.setMgmtCdOdrd(odrg);
     }
 
     @Override

@@ -7,43 +7,43 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocManagementCodeVo extends AbstractTreeVo {
+public class VocMgmtCdVo extends AbstractTreeVo {
 
 	private static final long serialVersionUID = -2550864441873076810L;
-	private String managementCd;
-	private String topCd;
-	private String prntsCd;
+	private String mgmtCd;
+	private String topMgmtCd;
+	private String prntsMgmtCd;
 	private String topComnCd;
 	private String comnCd;
-	private int odrg;
-	private int lvl;
-	private String codeNm;
+	private int mgmtCdOdrd;
+	private int mgmtCdLvlNo;
+	private String mgmtCdNm;
 	private String useYn;
 	private String regrId;
 	private String regDt;
 	private String amdrId;
 	private String amdDt;
 
-	private String topCdNm;
-	private String prntsCdNm;
+	private String topMgmtCdNm;
+	private String prntsMgmtCdNm;
 
 	@Override
 	public String getId() {
-		return getManagementCd();
+		return getMgmtCd();
 	}
 
 	@Override
 	public String getText() {
-		return getCodeNm();
+		return getMgmtCdNm();
 	}
 
 	@Override
 	public String getParentId() {
-		return getPrntsCd();
+		return getPrntsMgmtCd();
 	}
 
 	@Override
 	public int getLevel() {
-		return getLvl();
+		return getMgmtCdLvlNo();
 	}
 }

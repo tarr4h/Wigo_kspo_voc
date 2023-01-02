@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocProcedureBasVo extends BaseVo {
+public class VocPrcdBasVo extends BaseVo {
 
     private static final long serialVersionUID = -4401868272090337403L;
 	private String prcdId;

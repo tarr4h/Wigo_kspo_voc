@@ -38,7 +38,7 @@ public class NtcartBasController {
 	public String add(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
 		model.addAllAttributes(param);
 		NtcartBasVo vo = new NtcartBasVo();
-		vo.setBrdId(Constants._NOTICE_BBS_ID);
+		vo.setBltId(Constants._NOTICE_BBS_ID);
 		vo.setNtcartId(Utilities.getAutoSeq("BBS"));
 		vo.setTopNtcartId(vo.getNtcartId());
 		vo.setFileId(vo.getNtcartId());

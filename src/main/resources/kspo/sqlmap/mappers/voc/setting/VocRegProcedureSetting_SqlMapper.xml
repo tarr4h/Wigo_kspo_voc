@@ -40,9 +40,9 @@
 
     <insert id="insertDirMcMapping">
         insert into VOC_DIR_MC_MAPPING
-            (DIR_CD, MANAGEMENT_CD)
+            (DIR_CD, MGMT_CD)
         values
-            (#{dirCd}, #{managementCd})
+            (#{dirCd}, #{mgmtCd})
     </insert>
 
     <insert id="insertDirOrgMapping">

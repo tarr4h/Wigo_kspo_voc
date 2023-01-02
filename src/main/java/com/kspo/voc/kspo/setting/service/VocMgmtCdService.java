@@ -13,8 +13,8 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.dao.VocManagementCodeDao;
-import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
+import com.kspo.voc.kspo.setting.dao.VocMgmtCdDao;
+import com.kspo.voc.kspo.setting.model.VocMgmtCdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,26 +22,26 @@ import lombok.extern.slf4j.Slf4j;
 //@SuppressWarnings("unchecked")
 @Service
 @Slf4j
-public class VocManagementCodeService extends VocAbstractService {
+public class VocMgmtCdService extends VocAbstractService {
 
     @Autowired
-    VocManagementCodeDao dao;
+    VocMgmtCdDao dao;
 
     @Override
     public IVocDao getDao() {
         return dao;
     }
 
-    public Object vocManagementCodeTree(Map<String, Object> param) {
-        return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
+    public Object vocMgmtCdTree(Map<String, Object> param) {
+        return AbstractTreeVo.makeHierarchy(selectVocMgmtCdTree(param));
     }
 
-    public <T> List<T> vocManagementCodeList(Map<String, Object> param) {
+    public <T> List<T> vocMgmtCdList(Map<String, Object> param) {
         return dao.selectList(param);
     }
 
-    public Object vocManagementCode(EzMap param) {
-        return selectManagementCode(param);
+    public Object vocMgmtCd(EzMap param) {
+        return selectMgmtCd(param);
     }
 
     public Object insert(EzMap param) {
@@ -77,13 +77,13 @@ public class VocManagementCodeService extends VocAbstractService {
         return dao.update(param);
     }
 
-    public Object delete(List<VocManagementCodeVo> list) {
+    public Object delete(List<VocMgmtCdVo> list) {
         return dao.delete(list);
     }
 
     public EzMap generateInsertGroupParam(EzMap param){
-        StringBuilder managementCd = new StringBuilder();
-        managementCd.append("MC");
+        StringBuilder mgmtCd = new StringBuilder();
+        mgmtCd.append("MC");
 
         int groupSize = dao.selectList(param).size() + 1;
         int addNum = groupSize;
@@ -98,19 +98,19 @@ public class VocManagementCodeService extends VocAbstractService {
         }
 
         if(groupSize < 10){
-            managementCd.append("0").append(addNum);
+            mgmtCd.append("0").append(addNum);
         } else {
-            managementCd.append(addNum);
+            mgmtCd.append(addNum);
         };
 
         for(int i = 0; i < 13; i++){
-            managementCd.append("0");
+            mgmtCd.append("0");
         }
 
-        log.debug("management grp cd = {}", managementCd);
+        log.debug("management grp cd = {}", mgmtCd);
 
-        param.put("managementCd", managementCd.toString());
-        param.put("topCd", managementCd.toString());
+        param.put("mgmtCd", mgmtCd.toString());
+        param.put("topCd", mgmtCd.toString());
         param.put("odrg", addNum);
         param.put("lvl", 1);
         return param;
@@ -118,32 +118,32 @@ public class VocManagementCodeService extends VocAbstractService {
 
     public EzMap generateInsertCodeParam(EzMap param){
         // 17자리(코드값 2 + 분류값15(2/3/3/3/4))
-        VocManagementCodeVo prntsRow = selectManagementCode(param);
-        log.debug("prntsRow = {}", prntsRow.getCodeNm());
+        VocMgmtCdVo prntsRow = selectMgmtCd(param);
+        log.debug("prntsRow = {}", prntsRow.getMgmtCdNm());
 
         int childrenSize = dao.selectList(param).size();
         String maxChildCd = dao.maxChildCd(param);
 
-        param.put("lvl", prntsRow.getLvl() + 1);
+        param.put("lvl", prntsRow.getMgmtCdLvlNo() + 1);
         param.put("regUsr", Utilities.getLoginId());
 
-        String prntsCd = prntsRow.getManagementCd();
+        String prntsCd = prntsRow.getMgmtCd();
         String prntsCdGrp = prntsCd.substring(2, 4);
         String prntsCdNum = prntsCd.substring(4); // grp인 경우엔 2
 
         // prefix
-        StringBuilder managementCd = new StringBuilder();
-        managementCd.append("MC").append(prntsCdGrp);
+        StringBuilder mgmtCd = new StringBuilder();
+        mgmtCd.append("MC").append(prntsCdGrp);
 
         // 부모코드 자리
-        int prntsLvl = prntsRow.getLvl() - 1;
+        int prntsLvl = prntsRow.getMgmtCdLvlNo() - 1;
         if(prntsLvl != 0){
             String subStrCd = prntsCdNum.substring(0, prntsLvl * 3);
-            managementCd.append(subStrCd);
+            mgmtCd.append(subStrCd);
         }
 
         log.debug("prntsLvl = {}", prntsLvl);
-        log.debug("managementCd 1 = {}", managementCd);
+        log.debug("mgmtCd 1 = {}", mgmtCd);
 
         log.debug("maxChildCd = {}", maxChildCd);
         log.debug("childrenSize = {}", childrenSize);
@@ -163,30 +163,30 @@ public class VocManagementCodeService extends VocAbstractService {
         log.debug("inputVal = {}", inputVal);
 
         if(inputVal < 10){
-            managementCd.append("000");
+            mgmtCd.append("000");
         } else if (inputVal < 100){
-            managementCd.append("00");
+            mgmtCd.append("00");
         } else if (inputVal < 1000){
-            managementCd.append("0");
+            mgmtCd.append("0");
         }
         if(prntsLvl + 1 < 4){
-            managementCd.deleteCharAt(managementCd.length() - 1);
+            mgmtCd.deleteCharAt(mgmtCd.length() - 1);
         }
-        managementCd.append(inputVal);
+        mgmtCd.append(inputVal);
 
         int leftSpace = 17 - 4 - ((prntsLvl + 1) * 3);
         leftSpace = prntsLvl == 3 ? leftSpace - 1 : leftSpace;
         for(int i = 0; i < leftSpace; i++){
-            managementCd.append("0");
+            mgmtCd.append("0");
         }
 
-        log.debug("managementCd = {}", managementCd);
+        log.debug("mgmtCd = {}", mgmtCd);
 
-        String topCd = prntsRow.getTopCd() == null ? managementCd.toString() : prntsRow.getTopCd();
+        String topCd = prntsRow.getTopMgmtCd() == null ? mgmtCd.toString() : prntsRow.getTopMgmtCd();
         log.debug("topCd = {}", topCd);
         param.put("topCd", topCd);
 
-        param.put("managementCd", managementCd.toString());
+        param.put("mgmtCd", mgmtCd.toString());
         return param;
     }
 

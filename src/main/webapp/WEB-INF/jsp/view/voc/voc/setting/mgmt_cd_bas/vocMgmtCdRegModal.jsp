@@ -68,13 +68,13 @@
             <tr>
                 <th>상위코드</th>
                 <td>
-                    <span id="prntsCd"></span>
+                    <span id="prntsMgmtCd"></span>
                 </td>
             </tr>
             <tr>
                 <th>등록 코드명</th>
                 <td>
-                    <input type="text" class="register_input" id="codeNm">
+                    <input type="text" class="register_input" id="mgmtCdNm">
                 </td>
             </tr>
         </tbody>
@@ -84,7 +84,7 @@
 
 
 <script>
-    let prntsCd = '${param.prntsCd}';
+    let prntsMgmtCd = '${param.prntsMgmtCd}';
     let topComnCd;
     let comnCd;
 
@@ -102,17 +102,17 @@
     })
 
     function regCode(){
-        let codeNm = $("#codeNm").val();
+        let mgmtCdNm = $("#mgmtCdNm").val();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                prntsCd,
+                prntsMgmtCd,
                 topComnCd,
                 comnCd,
-                codeNm
+                mgmtCdNm
             }),
             success(res){
                 alert(res.msg);
@@ -132,12 +132,12 @@
 
     function getPrntsInfo(){
         $.ajax({
-            url : '<c:url value="${urlPrefix}/vocManagementCode${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/vocMgmtCd${urlSuffix}"/>',
             data : {
-                managementCd : prntsCd
+                mgmtCd : prntsMgmtCd
             },
             success(res){
-                $("#prntsCd").text(res.codeNm);
+                $("#mgmtCdNm").text(res.mgmtCdNm);
                 topComnCd = res.topComnCd;
                 comnCd = res.comnCd;
             },

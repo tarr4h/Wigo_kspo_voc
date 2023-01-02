@@ -44,5 +44,5 @@ public interface VocRegProcedureSettingDao extends IVocDao {
 
     int deleteProcedure(EzMap param);
 
-    int updateProcedure(VocProcedureVo procedure);
+    int updateProcedure(VocMcPrcdVo procedure);
 }

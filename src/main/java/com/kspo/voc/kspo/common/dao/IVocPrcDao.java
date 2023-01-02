@@ -5,18 +5,18 @@ import java.util.Map;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
-import com.kspo.voc.kspo.process.model.VocPrcdVo;
+import com.kspo.voc.kspo.process.model.VocApplyPrcdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
 @VocMapper
 public interface IVocPrcDao extends IVocDao {
 
-    List<? extends ITreeVo> selectVocManagementCodeTree(Map<String, Object> param);
+    List<? extends ITreeVo> selectVocMgmtCdTree(Map<String, Object> param);
 
     <T> List<T> selectTaskBasList(Object param);
 
-    <T> T selectManagementCode(Object param);
+    <T> T selectMgmtCd(Object param);
 
     <T> T selectPrcdBas(Object param);
 
@@ -37,7 +37,7 @@ public interface IVocPrcDao extends IVocDao {
 
     List<EzMap> selectDutyOrgList(Object param);
 
-    List<VocPrcdVo> selectRegPrcdList(Object param);
+    List<VocApplyPrcdVo> selectRegPrcdList(Object param);
 
     int updateRegPrcd(Object param);
 
@@ -47,7 +47,7 @@ public interface IVocPrcDao extends IVocDao {
 
     int updateRegistrationStatus(Object param);
 
-    <T> List<T> getManagementCodeSelect(Map<String, Object> param);
+    <T> List<T> getMgmtCdSelect(Map<String, Object> param);
 
     <T> T selectStatusCd(Object param);
 

@@ -7,7 +7,7 @@ import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
 @VocMapper
-public interface VocManagementCodeDao extends IVocDao {
+public interface VocMgmtCdDao extends IVocDao {
 
     String maxChildCd(EzMap param);
 

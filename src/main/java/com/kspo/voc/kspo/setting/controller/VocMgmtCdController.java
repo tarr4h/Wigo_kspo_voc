@@ -19,46 +19,46 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
-import com.kspo.voc.kspo.setting.service.VocManagementCodeService;
+import com.kspo.voc.kspo.setting.model.VocMgmtCdVo;
+import com.kspo.voc.kspo.setting.service.VocMgmtCdService;
 
 @Controller
-@RequestMapping({"vocManagementCode", "{menuId}/vocManagementCode"})
-public class VocManagementCodeController {
+@RequestMapping({"vocMgmtCd", "{menuId}/vocMgmtCd"})
+public class VocMgmtCdController {
 
     @Autowired
-    VocManagementCodeService service;
+    VocMgmtCdService service;
 
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/management_code/vocManagementCodeSetting";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/mgmt_cd_bas/vocMgmtCdSetting";
     }
 
-    @PostMapping(value = {"vocManagementCodeTree"})
-    public @ResponseBody Object vocManagementCodeTree(@RequestBody EzMap param) throws EgovBizException{
-        return service.vocManagementCodeTree(param);
+    @PostMapping(value = {"vocMgmtCdTree"})
+    public @ResponseBody Object vocMgmtCdTree(@RequestBody EzMap param) throws EgovBizException{
+        return service.vocMgmtCdTree(param);
     }
 
-    @PostMapping(value = {"vocManagementCodeGrid"})
+    @PostMapping(value = {"vocMgmtCdGrid"})
     public @ResponseBody Object vocMcMappingRows(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocManagementCodeVo> list = service.vocManagementCodeList(param);
+        List<VocMgmtCdVo> list = service.vocMgmtCdList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(convertList, page);
     }
 
-    @GetMapping(value = "vocManagementCode")
-    public @ResponseBody Object vocManagementCode(@RequestParam Map<String, Object> param) {
+    @GetMapping(value = "vocMgmtCd")
+    public @ResponseBody Object vocMgmtCd(@RequestParam Map<String, Object> param) {
         EzMap map = new EzMap(param);
-        return service.vocManagementCode(map);
+        return service.vocMgmtCd(map);
     }
 
     @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
     public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
-        List<VocManagementCodeVo> existCdList = service.vocManagementCodeList(param);
+        List<VocMgmtCdVo> existCdList = service.vocMgmtCdList(param);
         param.put("existCd", existCdList);
         return VocUtils.selectComnCdOptionList(param);
     }
@@ -74,7 +74,7 @@ public class VocManagementCodeController {
     }
 
     @PostMapping(value = "delete")
-    public @ResponseBody Object delete(@RequestBody List<VocManagementCodeVo> list){
+    public @ResponseBody Object delete(@RequestBody List<VocMgmtCdVo> list){
         return service.delete(list);
     }
 
@@ -82,6 +82,6 @@ public class VocManagementCodeController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/management_code/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/mgmt_cd_bas/" + pageNm;
     }
 }
