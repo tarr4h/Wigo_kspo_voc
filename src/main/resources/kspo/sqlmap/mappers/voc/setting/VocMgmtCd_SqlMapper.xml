@@ -43,7 +43,7 @@
                 PRNTS_MGMT_CD is null
             </if>
         order by
-            odrg, MGMT_CD
+            MGMT_CD_ORDR, MGMT_CD
     </select>
 
     <insert id="insert">

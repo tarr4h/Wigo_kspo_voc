@@ -39,8 +39,8 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
     }
 
     @Override
-    public void setPrntsCdNm(String prntsCdNm) {
-        super.setPrntsCdNm(prntsCdNm);
+    public void setPrntsMgmtCdNm(String prntsCdNm) {
+        super.setPrntsMgmtCdNm(prntsCdNm);
     }
 
     @Override
@@ -74,13 +74,13 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
     }
 
     @Override
-    public String getTopCdNm() {
-        return super.getTopCdNm();
+    public String getTopMgmtCdNm() {
+        return super.getTopMgmtCdNm();
     }
 
     @Override
-    public String getPrntsCdNm() {
-        return super.getPrntsCdNm();
+    public String getPrntsMgmtCdNm() {
+        return super.getPrntsMgmtCdNm();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
     }
 
     @Override
-    public void setTopCdNm(String topCdNm) {
-        super.setTopCdNm(topCdNm);
+    public void setTopMgmtCdNm(String topCdNm) {
+        super.setTopMgmtCdNm(topCdNm);
     }
 }
