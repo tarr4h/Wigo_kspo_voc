@@ -16,22 +16,23 @@
 
  <title>VOC</title>
 <%-- favicon --%>
-<link rel="shortcut icon" href="/static/voc/images/favicon.ico">
+<link rel="shortcut icon" href="/static/kspo/images/favicon.ico">
 
 <!-- IE -->
 <script src="<c:url value='/static/js/polyfill.js'/>"></script>
 <!-- library -->
-<script type="text/javascript" src="/static/voc/js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/voc/plugins/swiper/swiper.min.css">
-<script type="text/javascript" src="/static/voc/plugins/swiper/swiper.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/voc/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
-<script type="text/javascript" src="/static/voc/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-<link rel="stylesheet" href="/static/voc/css/jquery-ui.css">
-<script type="text/javascript" src="/static/voc/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/kspo/js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/kspo/plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="/static/kspo/plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/kspo/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="/static/kspo/plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="/static/kspo/css/jquery-ui.css">
+<script type="text/javascript" src="/static/kspo/js/jquery-ui.js"></script>
 <!-- //library -->
 <!-- customer -->
-<link rel="stylesheet" href="/static/voc/css/ui.css?reqrend=${reqrend}">
-<%-- <script type="text/javascript" src="/static/voc/js/ui.js?reqrend=${reqrend}"></script> --%>
+<link rel="stylesheet" href="/static/kspo/css/ui.css?reqrend=${reqrend}">
+<link rel="stylesheet" href="/static/kspo/css/svg.css?reqrend=${reqrend}">
+<%-- <script type="text/javascript" src="/static/kspo/js/ui.js?reqrend=${reqrend}"></script> --%>
 
 
 <!-- multiselect -->
@@ -89,7 +90,7 @@
 <script src="<c:url value='/static/js/ez-attachfile.js?reqrend=${reqrend}'/>"></script>
 
 <%-- voc --%>
-<link rel="stylesheet" href="<c:url value='/static/css/voc/voc.css'/>" />
+<%-- <link rel="stylesheet" href="<c:url value='/static/css/voc/voc.css'/>" /> --%>
 
 
 <script type="text/javascript">

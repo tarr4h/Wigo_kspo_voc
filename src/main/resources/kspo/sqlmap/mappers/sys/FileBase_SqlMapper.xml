@@ -63,7 +63,7 @@
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.FileVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.FileBaseDao.selectList */ <include refid="sqlCols"/>
                     , TO_CHAR(REG_DT, 'YYYYMMDDHH24MISS') UPL_DT
                  FROM TB_SYS_FILE_BAS
         <include refid="sqlConditions"/>
@@ -73,7 +73,7 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.FileVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT  /* com.kspo.voc.sys.dao.FileBaseDao.select */ <include refid="sqlCols"/>
                     , TO_CHAR(REG_DT, 'YYYYMMDDHH24MISS') UPL_DT
                  FROM TB_SYS_FILE_BAS
         <include refid="sqlPkConditions"/>
@@ -85,7 +85,7 @@
              WHERE FILE_ID = TO_CHAR(#{fileId}) 
         </selectKey>
         
-                INSERT INTO TB_SYS_FILE_BAS (
+                INSERT  /* com.kspo.voc.sys.dao.FileBaseDao.insert */  INTO TB_SYS_FILE_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{fileId}
@@ -103,7 +103,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_FILE_BAS
+               UPDATE  /* com.kspo.voc.sys.dao.FileBaseDao.update */  TB_SYS_FILE_BAS
                   SET FILE_NM             =         #{fileNm}
                     , FILE_SIZE           =         #{fileSize}
                     , FILE_SAVE_NM        =         #{fileSaveNm}
@@ -115,14 +115,14 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_FILE_BAS
+               DELETE  /* com.kspo.voc.sys.dao.FileBaseDao.delete */  FROM TB_SYS_FILE_BAS
                 WHERE FILE_ID            =       TO_CHAR(#{fileId})
                 <if test="fileOdrg != null and fileOdrg != ''">
                   AND FILE_ODRG           =       #{fileOdrg} 
                 </if>
     </delete>
     <select id="selectMaxfileOdrg" resultType="int">
-        SELECT NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
+        SELECT  /* com.kspo.voc.sys.dao.FileBaseDao.selectMaxfileOdrg */  NVL(DECODE(#{fileOdrg},0,NULL,#{fileOdrg}),NVL(MAX(FILE_ODRG),0) + 1 )
               FROM TB_SYS_FILE_BAS
              WHERE FILE_ID = TO_CHAR(#{fileId})
     </select>

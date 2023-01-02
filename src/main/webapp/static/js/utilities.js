@@ -1755,7 +1755,7 @@ $.ajaxSetup({
                
             if(!fileId)
                 fileId = "";
-            var url = "/file/fileInfo?fileCd=" + fileId+"&fileCtgryCd=" + fileCtgryCd + "&mode=" + uploadMode;
+            var url = "/file/fileInfo?fileId=" + fileId+"&fileCtgryCd=" + fileCtgryCd + "&mode=" + uploadMode;
             Utilities.openModal(url,900,600);    
                 
         },
@@ -3134,13 +3134,13 @@ function makeAction(element) {
 }
 var _CURFILEDATA = null;
 function onEzFileUploaderAddFile(e, data) {
-    var fileCd = _CURFILEDATA.fileCd;
+    var fileId = _CURFILEDATA.fileId;
     var fileSeq = _CURFILEDATA.fileSeq;
     _CURFILEDATA.id = data.id;
     var file = data.file;
     var fileExt = Utilities.getFileExt(file.name);
     var fileInfo = {
-        fileCd : fileCd,
+        fileId : fileId,
         fileSeq : fileSeq,
         fileNm : file.name,
         fileSize : file.size,
@@ -3150,32 +3150,32 @@ function onEzFileUploaderAddFile(e, data) {
         fileExt : fileExt,
         stat : 'c'
     };
-    $("[data-file-info=remove][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
-    $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
-    $("[data-file-info=button][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
-    $("[data-file-info=cancel][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
+    $("[data-file-info=remove][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
+    $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
+    $("[data-file-info=button][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
+    $("[data-file-info=cancel][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
 
     var fileCategory = _CURFILEDATA.fileCategory?_CURFILEDATA.fileCategory : "";
     var url = _basePath + "/file/uploadFile"+_urlSuffix+"?fileCtgryCd="+fileCategory;
-    $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html("전송준비중");
+    $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html("전송준비중");
     ezFileUploader.upload(data.id, url, fileInfo
      , function(id, resultData, result){
         
         
-        $("[data-file-info=button][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
-        $("[data-file-info=cancel][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
+        $("[data-file-info=button][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
+        $("[data-file-info=cancel][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
         
         
         if(result)
         {
-            $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html(resultData.fileNm);
-            $("[data-file-info=remove][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
-            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
-            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").data("fileUrl",resultData.fileUrl);
-            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").attr("fileUrl",resultData.fileUrl);
-            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").data("fileNm",resultData.fileNm);
-            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").attr("fileNm",resultData.fileNm);
-            var el = $("[data-click=onFileInfo][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]");
+            $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html(resultData.fileNm);
+            $("[data-file-info=remove][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
+            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
+            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").data("fileUrl",resultData.fileUrl);
+            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").attr("fileUrl",resultData.fileUrl);
+            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").data("fileNm",resultData.fileNm);
+            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").attr("fileNm",resultData.fileNm);
+            var el = $("[data-click=onFileInfo][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]");
             if(el.length){
                 var dt = $(el[0]).data();
                 if(dt.uploadCallback){
@@ -3191,10 +3191,10 @@ function onEzFileUploaderAddFile(e, data) {
         }   
         else
         {
-            $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html(_CURFILEDATA.orgFileInfo);
+            $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html(_CURFILEDATA.orgFileInfo);
             if(_CURFILEDATA.orgFileInfo){
-                $("[data-file-info=remove][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
-                $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").show();
+                $("[data-file-info=remove][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
+                $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").show();
             }
         }
         
@@ -3209,15 +3209,15 @@ function onEzFileUploaderAddFile(e, data) {
             info = "파일 처리중";
         else 
             info = Utilities.numberWithCommas(parseInt(loaded/1024)) + "KB/ "  + Utilities.numberWithCommas(parseInt(total/1024)) + "KB("+ per +"%)";
-        $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html(info);
+        $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html(info);
 //      console.log("["+id+"]["+loaded+"]["+total+"]["+percent+"]");
     });
-    $("[data-file-info=button][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html("첨부");
+    $("[data-file-info=button][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html("첨부");
     
 }
 function onFileInfo(el,data){
     _CURFILEDATA = data;
-    _CURFILEDATA.orgFileInfo = $("[data-file-info=info][data-file-cd="+data.fileCd+"][data-file-seq="+data.fileSeq+"]").html();
+    _CURFILEDATA.orgFileInfo = $("[data-file-info=info][data-file-id="+data.fileId+"][data-file-seq="+data.fileSeq+"]").html();
     if(data.fileSeq>0)
         ezSingFileUploader(el,data);
     else
@@ -3242,22 +3242,22 @@ function onRemoveFileInfo(el,data){
     if(!confirm('한번 삭제한 파일은 복구하지 못합니다.\n계속 하시겠습니까?'))
         return;
 var removeUrl = _basePath + "/file/removeFileInfo"+_urlSuffix;
-            var fileCd = data.fileCd;
+            var fileId = data.fileId;
             var fileSeq = data.fileSeq;
                 var param = {
-                fileCd : fileCd+"",
+                fileId : fileId+"",
                 fileSeq :fileSeq    
                 };
                 Utilities.getAjax(removeUrl,param,true,function(result,jqXHR){
                     if(Utilities.processResult(result,jqXHR,"파일정보 삭제에 실패했습니다.")){
                         alert("파일 삭제에 성공했습니다.");
-                            $("[data-file-info=remove][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
-                            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").hide();
-                            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").data("fileUrl","");
-                            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").attr("fileUrl","");
-                            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").data("fileNm","");
-                            $("[data-file-info=download][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").attr("fileNm","");
-                            $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html("첨부없음");
+                            $("[data-file-info=remove][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
+                            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").hide();
+                            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").data("fileUrl","");
+                            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").attr("fileUrl","");
+                            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").data("fileNm","");
+                            $("[data-file-info=download][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").attr("fileNm","");
+                            $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html("첨부없음");
                             if(data.removeCallback){
                                 try{
                                     window[data.removeCallback](data);  
@@ -3282,15 +3282,15 @@ function ezSingFileUploader(el,data){
 function ezMultiFileUploader(el,data){
     
     if(!window["onFileClose"]){
-        window["onFileClose"] = function(fileCd,fileList,fileInfo){
-            $("[data-file-info=info][data-file-cd="+fileCd+"]").html(fileInfo);
+        window["onFileClose"] = function(fileId,fileList,fileInfo){
+            $("[data-file-info=info][data-file-id="+fileId+"]").html(fileInfo);
         };
     }
 
     if(window["showFileInfo"])
         showFileInfo(el,data);
     else
-        openFileModal(data.fileCd,data.fileCategory);
+        openFileModal(data.fileId,data.fileCategory);
         
 }
 $(document).ready(function(e) {

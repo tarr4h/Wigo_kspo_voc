@@ -27,61 +27,45 @@
 
 	<!-- header -->
 	<div id="header">
-<!-- 		<a href="#;" data-click="showLeftMenu" class="menu">메뉴보기</a> -->
-		<h1>
-			<a href="/" style="color: #f8f8f8;">
-<%--				<img src="/static/voc/images/logo.png" alt="CERAGEM 통합고객">--%>
-				VOC
-			</a>
-		</h1>
+		<h1><a href="/" ><img src="/static/kspo/images/logo.png" alt="국민체육진흥공단"></a></h1>
 		<!-- gnb -->
-		<div id="gnbNav" class="mGnb">
-			<ul>
+        <nav>
+			<ul class="main_menu">
 				<c:forEach var="topLevelMenu" items="${ menuTree.children}">
 					<c:if test='${topLevelMenu.menuShowYn eq "Y" }'>
 					<li>
-						<a href="#;" class="dep1">${topLevelMenu.menuNm }</a>
-						<div class="dep2">
-							<ul>
+						<a href="#;" >${topLevelMenu.menuNm }</a>
+						<div class="sub_menu">
+							
 								<c:forEach var="subMenu" items="${ topLevelMenu.children}" varStatus="status">
 								<c:if test='${subMenu.menuShowYn eq "Y" }'>
-								<li>
-									<strong class="tit">${subMenu.menuNm }</strong>
+                                <dl>
+<!-- 								<li> -->
+                                    <dt><a href="#;">${subMenu.menuNm }</a></dt>
 									<c:forEach var="menu3" items="${subMenu.children }" >
 									<c:if test='${menu3.menuShowYn eq "Y" }'>
 									
 									<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
-									
-									
-<!-- 									<div class="ls"><button class="iFavor1 active"></button> <a href="#;">통합고객 기본정보</a></div> -->
-									<div class="ls"><button data-click="togMyMenu" data-btn-type="myMenuBtn" ${ menu3Data} class="iFavor1 ${menu3.wdgtYn eq 'Y' ? 'active' : '' }"></button><a href="#;" data-click="showThirdMenu" ${menu3Data }>${menu3.menuNm }</a></div>
+									   <dd><a href="#;" data-click="showThirdMenu" ${menu3Data }>${menu3.menuNm }</a></dd>
 									</c:if>
 									</c:forEach>
-
-
-
-                				
-
-								</li>
-								<c:if test="${status.count % 5 == 0 && status.count>0 && status.count != topLevelMenu.children.size() }" >
-						<c:out value="</ul><ul>" escapeXml="false"/>		
-								</c:if>
+								</dl>
 								</c:if>
 								</c:forEach>
-							</ul>
 						</div>
                         
                     </li>
 					</c:if>
 				</c:forEach>
 			</ul>
-		</div>
+            </nav>
 		<!-- //gnb -->
 		<div class="gRt">
 			<span class="log"><c:out value="${LOGIN_USER.userNm }" />(<c:out value="${LOGIN_USER.loginId }" />)님 환영합니다.</span>
-            <span class="log" id="elSessionTime"></span>
-            <a href="#;" class="mBtn1 s lWhite" data-click="extendSession">연장</a>
-			<a href="#;" class="mBtn1 s lWhite" data-click="logout">로그아웃</a>
+            <span class="time" id="elSessionTime">00:00</span>
+            <a href="#" class="btn s btn-blue" data-click="extendSession">연장</a>
+            <a href="#" class="btn s" data-click="logout">로그아웃</a>
+            
 		</div>
 	</div>
 	<!-- //header -->
@@ -94,7 +78,6 @@
 			</div>
 			<div class="swiper-button-next"></div>
 			<div class="swiper-button-prev"></div>
-<!-- 			<div class="swiper-scrollbar"></div> -->
 			<div class="gRt">
 				<a href="#;" data-click="closeAllTabs" class="mBtn1 s lWhite">전체닫기</a>
 			</div>
@@ -103,20 +86,7 @@
 	<!-- //midTab -->
 
 	<div id="body">
-		<div class="mWidget1">
-			<a href="#sFavor1" class="btn" data-click="showMyMenu">마이메뉴</a>
-			<div id="jsFavor1" class="list mCustomScrollbar">
-			<strong class="ti">마이메뉴</strong>
-				<ul id="ulMyMenu">
-				
-				<c:forEach var="menu3" items="${ wdgtList}" varStatus="status">
-					<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
-					<li ${menu3Data}><a href="#;"   data-click="showThirdMenu" ${menu3Data} >${menu3.menuNm }</a> <button class="delete" data-click="removeWdgt" ${ menu3Data}>삭제</button></li>
-				</c:forEach>	
 
-				</ul>
-			</div>
-		</div>
 		
 
 		<div id="divMain">
@@ -130,83 +100,12 @@
 
 </div>
 
-
-<div id="jsMenu1" class="lMenu">
-	<div class="modal"></div>
-	<div class="con mCustomScrollbar">
-		<ul>
-			<c:set value="1" var="cnt" />
-        	<c:forEach var="topLevelMenu" items="${ menuTree.children}">
-				<c:if test='${topLevelMenu.menuShowYn eq "Y" }'>
-					<c:forEach var="subMenu" items="${ topLevelMenu.children}">
-						<c:if test='${subMenu.menuShowYn eq "Y" }'>
-						<c:set var="subMenuData">data-top-menu-id="${ subMenu.topMenuId}" data-menu-id="${subMenu.menuId }" data-menu-lvl-no="${subMenu.menuLvlNo }" data-menu-url="${subMenu.menuUrl }" data-menu-nm="${subMenu.menuNm }"</c:set>
-						<li data-menu-depth="2" style="<c:if test='${cnt > 1 }'><c:set value="2" var="cnt" />display:none</c:if>" ${subMenuData }>
-                			<a data-click="showSubMenu" href="#;" class="dep1" ${subMenuData }>${subMenu.menuNm }</a>
-                			<c:if test="${!empty subMenu.children}">
-                			<ul data-menu-depth="3" ${subMenuData }>
-                				<c:forEach var="menu3" items="${ subMenu.children}">
-                				<c:set var="menu3Data">data-top-menu-id="${ menu3.topMenuId}" data-menu-id="${menu3.menuId }" data-menu-lvl-no="${menu3.menuLvlNo }" data-menu-url="${menu3.menuUrl }" data-menu-nm="${menu3.menuNm }"</c:set>
-                					<c:if test='${menu3.menuShowYn eq "Y" }'>
-                			 <li ${menu3Data }>
-                			 	<a href="#;" data-click="showThirdMenu" class="" ${menu3Data }>${menu3.menuNm }</a>
-                			 	<c:if test="${!empty menu3.children}">
-                			 		<ul class="" ${menu3Data }> 
-                			 		<c:forEach var="menu4" items="${ menu3.children}">
-                			 			<c:if test='${menu4.menuShowYn eq "Y" }'>
-                			 			<c:set var="menu4Data">data-top-menu-id="${ menu4.topMenuId}" data-menu-id="${menu4.menuId }" data-menu-lvl-no="${menu4.menuLvlNo }" data-menu-url="${menu4.menuUrl }" data-menu-nm="${menu4.menuNm }"</c:set>
-                			 			<li ${menu4Data }>
-                			 				<a href="#;" data-click="showFourthMenu" class="" ${menu4Data }>${menu4.menuNm }</a>
-                			 			</li>
-                			 			</c:if>
-                			 		</c:forEach>
-                			 		</ul>
-                			 	</c:if>
-                			 </li>		
-                					</c:if>
-                				</c:forEach>
-                			</ul>
-                			</c:if>
-            			</li>
-						</c:if>
-					</c:forEach>
-				</c:if>
-			</c:forEach>
-        </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	</div>
-</div>
 <!-- //menu -->
 <script>
-	<%--	test for vim (tarr4h)   --%>
-	$(".mGnb").on("click", "li", function(){
-		// console.log("hover click change");
 
-		let $target = $(this).find('div');
-		let $css = $target.css('display');
-
-		if($css == 'none'){
-			$target.css('display', 'block');
-		} else {
-			$target.css('display', 'none');
-		}
-	})
-
-
+var _offsetMs = 0;
+var _sessionTime = 0;
+var _sessionTimer = 0;
 
 
 window["mainIndex"] = true;
@@ -238,7 +137,6 @@ function showToplevelMenu(element,data){
     showSecondMenu(data.menuId,true);
 }
 function showSecondMenu(menuId,forceOpen){
-	
 	
 	let ul = $("ul[data-menu-depth=3][data-menu-id="+menuId+"]");
 	let li = $("li[data-menu-depth=2][data-menu-id="+menuId+"]");
@@ -274,11 +172,7 @@ function goMenu(menu){
 	let url = menu.menuUrl;
 	if(!url)
 		return;
-// 	if(menu.menuPopupYn == "Y"){
-// 		return;
-// 	}
-// 	$("#gnbNav").find(".dep2").css("display","none");
-	$("#jsMenu1").removeClass("active");
+
 	openContentsTab(menu);
 	
 }
@@ -402,81 +296,11 @@ function resizeTabWnd(width,height){
 		return;
 	$("[data-tab-type=iframe][data-menu-id="+id+"]").height(height);
 }
-function showLeftMenu(){
-	$( "#jsMenu1").addClass("active");
-}
+
 function closeAllTabs(){
 	location.reload();
 }
 
-function togMyMenu(el,data){
-	if(el.hasClass("active")){
-		removeMyMenu(data);
-	}else {
-		addMyMenu(data);
-	}
-}
-function addMyMenu(data){
-	
-	var el = $("[data-btn-type=myMenuBtn][data-menu-id="+data.menuId+"]");
-	el.addClass("active");
-	var dataStr = 'data-menu-id="'+data.menuId+'" data-menu-nm="'+data.menuNm+'" data-menu-url="'+data.menuUrl+'"';
-	var html = $('<li '+dataStr+'></li>');
-	
-	var a = $('<a href="#;" '+dataStr+'>'+data.menuNm+'</a>');
-	a.click(function(){
-		goMenu($(this).data())
-	});
-	html.append(a);
-	var btn = $('<button class="delete" '+dataStr+'>삭제</button>');
-	html.append(btn);
-	btn.click(function(){
-		removeMyMenu($(this).data());
-	});
-	$("#ulMyMenu").append(html);
-	
-	
-	
-	var url = "/addWdgt";
-// 	Utilities.blockUI();
-	Utilities.getAjax(url,data,true,function(result,jqXHR){
-// 		Utilities.unblockUI();
-        if(Utilities.processResult(result,jqXHR,"위젯추가에 실패했습니다."))
-        {
-        	
-        }
-    });
-	
-}
-
-
-function removeMyMenu(data){
-	
-	var el = $("[data-btn-type=myMenuBtn][data-menu-id="+data.menuId+"]");
-	el.removeClass("active");
-	$("#ulMyMenu").find("li[data-menu-id="+data.menuId+"]").remove();
-	
-	var url = "/removeWdgt";
-	
-	Utilities.getAjax(url,data,true,function(result,jqXHR){
-        if(Utilities.processResult(result,jqXHR,"위젯추가에 실패했습니다."))
-        {
-        	
-        }
-    });
-	
-}
-function removeWdgt(elem,data){
-	removeMyMenu(data);
-}
-
-function showMyMenu(element){
-	element.parent().addClass("active");
-	return false;
-}
-var _offsetMs = 0;
-var _sessionTime = 0;
-var _sessionTimer = 0;
 
 function extendSession(){
 	var url = "/extendSession";
@@ -524,18 +348,6 @@ $(document).ready(function() {
 	// openMenuTab("MAIN","통합고객정보 관리","/main",true);
 	openMenuTab("MAIN","main","/main",true);
 
-	$(".lMenu .modal").on("click",function(){
-		$(this).parent().removeClass("active");
-	});
-	$(".jsBtnShowMenu1").on("click",function(){
-		$(".lMenu").addClass("active");
-	});
-	
-	$(".mWidget1").on("mouseleave",function(){
-		$(this).removeClass("active");
-		return false;
-	});
-	
 	getOffsetTime();
 
 });

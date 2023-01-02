@@ -92,12 +92,12 @@ class FileRenderer {
         
         el.colInfo = col;
 
-        var fileCd =  props.value;
+        var fileId =  props.value;
         var fileSeq = col.fileSeq;
         
-        if(col.fileCdField)
+        if(col.fileIdField)
         {
-            fileCd = props.grid.getRow(props.rowKey)[col.fileCdField];
+            fileId = props.grid.getRow(props.rowKey)[col.fileIdField];
         }
         if(col.fileSeqField)
         {
@@ -115,14 +115,14 @@ class FileRenderer {
         }
         if(fileSeq){
             var param ={
-            fileCd: fileCd,
+            fileId: fileId,
             fileSeq:fileSeq,
             previewUrl : "Y"
             };
-            var key = fileCd+"_" + fileSeq;
+            var key = fileId+"_" + fileSeq;
             var fileData = col.fileDataMap[key];
             if(fileData){
-                return initFileCol(col,el,fileData.data,fileCd,fileSeq,fileCategory);
+                return initFileCol(col,el,fileData.data,fileId,fileSeq,fileCategory);
             }
             var url=_fileInfo_url;
            
@@ -130,7 +130,7 @@ class FileRenderer {
                 if(Utilities.processResult(data,jqXHR,""))
                 {
                     col.fileDataMap[key] = {data:data};
-                    initFileCol(col,el,data,fileCd,fileSeq,fileCategory);
+                    initFileCol(col,el,data,fileId,fileSeq,fileCategory);
                 }
             }); 
         }
@@ -1309,8 +1309,8 @@ class PhoneNumberEditor {
           }
         }
     
-    function initFileCol(col,el,data,fileCd,fileSeq,fileCategory){
-        var key = fileCd+"_"+fileSeq;
+    function initFileCol(col,el,data,fileId,fileSeq,fileCategory){
+        var key = fileId+"_"+fileSeq;
         var acceptTypes = col.acceptTypes;
                     var acceptExt = col.acceptExt;
                     if(acceptTypes)
@@ -1319,12 +1319,12 @@ class PhoneNumberEditor {
                         acceptExt = "data-accept-ext='"+acceptExt+"'";
                     if(!acceptExt)
                         acceptExt = "";
-                    var info = $('<span data-type="fileInfo" '+acceptTypes+' '+acceptExt+' data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'" style="display:none"></span>')
-                    var btnAdd = $('<a href="#;"  data-type="btnFileAdd" '+acceptTypes+' '+acceptExt+' data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'"><i class="fas fa-cloud-upload-alt" ></i></a>');
-            //      var btnAdd =  $('<button style="width:30px"  data-type="btnFileAdd"  data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'" class="btnBasic">첨부</button>');
-                    var btnDown = $('<a href="#;"  data-type="btnFileAdd"  '+acceptTypes+' '+acceptExt+' data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'"><i class="fas fa-cloud-download-alt"></i></a>');
-                    var btnRemove = $('<a href="#;"  data-type="btnFileAdd" '+acceptTypes+' '+acceptExt+' data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'"><i class="fas fa-trash-alt"></i></a>');
-                    var btnPreview = $('<a href="#;"  data-type="btnFilePrev" '+acceptTypes+' '+acceptExt+' data-file-cd="'+fileCd+'" data-file-seq="'+fileSeq+'"><i class="fas fa-play"></i></a>');
+                    var info = $('<span data-type="fileInfo" '+acceptTypes+' '+acceptExt+' data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'" style="display:none"></span>')
+                    var btnAdd = $('<a href="#;"  data-type="btnFileAdd" '+acceptTypes+' '+acceptExt+' data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'"><i class="fas fa-cloud-upload-alt" ></i></a>');
+            //      var btnAdd =  $('<button style="width:30px"  data-type="btnFileAdd"  data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'" class="btnBasic">첨부</button>');
+                    var btnDown = $('<a href="#;"  data-type="btnFileAdd"  '+acceptTypes+' '+acceptExt+' data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'"><i class="fas fa-cloud-download-alt"></i></a>');
+                    var btnRemove = $('<a href="#;"  data-type="btnFileAdd" '+acceptTypes+' '+acceptExt+' data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'"><i class="fas fa-trash-alt"></i></a>');
+                    var btnPreview = $('<a href="#;"  data-type="btnFilePrev" '+acceptTypes+' '+acceptExt+' data-file-id="'+fileId+'" data-file-seq="'+fileSeq+'"><i class="fas fa-play"></i></a>');
                     
                     $(el).append(info);
                     $(el).append(btnAdd);
@@ -1358,7 +1358,7 @@ class PhoneNumberEditor {
                                 var file = data.file;
                                 var fileExt = Utilities.getFileExt(file.name);
                                 var fileInfo = {
-                                    fileCd : fileCd,
+                                    fileId : fileId,
                                     fileSeq : fileSeq,
                                     fileNm : file.name,
                                     fileSize : file.size,
@@ -1393,7 +1393,7 @@ class PhoneNumberEditor {
                                                 }, function(id, loaded, total, percent) {
 //                                                  var per = parseInt(percent*100);
 //                                                  var info = Utilities.numberWithCommas(parseInt(loaded/1024)) + "KB/ "  + Utilities.numberWithCommas(parseInt(total/1024)) + "KB("+ per +"%)";
-//                                                  $("[data-file-info=info][data-file-cd="+fileCd+"][data-file-seq="+fileSeq+"]").html(info);
+//                                                  $("[data-file-info=info][data-file-id="+fileId+"][data-file-seq="+fileSeq+"]").html(info);
                                             //      console.log("["+id+"]["+loaded+"]["+total+"]["+percent+"]");
                                                 });
                                 

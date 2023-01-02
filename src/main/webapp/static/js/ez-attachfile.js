@@ -15,13 +15,13 @@ function initEzAttachfile(el){
 		 $el.attr("id",id);
 	}
 	
-	const fileCd = $data.fileCd;
+	const fileId = $data.fileId;
 	const fileOdrg = $data.fileOdrg;
-	if(!fileCd){
+	if(!fileId){
 		return createEzFileUploader(el);
 	}
 	let param = {
-		fileCd : fileCd,
+		fileId : fileId,
 		recordCountPerPage : 100000
 	}
 	if(fileOdrg)
@@ -44,7 +44,7 @@ function createEzFileUploader(el,fileList){
 	const editable = $data.mode == "edit";
 	let ezUploader = {
 		el : el,
-		fileCd : $data.fileCd,
+		fileId : $data.fileId,
 		fileOdrg : $data.fileOdrg ? $data.fileOdrg : "",
 		multiple : multiple,
 		fileList : fileList,
@@ -62,7 +62,7 @@ function createEzFileUploader(el,fileList){
 		onAddedFile : function(e,data,uploader){
 			$this = el.ezFileUploader;
 			let fileInfo = {
-				fileCd  : $this.fileCd,
+				fileId  : $this.fileId,
 				fileUrl : "",
 				fileExtNm : Utilities.getFileExt(data.file.name),
 				mimeTypeNm : data.file.type,
@@ -101,16 +101,16 @@ function createEzFileUploader(el,fileList){
 			$this = this;
 			$div = $(this.el);
 			$div.html("");
-			if(!this.fileCd)
+			if(!this.fileId)
 				return;
-			let dataStr = 'data-file-cd="'+this.fileCd+'" data-file-odrg="'+this.fileOdrg+'" ';
+			let dataStr = 'data-file-id="'+this.fileId+'" data-file-odrg="'+this.fileOdrg+'" ';
 			if(editable)
 			{
 				
 				let $btn = $('<a href="#;" data-file-type="addBtn" '+dataStr+' class="mBtn1 m lWhite">파일추가</a>') ;
 				const $this = this;
 				$btn.click(function(){
-					if($this.fileOdrg &&  $($this.el).find('[data-file-type=file][data-file-cd='+$this.fileCd+'][data-file-odrg='+$this.fileOdrg+']').length > 0 ){
+					if($this.fileOdrg &&  $($this.el).find('[data-file-type=file][data-file-id='+$this.fileId+'][data-file-odrg='+$this.fileOdrg+']').length > 0 ){
 						if(!confirm("기존파일을 삭제하고 재업로드 하시겠습니까?"))
 							return;
 					}
@@ -128,11 +128,11 @@ function createEzFileUploader(el,fileList){
 		drawFileInfo: function(fDiv,fileInfo){
 			$this = this;
 			fDiv.html("");
-			let dataStr = 'data-file-cd="'+fileInfo.fileCd+'" data-file-odrg="'+fileInfo.fileOdrg+'" data-fileSize="'+fileInfo.fileSize+'" data-file-save-nm="'+fileInfo.fileSaveNm+'"';
+			let dataStr = 'data-file-id="'+fileInfo.fileId+'" data-file-odrg="'+fileInfo.fileOdrg+'" data-fileSize="'+fileInfo.fileSize+'" data-file-save-nm="'+fileInfo.fileSaveNm+'"';
 			let fA = $('<a href="#;" style="text-decoration:underline" '+dataStr+'>'+ fileInfo.fileNm +'('+Utilities.getReadableFileSizeString(fileInfo.fileSize)+')</a>');
 			fA.click(function(){
 				$fileInfo = $(this).data();
-				var url = urlPrefix + 'download?fileCd='+$fileInfo.fileCd+'&fileOdrg=' + $fileInfo.fileOdrg;
+				var url = urlPrefix + 'download?fileId='+$fileInfo.fileId+'&fileOdrg=' + $fileInfo.fileOdrg;
 
 				Utilities.downloadFileUrl(url);
 			});
@@ -152,8 +152,8 @@ function createEzFileUploader(el,fileList){
 		},
 		addFile : function(fileInfo,uploader,data){
 			$div = $(this.el);
-			let dataStr = 'data-file-cd="'+fileInfo.fileCd+'" data-file-odrg="'+fileInfo.fileOdrg+'" ';
-			let fDiv = $div.find('[data-file-type="file"][data-file-cd='+fileInfo.fileCd+'][data-file-odrg='+(fileInfo.fileOdrg ?fileInfo.fileOdrg : 0 )+']');
+			let dataStr = 'data-file-id="'+fileInfo.fileId+'" data-file-odrg="'+fileInfo.fileOdrg+'" ';
+			let fDiv = $div.find('[data-file-type="file"][data-file-id='+fileInfo.fileId+'][data-file-odrg='+(fileInfo.fileOdrg ?fileInfo.fileOdrg : 0 )+']');
 			
 			if(fDiv.length==0){
 				if(data){
@@ -185,20 +185,20 @@ function createEzFileUploader(el,fileList){
 		        if(Utilities.processResult(data,jqXHR,"첨부파일 삭제에 실패했습니다."))
 		        {
 					alert("첨부파일 삭제에 성공했습니다.");
-					$($this.el).find('[data-file-type=file][data-file-cd='+fileInfo.fileCd+'][data-file-odrg='+fileInfo.fileOdrg+']').remove();
+					$($this.el).find('[data-file-type=file][data-file-id='+fileInfo.fileId+'][data-file-odrg='+fileInfo.fileOdrg+']').remove();
 					
 		        }
 		    });
 		},
-		reset : function(fileCd,fileOdrg){
+		reset : function(fileId,fileOdrg){
 			$this = this;
-			this.fileCd = fileCd;
+			this.fileId = fileId;
 			this.fileOdrg = fileOdrg ? fileOdrg : "";
 			const param = {
-				fileCd : this.fileCd,
+				fileId : this.fileId,
 				fileOdrg : this.fileOdrg
 			};
-			if(!this.fileCd)
+			if(!this.fileId)
 				return draw();
 			var url = urlPrefix +"getList";
 			Utilities.getAjax(url,param,true,function(data,jqXHR){
