@@ -14,7 +14,7 @@
         <setSort value="none"/>
     </meta>
     <column name="게시물ID" field="ntcartId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" defaultValue="" hidden="Y"/>
-    <column name="게시판ID" field="bltId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
+    <column name="게시판ID" field="brdId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="상위게시물ID" field="upNtcartId" type="char" maxLength="20" width="80" textAlignment="left" required="N" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="최상위게시물ID" field="topNtcartId" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="N" readOnly="N" defaultValue="" hidden="Y"/>
     <column name="게시물명" field="ntcartNm" type="char" maxLength="1000" width="400" textAlignment="left" required="N" Pk="N" readOnly="N" defaultValue="" hidden="N"/>

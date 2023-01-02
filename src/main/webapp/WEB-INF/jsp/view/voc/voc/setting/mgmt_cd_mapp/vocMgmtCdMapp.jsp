@@ -61,7 +61,7 @@
         </div>
         <div id="divTree"
              data-type="tree"
-             data-get-url="<c:url value='${urlPrefix}/vocMgmtCdMappingTree${urlSuffix}'/>"
+             data-get-url="<c:url value='${urlPrefix}/vocMgmtCdMappTree${urlSuffix}'/>"
              data-change-seq="Y"
         >
         </div>
@@ -73,7 +73,7 @@
     $('.func_btn').on('click', function(){
         let evt = $(this).data('event');
         switch(evt){
-            case 'add' : openModal('vocMgmtCdMappingAddModal', 600, 500);break;
+            case 'add' : openModal('vocMgmtCdMappAddModal', 600, 500);break;
             case 'delete' : deleteMapping(); break;
         }
     });

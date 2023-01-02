@@ -6,7 +6,7 @@
     </sql>
     <sql id="sqlCols">
                       NTCART_ID                    /*게시물ID        */
-                    , BLT_ID                    /*게시판ID        */
+                    , BRD_ID                    /*게시판ID        */
                     , UP_NTCART_ID                    /*상위게시물ID        */
                     , TOP_NTCART_ID                    /*최상위게시물ID        */
                     , NTCART_NM                    /*게시물명        */
@@ -31,8 +31,8 @@
         <if test="ntcartId != null and ntcartId != ''">
                       AND NTCART_ID         =       #{ntcartId}
         </if>
-        <if test="bltId != null and bltId != ''">
-                      AND BLT_ID            =       #{bltId}
+        <if test="brdId != null and brdId != ''">
+                      AND BRD_ID            =       #{brdId}
         </if>
         <if test="upNtcartId != null and upNtcartId != ''">
                       AND UP_NTCART_ID      =       #{upNtcartId}
@@ -116,7 +116,7 @@
     <select id="selectList" resultType="com.kspo.voc.sys.model.NtcartBasVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
                SELECT NTCART_ID                    /*게시물ID        */
-                    , BLT_ID                    /*게시판ID        */
+                    , BRD_ID                    /*게시판ID        */
                     , UP_NTCART_ID                    /*상위게시물ID        */
                     , TOP_NTCART_ID                    /*최상위게시물ID        */
                     , NTCART_NM                    /*게시물명        */
@@ -150,7 +150,7 @@
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{ntcartId}
-                     , #{bltId}
+                     , #{brdId}
                      , #{upNtcartId}
                      , #{topNtcartId}
                      , #{ntcartNm}
@@ -173,7 +173,7 @@
     </insert>
     <update id="update">
                UPDATE TB_SYS_NTCART_BAS
-                  SET BLT_ID              =         #{bltId}
+                  SET BRD_ID              =         #{brdId}
                     , UP_NTCART_ID        =         #{upNtcartId}
                     , TOP_NTCART_ID       =         #{topNtcartId}
                     , NTCART_NM           =         #{ntcartNm}

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 @Controller
-@RequestMapping({ "vocMgmtCdMapping", "{menuId}/vocMgmtCdMapping" })
+@RequestMapping({ "vocMgmtCdMapp", "{menuId}/vocMgmtCdMapp" })
 public class VocMgmtCdMappController {
 
 	@Autowired
@@ -23,7 +23,7 @@ public class VocMgmtCdMappController {
 	@GetMapping(value = { "", "index" })
 	public String init(@RequestParam Map<String, Object> param, Model model) {
 		model.addAllAttributes(param);
-		return Utilities.getProperty("tiles.voc") + "voc/setting/mgmt_cd_mapping/vocMgmtCdMapping";
+		return Utilities.getProperty("tiles.voc") + "voc/setting/mgmt_cd_mapp/vocMgmtCdMapp";
 	}
 
 	@PostMapping(value = { "vocMgmtCdTree" })
@@ -34,16 +34,16 @@ public class VocMgmtCdMappController {
 		return service.vocMgmtCdTree(param);
 	}
 
-	@PostMapping(value = "vocMgmtCdMappingTree")
-	public @ResponseBody Object vocMgmtCdMappingTree(@RequestBody EzMap param) throws EgovBizException {
-		return service.vocMgmtCdMappingTree(param);
+	@PostMapping(value = "vocMgmtCdMappTree")
+	public @ResponseBody Object vocMgmtCdMappTree(@RequestBody EzMap param) throws EgovBizException {
+		return service.vocMgmtCdMappTree(param);
 	}
 
 	@GetMapping(value = { "openModal/{pageNm}" })
 	public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model)
 			throws EgovBizException {
 		model.addAttribute("param", param);
-		return Utilities.getProperty("tiles.voc.blank") + "voc/setting/mgmt_cd_mapping/" + pageNm;
+		return Utilities.getProperty("tiles.voc.blank") + "voc/setting/mgmt_cd_mapp/" + pageNm;
 	}
 
 	@PostMapping(value = "insert")

@@ -34,7 +34,7 @@ public class VocMgmtCdMappService extends VocAbstractService {
         return AbstractTreeVo.makeHierarchy(selectVocMgmtCdTree(param));
     }
 
-    public Object vocMgmtCdMappingTree(EzMap param) {
+    public Object vocMgmtCdMappTree(EzMap param) {
         return AbstractTreeVo.makeHierarchy(dao.selectList(param));
     }
 
