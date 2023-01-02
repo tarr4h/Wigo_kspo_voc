@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocProcedureVo extends VocProcedureBasVo implements Comparable<VocProcedureVo>{
+public class VocMcPrcdVo extends VocPrcdBasVo implements Comparable<VocMcPrcdVo>{
 
 	private static final long serialVersionUID = 1L;
 	private String mcPrcdSeq;
@@ -40,7 +40,7 @@ public class VocProcedureVo extends VocProcedureBasVo implements Comparable<VocP
     }
 
     @Override
-    public int compareTo(VocProcedureVo vo) {
+    public int compareTo(VocMcPrcdVo vo) {
         return this.prcdSeq.compareTo(vo.prcdSeq);
     }
 }

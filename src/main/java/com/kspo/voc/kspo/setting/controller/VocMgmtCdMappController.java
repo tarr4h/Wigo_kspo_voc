@@ -3,7 +3,7 @@ package com.kspo.voc.kspo.setting.controller;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
-import com.kspo.voc.kspo.setting.service.VocManagementCdMappingService;
+import com.kspo.voc.kspo.setting.service.VocMgmtCdMappService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,36 +14,36 @@ import java.util.Arrays;
 import java.util.Map;
 
 @Controller
-@RequestMapping({ "vocManagementCdMapping", "{menuId}/vocManagementCdMapping" })
-public class VocManagementCdMappingController {
+@RequestMapping({ "vocMgmtCdMapping", "{menuId}/vocMgmtCdMapping" })
+public class VocMgmtCdMappController {
 
 	@Autowired
-	VocManagementCdMappingService service;
+	VocMgmtCdMappService service;
 
 	@GetMapping(value = { "", "index" })
 	public String init(@RequestParam Map<String, Object> param, Model model) {
 		model.addAllAttributes(param);
-		return Utilities.getProperty("tiles.voc") + "voc/setting/management_code_mapping/vocManagementCdMapping";
+		return Utilities.getProperty("tiles.voc") + "voc/setting/mgmt_cd_mapping/vocMgmtCdMapping";
 	}
 
-	@PostMapping(value = { "vocManagementCodeTree" })
-	public @ResponseBody Object vocManagementCdTree(@RequestBody EzMap param) throws EgovBizException {
+	@PostMapping(value = { "vocMgmtCdTree" })
+	public @ResponseBody Object vocMgmtCdTree(@RequestBody EzMap param) throws EgovBizException {
 		ManageCodeCategory.setComnCdListTreeMap(param,
 				Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE, ManageCodeCategory.CAUSE,
 						ManageCodeCategory.LOCATION, ManageCodeCategory.TARGET));
-		return service.vocManagementCodeTree(param);
+		return service.vocMgmtCdTree(param);
 	}
 
-	@PostMapping(value = "vocManagementCdMappingTree")
-	public @ResponseBody Object vocManagementCdMappingTree(@RequestBody EzMap param) throws EgovBizException {
-		return service.vocManagementCdMappingTree(param);
+	@PostMapping(value = "vocMgmtCdMappingTree")
+	public @ResponseBody Object vocMgmtCdMappingTree(@RequestBody EzMap param) throws EgovBizException {
+		return service.vocMgmtCdMappingTree(param);
 	}
 
 	@GetMapping(value = { "openModal/{pageNm}" })
 	public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model)
 			throws EgovBizException {
 		model.addAttribute("param", param);
-		return Utilities.getProperty("tiles.voc.blank") + "voc/setting/management_code_mapping/" + pageNm;
+		return Utilities.getProperty("tiles.voc.blank") + "voc/setting/mgmt_cd_mapping/" + pageNm;
 	}
 
 	@PostMapping(value = "insert")

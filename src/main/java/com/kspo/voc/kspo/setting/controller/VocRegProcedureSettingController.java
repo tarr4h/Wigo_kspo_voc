@@ -7,8 +7,8 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.model.VocActivityVo;
-import com.kspo.voc.kspo.setting.model.VocProcedureBasVo;
-import com.kspo.voc.kspo.setting.model.VocProcedureVo;
+import com.kspo.voc.kspo.setting.model.VocPrcdBasVo;
+import com.kspo.voc.kspo.setting.model.VocMcPrcdVo;
 import com.kspo.voc.kspo.setting.model.VocTaskVo;
 import com.kspo.voc.kspo.setting.service.VocRegProcedureSettingService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -33,13 +33,13 @@ public class VocRegProcedureSettingController {
         return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_setting/vocRegProcedureSetting";
     }
 
-    @PostMapping(value = {"vocRegistrationManagementCodeTree"})
-    public @ResponseBody Object vocRegistrationManagementCodeTree(@RequestBody EzMap param) throws EgovBizException{
+    @PostMapping(value = {"vocRegistrationMgmtCdTree"})
+    public @ResponseBody Object vocRegistrationMgmtCdTree(@RequestBody EzMap param) throws EgovBizException{
         // single
         ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.CHANNEL);
         // multiple example
 //        ManageCodeCategoryEnum.setComnCdListTreeMap(param, Arrays.asList(ManageCodeCategoryEnum.REGISTRATION, ManageCodeCategoryEnum.RECEIPT));
-        return service.vocManagementCodeTree(param);
+        return service.vocMgmtCdTree(param);
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})
@@ -82,7 +82,7 @@ public class VocRegProcedureSettingController {
      */
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
-        List<VocProcedureBasVo> list = service.selectAvailablePrcdBasList(param);
+        List<VocPrcdBasVo> list = service.selectAvailablePrcdBasList(param);
         list.removeIf(value -> value.getVocUseYn().equals("N"));
         param.put("list", list);
         param.put("target", "voc");
@@ -112,7 +112,7 @@ public class VocRegProcedureSettingController {
     @PostMapping(value = {"selectProcedureGrid"})
     public @ResponseBody Object selectProcedureGrid(@RequestBody EzMap param) throws EgovBizException {
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocProcedureVo> list = service.selectProcedureList(param);
+        List<VocMcPrcdVo> list = service.selectProcedureList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(convertList, page);

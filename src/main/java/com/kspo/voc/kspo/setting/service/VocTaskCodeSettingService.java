@@ -4,7 +4,7 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao;
-import com.kspo.voc.kspo.setting.model.VocProcedureBasVo;
+import com.kspo.voc.kspo.setting.model.VocPrcdBasVo;
 import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.service.AbstractVocService;
@@ -55,7 +55,7 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         String autoApplyAllYn = (String) param.get("autoApplyAllYn");
 
         // task를 허용하는 절차 리스트 조회
-        List<VocProcedureBasVo> prcdBasList = dao.selectAvailablePrcdList(param);
+        List<VocPrcdBasVo> prcdBasList = dao.selectAvailablePrcdList(param);
 
         int deadlineSum = 0;
         List<VocTaskBasVo> taskBasList = dao.selectList(param);
@@ -71,7 +71,7 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         if(autoApplyAllYn.equals("Y")){
             // prcd에 적용되는 task의 합이 prcd의 deadline을 초과하는지 확인
             deadlineSum += deadline;
-            for(VocProcedureBasVo prcdBas : prcdBasList){
+            for(VocPrcdBasVo prcdBas : prcdBasList){
                 List<VocTaskBasVo> tempTaskBasList = new ArrayList<>(taskBasList);
                 tempTaskBasList.removeIf(taskBas -> taskBas.getAutoApplyPrcdId() != null && !taskBas.getAutoApplyPrcdId().equals(prcdBas.getPrcdId()));
 
@@ -95,7 +95,7 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         if(autoApplyYn.equals("Y") && autoApplyAllYn.equals("N")){
             String autoApplyPrcdId = (String) param.get("autoApplyPrcdId");
             // task의 합이 prcd의 deadline을 초과하는지 확인
-            for(VocProcedureBasVo prcdBas : prcdBasList){
+            for(VocPrcdBasVo prcdBas : prcdBasList){
                 int currDeadline = deadlineSum;
                 if(prcdBas.getPrcdId().equals(autoApplyPrcdId)){
                     currDeadline += deadline;

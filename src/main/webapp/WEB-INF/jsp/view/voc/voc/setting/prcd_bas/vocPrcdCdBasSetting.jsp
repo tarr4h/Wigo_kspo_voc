@@ -86,7 +86,7 @@
         let event = $(this).data('event');
         switch(event){
             case 'save' : saveRows(); break;
-            case 'add'  : openModal('vocProcedureCodeRegModal', 800, 600); break;
+            case 'add'  : openModal('vocPrcdCdRegModal', 800, 600); break;
             case 'delete' : deleteRows(); break;
         }
     });

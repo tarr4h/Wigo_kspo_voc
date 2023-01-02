@@ -5,7 +5,7 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.model.VocProcedureBasVo;
+import com.kspo.voc.kspo.setting.model.VocPrcdBasVo;
 import com.kspo.voc.kspo.setting.service.VocProcedureCodeSettingService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping({"vocProcedureCodeSetting", "{menuId}/vocProcedureCodeSetting"})
-public class VocProcedureCodeSettingController {
+@RequestMapping({"vocPrcdCdBasSetting", "{menuId}/vocPrcdCdBasSetting"})
+public class VocPrcdCdBasSettingController {
 
     @Autowired
     VocProcedureCodeSettingService service;
@@ -27,7 +27,7 @@ public class VocProcedureCodeSettingController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/procedure_code/vocProcedureCodeSetting";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/prcd_bas/vocPrcdCdBasSetting";
     }
 
     @PostMapping(value = "selectProcedureCodeGrid")
@@ -45,7 +45,7 @@ public class VocProcedureCodeSettingController {
 
     @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
     public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
-        List<VocProcedureBasVo> list = service.selectProcedureCodeList(param);
+        List<VocPrcdBasVo> list = service.selectProcedureCodeList(param);
         param.put("existCd", list);
         return VocUtils.selectComnCdOptionList(param);
     }
@@ -78,7 +78,7 @@ public class VocProcedureCodeSettingController {
     @GetMapping(value = { "openModal/{pageNm}"})
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/procedure_code/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/prcd_bas/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})

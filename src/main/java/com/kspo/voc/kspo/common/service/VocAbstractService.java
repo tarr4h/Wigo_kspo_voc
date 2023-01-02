@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kspo.voc.kspo.process.model.VocApplyPrcdVo;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,8 +16,7 @@ import com.kspo.voc.kspo.common.dao.IVocPrcDao;
 import com.kspo.voc.kspo.common.stnd.ManageCodeCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdCategory;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
-import com.kspo.voc.kspo.process.model.VocPrcdVo;
-import com.kspo.voc.kspo.setting.model.VocProcedureVo;
+import com.kspo.voc.kspo.setting.model.VocMcPrcdVo;
 import com.kspo.voc.sys.service.AbstractVocService;
 
 public abstract class VocAbstractService extends AbstractVocService {
@@ -24,8 +24,8 @@ public abstract class VocAbstractService extends AbstractVocService {
     @Autowired
     IVocPrcDao dao;
 
-    public List<? extends ITreeVo> selectVocManagementCodeTree(Map<String, Object> param){
-        return dao.selectVocManagementCodeTree(param);
+    public List<? extends ITreeVo> selectVocMgmtCdTree(Map<String, Object> param){
+        return dao.selectVocMgmtCdTree(param);
     }
 
     /**
@@ -35,11 +35,11 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @return updateResult
      */
     public int updateY2N(Map<String, Object> param){
-        VocPrcdVo vo = selectNextRegPrcd(param);
+        VocApplyPrcdVo vo = selectNextRegPrcd(param);
 
         Map<String, Object> map = new HashMap<>();
         map.put("prntsSeq", vo.getMcPrcdSeq());
-        VocProcedureVo nextPrcd = selectProcedure(map);
+        VocMcPrcdVo nextPrcd = selectProcedure(map);
 
         Map<String, Object> nextStatus = selectVocStatus(nextPrcd.getPrcdSeq(), PrcdStatus.STNDBY.getStatus());
         // 다음 상태가 존재하지 않는 경우 == 완료 -> 종결 처리(C)
@@ -65,7 +65,7 @@ public abstract class VocAbstractService extends AbstractVocService {
             throw new EgovBizException("*** parameter에 [regSeq]가 존재하지 않습니다. ***");
         }
 
-        VocPrcdVo vo = selectNextRegPrcd(param);
+        VocApplyPrcdVo vo = selectNextRegPrcd(param);
         vo.setStatus(requestStatus.getStatus());
         dao.updateRegPrcd(vo);
 
@@ -79,8 +79,8 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @param requestStatus : PrcdStatus 타입
      */
     public void updateRegistrationStatus(Map<String, Object> param, PrcdStatus requestStatus){
-        VocPrcdVo regPrcd = dao.selectRegPrcd(param);
-        VocProcedureVo prcd = dao.selectProcedure(regPrcd);
+        VocApplyPrcdVo regPrcd = dao.selectRegPrcd(param);
+        VocMcPrcdVo prcd = dao.selectProcedure(regPrcd);
 
         Map<String, Object> status = dao.selectVocStatus(prcd.getPrcdSeq(), requestStatus.getStatus());
         status.put("regSeq", param.get("regSeq"));
@@ -92,12 +92,12 @@ public abstract class VocAbstractService extends AbstractVocService {
      * @param param : reqSeq(등록시퀀스) 필수 포함
      * @return VocRegPrcdVo - 등록절차 정보
      */
-    public VocPrcdVo selectNextRegPrcd(Object param){
-        List<VocPrcdVo> regPrcdList = dao.selectRegPrcdList(param);
+    public VocApplyPrcdVo selectNextRegPrcd(Object param){
+        List<VocApplyPrcdVo> regPrcdList = dao.selectRegPrcdList(param);
 
         int cntN = 0;
         int index = 0;
-        for(VocPrcdVo regPrcd : regPrcdList){
+        for(VocApplyPrcdVo regPrcd : regPrcdList){
             if(regPrcd.getStatus().equals(PrcdStatus.STNDBY.getStatus())){
                 cntN++;
             }
@@ -116,12 +116,12 @@ public abstract class VocAbstractService extends AbstractVocService {
             }
         }
         // 3. 모두 N이라면 0번 index
-        VocPrcdVo vo = regPrcdList.get(index);
+        VocApplyPrcdVo vo = regPrcdList.get(index);
         return vo;
     }
 
-    public <T> T selectManagementCode(Object param){
-        return dao.selectManagementCode(param);
+    public <T> T selectMgmtCd(Object param){
+        return dao.selectMgmtCd(param);
     }
 
     public <T> T selectPrcdBas(Object param){
@@ -164,9 +164,9 @@ public abstract class VocAbstractService extends AbstractVocService {
         return dao.selectDutyOrgList(param);
     }
 
-    public Object getManagementCodeSelect(Map<String, Object> param, ManageCodeCategory ctgr) {
+    public Object getMgmtCdSelect(Map<String, Object> param, ManageCodeCategory ctgr) {
         param.put("comnCd", ctgr.getComnCd());
-        return dao.getManagementCodeSelect(param);
+        return dao.getMgmtCdSelect(param);
     }
 
     public Map<String, Object> selectVocStatus(String prcdSeq, String status){

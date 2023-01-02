@@ -6,10 +6,10 @@ import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.stnd.PrcdStatus;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.process.dao.VocRegistrationDao;
-import com.kspo.voc.kspo.process.model.VocPrcdVo;
+import com.kspo.voc.kspo.process.model.VocApplyPrcdVo;
 import com.kspo.voc.kspo.process.model.VocVo;
-import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
-import com.kspo.voc.kspo.setting.model.VocProcedureVo;
+import com.kspo.voc.kspo.setting.model.VocMgmtCdVo;
+import com.kspo.voc.kspo.setting.model.VocMcPrcdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -66,31 +66,31 @@ public class VocRegistrationService extends VocAbstractService {
         }
         
         // 채널코드를 통해서 일치하는 dir_cd를 구한다.
-        param.put("managementCd", param.get("channel"));
+        param.put("mgmtCd", param.get("channel"));
         String dirCd = selectDirCd(param);
 
         // 일치하는 dir_cd가 없는 경우 상위 채널코드를 통해서 dir_cd를 구한다.(존재할때까지)
         if(dirCd == null){
             do {
-                VocManagementCodeVo mc = selectManagementCode(param);
-                if (mc.getPrntsCd() == null) {
+                VocMgmtCdVo mc = selectMgmtCd(param);
+                if (mc.getPrntsMgmtCd() == null) {
                     param.put("msg", "해당 채널에 등록된 절차가 없습니다.");
                     return false;
                 }
 
-                param.put("managementCd", mc.getPrntsCd());
+                param.put("mgmtCd", mc.getPrntsMgmtCd());
                 dirCd = selectDirCd(param);
             } while (dirCd == null);
         }
 
         // dirCd를 통해 절차목록를 조회
         param.put("dirCd", dirCd);
-        List<VocProcedureVo> prcdList = selectProcedureList(param);
+        List<VocMcPrcdVo> prcdList = selectProcedureList(param);
 
         // reg_prcd를 등록. deadline을 지정한다.
         int deadline = 0;
-        for(VocProcedureVo prcd : prcdList){
-            VocPrcdVo regPrcd = new VocPrcdVo();
+        for(VocMcPrcdVo prcd : prcdList){
+            VocApplyPrcdVo regPrcd = new VocApplyPrcdVo();
             regPrcd.setVocPrcdSeq(CodeGeneration.generateCode(dao.selectMaxRegPrcdSeq(), CodeGeneration.REG_PROCEDURE));
             regPrcd.setVocSeq((String) param.get("regSeq"));
             regPrcd.setMcPrcdSeq(prcd.getMcPrcdSeq());
