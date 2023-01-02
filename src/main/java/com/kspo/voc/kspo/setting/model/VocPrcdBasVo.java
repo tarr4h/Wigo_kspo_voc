@@ -14,8 +14,8 @@ public class VocPrcdBasVo extends BaseVo {
     private static final long serialVersionUID = -4401868272090337403L;
 	private String prcdCd;
     private String prcdNm;
-    private String refTopComnCd;
-    private String refComnCd;
+    private String topComnCd;
+    private String comnCd;
     private int ddlnSec;
     private String dutyOrgId;
     private String dutyOrgNm;

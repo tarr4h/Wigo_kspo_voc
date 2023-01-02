@@ -13,8 +13,8 @@
         select
             PRCD_CD,
             PRCD_NM,
-            REF_TOP_COMN_CD,
-            REF_COMN_CD,
+            TOP_COMN_CD,
+            COMN_CD,
             DDLN_SEC,
             nvl(DUTY_ORG_ID, '-') dutyOrgId,
             nvl(DUTY_EMP_ID, '-') dutyEmpId,
@@ -39,13 +39,13 @@
 
     <insert id="insert">
         insert into TB_VOC_PRCD_BAS
-        (PRCD_CD, PRCD_NM, REF_TOP_COMN_CD, REF_COMN_CD, DDLN_SEC, DUTY_ORG_ID, DUTY_ORG_NM, DUTY_EMP_ID ,DUTY_EMP_NM, DUTY_ROLE_CD, DUTY_CHNG_YN, VOC_APPLY_YN,
+        (PRCD_CD, PRCD_NM, TOP_COMN_CD, COMN_CD, DDLN_SEC, DUTY_ORG_ID, DUTY_ORG_NM, DUTY_EMP_ID ,DUTY_EMP_NM, DUTY_ROLE_CD, DUTY_CHNG_YN, VOC_APPLY_YN,
          VOC_DTL_APPLY_YN, VOC_ESTL_APPLY_YN, VOC_DTL_ESTL_APPLY_YN, TASK_USE_YN, REGR_ID, REG_DT, AMDR_ID, AMD_DT)
         values (
                 #{prcdCd},
                 #{prcdNm},
-                #{refTopComnCd},
-                #{refComnCd},
+                #{topComnCd},
+                #{comnCd},
                 #{ddlnSec},
                 #{dutyOrgId},
                 #{dutyOrgNm},

@@ -20,22 +20,22 @@
     </meta>
         <column name="ID" field="prcdCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="절차명" field="prcdNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-        <column name="최상단 공통코드" field="refTopComnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="공통코드명" field="refComnCd" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="공통코드" field="refComnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="최상단 공통코드" field="topComnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="공통코드명" field="comnCd" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="공통코드" field="comnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한(분)" field="ddlnSec" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="처리기한" field="deadlineConvert" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="담당부서ID" field="dutyOrg" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="담당자ID" field="dutyEmp" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="담당부서ID" field="dutyOrgId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="담당자ID" field="dutyEmpId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="적용권한" field="dutyRoleCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당변경가능여부" field="dutyChngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC 사용여부" field="vocUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="상세VOC 사용여부" field="vocDtlUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="VOC 필수여부" field="vocCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="상세VOC 필수여부" field="vocDtlCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="TASK 사용여부" field="taskYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC 적용여부" field="vocApplyYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="상세VOC 적용여부" field="vocDtlApplyYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC 필수적용여부" field="vocEstlApplyYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="상세VOC 필수적용여부" field="vocDtlEstlApplyYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="TASK 사용여부" field="taskUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
         <column name="등록자" field="regrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="수정자" field="amdrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
