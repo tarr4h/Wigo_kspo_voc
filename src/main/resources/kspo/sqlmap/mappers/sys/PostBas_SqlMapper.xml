@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.sys.dao.NtcartBasDao">
+<mapper namespace="com.kspo.voc.sys.dao.PostBasDao">
     <sql id="sqlPkConditions">
-                WHERE NTCART_ID         =       #{ntcartId}
+                WHERE POST_ID         =       #{postId}
     </sql>
     <sql id="sqlCols">
-                      NTCART_ID                    /*게시물ID        */
-                    , BLT_ID                    /*게시판ID        */
-                    , UP_NTCART_ID                    /*상위게시물ID        */
-                    , TOP_NTCART_ID                    /*최상위게시물ID        */
-                    , NTCART_NM                    /*게시물명        */
-                    , NTCART_CTNTS                    /*게시물내용        */
+                      POST_ID                    /*게시물ID        */
+                    , BRD_ID                    /*게시판ID        */
+                    , UP_POST_ID                    /*상위게시물ID        */
+                    , TOP_POST_ID                    /*최상위게시물ID        */
+                    , POST_NM                    /*게시물명        */
+                    , POST_CTNTS                    /*게시물내용        */
                     , ANSWER_CTNTS                    /*답변내용        */
                     , NOTE_STATUS_CD                    /*공지상태코드        */
                     , POST_STATUS_CD                    /*게시상태코드        */
@@ -20,7 +20,7 @@
                     , NOTE_STA_DT                    /*공지시작일시        */
                     , NOTE_END_DT                    /*공지종료일시        */
                     , FILE_ID                    /*파일코드        */
-                    , NTCART_PWD                    /*게시물비밀번호        */
+                    , POST_PWD                    /*게시물비밀번호        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
@@ -28,23 +28,23 @@
     </sql>
     <sql id="sqlConditions">
                 WHERE 1 = 1
-        <if test="ntcartId != null and ntcartId != ''">
-                      AND NTCART_ID         =       #{ntcartId}
+        <if test="postId != null and postId != ''">
+                      AND POST_ID         =       #{postId}
         </if>
-        <if test="bltId != null and bltId != ''">
-                      AND BLT_ID            =       #{bltId}
+        <if test="brdId != null and brdId != ''">
+                      AND BRD_ID            =       #{brdId}
         </if>
-        <if test="upNtcartId != null and upNtcartId != ''">
-                      AND UP_NTCART_ID      =       #{upNtcartId}
+        <if test="upPostId != null and upPostId != ''">
+                      AND UP_POST_ID      =       #{upPostId}
         </if>
-        <if test="topNtcartId != null and topNtcartId != ''">
-                      AND TOP_NTCART_ID     =       #{topNtcartId}
+        <if test="topPostId != null and topPostId != ''">
+                      AND TOP_POST_ID     =       #{topPostId}
         </if>
-        <if test="ntcartNm != null and ntcartNm != ''">
-                      AND NTCART_NM         =       #{ntcartNm}
+        <if test="postNm != null and postNm != ''">
+                      AND POST_NM         =       #{postNm}
         </if>
-        <if test="ntcartCtnts != null and ntcartCtnts != ''">
-                      AND NTCART_CTNTS      =       #{ntcartCtnts}
+        <if test="postCtnts != null and postCtnts != ''">
+                      AND POST_CTNTS      =       #{postCtnts}
         </if>
         <if test="answerCtnts != null and answerCtnts != ''">
                       AND ANSWER_CTNTS      =       #{answerCtnts}
@@ -103,24 +103,24 @@
                 </otherwise>
             </choose>
         </if>
-        <if test="ntcartPwd != null and ntcartPwd != ''">
-                      AND NTCART_PWD        =       #{ntcartPwd}
+        <if test="postPwd != null and postPwd != ''">
+                      AND POST_PWD        =       #{postPwd}
         </if>
 <!--          DBMS_LOB.INSTR(찾을컬럼이름, '찾을문자열') > 0 -->
     </sql>
     <select id="selectListCount" resultType="int">
                 SELECT COUNT(1)
-                 FROM TB_SYS_NTCART_BAS
+                 FROM TB_SYS_POST_BAS
         <include refid="sqlConditions"/>
     </select>
-    <select id="selectList" resultType="com.kspo.voc.sys.model.NtcartBasVo">
+    <select id="selectList" resultType="com.kspo.voc.sys.model.PostBasVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT NTCART_ID                    /*게시물ID        */
-                    , BLT_ID                    /*게시판ID        */
-                    , UP_NTCART_ID                    /*상위게시물ID        */
-                    , TOP_NTCART_ID                    /*최상위게시물ID        */
-                    , NTCART_NM                    /*게시물명        */
-                    , NTCART_CTNTS                    /*게시물내용        */
+               SELECT POST_ID                    /*게시물ID        */
+                    , BRD_ID                    /*게시판ID        */
+                    , UP_POST_ID                    /*상위게시물ID        */
+                    , TOP_POST_ID                    /*최상위게시물ID        */
+                    , POST_NM                    /*게시물명        */
+                    , POST_CTNTS                    /*게시물내용        */
                     , ANSWER_CTNTS                    /*답변내용        */
                     , NOTE_STATUS_CD                    /*공지상태코드        */
                     , POST_STATUS_CD                    /*게시상태코드        */
@@ -130,31 +130,31 @@
                     , /*TO_CHAR(NOTE_STA_DT,'YYYYMMDDHH24MISS')*/       NOTE_STA_DT              /*공지시작일시        */
                     , /*TO_CHAR(NOTE_END_DT,'YYYYMMDDHH24MISS')*/       NOTE_END_DT              /*공지종료일시        */
                     , FILE_ID                    /*파일코드        */
-                    , NTCART_PWD                    /*게시물비밀번호        */
+                    , POST_PWD                    /*게시물비밀번호        */
                     , REGR_ID                    /*등록자ID        */
                     , REG_DT                    /*등록일시        */
                     , AMDR_ID                    /*수정자ID        */
                     , AMD_DT                    /*수정일시        */
-                 FROM TB_SYS_NTCART_BAS
+                 FROM TB_SYS_POST_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
-    <select id="select" resultType="com.kspo.voc.sys.model.NtcartBasVo">
+    <select id="select" resultType="com.kspo.voc.sys.model.PostBasVo">
                SELECT <include refid="sqlCols"/>
-                 FROM TB_SYS_NTCART_BAS
+                 FROM TB_SYS_POST_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_NTCART_BAS (
+                INSERT INTO TB_SYS_POST_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
-                       #{ntcartId}
-                     , #{bltId}
-                     , #{upNtcartId}
-                     , #{topNtcartId}
-                     , #{ntcartNm}
-                     , #{ntcartCtnts}
+                       #{postId}
+                     , #{brdId}
+                     , #{upPostId}
+                     , #{topPostId}
+                     , #{postNm}
+                     , #{postCtnts}
                      , #{answerCtnts}
                      , #{noteStatusCd}
                      , #{postStatusCd}
@@ -163,8 +163,8 @@
                      , DECODE(#{postEndDt},NULL,NULL,TO_DATE(SUBSTR(#{postEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
                      , DECODE(#{noteStaDt},NULL,NULL,TO_DATE(SUBSTR(#{noteStaDt} || '000000',1,14) ,'YYYYMMDDHH24MISS'))
                      , DECODE(#{noteEndDt},NULL,NULL,TO_DATE(SUBSTR(#{noteEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
-                     , NVL(#{fileId},#{ntcartId})
-                     , #{ntcartPwd}
+                     , NVL(#{fileId},#{postId})
+                     , #{postPwd}
                      , #{regrId}
                      , SYSDATE
                      , #{amdrId}
@@ -172,12 +172,12 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_NTCART_BAS
-                  SET BLT_ID              =         #{bltId}
-                    , UP_NTCART_ID        =         #{upNtcartId}
-                    , TOP_NTCART_ID       =         #{topNtcartId}
-                    , NTCART_NM           =         #{ntcartNm}
-                    , NTCART_CTNTS        =         #{ntcartCtnts}
+               UPDATE TB_SYS_POST_BAS
+                  SET BRD_ID              =         #{brdId}
+                    , UP_POST_ID        =         #{upPostId}
+                    , TOP_POST_ID       =         #{topPostId}
+                    , POST_NM           =         #{postNm}
+                    , POST_CTNTS        =         #{postCtnts}
                     , ANSWER_CTNTS        =         #{answerCtnts}
                     , NOTE_STATUS_CD      =         #{noteStatusCd}
                     , POST_STATUS_CD      =         #{postStatusCd}
@@ -187,13 +187,13 @@
                     , NOTE_STA_DT         =         DECODE(#{noteStaDt} ,NULL ,NULL, TO_DATE(SUBSTR(#{noteStaDt} || '000000',1,14) ,'YYYYMMDDHH24MISS'))
                     , NOTE_END_DT         =         DECODE(#{noteEndDt} ,NULL ,NULL, TO_DATE(SUBSTR(#{noteEndDt} || '235959',1,14) ,'YYYYMMDDHH24MISS'))
 <!--                     , FILE_ID             =         #{fileId} -->
-                    , NTCART_PWD          =         #{ntcartPwd}
+                    , POST_PWD          =         #{postPwd}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_NTCART_BAS
+               DELETE FROM TB_SYS_POST_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

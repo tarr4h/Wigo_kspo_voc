@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NtcartBasVo extends BaseVo {
+public class PostBasVo extends BaseVo {
     /**
     *
     */
@@ -15,27 +15,27 @@ private static final long serialVersionUID = 1L;
     /**
     * <p>게시물ID</p> 
     */
-    private String ntcartId;
+    private String postId;
     /**
     * <p>게시판ID</p> 
     */
-    private String bltId;
+    private String brdId;
     /**
     * <p>상위게시물ID</p> 
     */
-    private String upNtcartId;
+    private String upPostId;
     /**
     * <p>최상위게시물ID</p> 
     */
-    private String topNtcartId;
+    private String topPostId;
     /**
     * <p>게시물명</p> 
     */
-    private String ntcartNm;
+    private String postNm;
     /**
     * <p>게시물내용</p> 
     */
-    private String ntcartCtnts;
+    private String postCtnts;
     /**
     * <p>답변내용</p> 
     */
@@ -73,7 +73,9 @@ private static final long serialVersionUID = 1L;
     */
     private String fileId;
     /**
-    * <p>게시물비밀번호</p> 
-    */
-    private String ntcartPwd;
+	 * <p>
+	 * 게시물비밀번호
+	 * </p>
+	 */
+	private String postPwd;
 }

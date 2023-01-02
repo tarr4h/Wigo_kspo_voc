@@ -18,15 +18,15 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Constants;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.NtcartBasVo;
-import com.kspo.voc.sys.service.NtcartBasService;
+import com.kspo.voc.sys.model.PostBasVo;
+import com.kspo.voc.sys.service.PostBasService;
 
 @Controller
 @RequestMapping(value = { "notice", "{menuId}/notice" })
-public class NtcartBasController {
+public class PostBasController {
 
 	@Autowired
-	NtcartBasService service;
+	PostBasService service;
 
 	@GetMapping(value = { "", "index" })
 	public String init(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
@@ -37,11 +37,11 @@ public class NtcartBasController {
 	@GetMapping(value = { "add" })
 	public String add(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
 		model.addAllAttributes(param);
-		NtcartBasVo vo = new NtcartBasVo();
+		PostBasVo vo = new PostBasVo();
 		vo.setBrdId(Constants._NOTICE_BBS_ID);
-		vo.setNtcartId(Utilities.getAutoSeq("BBS"));
-		vo.setTopNtcartId(vo.getNtcartId());
-		vo.setFileId(vo.getNtcartId());
+		vo.setPostId(Utilities.getAutoSeq("BBS"));
+		vo.setTopPostId(vo.getPostId());
+		vo.setFileId(vo.getPostId());
 		model.addAttribute("vo", vo);
 		model.addAttribute("addMode", true);
 
@@ -51,7 +51,7 @@ public class NtcartBasController {
 	@GetMapping(value = { "mod" })
 	public String mod(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
 		model.addAllAttributes(param);
-		NtcartBasVo vo = service.get(param);
+		PostBasVo vo = service.get(param);
 		model.addAttribute("vo", vo);
 		model.addAttribute("addMode", false);
 
@@ -73,21 +73,22 @@ public class NtcartBasController {
 	}
 
 	@PostMapping(value = { "save" })
-	public @ResponseBody Object save(@RequestBody NtcartBasVo vo) throws EgovBizException {
+	public @ResponseBody Object save(@RequestBody PostBasVo vo) throws EgovBizException {
 		return service.save(vo);
 	}
 
 	@PostMapping(value = { "saveList" })
-	public @ResponseBody Object saveList(@RequestBody List<NtcartBasVo> list) throws EgovBizException {
+	public @ResponseBody Object saveList(@RequestBody List<PostBasVo> list) throws EgovBizException {
 		return service.saveList(list);
 	}
 
 	@PostMapping(value = { "deleteList" })
-	public @ResponseBody Object deleteList(@RequestBody List<NtcartBasVo> list) throws EgovBizException {
+	public @ResponseBody Object deleteList(@RequestBody List<PostBasVo> list) throws EgovBizException {
 		return service.deleteList(list);
 	}
+
 	@PostMapping(value = { "remove" })
-	public @ResponseBody Object remove(@RequestBody NtcartBasVo vo) throws EgovBizException {
+	public @ResponseBody Object remove(@RequestBody PostBasVo vo) throws EgovBizException {
 		return service.delete(vo);
 	}
 }
