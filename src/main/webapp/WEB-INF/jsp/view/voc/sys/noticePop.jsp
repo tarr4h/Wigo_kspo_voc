@@ -24,10 +24,10 @@
 		
 		<form id="frmMain">
 		<input type="hidden" id="stat" name="stat" value="${addMode ? 'c' : 'u'}"/>
-		<input type="hidden" id="brdId" name="brdId" value="${vo.brdId }"/>
-	   	<input type="hidden" id=ntcartId name="ntcartId" value="${vo.ntcartId }"/>
-	   	<input type="hidden" id=upNtcartId name="upNtcartId" value="${vo.upNtcartId }" /> 
-	   	<input type="hidden" id="topNtcartId" name="topNtcartId" value="${vo.topNtcartId }" />
+		<input type="hidden" id="bltId" name="brdId" value="${vo.brdId }"/>
+	   	<input type="hidden" id=postId name="postId" value="${vo.postId }"/>
+	   	<input type="hidden" id=upPostId name="upPostId" value="${vo.upPostId }" /> 
+	   	<input type="hidden" id="topPostId" name="topPostId" value="${vo.topPostId }" />
 	   	
 	   	<input type="hidden" id="answerCtnts" name="answerCtnts" value="${vo.answerCtnts }"/>
 	   	<input type="hidden" id="noteStatusCd" name="noteStatusCd" value="${vo.noteStatusCd }"/>
@@ -36,7 +36,7 @@
 	   	<input type="hidden" id="noteStaDt" name="noteStaDt" value="${vo.noteStaDt }"/>
 	   	<input type="hidden" id="noteEndDt" name="noteEndDt" value="${vo.noteEndDt }"/>
 	   	<input type="hidden" id="fileId" name="fileId" value="${vo.fileId }"/>
-	   	<input type="hidden" id="ntcartPwd" name="ntcartPwd" value="${vo.ntcartPwd }"/>
+	   	<input type="hidden" id="postPwd" name="postPwd" value="${vo.postPwd }"/>
 	   	
 			<div class="mBoard2">
 				<table>
@@ -54,7 +54,7 @@
 <!--                             </td> -->
                         <th class="left"><span class="iMust">게시물 제목</span></th>
                             <td class="left" colspan="3">
-                                <input type="text" name="ntcartNm" id="ntcartNm" value="${vo.ntcartNm }" class="it"/>
+                                <input type="text" name="postNm" id="postNm" value="${vo.postNm }" class="it"/>
                             </td>
                         </tr>
 						<tr>
@@ -66,7 +66,7 @@
                         </tr>
                         <tr>
                             <th class="left"><span class="iMust">내용</span></th>
-                            <td class="left" colspan="3"><textarea style="height:300px" id="ntcartCtnts" name="ntcartCtnts" class="it">${vo.ntcartCtnts }</textarea></td>
+                            <td class="left" colspan="3"><textarea style="height:300px" id="postCtnts" name="postCtnts" class="it">${vo.postCtnts }</textarea></td>
                         </tr>
                         <tr>
                             <th class="left">첨부파일</th>
@@ -89,15 +89,15 @@
 	$("#postEndDt").val(moment("${vo.postEndDt }").format("YYYYMMDD"));
 	function saveNotice(){
 		var saveJson = Utilities.formToMap("frmMain");
-		if(!saveJson.ntcartNm){
+		if(!saveJson.postNm){
 			alert("게시물 제목을 입력하세요");
-			$("#ntcartNm")[0].focus();
+			$("#postNm")[0].focus();
 			return;
 			
 		}
-		if(!saveJson.ntcartCtnts){
+		if(!saveJson.postCtnts){
 			alert("게시물 내용을 입력하세요");
-			$("#ntcartCtnts")[0].focus();
+			$("#postCtnts")[0].focus();
 			return;
 			
 		}
@@ -115,6 +115,6 @@
 	
 	function removeNotice()
 	{
-		Utilities.getOpener().deleteNotice($("#ntcartId").val());
+		Utilities.getOpener().deleteNotice($("#postId").val());
 	}
 </script>

@@ -140,7 +140,7 @@ function createEzFileUploader(el,fileList){
 			if(this.editable){
 //				fDel = $('<a href="#;" '+dataStr+'><i class="fas fa-trash-alt"></i></a>');
 //				fDel = $('<button class="delete" '+dataStr+'><img src=""삭제</button>');
-				fDel = $('<a href="#;" '+dataStr+'><img src="/static/voc/images/ico_delete2.png	" /></a>');
+				fDel = $('<a href="#;" '+dataStr+'><img src="/static/kspo/images/ico_delete2.png	" /></a>');
 			
 				fDel.click(function(){
 					

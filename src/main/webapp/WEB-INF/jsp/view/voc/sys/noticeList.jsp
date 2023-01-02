@@ -54,7 +54,7 @@
 					data-get-url="<c:url value='${urlPrefix}/getList${urlSuffix}'/>"
       				data-grid-id="grdList" data-type="grid"
       				data-pagination="Y" 
-      				data-tpl-url="<c:url value='/static/gridTemplate/system/ntcartBas.xml'/>">
+      				data-tpl-url="<c:url value='/static/gridTemplate/system/postBas.xml'/>">
     		</div>
 			</div>
 			
@@ -75,9 +75,9 @@
 			<form name="frmDetail" id="frmDetail">
 
 	   	<input type="hidden" id="brdId" name="brdId" />
-	   	<input type="hidden" id=ntcartId name="ntcartId" />
-	   	<input type="hidden" id=upNtcartId name="upNtcartId" /> 
-	   	<input type="hidden" id="topNtcartId" name="topNtcartId" />
+	   	<input type="hidden" id=postId name="postId" />
+	   	<input type="hidden" id=upPostId name="upPostId" /> 
+	   	<input type="hidden" id="topPostId" name="topPostId" />
 	   	
 	   	<input type="hidden" id="answerCtnts" name="answerCtnts" />
 	   	<input type="hidden" id="noteStatusCd" name="noteStatusCd" />
@@ -86,7 +86,7 @@
 	   	<input type="hidden" id="noteStaDt" name="noteStaDt" />
 	   	<input type="hidden" id="noteEndDt" name="noteEndDt" />
 	   	<input type="hidden" id="fileId" name="fileId" />
-	   	<input type="hidden" id="ntcartPwd" name="ntcartPwd" />
+	   	<input type="hidden" id="postPwd" name="postPwd" />
 								<table>
 									<caption>선택정보</caption>
 									<colgroup>
@@ -121,13 +121,13 @@
 										<tr>
 											<th scope="row" class="left">게시물 제목</th>
 											<td colspan= "7">
-												<input type="text" name="ntcartNm" id="ntcartNm" readonly="readonly" class="it"/>
+												<input type="text" name="postNm" id="postNm" readonly="readonly" class="it"/>
 											</td>
 										</tr>
 										<tr>
 											<th scope="row" class="left">게시물 내용</th>
 											<td colspan= "7" >
-												<textarea style="height:300px" id="ntcartCtnts" name="ntcartCtnts" readonly class="it"></textarea>
+												<textarea style="height:300px" id="postCtnts" name="postCtnts" readonly class="it"></textarea>
 											</td>
 										</tr>
 										<tr>
@@ -179,7 +179,7 @@ function newNotice()
 }
 function saveNoticeDetail()
 {
-	var url = "<c:url value='${urlPrefix}/mod${urlSuffix}'/>?ntcartId="+ $("#ntcartId").val();
+	var url = "<c:url value='${urlPrefix}/mod${urlSuffix}'/>?postId="+ $("#postId").val();
 	Utilities.openModal(url,1200,900);
 }
 function deleteNotice(id){
@@ -187,7 +187,7 @@ function deleteNotice(id){
 		return;
 	var url = "<c:url value='${urlPrefix}/remove${urlSuffix}'/>";
 	var saveJson = {
-			ntcartId : id
+			postId : id
 	}
 	if(!confirm("게시물을 삭제하시겠습니까?"))
 		return false;
@@ -204,7 +204,7 @@ function deleteNotice(id){
 }
 function removeNoticeDetail()
 {
-	deleteNotice($("#ntcartId").val());
+	deleteNotice($("#postId").val());
 }
 
 </script>
