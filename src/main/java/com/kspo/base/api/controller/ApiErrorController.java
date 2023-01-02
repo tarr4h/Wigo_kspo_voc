@@ -27,8 +27,6 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kspo.base.api.jwt.EzJwtService;
 import com.kspo.base.api.model.ApiErrorResultVo;
@@ -59,10 +57,10 @@ import lombok.extern.slf4j.Slf4j;
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 @Slf4j
-@RestController
-@RestControllerAdvice
+//@RestController
+//@RestControllerAdvice
 //@ControllerAdvice
-@RequestMapping(value = { "/error" })
+//@RequestMapping(value = { "/error" })
 public class ApiErrorController implements ErrorController {
 	private static final String ERROR_PATH = "/error";
 	@Autowired

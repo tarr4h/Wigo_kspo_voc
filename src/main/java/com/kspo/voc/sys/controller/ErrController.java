@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tiles.request.render.CannotRenderException;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -58,17 +59,22 @@ public class ErrController implements ErrorController {
 	}
 
 	@GetMapping(value = { "", "index" })
-	public String init(HttpServletRequest request, @RequestParam Map<String, Object> param, ModelMap model)
+	public String init(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String, Object> param, ModelMap model)
 			throws EgovBizException {
-//		Exception ex = (Exception) request.getAttribute("javax.servlet.error.exception");
-//		if (ex != null) {
-//
-//			if (ex instanceof CannotRenderException) {
-//				return Utilities.getProperty("tiles.kland") + "error/error";
-//			}
-//			if(ex.getCause() != null && ex.getCause() instanceof CannotRenderException)
-//				return Utilities.getProperty("tiles.kland") + "error/error";
-//		}
+		Exception ex = (Exception) request.getAttribute("javax.servlet.error.exception");
+		if (ex != null) {
+
+			if (ex instanceof CannotRenderException) {
+				return Utilities.getProperty("tiles.voc") + "error/error";
+			}
+			if(ex.getCause() != null && ex.getCause() instanceof CannotRenderException)
+				return Utilities.getProperty("tiles.voc") + "error/error";
+			
+			
+		}
+		int status = response.getStatus();
+		if(status >= 500)
+			response.setStatus(405);
 		return "error";
 
 	}
