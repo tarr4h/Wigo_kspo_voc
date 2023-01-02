@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @VocMapper
-public interface VocTaskCodeSettingDao extends IVocDao {
+public interface VocTaskBasDao extends IVocDao {
 
     int chngTaskDuty(Map<String, Object> param);
 

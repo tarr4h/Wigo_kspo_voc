@@ -175,7 +175,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyOrgNm" class="form_row_input_short duty_validate" disabled>
-                <input type="text" name="dutyOrg" class="form_row_dpn">
+                <input type="text" name="dutyOrgId" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="orgSearch">조회</button>
             </div>
         </div>
@@ -185,7 +185,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyEmpNm" class="form_row_input_short duty_validate" disabled>
-                <input type="text" name="dutyEmp" class="form_row_dpn">
+                <input type="text" name="dutyEmpId" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="empSearch">조회</button>
             </div>
         </div>
@@ -195,37 +195,37 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyRoleNm" class="form_row_input_short duty_validate">
-                <input type="text" name="dutyRole" class="form_row_dpn">
+                <input type="text" name="dutyRoleCd" class="form_row_dpn">
                 <button type="button" class="form_row_button">조회</button>
             </div>
         </div>
-        <div class="form_row" id="autoApplyYn">
+        <div class="form_row" id="autoApplyPrcdYn">
             <div class="form_row_left">
-                <span class="form_row_title">자동적용 여부</span>
+                <span class="form_row_title">절차자동적용 여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>적용</label>
-                    <input type="radio" name="autoApplyYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="autoApplyPrcdYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미적용</label>
-                    <input type="radio" name="autoApplyYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="autoApplyPrcdYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
-        <div class="form_row" id="autoApplyAllYn" style="display: none;">
+        <div class="form_row" id="autoApplyAllPrcdYn" style="display: none;">
             <div class="form_row_left">
                 <span class="form_row_title">전체절차 자동적용 여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>적용</label>
-                    <input type="radio" name="autoApplyAllYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="autoApplyAllPrcdYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미적용</label>
-                    <input type="radio" name="autoApplyAllYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="autoApplyAllPrcdYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -235,7 +235,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="autoApplyPrcdNm" class="form_row_input_short">
-                <input type="text" name="autoApplyPrcdId" class="form_row_dpn">
+                <input type="text" name="autoApplyPrcdCd" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="prcdSearch">조회</button>
             </div>
         </div>
@@ -271,8 +271,8 @@
     $('.form_row_radio').on('change', function(){
         let radioNm = $(this).attr('name');
         switch(radioNm){
-            case 'autoApplyYn' : toggleAutoApplyYn(); break;
-            case 'autoApplyAllYn' : toggleAutoApplyAllYn(this); break;
+            case 'autoApplyPrcdYn' : toggleAutoApplyPrcdYn(); break;
+            case 'autoApplyAllPrcdYn' : toggleAutoApplyAllPrcdYn(this); break;
         }
     });
 
@@ -295,13 +295,13 @@
      * 자동적용여부 radio값 변경 시 처리
      *  - N인 경우 전체절차 자동적용여부, 자동적용 대상절차 영역 hide & 자동적용 대상절차 input value 초기화
      */
-    function toggleAutoApplyYn(){
-        let target = $('#autoApplyAllYn');
+    function toggleAutoApplyPrcdYn(){
+        let target = $('#autoApplyAllPrcdYn');
         target.toggle();
 
         let radio = target.find('input[type="radio"]:checked');
         if(radio.val() === 'N'){
-            $('input[name="autoApplyAllYn"][value="Y"]').prop('checked', true);
+            $('input[name="autoApplyAllPrcdYn"][value="Y"]').prop('checked', true);
             $('#autoApplyPrcd').find('input[type="text"]').val('');
             $('#autoApplyPrcd').hide();
         }
@@ -312,7 +312,7 @@
      *  - N인 경우 자동적용 대상절차 영역 show
      *  - Y인 경우 자동적용 대상절차 영역 hide & 해당영역 input value 초기화
      */
-    function toggleAutoApplyAllYn(radio){
+    function toggleAutoApplyAllPrcdYn(radio){
         let val = $(radio).val();
         let target = $('#autoApplyPrcd');
 
@@ -394,7 +394,7 @@
      */
     function orgSearchCallback(data){
         $('input[name="dutyOrgNm"]').val(data.orgNm);
-        $('input[name="dutyOrg"]').val(data.orgId);
+        $('input[name="dutyOrgId"]').val(data.orgId);
     }
 
     /**
@@ -403,7 +403,7 @@
      */
     function empSearchCallback(data){
         $('input[name="dutyEmpNm"]').val(data.empNm);
-        $('input[name="dutyEmp"]').val(data.empId);
+        $('input[name="dutyEmpId"]').val(data.empId);
     }
 
     /**
@@ -412,7 +412,7 @@
      */
     function prcdSearchCallback(data){
         $('input[name="autoApplyPrcdNm"]').val(data.prcdNm);
-        $('input[name="autoApplyPrcdId"]').val(data.prcdId);
+        $('input[name="autoApplyPrcdCd"]').val(data.prcdCd);
     }
 
 
@@ -444,8 +444,8 @@
      * 절차 검색 모달 호출
      */
     function openPrcdBasSearchModal(){
-        let prcdId = $('input[name="autoApplyPrcdId"]').val();
-        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdId=" + prcdId;
+        let prcdCd = $('input[name="autoApplyPrcdCd"]').val();
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdCd=" + prcdCd;
         Utilities.openModal(url, 900, 600);
     }
 

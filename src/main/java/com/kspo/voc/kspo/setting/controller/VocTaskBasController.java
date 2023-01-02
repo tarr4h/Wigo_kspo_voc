@@ -3,6 +3,7 @@ package com.kspo.voc.kspo.setting.controller;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,20 +20,21 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.service.VocTaskCodeSettingService;
+import com.kspo.voc.kspo.setting.service.VocTaskBasService;
 
 @Controller
-@RequestMapping({"vocTaskCodeSetting", "{menuId}/vocTaskCodeSetting"})
-public class VocTaskCodeSettingController {
+@Slf4j
+@RequestMapping({"vocTaskBas", "{menuId}/vocTaskBas"})
+public class VocTaskBasController {
 
     @Autowired
-    VocTaskCodeSettingService service;
+    VocTaskBasService service;
 
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/task_code/vocTaskCodeSetting";
+        return Utilities.getProperty("tiles.voc") + "voc/setting/task_bas/vocTaskBasSetting";
     }
 
     @PostMapping(value = "selectTaskCodeList")
@@ -50,6 +52,7 @@ public class VocTaskCodeSettingController {
 
     @PostMapping(value = "saveRows")
     public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param) throws EgovBizException {
+        log.debug("saveRows param = {}", param);
         return service.update(param);
     }
 
@@ -67,7 +70,7 @@ public class VocTaskCodeSettingController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/task_code/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/task_bas/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})

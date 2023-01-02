@@ -96,7 +96,7 @@
     <update id="chngPrcdDuty">
         update TB_VOC_PRCD_BAS
         set
-            ${targetInfo.col} = #{chngMap.id},
+            ${targetInfo.col}_ID = #{chngMap.id},
             ${targetInfo.col}_NM = #{chngMap.nm},
             AMDR_ID = #{loginUsr},
             AMD_DT = SYSDATE

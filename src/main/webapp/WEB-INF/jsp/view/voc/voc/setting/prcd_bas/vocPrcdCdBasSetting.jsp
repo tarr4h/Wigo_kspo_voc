@@ -138,7 +138,7 @@
         let parsingJson = JSON.parse(jsonStorage);
 
         let param = data;
-        param.prcdId = parsingJson.prcdId;
+        param.prcdCd = parsingJson.prcdCd;
         param.deadline = parsingJson.deadline_convert;
         updateDeadline(param);
     }
@@ -185,7 +185,7 @@
 
         let row = gridView.getJsonRow(rowIndex);
         let param = {
-            prcdId : row.prcdId,
+            prcdCd : row.prcdCd,
             col : target
         };
         window.localStorage.setItem('vocProcedureCodeSettingSelectedBtnVal', JSON.stringify(param));

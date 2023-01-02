@@ -3,7 +3,7 @@ package com.kspo.voc.kspo.setting.service;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.dao.VocTaskCodeSettingDao;
+import com.kspo.voc.kspo.setting.dao.VocTaskBasDao;
 import com.kspo.voc.kspo.setting.model.VocPrcdBasVo;
 import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
 import com.kspo.voc.sys.dao.IVocDao;
@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class VocTaskCodeSettingService extends AbstractVocService {
+public class VocTaskBasService extends AbstractVocService {
 
     @Autowired
-    VocTaskCodeSettingDao dao;
+    VocTaskBasDao dao;
 
     @Override
     public IVocDao getDao() {
@@ -42,7 +42,7 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         }
 
         String maxCd = dao.selectMaxCd();
-        ((Map<String, Object>) param).put("taskId", CodeGeneration.generateCode(maxCd, CodeGeneration.TASK_BAS));
+        ((Map<String, Object>) param).put("taskCd", CodeGeneration.generateCode(maxCd, CodeGeneration.TASK_BAS));
         int result = dao.insert(param);
         returnMap.put("msg", result + "건이 등록되었습니다.");
         return returnMap;
@@ -51,8 +51,8 @@ public class VocTaskCodeSettingService extends AbstractVocService {
     public Map<String, Object> validateAutoApply(Map<String, Object> param){
         Map<String, Object> returnMap = new HashMap<>();
 
-        int deadline = VocUtils.parseIntObject(param.get("deadline"));
-        String autoApplyAllYn = (String) param.get("autoApplyAllYn");
+        int deadline = VocUtils.parseIntObject(param.get("ddlnSec"));
+        String autoApplyAllYn = (String) param.get("autoApplyAllPrcdYn");
 
         // task를 허용하는 절차 리스트 조회
         List<VocPrcdBasVo> prcdBasList = dao.selectAvailablePrcdList(param);
@@ -91,13 +91,13 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         }
 
         // 2. 특정절차 적용인 경우
-        String autoApplyYn = (String) param.get("autoApplyYn");
+        String autoApplyYn = (String) param.get("autoApplyPrcdYn");
         if(autoApplyYn.equals("Y") && autoApplyAllYn.equals("N")){
-            String autoApplyPrcdId = (String) param.get("autoApplyPrcdId");
+            String autoApplyPrcdCd = (String) param.get("autoApplyPrcdCd");
             // task의 합이 prcd의 deadline을 초과하는지 확인
             for(VocPrcdBasVo prcdBas : prcdBasList){
                 int currDeadline = deadlineSum;
-                if(prcdBas.getPrcdCd().equals(autoApplyPrcdId)){
+                if(prcdBas.getPrcdCd().equals(autoApplyPrcdCd)){
                     currDeadline += deadline;
                     for(VocTaskBasVo taskBas : taskBasList){
                         if(taskBas.getAutoApplyPrcdCd() != null && taskBas.getAutoApplyPrcdCd().equals(prcdBas.getPrcdCd())){
