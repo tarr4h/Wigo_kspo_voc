@@ -12,7 +12,7 @@
         PRNTS_MGMT_CD,
         TOP_COMN_CD,
         COMN_CD,
-        ODRG,
+        MGMT_CD_ORDR,
         MGMT_CD_LVL_NO,
         MGMT_CD_NM,
         USE_YN,
@@ -29,17 +29,17 @@
             TB_VOC_MGMT_CD_BAS
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
-                top_comn_cd = #{topComnCd}
+                TOP_COMN_CD = #{topComnCd}
             </if>
             <!-- 단건의 분류코드 그룹 호출 시 -->
             <if test="comnCd instanceof String">
-                and
-                comn_cd = #{comnCd}
+                AND
+                COMN_CD = #{comnCd}
             </if>
             <!-- 여러개의 분류코드 그룹 호출 시 -->
             <if test="comnCd instanceof java.util.ArrayList">
-                and
-                comn_cd in
+                AND
+                COMN_CD IN
                 <foreach collection="comnCd" item="item" separator="," open="(" close=")">
                     #{item}
                 </foreach>
@@ -58,9 +58,9 @@
             <if test="mgmtCd != null and !mgmtCd.equals('')">
                 MGMT_CD = #{mgmtCd}
             </if>
-            <if test="mgmtCd == null and prntsCd != null and !prntsCd.equals('')">
-                and
-                MGMT_CD = #{prntsCd}
+            <if test="mgmtCd == null and prntsMgmtCd != null and !prntsMgmtCd.equals('')">
+                AND
+                MGMT_CD = #{prntsMgmtCd}
             </if>
         </where>
     </select>

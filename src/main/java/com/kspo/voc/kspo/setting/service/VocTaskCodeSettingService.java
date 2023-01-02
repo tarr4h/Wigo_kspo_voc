@@ -62,8 +62,8 @@ public class VocTaskCodeSettingService extends AbstractVocService {
         
         // 전체절차적용 task 조회, 처리기한의 합 구하기
         for(VocTaskBasVo taskBas : taskBasList){
-            if(taskBas.getAutoApplyAllYn().equals("Y")){
-                deadlineSum += taskBas.getDeadline();
+            if(taskBas.getAutoApplyAllPrcdYn().equals("Y")){
+                deadlineSum += taskBas.getDdlnSec();
             }
         }
 
@@ -73,16 +73,16 @@ public class VocTaskCodeSettingService extends AbstractVocService {
             deadlineSum += deadline;
             for(VocPrcdBasVo prcdBas : prcdBasList){
                 List<VocTaskBasVo> tempTaskBasList = new ArrayList<>(taskBasList);
-                tempTaskBasList.removeIf(taskBas -> taskBas.getAutoApplyPrcdId() != null && !taskBas.getAutoApplyPrcdId().equals(prcdBas.getPrcdId()));
+                tempTaskBasList.removeIf(taskBas -> taskBas.getAutoApplyPrcdCd() != null && !taskBas.getAutoApplyPrcdCd().equals(prcdBas.getPrcdCd()));
 
                 int currDeadline = deadlineSum;
                 if(tempTaskBasList.size() != 0){
                     for(VocTaskBasVo taskBas : tempTaskBasList){
-                        currDeadline += taskBas.getDeadline();
+                        currDeadline += taskBas.getDdlnSec();
                     }
                 }
 
-                if(prcdBas.getDeadline() < currDeadline){
+                if(prcdBas.getDdlnSec() < currDeadline){
                     returnMap.put("msg", "task 추가 시 처리기한이 초과되는 절차가 존재합니다.\n확인 후 다시 등록해주세요.");
                     returnMap.put("result", false);
                     return returnMap;
@@ -97,15 +97,15 @@ public class VocTaskCodeSettingService extends AbstractVocService {
             // task의 합이 prcd의 deadline을 초과하는지 확인
             for(VocPrcdBasVo prcdBas : prcdBasList){
                 int currDeadline = deadlineSum;
-                if(prcdBas.getPrcdId().equals(autoApplyPrcdId)){
+                if(prcdBas.getPrcdCd().equals(autoApplyPrcdId)){
                     currDeadline += deadline;
                     for(VocTaskBasVo taskBas : taskBasList){
-                        if(taskBas.getAutoApplyPrcdId() != null && taskBas.getAutoApplyPrcdId().equals(prcdBas.getPrcdId())){
-                            currDeadline += taskBas.getDeadline();
+                        if(taskBas.getAutoApplyPrcdCd() != null && taskBas.getAutoApplyPrcdCd().equals(prcdBas.getPrcdCd())){
+                            currDeadline += taskBas.getDdlnSec();
                         }
                     }
 
-                    if(prcdBas.getDeadline() < currDeadline){
+                    if(prcdBas.getDdlnSec() < currDeadline){
                         returnMap.put("msg", "[" + prcdBas.getPrcdNm() + "] 절차의 처리기한이 초과됩니다.\n확인 후 다시 등록해주세요.");
                         returnMap.put("result", false);
                         return returnMap;

@@ -15,7 +15,7 @@ public class VocMgmtCdVo extends AbstractTreeVo {
 	private String prntsMgmtCd;
 	private String topComnCd;
 	private String comnCd;
-	private int mgmtCdOdrd;
+	private int mgmtCdOrdr;
 	private int mgmtCdLvlNo;
 	private String mgmtCdNm;
 	private String useYn;

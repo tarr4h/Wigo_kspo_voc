@@ -13,19 +13,19 @@ import lombok.Setter;
 public class VocTaskBasVo extends BaseVo {
 
     private static final long serialVersionUID = 8950672182287295915L;
-	private String taskId;
+	private String taskCd;
     private String taskNm;
-    private int deadline;
-    private String dutyOrg;
+    private int ddlnSec;
+    private String dutyOrgId;
     private String dutyOrgNm;
-    private String dutyEmp;
+    private String dutyEmpId;
     private String dutyEmpNm;
-    private String dutyRole;
+    private String dutyRoleCd;
     private String useYn;
     private String dutyChngYn;
-    private String autoApplyYn;
-    private String autoApplyAllYn;
-    private String autoApplyPrcdId;
+    private String autoApplyPrcdYn;
+    private String autoApplyAllPrcdYn;
+    private String autoApplyPrcdCd;
     private String autoApplyPrcdNm;
     private String regrId;
     private String regDt;
@@ -34,6 +34,6 @@ public class VocTaskBasVo extends BaseVo {
 
 
     public String getDeadlineConvert() {
-        return VocUtils.convertDeadline(deadline);
+        return VocUtils.convertDeadline(ddlnSec);
     }
 }

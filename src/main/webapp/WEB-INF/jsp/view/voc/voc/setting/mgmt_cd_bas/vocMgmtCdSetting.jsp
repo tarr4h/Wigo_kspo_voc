@@ -111,7 +111,7 @@
     // event listener
     $('.func_btn').on('click', function(){
         let event = $(this).data('event');
-        if(selectedCd == null && event !== 'manage_grp'){
+        if(selectedCd == null && event !== 'grp'){
             return false;
         };
         switch(event){
@@ -172,7 +172,7 @@
     }
 
     function onTreeSelect(data, node, tree){
-        if(data.lvl === 5){
+        if(data.mgmtCdLvlNo === 5){
             alert('5depth까지 등록 가능합니다.');
             node.state.opened = false;
             node.state.selected = false;
@@ -181,12 +181,12 @@
         }
 
         let prntsMgmtCd = data.id;
-        let codeNm = data.text;
+        let mgmtCdNm = data.text;
 
         selectedCd = prntsMgmtCd;
-        $("#grid_title").text(codeNm);
+        $("#grid_title").text(mgmtCdNm);
 
-        loadGrid(prntsCd);
+        loadGrid(prntsMgmtCd);
     }
 
     function loadGrid(prntsMgmtCd){

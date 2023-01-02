@@ -35,8 +35,8 @@ public class VocMcPrcdVo extends VocPrcdBasVo implements Comparable<VocMcPrcdVo>
     }
 
     @Override
-    public String getTaskYn() {
-        return super.getTaskYn();
+    public String getTaskUseYn() {
+        return super.getTaskUseYn();
     }
 
     @Override

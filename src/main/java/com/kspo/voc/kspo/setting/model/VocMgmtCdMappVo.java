@@ -5,14 +5,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocMgmgCdMappVo extends VocMgmtCdVo {
+public class VocMgmtCdMappVo extends VocMgmtCdVo {
 
     private static final long serialVersionUID = 5198406220369039570L;
 	private String mappCd;
     private String mgmtCd;
     private String prntsMappCd;
     private int mappLvlNo;
-    private String codeNm;
+    private String mgmtCdNm;
     private String regrId;
     private String regDt;
     private String amdrId;
@@ -25,7 +25,7 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
 
     @Override
     public String getText() {
-        return getCodeNm();
+        return getMgmtCdNm();
     }
 
     @Override
@@ -64,8 +64,8 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
     }
 
     @Override
-    public int getMgmtCdOdrd() {
-        return super.getMgmtCdOdrd();
+    public int getMgmtCdOrdr() {
+        return super.getMgmtCdOrdr();
     }
 
     @Override
@@ -104,8 +104,8 @@ public class VocMgmgCdMappVo extends VocMgmtCdVo {
     }
 
     @Override
-    public void setMgmtCdOdrd(int odrg) {
-        super.setMgmtCdOdrd(odrg);
+    public void setMgmtCdOrdr(int odrg) {
+        super.setMgmtCdOrdr(odrg);
     }
 
     @Override

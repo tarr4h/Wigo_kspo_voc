@@ -38,7 +38,7 @@ public class VocRegProcedureSettingService extends VocAbstractService {
         List<VocPrcdBasVo> prcdBasList = selectPrcdBasList(param);
         List<VocMcPrcdVo> prcdList = selectProcedureList(param);
         for(VocMcPrcdVo prcd : prcdList){
-            prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdId().equals(prcd.getPrcdSeq()));
+            prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdCd().equals(prcd.getPrcdSeq()));
         }
 
         return prcdBasList;
@@ -74,16 +74,16 @@ public class VocRegProcedureSettingService extends VocAbstractService {
 
             // 참조 prcd의 담당부서/담당자/적용권한이 없다면 분류코드 담당부서를 SET
             VocPrcdBasVo prcdBas = selectPrcdBas(prcdSeq);
-            if(prcdBas.getDutyEmp() == null && prcdBas.getDutyOrg() == null && prcdBas.getDutyRole() == null){
+            if(prcdBas.getDutyEmpId() == null && prcdBas.getDutyOrgId() == null && prcdBas.getDutyRoleCd() == null){
                 prcd.setDutyOrg(primaryOrg);
             } else {
-                prcd.setDutyOrg(prcdBas.getDutyOrg());
+                prcd.setDutyOrg(prcdBas.getDutyOrgId());
             }
 
             dao.insertProcedure(Utilities.beanToMap(prcd));
 
             // 절차가 task허용 & 자동적용 절차가 있다면 insert
-            if(prcdBas.getTaskYn().equals("Y")){
+            if(prcdBas.getTaskUseYn().equals("Y")){
                 log.debug("******* insert task *******");
                 param.put("autoApplyAllYn", "Y");
                 param.put("autoApplyPrcdSeq", prcdSeq);
@@ -307,14 +307,14 @@ public class VocRegProcedureSettingService extends VocAbstractService {
         String target = (String) param.get("target");
 
         List<VocPrcdBasVo> prcdBasList = selectPrcdBasList(param);
-        prcdBasList.removeIf(value -> value.getRequestCompulsoryYn(target).equals("N"));
+        prcdBasList.removeIf(value -> value.getRequestEstlYn(target).equals("N"));
         int requiredSize = prcdBasList.size();
 
         int compulsoryCnt = 0;
         for(int i = 0; i < prcdList.size(); i++){
             VocMcPrcdVo prcd = prcdList.get(i);
             VocPrcdBasVo prcdBas = selectPrcdBas(prcd);
-            if(prcdBas.getRequestCompulsoryYn(target).equals("Y")){
+            if(prcdBas.getRequestEstlYn(target).equals("Y")){
                 compulsoryCnt++;
             }
         }
