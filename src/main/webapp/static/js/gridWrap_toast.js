@@ -141,15 +141,15 @@ tui.Grid.applyTheme('kspo',{
           cell: {
             normal: {
               background: '#fbfbfb',
-              border: '#ccc',
+//              border: '#fbfbfb',
               text : '#333333',
-              showVerticalBorder: true
+              showVerticalBorder: false
             },
             header: {
               background: '#FAFCFF',
-              border: '#ccc',
+//              border: '#FAFCFF',
               text : '#333333',
-              showVerticalBorder: true
+              showVerticalBorder: false
             },
             summary : {
                 background: '#F6F6F6',
@@ -995,6 +995,7 @@ function createGridObject(grd) {
                 el : container,
                 data : dataSource,
                 minRowHeight : 35,
+//                header: {height:30},
                 rowHeight : 'auto',
 //              bodyHeight : bodyHeight - pageHeightOffset /*fitToParent*/, 
                 bodyHeight : 'fitToParent',
