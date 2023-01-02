@@ -65,10 +65,10 @@
     </div>
     <div class="grid_wrapper">
         <div id="divGrid1"
-             data-get-url="<c:url value='${urlPrefix}/selectProcedureCodeGrid${urlSuffix}'/>"
+             data-get-url="<c:url value='${urlPrefix}/selectPrcdCdGrid${urlSuffix}'/>"
              data-grid-id="procedureCdGrid"
              data-type="grid"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBas.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBas.xml${urlSuffix}'/>"
              style="width:100%;height:735px;"
         >
         </div>
@@ -91,9 +91,9 @@
         }
     });
 
-    function chngProcedureDuty(targetInfo, chngMap){
+    function chngPrcdDuty(targetInfo, chngMap){
         $.ajax({
-            url : '<c:url value="${urlPrefix}/chngProcedureDuty${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/chngPrcdDuty${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
@@ -138,7 +138,7 @@
         let parsingJson = JSON.parse(jsonStorage);
 
         let param = data;
-        param.prcdId = parsingJson.prcdId;
+        param.prcdCd = parsingJson.prcdCd;
         param.deadline = parsingJson.deadline_convert;
         updateDeadline(param);
     }
@@ -155,7 +155,7 @@
             id : data.orgId,
             nm : data.orgNm
         }
-        chngProcedureDuty(parsingStorage, param);
+        chngPrcdDuty(parsingStorage, param);
     }
 
     /**
@@ -171,7 +171,7 @@
             nm : data.empNm
         }
 
-        chngProcedureDuty(parsingStorage, param);
+        chngPrcdDuty(parsingStorage, param);
     }
 
     function onGridCellDblClick(gridView,rowIndex,columnName,colIndex,fieldIndex){
@@ -185,7 +185,7 @@
 
         let row = gridView.getJsonRow(rowIndex);
         let param = {
-            prcdId : row.prcdId,
+            prcdCd : row.prcdCd,
             col : target
         };
         window.localStorage.setItem('vocProcedureCodeSettingSelectedBtnVal', JSON.stringify(param));

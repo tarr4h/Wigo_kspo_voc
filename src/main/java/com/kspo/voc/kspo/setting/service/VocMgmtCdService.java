@@ -50,10 +50,10 @@ public class VocMgmtCdService extends VocAbstractService {
         String msg = null;
         boolean result = false;
 
-        if(param.get("codeNm") == null){
+        if(param.get("mgmtCdNm") == null){
             msg = "코드명을 입력해주세요.";
         } else {
-            if(param.get("prntsCd") != null){
+            if(param.get("prntsMgmtCd") != null){
                 param = generateInsertCodeParam(param);
             } else {
                 param = generateInsertGroupParam(param);
@@ -107,12 +107,12 @@ public class VocMgmtCdService extends VocAbstractService {
             mgmtCd.append("0");
         }
 
-        log.debug("management grp cd = {}", mgmtCd);
-
         param.put("mgmtCd", mgmtCd.toString());
-        param.put("topCd", mgmtCd.toString());
-        param.put("odrg", addNum);
-        param.put("lvl", 1);
+        param.put("topMgmtCd", mgmtCd.toString());
+        param.put("mgmtCdOrdr", addNum);
+        param.put("mgmtCdLvlNo", 1);
+
+        log.debug("grp param = {}", param);
         return param;
     }
 
@@ -124,12 +124,12 @@ public class VocMgmtCdService extends VocAbstractService {
         int childrenSize = dao.selectList(param).size();
         String maxChildCd = dao.maxChildCd(param);
 
-        param.put("lvl", prntsRow.getMgmtCdLvlNo() + 1);
-        param.put("regUsr", Utilities.getLoginId());
+        param.put("mgmtCdLvlNo", prntsRow.getMgmtCdLvlNo() + 1);
+        param.put("regrId", Utilities.getLoginId());
 
         String prntsCd = prntsRow.getMgmtCd();
         String prntsCdGrp = prntsCd.substring(2, 4);
-        String prntsCdNum = prntsCd.substring(4); // grp인 경우엔 2
+        String prntsCdNum = prntsCd.substring(4);
 
         // prefix
         StringBuilder mgmtCd = new StringBuilder();
@@ -150,14 +150,14 @@ public class VocMgmtCdService extends VocAbstractService {
         // 현재 코드의 실제 적재 자리
         int inputVal = 0;
         if(maxChildCd == null) {
-            param.put("odrg", childrenSize + 1);
+            param.put("mgmtCdOrdr", childrenSize + 1);
             inputVal = childrenSize + 1;
         } else {
             int endSpot = prntsLvl < 3 ? 4 : 5;
             String siblingCd = maxChildCd.substring(4 + (prntsLvl * 3), endSpot + (prntsLvl + 1) * 3);
             log.debug("siblingCd = {}", siblingCd);
             inputVal = VocUtils.parseIntObject(siblingCd) + 1;
-            param.put("odrg", inputVal);
+            param.put("mgmtCdOrdr", inputVal);
         }
 
         log.debug("inputVal = {}", inputVal);
@@ -182,9 +182,9 @@ public class VocMgmtCdService extends VocAbstractService {
 
         log.debug("mgmtCd = {}", mgmtCd);
 
-        String topCd = prntsRow.getTopMgmtCd() == null ? mgmtCd.toString() : prntsRow.getTopMgmtCd();
-        log.debug("topCd = {}", topCd);
-        param.put("topCd", topCd);
+        String topMgmtCd = prntsRow.getTopMgmtCd() == null ? mgmtCd.toString() : prntsRow.getTopMgmtCd();
+        log.debug("topCd = {}", topMgmtCd);
+        param.put("topMgmtCd", topMgmtCd);
 
         param.put("mgmtCd", mgmtCd.toString());
         return param;

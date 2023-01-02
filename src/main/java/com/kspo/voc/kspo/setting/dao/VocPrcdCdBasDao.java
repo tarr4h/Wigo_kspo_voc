@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 @VocMapper
-public interface VocProcedureCodeSettingDao extends IVocDao {
+public interface VocPrcdCdBasDao extends IVocDao {
 
-    int chngProcedureDuty(Map<String, Object> param);
+    int chngPrcdDuty(Map<String, Object> param);
 
     int updateDeadline(Map<String, Object> param);
 

@@ -6,7 +6,7 @@ import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.kspo.common.util.VocUtils;
 import com.kspo.voc.kspo.setting.model.VocPrcdBasVo;
-import com.kspo.voc.kspo.setting.service.VocProcedureCodeSettingService;
+import com.kspo.voc.kspo.setting.service.VocPrcdCdBasService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping({"vocPrcdCdBasSetting", "{menuId}/vocPrcdCdBasSetting"})
-public class VocPrcdCdBasSettingController {
+@RequestMapping({"vocPrcdCdBas", "{menuId}/vocPrcdCdBas"})
+public class VocPrcdCdBasController {
 
     @Autowired
-    VocProcedureCodeSettingService service;
+    VocPrcdCdBasService service;
 
     @GetMapping(value = {"", "index"})
     public String init(@RequestParam Map<String, Object> param, Model model) {
@@ -30,8 +30,8 @@ public class VocPrcdCdBasSettingController {
         return Utilities.getProperty("tiles.voc") + "voc/setting/prcd_bas/vocPrcdCdBasSetting";
     }
 
-    @PostMapping(value = "selectProcedureCodeGrid")
-    public @ResponseBody Object selectProcedureCodeGrid(@RequestBody EzMap param){
+    @PostMapping(value = "selectPrcdCdGrid")
+    public @ResponseBody Object selectPrcdCdGrid(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
         List<EzMap> list = service.selectProcedureCodeList(param);
         page.setTotalRecordCount(list.size());
@@ -65,9 +65,9 @@ public class VocPrcdCdBasSettingController {
         return service.delete(param);
     }
 
-    @PostMapping(value = "chngProcedureDuty")
-    public @ResponseBody Object chngProcedureDuty(@RequestBody Map<String, Object> param){
-        return service.chngProcedureDuty(param);
+    @PostMapping(value = "chngPrcdDuty")
+    public @ResponseBody Object chngPrcdDuty(@RequestBody Map<String, Object> param){
+        return service.chngPrcdDuty(param);
     }
 
     @PostMapping(value = "updateDeadline")

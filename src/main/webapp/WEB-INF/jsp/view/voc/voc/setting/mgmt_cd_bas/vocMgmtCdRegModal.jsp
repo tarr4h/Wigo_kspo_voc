@@ -68,7 +68,7 @@
             <tr>
                 <th>상위코드</th>
                 <td>
-                    <span id="prntsMgmtCd"></span>
+                    <span id="prntsMgmtCdNm"></span>
                 </td>
             </tr>
             <tr>
@@ -137,7 +137,7 @@
                 mgmtCd : prntsMgmtCd
             },
             success(res){
-                $("#mgmtCdNm").text(res.mgmtCdNm);
+                $("#prntsMgmtCdNm").text(res.mgmtCdNm);
                 topComnCd = res.topComnCd;
                 comnCd = res.comnCd;
             },

@@ -49,7 +49,7 @@
              data-grid-id="appliedPrcdGrid"
              data-type="grid"
              data-grid-callback="onGridLoad"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBasSearch.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasSearch.xml${urlSuffix}'/>"
              style="width:100%;height:150px;"
         >
         </div>
@@ -62,7 +62,7 @@
              data-grid-id="availablePrcdGrid"
              data-type="grid"
              data-grid-callback="onGridLoad"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBasSearch.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasSearch.xml${urlSuffix}'/>"
              style="width:100%;height:300px;"
         >
         </div>
@@ -74,7 +74,7 @@
 <script>
     function onGridLoad(){
         let param = {};
-        param.prcdId = '${param.prcdId}';
+        param.prcdCd = '${param.prcdCd}';
         appliedPrcdGrid.loadUrl('', param);
         availablePrcdGrid.loadUrl('', param);
     }
@@ -87,11 +87,11 @@
 
     function onGridButtonClicked(gridView, row, col, json) {
         let prcdNm = json.prcdNm;
-        let prcdId = json.prcdId;
+        let prcdCd = json.prcdCd;
 
         let param = {
             prcdNm,
-            prcdId
+            prcdCd
         };
 
         let opnr = Utilities.getOpener();

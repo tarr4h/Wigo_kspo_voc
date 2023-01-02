@@ -4,7 +4,7 @@ package com.kspo.voc.kspo.setting.service;
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.stnd.CodeGeneration;
 import com.kspo.voc.kspo.common.util.VocUtils;
-import com.kspo.voc.kspo.setting.dao.VocProcedureCodeSettingDao;
+import com.kspo.voc.kspo.setting.dao.VocPrcdCdBasDao;
 import com.kspo.voc.kspo.setting.model.VocTaskBasVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -18,10 +18,10 @@ import java.util.Map;
 
 @SuppressWarnings("unchecked")
 @Service
-public class VocProcedureCodeSettingService extends VocAbstractService {
+public class VocPrcdCdBasService extends VocAbstractService {
 
     @Autowired
-    VocProcedureCodeSettingDao dao;
+    VocPrcdCdBasDao dao;
 
     @Override
     public IVocDao getDao() {
@@ -36,7 +36,7 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
     public int insert(Object param) throws EgovBizException {
         param = VocUtils.setCodeSettingParam(param);
         String maxCd = dao.selectMaxCd();
-        ((Map<String, Object>) param).put("prcdId", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
+        ((Map<String, Object>) param).put("prcdCd", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
         return super.insert(param);
     }
 
@@ -58,15 +58,15 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
         return super.delete(param);
     }
 
-    public Object chngProcedureDuty(Map<String, Object> param) {
-        return dao.chngProcedureDuty(param);
+    public Object chngPrcdDuty(Map<String, Object> param) {
+        return dao.chngPrcdDuty(param);
     }
 
     public Object updateDeadline(Map<String, Object> param) {
         Map<String, Object> returnMap = new HashMap<>();
         VocUtils.sumUpDeadline(param);
 
-        int deadline = VocUtils.parseIntObject(param.get("deadline"));
+        int deadline = VocUtils.parseIntObject(param.get("ddlnSec"));
 //        VocProcedureCodeVo prcd = 
         		selectPrcdBas(param);
 
@@ -83,9 +83,9 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
 
         // 전체적용 task deadline의 합 구하기
         List<VocTaskBasVo> autoApplyAllList = new ArrayList<>(taskList);
-        autoApplyAllList.removeIf(task -> task.getAutoApplyAllYn().equals("N"));
+        autoApplyAllList.removeIf(task -> task.getAutoApplyAllPrcdYn().equals("N"));
         for(VocTaskBasVo task : autoApplyAllList){
-            taskDeadlineSum += task.getDeadline();
+            taskDeadlineSum += task.getDdlnSec();
         }
 
         // 2. 전체적용 < deadline : 변경불가
@@ -97,9 +97,9 @@ public class VocProcedureCodeSettingService extends VocAbstractService {
 
         // 전체적용 deadline 합에 요청 prcd를 target으로 하는 task의 처리기한 합 구하기
         List<VocTaskBasVo> autoApplyPrcdList = new ArrayList<>(taskList);
-        autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdId() == null || !task.getAutoApplyPrcdId().equals(param.get("prcdId")));
+        autoApplyPrcdList.removeIf(task -> task.getAutoApplyPrcdCd() == null || !task.getAutoApplyPrcdCd().equals(param.get("prcdCd")));
         for(VocTaskBasVo task : autoApplyPrcdList){
-            taskDeadlineSum += task.getDeadline();
+            taskDeadlineSum += task.getDdlnSec();
         }
 
         // 3. 전체적용 + 개별적용 < deadline : 변경

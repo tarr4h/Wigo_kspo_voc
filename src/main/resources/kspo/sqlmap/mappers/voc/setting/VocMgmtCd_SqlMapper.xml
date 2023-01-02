@@ -9,7 +9,7 @@
             PRNTS_MGMT_CD,
             TOP_COMN_CD,
             COMN_CD,
-            MGMT_CD_ODRD,
+            MGMT_CD_ORDR,
             MGMT_CD_LVL_NO,
             MGMT_CD_NM,
             USE_YN,
@@ -24,7 +24,7 @@
                     TB_VOC_MGMT_CD_BAS
                 where
                     MGMT_CD = vmc.PRNTS_MGMT_CD
-            ), '-') prntsMgmtdNm,
+            ), '-') prntsMgmtCdNm,
             (
                 select
                     MGMT_CD_NM
@@ -36,10 +36,10 @@
         from
             TB_VOC_MGMT_CD_BAS vmc
         where
-            <if test="prntsCd != null and !prntsCd.equals('')">
-                PRNTS_MGMT_CD = #{prntsCd}
+            <if test="prntsMgmtCd != null and !prntsMgmtCd.equals('')">
+                PRNTS_MGMT_CD = #{prntsMgmtCd}
             </if>
-            <if test="prntsCd == null">
+            <if test="prntsMgmtCd == null">
                 PRNTS_MGMT_CD is null
             </if>
         order by
@@ -48,14 +48,14 @@
 
     <insert id="insert">
         insert into TB_VOC_MGMT_CD_BAS
-        (MGMT_CD, TOP_MGMT_CD, PRNTS_MGMT_CD, TOP_COMN_CD, COMN_CD, MGMT_CD_ODRD, MGMT_CD_LVL_NO, MGMT_CD_NM, REGR_ID, AMDR_ID)
+        (MGMT_CD, TOP_MGMT_CD, PRNTS_MGMT_CD, TOP_COMN_CD, COMN_CD, MGMT_CD_ORDR, MGMT_CD_LVL_NO, MGMT_CD_NM, REGR_ID, AMDR_ID)
         values(
                #{mgmtCd},
                #{topMgmtCd},
                #{prntsMgmtCd},
                #{topComnCd},
                #{comnCd},
-               #{mgmtCdOdrd},
+               #{mgmtCdOrdr},
                #{mgmtCdLvlNo},
                #{mgmtCdNm},
                #{loginUsr},
@@ -67,8 +67,8 @@
         <foreach collection="rows" item="item" open="DECLARE BEGIN" separator=";" close="; END;">
             update TB_VOC_MGMT_CD_BAS
             set
-                MGMT_CD_ODRD = #{item.odrg},
-                MGMT_CD_NM = #{item.codeNm},
+                MGMT_CD_ORDR = #{item.mgmtCdOrdr},
+                MGMT_CD_NM = #{item.mgmtCdNm},
                 USE_YN = #{item.useYn}
             where
                 MGMT_CD = #{item.mgmtCd}
@@ -86,15 +86,15 @@
 
     <select id="maxChildCd" resultType="string">
         select
-            max(MGMT_CD)
+            MAX(MGMT_CD)
         from
             TB_VOC_MGMT_CD_BAS
         where
-            <if test="prntsCd != null">
-            PRNTS_MGMT_CD = #{prntsCd}
+            <if test="prntsMgmtCd != null">
+                PRNTS_MGMT_CD = #{prntsCd}
             </if>
-            <if test="prntsCd == null">
-            PRNTS_MGMT_CD is null
+            <if test="prntsMgmtCd == null">
+                PRNTS_MGMT_CD is null
             </if>
     </select>
 

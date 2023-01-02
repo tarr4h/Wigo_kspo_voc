@@ -99,7 +99,7 @@
 
 <div class="register_wrapper">
     <div class="register_title">등록 그룹명</div>
-    <input type="text" class="register_input" id="codeNm">
+    <input type="text" class="register_input" id="mgmtCdNm">
     <div class="register_title">적용 구분</div>
     <select id="comnCd" class="register_select">
     </select>
@@ -171,7 +171,7 @@
     }
 
     function regCode(){
-        let codeNm = $("#codeNm").val();
+        let mgmtCdNm = $("#mgmtCdNm").val();
         let comnCd = $("#comnCd").val();
         let topComnCd = $("#comnCd").find('option:selected').data('top-comn-cd');
 
@@ -180,7 +180,7 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                codeNm,
+                mgmtCdNm,
                 comnCd,
                 topComnCd
             }),

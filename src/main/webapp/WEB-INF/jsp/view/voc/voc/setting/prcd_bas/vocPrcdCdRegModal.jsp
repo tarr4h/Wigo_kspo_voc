@@ -76,7 +76,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyOrgNm" class="form_row_input_short duty_validate" disabled>
-                <input type="text" name="dutyOrg" class="form_row_dpn">
+                <input type="text" name="dutyOrgId" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="orgSearch">조회</button>
             </div>
         </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyEmpNm" class="form_row_input_short duty_validate" disabled>
-                <input type="text" name="dutyEmp" class="form_row_dpn">
+                <input type="text" name="dutyEmpId" class="form_row_dpn">
                 <button type="button" class="form_row_button" data-event="empSearch">조회</button>
             </div>
         </div>
@@ -96,7 +96,7 @@
             </div>
             <div class="form_row_right">
                 <input type="text" name="dutyRoleNm" class="form_row_input_short duty_validate">
-                <input type="text" name="dutyRole" class="form_row_dpn">
+                <input type="text" name="dutyRoleCd" class="form_row_dpn">
                 <button type="button" class="form_row_button">조회</button>
             </div>
         </div>
@@ -118,56 +118,56 @@
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>사용</label>
-                    <input type="radio" name="vocUseYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocApplyYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미사용</label>
-                    <input type="radio" name="vocUseYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocApplyYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">상세VOC 사용여부</span>
+                <span class="form_row_title">상세VOC 적용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>사용</label>
-                    <input type="radio" name="vocDtlUseYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocDtlApplyYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미사용</label>
-                    <input type="radio" name="vocDtlUseYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocDtlApplyYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC 필수여부</span>
+                <span class="form_row_title">VOC 필수 적용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>예</label>
-                    <input type="radio" name="vocCompulsoryYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocEstlApplyYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="vocCompulsoryYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocEstlApplyYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_left">
-                <span class="form_row_title">VOC상세 필수여부</span>
+                <span class="form_row_title">VOC상세 필수 적용여부</span>
             </div>
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>예</label>
-                    <input type="radio" name="vocDtlCompulsoryYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="vocDtlEstlApplyYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>아니오</label>
-                    <input type="radio" name="vocDtlCompulsoryYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="vocDtlEstlApplyYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -178,11 +178,11 @@
             <div class="form_row_right">
                 <div class="radio_wrapper">
                     <label>적용</label>
-                    <input type="radio" name="taskYn" class="form_row_radio" value="Y">
+                    <input type="radio" name="taskUseYn" class="form_row_radio" value="Y">
                 </div>
                 <div class="radio_wrapper">
                     <label>미적용</label>
-                    <input type="radio" name="taskYn" class="form_row_radio" value="N" checked>
+                    <input type="radio" name="taskUseYn" class="form_row_radio" value="N" checked>
                 </div>
             </div>
         </div>
@@ -307,14 +307,13 @@
     }
 
     function orgSearchCallback(data){
-        console.log('org data : ', data);
         $('input[name="dutyOrgNm"]').val(data.orgNm);
-        $('input[name="dutyOrg"]').val(data.orgId);
+        $('input[name="dutyOrgId"]').val(data.orgId);
     }
 
     function empSearchCallback(data){
         $('input[name="dutyEmpNm"]').val(data.empNm);
-        $('input[name="dutyEmp"]').val(data.empId);
+        $('input[name="dutyEmpId"]').val(data.empId);
     }
 
 </script>

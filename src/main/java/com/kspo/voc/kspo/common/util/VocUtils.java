@@ -155,9 +155,9 @@ public class VocUtils extends Utilities {
         int hour = VocUtils.parseIntObject(param.get("deadlineHour"));
         int minute = VocUtils.parseIntObject(param.get("deadlineMinute"));
 
-        int deadline = (date * 24 * 60) + (hour * 60) + minute;
-        log.debug("deadline = {}", deadline);
-        param.put("deadline", deadline);
+        int ddlnSec = (date * 24 * 60) + (hour * 60) + minute;
+        log.debug("ddlnSec = {}", ddlnSec);
+        param.put("ddlnSec", ddlnSec);
 
         return param;
     }

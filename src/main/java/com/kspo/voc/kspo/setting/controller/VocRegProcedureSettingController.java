@@ -83,7 +83,7 @@ public class VocRegProcedureSettingController {
     @GetMapping(value = "selectPrcdBasList")
     public @ResponseBody Object selectAvailablePrcdBasList(@RequestParam Map<String, Object> param){
         List<VocPrcdBasVo> list = service.selectAvailablePrcdBasList(param);
-        list.removeIf(value -> value.getVocUseYn().equals("N"));
+        list.removeIf(value -> value.getVocApplyYn().equals("N"));
         param.put("list", list);
         param.put("target", "voc");
         return param;

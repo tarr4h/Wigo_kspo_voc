@@ -12,7 +12,7 @@
         PRNTS_MGMT_CD,
         TOP_COMN_CD,
         COMN_CD,
-        ODRG,
+        MGMT_CD_ORDR,
         MGMT_CD_LVL_NO,
         MGMT_CD_NM,
         USE_YN,
@@ -29,17 +29,17 @@
             TB_VOC_MGMT_CD_BAS
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
-                top_comn_cd = #{topComnCd}
+                TOP_COMN_CD = #{topComnCd}
             </if>
             <!-- 단건의 분류코드 그룹 호출 시 -->
             <if test="comnCd instanceof String">
-                and
-                comn_cd = #{comnCd}
+                AND
+                COMN_CD = #{comnCd}
             </if>
             <!-- 여러개의 분류코드 그룹 호출 시 -->
             <if test="comnCd instanceof java.util.ArrayList">
-                and
-                comn_cd in
+                AND
+                COMN_CD IN
                 <foreach collection="comnCd" item="item" separator="," open="(" close=")">
                     #{item}
                 </foreach>
@@ -58,54 +58,54 @@
             <if test="mgmtCd != null and !mgmtCd.equals('')">
                 MGMT_CD = #{mgmtCd}
             </if>
-            <if test="mgmtCd == null and prntsCd != null and !prntsCd.equals('')">
-                and
-                MGMT_CD = #{prntsCd}
+            <if test="mgmtCd == null and prntsMgmtCd != null and !prntsMgmtCd.equals('')">
+                AND
+                MGMT_CD = #{prntsMgmtCd}
             </if>
         </where>
     </select>
 
     <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
-        select
+        SELECT
             *
-        from
-            tb_voc_prcd_bas
-        where
-            prcd_id = #{prcdId}
+        FROM
+            TB_VOC_PRCD_BAS
+        WHERE
+            PRCD_CD = #{prcdCd}
     </select>
 
     <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
-        select
+        SELECT
             *
-        from
-            tb_voc_prcd_bas
-        where
-            voc_use_yn = 'Y'
-        order by
-            prcd_id
+        FROM
+            TB_VOC_PRCD_BAS
+        WHERE
+            VOC_APPLY_YN = 'Y'
+        ORDER BY
+            PRCD_CD
     </select>
 
     <select id="selectTaskBasList" resultType="com.kspo.voc.kspo.setting.model.VocTaskBasVo">
-        select
+        SELECT
             *
-        from
-            tb_voc_task_bas
+        FROM
+            TB_VOC_TASK_BAS
         <where>
-            <if test="autoApplyAllYn != null and !autoApplyAllYn.equals('')">
-                AUTO_APPLY_ALL_YN = #{autoApplyAllYn}
+            <if test="autoApplyAllPrcdYn != null and !autoApplyAllPrcdYn.equals('')">
+                AUTO_APPLY_ALL_PRCD_YN = #{autoApplyAllPrcdYn}
             </if>
-            <if test="autoApplyPrcdId != null and !autoApplyPrcdId.equals('')">
+            <if test="autoApplyPrcdCd != null and !autoApplyPrcdCd.equals('')">
                 or
-                AUTO_APPLY_PRCD_ID = #{autoApplyPrcdId}
+                AUTO_APPLY_PRCD_CD = #{autoApplyPrcdCd}
             </if>
-            <if test="mcPrcdId != null and !mcPrcdId.equals('')">
-                task_id not in (
-                    select
-                        task_id
-                    from
-                        tb_voc_mc_task_dtl
-                    where
-                        mc_prcd_id = #{mcPrcdId}
+            <if test="mcPrcdCd != null and !mcPrcdCd.equals('')">
+                TASK_CD NOT IN (
+                    SELECT
+                        TASK_CD
+                    FROM
+                        TB_VOC_MC_TASK_DTL
+                    WHERE
+                        MC_PRCD_CD = #{mcPrcdCd}
                 )
             </if>
         </where>

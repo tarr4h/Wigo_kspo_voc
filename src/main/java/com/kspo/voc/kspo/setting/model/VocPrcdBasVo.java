@@ -12,22 +12,22 @@ import lombok.Setter;
 public class VocPrcdBasVo extends BaseVo {
 
     private static final long serialVersionUID = -4401868272090337403L;
-	private String prcdId;
+	private String prcdCd;
     private String prcdNm;
     private String topComnCd;
     private String comnCd;
-    private int deadline;
-    private String dutyOrg;
+    private int ddlnSec;
+    private String dutyOrgId;
     private String dutyOrgNm;
-    private String dutyEmp;
+    private String dutyEmpId;
     private String dutyEmpNm;
-    private String dutyRole;
+    private String dutyRoleCd;
     private String dutyChngYn;
-    private String vocUseYn;
-    private String vocDtlUseYn;
-    private String vocCompulsoryYn;
-    private String vocDtlCompulsoryYn;
-    private String taskYn;
+    private String vocApplyYn;
+    private String vocDtlApplyYn;
+    private String vocEstlApplyYn;
+    private String vocDtlEstlApplyYn;
+    private String taskUseYn;
     private String regrId;
     private String regDt;
     private String amdrId;
@@ -36,14 +36,14 @@ public class VocPrcdBasVo extends BaseVo {
 
 
     public String getDeadlineConvert() {
-        return VocUtils.convertDeadline(deadline);
+        return VocUtils.convertDeadline(ddlnSec);
     }
 
-    public String getRequestCompulsoryYn(String target){
+    public String getRequestEstlYn(String target){
         if(target.equals("voc")){
-            return this.getVocCompulsoryYn();
+            return this.getVocEstlApplyYn();
         } else if(target.equals("vocDtl")){
-            return this.getVocDtlCompulsoryYn();
+            return this.getVocDtlEstlApplyYn();
         }
 
         return null;

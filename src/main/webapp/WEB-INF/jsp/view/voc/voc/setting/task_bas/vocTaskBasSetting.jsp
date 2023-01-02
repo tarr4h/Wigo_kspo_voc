@@ -66,7 +66,7 @@
     <div class="grid_wrapper">
         <div id="divGrid1"
              data-get-url="<c:url value='${urlPrefix}/selectTaskCodeList${urlSuffix}'/>"
-             data-grid-id="taskCdGrid"
+             data-grid-id="taskBasGrid"
              data-type="grid"
              data-grid-callback="onGridLoad"
              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocTaskBas.xml${urlSuffix}'/>"
@@ -79,7 +79,7 @@
 <script>
     function onGridLoad(){
         let param = {};
-        taskCdGrid.loadUrl('', param);
+        taskBasGrid.loadUrl('', param);
 
     };
 
@@ -91,7 +91,7 @@
         let event = $(this).data('event');
         switch(event){
             case 'save' : saveRows(); break;
-            case 'add'  : openModal('vocTaskCodeRegModal', 800, 600); break;
+            case 'add'  : openModal('vocTaskBasRegModal', 800, 600); break;
             case 'delete' : deleteRows(); break;
         }
     });
@@ -116,7 +116,7 @@
 
         if(target != null){
             let param = {
-                taskSeq : row.taskSeq,
+                taskCd : row.taskCd,
                 col : target
             };
             window.localStorage.setItem('vocTaskCodeSettingDblClickVal', JSON.stringify(param));
@@ -130,7 +130,7 @@
         }
         if(target != null){
             let param = {
-                taskSeq : json.taskSeq,
+                taskCd : json.taskCd,
                 col : target
             };
             window.localStorage.setItem('vocTaskCodeSettingSelectedBtnVal', JSON.stringify(param));
@@ -150,7 +150,7 @@
         }
 
         $.each(rows, (i, e) => {
-            if(e.autoApplyYn === 'N' && e.autoApplyAllYn === 'Y'){
+            if(e.autoApplyPrcdYn === 'N' && e.autoApplyAllPrcdYn === 'Y'){
                 param.result = false;
                 param.rowKey = e.rowKey;
             }
@@ -164,12 +164,12 @@
      *  - grid 전체 대상.
      */
     function saveRows(){
-        let rows = taskCdGrid.getJsonRows();
+        let rows = taskBasGrid.getJsonRows();
 
         let validateResult = validateCheckbox(rows);
         if(!validateResult.result){
             alert('자동적용여부 미설정 시 전체절차 자동적용을 사용하실 수 없습니다.');
-            taskCdGrid.focus(validateResult.rowKey, 'autoApplyAllYn');
+            taskBasGrid.focus(validateResult.rowKey, 'autoApplyAllPrcdYn');
             return false;
         }
 
@@ -195,7 +195,7 @@
      *  - grid에서 check된 row
      */
     function deleteRows(){
-        let rows = taskCdGrid.getCheckedJson();
+        let rows = taskBasGrid.getCheckedJson();
         if(rows.length === 0){
             alert('선택된 코드가 없습니다.');
         }
@@ -283,7 +283,7 @@
     function prcdSearchCallback(data){
         let jsonStorage = window.localStorage.getItem('vocTaskCodeSettingSelectedBtnVal');
         let parsingStorage = JSON.parse(jsonStorage);
-        data.taskSeq = parsingStorage.taskSeq;
+        data.taskCd = parsingStorage.taskCd;
 
         $.ajax({
             url: '<c:url value="${urlPrefix}/updateAutoApplyPrcd${urlSuffix}"/>',
@@ -331,18 +331,18 @@
      * @returns {boolean}
      */
     function openPrcdBasSearchModal(json){
-        let autoApplyYn = json.autoApplyYn;
-        if(autoApplyYn === 'N'){
+        let autoApplyPrcdYn = json.autoApplyPrcdYn;
+        if(autoApplyPrcdYn === 'N'){
             alert('자동적용 미사용시 세부설정이 불가합니다.');
             return false;
         }
 
-        let autoApplyAllYn = json.autoApplyAllYn;
+        let autoApplyAllPrcdYn = json.autoApplyAllPrcdYn;
 
-        if(autoApplyAllYn === 'N'){
-            let prcdSeq = json.autoApplyPrcdSeq;
+        if(autoApplyAllPrcdYn === 'N'){
+            let prcdCd = json.autoApplyPrcdCd;
 
-            let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdSeq=" + prcdSeq;
+            let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/vocPrcdBasSearchModal' + "?prcdCd=" + prcdCd;
             Utilities.openModal(url, 900, 600);
         } else {
             alert('전체절차 자동적용인 경우 세부설정이 불가합니다.');
