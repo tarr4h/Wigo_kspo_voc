@@ -18,7 +18,7 @@
         <setSort value="none"/>
 <!--        <headerRows value="1"/>-->
     </meta>
-        <column name="시퀀스" field="prcdSeq" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="ID" field="prcdId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="절차명" field="prcdNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
         <column name="최상단 공통코드" field="topComnCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="공통코드명" field="comnCd" type="combo" codeId="VOC020" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
@@ -31,11 +31,13 @@
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="적용권한" field="dutyRole" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당변경가능여부" field="dutyChngYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="N"/>
-        <column name="VOC등록 사용여부" field="regUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="VOC접수 사용여부" field="recUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="VOC등록 필수여부" field="regCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="VOC접수 필수여부" field="recCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC 사용여부" field="vocUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="상세VOC 사용여부" field="vocDtlUseYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="VOC 필수여부" field="vocCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="상세VOC 필수여부" field="vocDtlCompulsoryYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
         <column name="TASK 사용여부" field="taskYn" type="checkbox" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="수정자" field="modUsr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="수정일시" field="modDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="등록자" field="regrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="수정자" field="amdrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="수정일시" field="amdDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
 </grid>

@@ -8,9 +8,9 @@ import com.kspo.base.common.model.AbstractTreeVo;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.kspo.common.service.VocAbstractService;
 import com.kspo.voc.kspo.common.stnd.CodeGeneration;
-import com.kspo.voc.kspo.setting.dao.VocProcedureMappingDao;
+import com.kspo.voc.kspo.setting.dao.VocManagementCdMappingDao;
 import com.kspo.voc.kspo.setting.model.VocManagementCodeVo;
-import com.kspo.voc.kspo.setting.model.VocProcedureMappingVo;
+import com.kspo.voc.kspo.setting.model.VocManagementCdMappingVo;
 import com.kspo.voc.sys.dao.IVocDao;
 
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class VocProcedureMappingService extends VocAbstractService {
+public class VocManagementCdMappingService extends VocAbstractService {
 
     @Autowired
-    VocProcedureMappingDao dao;
+    VocManagementCdMappingDao dao;
 
     @Override
     public IVocDao getDao() {
@@ -34,7 +34,7 @@ public class VocProcedureMappingService extends VocAbstractService {
         return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
     }
 
-    public Object vocProcedureMappingTree(EzMap param) {
+    public Object vocManagementCdMappingTree(EzMap param) {
         return AbstractTreeVo.makeHierarchy(dao.selectList(param));
     }
 
@@ -65,29 +65,29 @@ public class VocProcedureMappingService extends VocAbstractService {
     }
 
     public Object delete(Map<String, Object> param){
-        VocProcedureMappingVo topVo = dao.select(param);
-        List<VocProcedureMappingVo> childList = findChildList(param);
+        VocManagementCdMappingVo topVo = dao.select(param);
+        List<VocManagementCdMappingVo> childList = findChildList(param);
         childList.add(0, topVo);
 
         param.put("list", childList);
         return dao.delete(param);
     }
 
-    public List<VocProcedureMappingVo> findChildList(Object param){
-        List<VocProcedureMappingVo> list = new ArrayList<>();
+    public List<VocManagementCdMappingVo> findChildList(Object param){
+        List<VocManagementCdMappingVo> list = new ArrayList<>();
 
         Map<String, Object> map = new HashMap<>();
-        if(param instanceof VocProcedureMappingVo){
-            map.put("prntsMappingSeq", ((VocProcedureMappingVo) param).getMappingSeq());
+        if(param instanceof VocManagementCdMappingVo){
+            map.put("prntsMappingSeq", ((VocManagementCdMappingVo) param).getMappingSeq());
         } else if(param instanceof HashMap){
             map.put("prntsMappingSeq", ((HashMap<?, ?>) param).get("mappingSeq"));
         }
 
-        List<VocProcedureMappingVo> voList = dao.selectList(map);
+        List<VocManagementCdMappingVo> voList = dao.selectList(map);
 
         if(!voList.isEmpty()){
             list.addAll(voList);
-            for(VocProcedureMappingVo vo : voList){
+            for(VocManagementCdMappingVo vo : voList){
                 list.addAll(findChildList(vo));
             }
         }
@@ -106,7 +106,7 @@ public class VocProcedureMappingService extends VocAbstractService {
         Map<String, Object> map = new HashMap<>();
         map.put("mappingSeq", param.get("prntsCd"));
 
-        VocProcedureMappingVo prntsVo = dao.select(map);
+        VocManagementCdMappingVo prntsVo = dao.select(map);
 
 //      현재 요소의 부모코드가 최상단코드가 아니면서 상위 mapping에 등록되어 있지 않은 경우
         if(!reqVo.getTopCd().equals(reqVo.getPrntsCd()) && !reqVo.getPrntsCd().equals(prntsVo.getManagementCd())) {
@@ -115,7 +115,7 @@ public class VocProcedureMappingService extends VocAbstractService {
         }
 
         // 상위 부모코드 목록 조회
-        List<VocProcedureMappingVo> list = findPrntsList(prntsVo);
+        List<VocManagementCdMappingVo> list = findPrntsList(prntsVo);
         list.add(prntsVo);
 
         // prnts가 무조건 존재함 == size가 최소 1
@@ -133,9 +133,9 @@ public class VocProcedureMappingService extends VocAbstractService {
         // 부모코드의 자식요소 조회(siblings)
         Map<String, Object> sbMap = new HashMap<>();
         sbMap.put("prntsMappingSeq", prntsVo.getMappingSeq());
-        List<VocProcedureMappingVo> siblings = dao.selectList(sbMap);
+        List<VocManagementCdMappingVo> siblings = dao.selectList(sbMap);
 
-        for(VocProcedureMappingVo vo : siblings){
+        for(VocManagementCdMappingVo vo : siblings){
             if(vo.getManagementCd().equals(reqVo.getManagementCd())){
                 returnMap.put("msg", "같은 레벨에 동일한 코드가 존재합니다.");
                 return returnMap;
@@ -148,8 +148,8 @@ public class VocProcedureMappingService extends VocAbstractService {
         return returnMap;
     }
 
-    public List<VocProcedureMappingVo> findPrntsList(VocProcedureMappingVo vo){
-        List<VocProcedureMappingVo> list = new ArrayList<>();
+    public List<VocManagementCdMappingVo> findPrntsList(VocManagementCdMappingVo vo){
+        List<VocManagementCdMappingVo> list = new ArrayList<>();
         if(vo.getPrntsMappingSeq() == null){
             return list;
         }
@@ -157,7 +157,7 @@ public class VocProcedureMappingService extends VocAbstractService {
         Map<String, Object> param = new HashMap<>();
         param.put("mappingSeq", vo.getPrntsMappingSeq());
 
-        VocProcedureMappingVo prnts = dao.select(param);
+        VocManagementCdMappingVo prnts = dao.select(param);
         if(prnts != null){
             list.add(prnts);
             list.addAll(findPrntsList(prnts));

@@ -34,11 +34,11 @@ public class VocRegProcedureSettingService extends VocAbstractService {
         return AbstractTreeVo.makeHierarchy(selectVocManagementCodeTree(param));
     }
 
-    public List<VocProcedureCodeVo> selectAvailablePrcdBasList(Map<String, Object> param) {
-        List<VocProcedureCodeVo> prcdBasList = selectPrcdBasList(param);
+    public List<VocProcedureBasVo> selectAvailablePrcdBasList(Map<String, Object> param) {
+        List<VocProcedureBasVo> prcdBasList = selectPrcdBasList(param);
         List<VocProcedureVo> prcdList = selectProcedureList(param);
         for(VocProcedureVo prcd : prcdList){
-            prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdSeq().equals(prcd.getPrcdSeq()));
+            prcdBasList.removeIf(prcdBas -> prcdBas.getPrcdId().equals(prcd.getPrcdSeq()));
         }
 
         return prcdBasList;
@@ -73,7 +73,7 @@ public class VocRegProcedureSettingService extends VocAbstractService {
             }
 
             // 참조 prcd의 담당부서/담당자/적용권한이 없다면 분류코드 담당부서를 SET
-            VocProcedureCodeVo prcdBas = selectPrcdBas(prcdSeq);
+            VocProcedureBasVo prcdBas = selectPrcdBas(prcdSeq);
             if(prcdBas.getDutyEmp() == null && prcdBas.getDutyOrg() == null && prcdBas.getDutyRole() == null){
                 prcd.setDutyOrg(primaryOrg);
             } else {
@@ -87,9 +87,9 @@ public class VocRegProcedureSettingService extends VocAbstractService {
                 log.debug("******* insert task *******");
                 param.put("autoApplyAllYn", "Y");
                 param.put("autoApplyPrcdSeq", prcdSeq);
-                List<VocTaskCodeVo> taskList = selectTaskBasList(param);
+                List<VocTaskBasVo> taskList = selectTaskBasList(param);
 
-                for(VocTaskCodeVo task : taskList){
+                for(VocTaskBasVo task : taskList){
                     EzMap taskMap = (EzMap) Utilities.beanToMap(task);
                     String maxMcTaskSeq = dao.selectMaxMcTaskSeq();
                     String mcTaskSeq = CodeGeneration.generateCode(maxMcTaskSeq, CodeGeneration.TASK);
@@ -306,14 +306,14 @@ public class VocRegProcedureSettingService extends VocAbstractService {
 
         String target = (String) param.get("target");
 
-        List<VocProcedureCodeVo> prcdBasList = selectPrcdBasList(param);
+        List<VocProcedureBasVo> prcdBasList = selectPrcdBasList(param);
         prcdBasList.removeIf(value -> value.getRequestCompulsoryYn(target).equals("N"));
         int requiredSize = prcdBasList.size();
 
         int compulsoryCnt = 0;
         for(int i = 0; i < prcdList.size(); i++){
             VocProcedureVo prcd = prcdList.get(i);
-            VocProcedureCodeVo prcdBas = selectPrcdBas(prcd);
+            VocProcedureBasVo prcdBas = selectPrcdBas(prcd);
             if(prcdBas.getRequestCompulsoryYn(target).equals("Y")){
                 compulsoryCnt++;
             }

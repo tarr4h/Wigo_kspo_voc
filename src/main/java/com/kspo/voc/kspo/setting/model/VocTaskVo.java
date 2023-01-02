@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocTaskVo extends VocTaskCodeVo{
+public class VocTaskVo extends VocTaskBasVo {
 
     private static final long serialVersionUID = 7276553724431526965L;
 	private String mcTaskSeq;

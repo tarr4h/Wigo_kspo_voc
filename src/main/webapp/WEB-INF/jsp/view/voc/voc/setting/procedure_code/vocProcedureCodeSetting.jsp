@@ -68,7 +68,7 @@
              data-get-url="<c:url value='${urlPrefix}/selectProcedureCodeGrid${urlSuffix}'/>"
              data-grid-id="procedureCdGrid"
              data-type="grid"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureCode.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocProcedureBas.xml${urlSuffix}'/>"
              style="width:100%;height:735px;"
         >
         </div>
@@ -120,6 +120,7 @@
             success(res){
                 if(res.result){
                     alert(res.msg);
+                    window.location.reload();
                 }
             },
             error: console.log
@@ -137,7 +138,7 @@
         let parsingJson = JSON.parse(jsonStorage);
 
         let param = data;
-        param.prcdSeq = parsingJson.prcdSeq;
+        param.prcdId = parsingJson.prcdId;
         param.deadline = parsingJson.deadline_convert;
         updateDeadline(param);
     }
@@ -184,7 +185,7 @@
 
         let row = gridView.getJsonRow(rowIndex);
         let param = {
-            prcdSeq : row.prcdSeq,
+            prcdId : row.prcdId,
             col : target
         };
         window.localStorage.setItem('vocProcedureCodeSettingSelectedBtnVal', JSON.stringify(param));

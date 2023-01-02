@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocProcedureVo extends VocProcedureCodeVo implements Comparable<VocProcedureVo>{
+public class VocProcedureVo extends VocProcedureBasVo implements Comparable<VocProcedureVo>{
 
 	private static final long serialVersionUID = 1L;
 	private String mcPrcdSeq;

@@ -26,7 +26,7 @@
         select
             <include refid="vocManagementCodeCols"/>
         from
-            tb_voc_management_code
+            tb_voc_management_cd_bas
         <where>
             <if test="topComnCd != null and !topComnCd.equals('')">
                 top_comn_cd = #{topComnCd}
@@ -53,7 +53,7 @@
         select
             <include refid="vocManagementCodeCols"/>
         from
-            tb_voc_management_code
+            tb_voc_management_cd_bas
         <where>
             <if test="managementCd != null and !managementCd.equals('')">
                 management_cd = #{managementCd}
@@ -65,27 +65,27 @@
         </where>
     </select>
 
-    <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+    <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
         select
             *
         from
-            tb_voc_procedure_bas
+            tb_voc_prcd_bas
         where
-            prcd_seq = #{prcdSeq}
+            prcd_id = #{prcdId}
     </select>
 
-    <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureCodeVo">
+    <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocProcedureBasVo">
         select
             *
         from
-            tb_voc_procedure_bas
+            tb_voc_prcd_bas
         where
-            reg_use_yn = 'Y'
+            voc_use_yn = 'Y'
         order by
-            prcd_seq
+            prcd_id
     </select>
 
-    <select id="selectTaskBasList" resultType="com.kspo.voc.kspo.setting.model.VocTaskCodeVo">
+    <select id="selectTaskBasList" resultType="com.kspo.voc.kspo.setting.model.VocTaskBasVo">
         select
             *
         from
@@ -94,18 +94,18 @@
             <if test="autoApplyAllYn != null and !autoApplyAllYn.equals('')">
                 AUTO_APPLY_ALL_YN = #{autoApplyAllYn}
             </if>
-            <if test="autoApplyPrcdSeq != null and !autoApplyPrcdSeq.equals('')">
+            <if test="autoApplyPrcdId != null and !autoApplyPrcdId.equals('')">
                 or
-                AUTO_APPLY_PRCD_SEQ = #{autoApplyPrcdSeq}
+                AUTO_APPLY_PRCD_ID = #{autoApplyPrcdId}
             </if>
-            <if test="mcPrcdSeq != null and !mcPrcdSeq.equals('')">
-                task_seq not in (
-                select
-                task_seq
-                from
-                voc_task
-                where
-                mc_prcd_seq = #{mcPrcdSeq}
+            <if test="mcPrcdId != null and !mcPrcdId.equals('')">
+                task_id not in (
+                    select
+                        task_id
+                    from
+                        tb_voc_mc_task_dtl
+                    where
+                        mc_prcd_id = #{mcPrcdId}
                 )
             </if>
         </where>
@@ -121,9 +121,9 @@
             select
                 func_cd
             from
-                tb_voc_activity
+                tb_voc_activity_dtl
             where
-                mc_task_seq = #{mcTaskSeq}
+                mc_task_id = #{mcTaskId}
             )
     </select>
 
