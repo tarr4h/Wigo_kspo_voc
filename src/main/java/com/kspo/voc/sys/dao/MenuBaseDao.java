@@ -11,7 +11,7 @@ import com.kspo.voc.sys.model.MenuVo;
 @VocMapper
 public interface MenuBaseDao extends IVocDao {
 
-	MenuVo selectMaxInfo(Object so) throws EgovBizException;
+	MenuVo selectMaxInfo(Object param) throws EgovBizException;
 
 	List<MenuVo> selectTreeList(EzMap param) throws EgovBizException;
 

@@ -94,14 +94,14 @@ $(document).ready(function() {
 var _gridHeaderHeight = 35;
 var _gridPaginationHeight = 28;
 var _defaultRecordCountPerPage = 30;
-tui.Grid.applyTheme('cmm',{
+tui.Grid.applyTheme('kspo',{
 //	outline : {
 //		showVerticalBorder : true,
 //		border : '#CCCCCC'
 //	},
 	area : {
 		header : {
-			 background: '#ffeded',
+			 background: '#FAFCFF',
 	            border: '#CCCCCC'
 		},
 		body : {
@@ -146,7 +146,7 @@ tui.Grid.applyTheme('cmm',{
               showVerticalBorder: true
             },
             header: {
-              background: '#ffeded',
+              background: '#FAFCFF',
               border: '#ccc',
               text : '#333333',
               showVerticalBorder: true

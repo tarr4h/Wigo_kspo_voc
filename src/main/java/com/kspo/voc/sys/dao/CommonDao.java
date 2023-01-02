@@ -5,5 +5,5 @@ import com.kspo.voc.sys.mapper.VocMapper;
 @VocMapper
 public interface CommonDao extends IVocDao {
 
-	public String getAutoSeq(Object param);
+	String getAutoSeq(Object param);
 }

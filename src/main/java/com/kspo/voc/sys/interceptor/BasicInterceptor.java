@@ -43,18 +43,13 @@ public class BasicInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		try {
-
-			if (!(handler instanceof HandlerMethod))
-				return true;
-			String urlSuffix = propertiesService.getString("urlSuffix", "");
-			request.setAttribute("urlSuffix", urlSuffix);
-			request.setAttribute("httpServletResponse", response);
-			SessionUtil.touch(response);
+		if (!(handler instanceof HandlerMethod))
 			return true;
-		} finally {
-
-		}
+		String urlSuffix = propertiesService.getString("urlSuffix", "");
+		request.setAttribute("urlSuffix", urlSuffix);
+		request.setAttribute("httpServletResponse", response);
+		SessionUtil.touch(response);
+		return true;
 	}
 
 }
