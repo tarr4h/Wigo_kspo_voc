@@ -9,8 +9,8 @@
             TB_VOC_MGMT_CD_REL tvmcr inner join TB_VOC_MGMT_CD_BAS tvmcb
             on tvmcr.MGMT_CD = tvmcb.MGMT_CD
         <where>
-            <if test="mappingSeq != null and !mappingSeq.equals('')">
-                mapping_seq = #{mappingSeq}
+            <if test="mappCd != null and !mappCd.equals('')">
+                MAPP_CD = #{mappCd}
             </if>
             <if test="mgmtCd != null and !mgmtCd.equals('')">
                 and
@@ -26,29 +26,29 @@
             TB_VOC_MGMT_CD_REL tvmcr inner join TB_VOC_MGMT_CD_BAS tvmcb
             on tvmcr.MGMT_CD = tvmcb.MGMT_CD
         <where>
-            <if test="prntsMappingSeq != null and !prntsMappingSeq.equals('')">
+            <if test="prntsMappCd != null and !prntsMappCd.equals('')">
                 and
-                prnts_mapping_seq = #{prntsMappingSeq}
+                PRNTS_MAPP_CD = #{prntsMappCd}
             </if>
         </where>
     </select>
 
     <select id="selectMaxCd" resultType="String">
         select
-            max(mapping_seq)
+            MAX(MAPP_CD)
         from
             TB_VOC_MGMT_CD_REL
     </select>
 
     <insert id="insert">
         insert into TB_VOC_MGMT_CD_REL
-        (MAPPING_SEQ, MGMT_CD, PRNTS_MAPPING_SEQ, MGMT_CD_LVL_NO, REGR_ID)
+        (MAPP_CD, MGMT_CD, PRNTS_MAPP_CD, MAPP_LVL_NO, REGR_ID)
         values
             (
-             #{mappingSeq},
+             #{mappCd},
              #{mgmtCd},
-             #{prntsMappingSeq},
-             #{lvl},
+             #{prntsMappCd},
+             #{mappLvlNo},
              #{loginUsr}
             )
     </insert>
@@ -56,9 +56,9 @@
     <delete id="delete">
         delete from TB_VOC_MGMT_CD_REL
         where
-            mapping_seq in
+            MAPP_CD in
             <foreach collection="list" item="vo" open="(" separator="," close=")">
-                #{vo.mappingSeq}
+                #{vo.mappCd}
             </foreach>
     </delete>
 </mapper>

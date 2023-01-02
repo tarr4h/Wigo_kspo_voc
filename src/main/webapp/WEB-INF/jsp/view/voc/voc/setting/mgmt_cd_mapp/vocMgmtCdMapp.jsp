@@ -87,7 +87,7 @@
      */
     function deleteMapping(){
         let target = $('#divTree').getSelectedNode();
-        let mappingSeq = target.mappingSeq;
+        let mappCd = target.mappCd;
 
         $.ajax({
             url: '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
@@ -110,9 +110,9 @@
     function addMapping(mgmtCd){
         let target = $('#divTree');
         let node = target.getSelectedNode();
-        let prntsCd = node == null ? null : node.id;
+        let prntsMappCd = node == null ? null : node.id;
         let param = {
-            prntsCd,
+            prntsMappCd,
             mgmtCd
         };
 
