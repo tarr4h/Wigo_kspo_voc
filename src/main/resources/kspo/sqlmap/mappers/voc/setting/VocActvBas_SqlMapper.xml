@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocActvBasDao">
+
+
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocActvBasVo">
+        SELECT
+            *
+        FROM
+            TB_VOC_ACTV_BAS
+    </select>
+
+    <insert id="insert">
+        INSERT INTO TB_VOC_ACTV_BAS
+        (ACTV_CD, FUNC_TP_CD, ACTV_NM, CALL_MTHD_CD, ACTV_EXPLN, REGR_ID, AMDR_ID)
+        VALUES(
+               #{actvCd},
+               #{funcTpCd},
+               #{actvNm},
+               #{callMthdCd},
+               #{actvExpln},
+               #{loginUsr},
+               #{loginUsr}
+        )
+    </insert>
+
+    <update id="update">
+        <foreach collection="rows" item="item" open="DECLARE BEGIN" close=";END;" separator=";">
+            UPDATE TB_VOC_ACTV_BAS
+            SET
+                ACTV_NM = #{item.actvNm},
+                FUNC_TP_CD = #{item.funcTpCd},
+                CALL_MTHD_CD = #{item.callMthdCd},
+                ACTV_EXPLN = #{item.actvExpln},
+                USE_YN = #{item.useYn},
+                AMDR_ID = #{loginUsr},
+                AMD_DT = SYSDATE
+            WHERE
+                ACTV_CD = #{item.actvCd}
+        </foreach>
+    </update>
+
+    <select id="selectMaxCd" resultType="String">
+        SELECT
+            MAX(ACTV_CD)
+        FROM
+            TB_VOC_ACTV_BAS
+    </select>
+</mapper>

@@ -75,34 +75,4 @@
             org_id = #{orgId}
         </if>
     </select>
-
-    <!--  list 관련  -->
-    <sql id="vocListCols">
-        voc_seq,
-        channel,
-        status_cd,
-        title,
-        content,
-        reg_comment,
-        cust_id,
-        issue_yn,
-        issue_grade,
-        ownership_org,
-        amdr_id,
-        amd_dt,
-        public_yn,
-        del_yn,
-        (select status_nm from voc_status where status_cd = vr.status_cd) "statusCdNm"
-    </sql>
-    <sql id="vocListStatusCondition">
-        <if test="statusCd instanceof String">
-            status_cd = #{statusCd}
-        </if>
-        <if test="statusCd instanceof java.util.ArrayList">
-            status_cd in
-            <foreach collection="statusCd" open="(" separator="," close=")" item="item">
-                #{item}
-            </foreach>
-        </if>
-    </sql>
 </mapper>

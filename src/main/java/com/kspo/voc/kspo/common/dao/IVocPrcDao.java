@@ -21,30 +21,7 @@ public interface IVocPrcDao extends IVocDao {
 
     <T> List<T> selectPrcdBasList(Object param);
 
-    <T> List<T> selectActivityFuncBasList(Object param);
-
-
-    <T> T selectProcedure(Object param);
-
-    <T> List<T> selectProcedureList(Object param);
-
-    <T> List<T> selectTaskList(Object param);
-
-    <T> List<T> selectActivityList(Object param);
-
-    String selectDirCd(Object param);
-
-    List<EzMap> selectDutyOrgList(Object param);
-
-    Map<String, Object> selectVocStatus(String prcdSeq, String status);
-
-
     <T> List<T> getMgmtCdSelect(Map<String, Object> param);
-
-    <T> T selectStatusCd(Object param);
-
-    <T> List<T> selectStatusList(Object param);
-
 
 }
 

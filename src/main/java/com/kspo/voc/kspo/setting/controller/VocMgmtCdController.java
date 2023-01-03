@@ -57,7 +57,7 @@ public class VocMgmtCdController {
     }
 
     @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
-    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
+    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param) throws EgovBizException {
         List<VocMgmtCdVo> existCdList = service.vocMgmtCdList(param);
         param.put("existCd", existCdList);
         return VocUtils.selectComnCdOptionList(param);
