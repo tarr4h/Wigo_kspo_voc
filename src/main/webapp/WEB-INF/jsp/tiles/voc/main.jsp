@@ -346,7 +346,7 @@ function getOffsetTime(){
 }
 $(document).ready(function() {
 	// openMenuTab("MAIN","통합고객정보 관리","/main",true);
-	openMenuTab("MAIN","main","/main",true);
+	openMenuTab("MAIN","메인","/main",true);
 
 	getOffsetTime();
 
