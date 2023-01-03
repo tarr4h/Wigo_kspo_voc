@@ -5,6 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="gLeft">
 
-<h1>voc-main</h1>
+    <h1>VOC 가나다라마바사아자차카타파하</h1>
 
 </div>
