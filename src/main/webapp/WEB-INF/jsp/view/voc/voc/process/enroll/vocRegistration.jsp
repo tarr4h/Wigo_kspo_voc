@@ -105,6 +105,7 @@
     </form>
 </div>
 
+
 <script>
     const regSeq = '${param.regSeq}';
     const $channelWrapper = $('#channelWrapper');
