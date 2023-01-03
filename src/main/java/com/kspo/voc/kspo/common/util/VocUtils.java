@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +36,6 @@ public class VocUtils extends Utilities {
     @Autowired
     VocComnService cmService;
 
-
-
     @PostConstruct
     public void init(){
         try {
@@ -49,16 +48,6 @@ public class VocUtils extends Utilities {
     public static int parseIntObject(Object obj){
         return Integer.parseInt(String.valueOf(obj));
     }
-
-//    public static void setPagination(EzMap param, EzPaginationInfo page){
-//        int currentPage = page.getCurrentPageNo();
-//        int limit = page.getRecordCountPerPage();
-//        int pageStart = (currentPage - 1) * limit + 1;
-//        int pageEnd = currentPage * limit;
-//
-//        param.put("pageStart", pageStart);
-//        param.put("pageEnd", pageEnd);
-//    }
 
     public static void setOrgInfoToMap(EzMap org) {
         String orgId = (String) org.get("orgId");
@@ -116,7 +105,7 @@ public class VocUtils extends Utilities {
         return comnService.selectComnCdList(param);
     }
 
-    public static Object selectComnCdOptionList(Map<String, Object> param){
+    public static Object selectComnCdOptionList(Map<String, Object> param) throws EgovBizException {
         StringBuilder sb = new StringBuilder();
         List<ComnCdBaseVo> comnCdList = comnService.selectComnCdList(param);
         for(ComnCdBaseVo comnCd : comnCdList){

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping({"vocPrcdCdBas", "{menuId}/vocPrcdCdBas"})
+@RequestMapping({"vocPrcdBas", "{menuId}/vocPrcdBas"})
 public class VocPrcdCdBasController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class VocPrcdCdBasController {
     }
 
     @GetMapping(value = "selectComnCdList", produces = "application/text;charset=utf-8")
-    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param){
+    public @ResponseBody Object selectComnCdList(@RequestParam Map<String, Object> param) throws EgovBizException {
         List<VocPrcdBasVo> list = service.selectProcedureCodeList(param);
         param.put("existCd", list);
         return VocUtils.selectComnCdOptionList(param);
