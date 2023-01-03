@@ -401,6 +401,7 @@ function createGridObject(grd) {
     var isPost = grd.attr("data-post") != "N";
     var forceReadOnly = grd.attr("data-read-only") == "Y";
     var scrollX = grd.attr("data-scroll-x") == "Y";
+    var scrollY = grd.attr("data-scroll-y") != "N";
     var autoResize = grd.attr("data-auto-resize") != "N";
     var loadFocus = grd.attr("data-load-focus") == "Y";
     var hasMenu = grd.attr("data-menu") != "N";
@@ -444,6 +445,7 @@ function createGridObject(grd) {
         gridHeight : gridHeight,
         forceReadOnly : forceReadOnly,
         scrollX : scrollX,
+        scrollY : scrollY,
         autoResize : autoResize,
         loadFocus : loadFocus,
         tmplUrl : url,
@@ -1002,7 +1004,7 @@ function createGridObject(grd) {
                 bodyHeight : 'fitToParent',
                 // data: null,
                  scrollX : this.scrollX, 
-                // scrollY : false,
+                 scrollY : this.scrollY,
                 // columns : jsonColumns,
                 
                 
