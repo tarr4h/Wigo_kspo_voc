@@ -283,9 +283,9 @@ function addExcelLog(excelName){
 .mSort2 ul {
 width: 100%;
 }
-.btnTopMargin {
-	margin-top: 14px;
-}
+/* .btnTopMargin { */
+/* 	margin-top: 14px; */
+/* } */
 /* .mGrid1 .gLeft .mBox1{height:730px;} */
 
 .gridWrap{
@@ -433,4 +433,7 @@ a.ui-button:active,
 	color: #ffffff;
 }
 
+.ui-datepicker {
+z-index: 9999 !important;
+}
 </style>
