@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
-import com.kspo.voc.kspo.process.model.VocApplyPrcdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
@@ -37,15 +36,8 @@ public interface IVocPrcDao extends IVocDao {
 
     List<EzMap> selectDutyOrgList(Object param);
 
-    List<VocApplyPrcdVo> selectRegPrcdList(Object param);
-
-    int updateRegPrcd(Object param);
-
-    <T> T selectRegPrcd(Object param);
-
     Map<String, Object> selectVocStatus(String prcdSeq, String status);
 
-    int updateRegistrationStatus(Object param);
 
     <T> List<T> getMgmtCdSelect(Map<String, Object> param);
 
