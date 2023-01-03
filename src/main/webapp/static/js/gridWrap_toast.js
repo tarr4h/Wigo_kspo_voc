@@ -91,7 +91,8 @@ $(document).ready(function() {
 	});
 });
 
-var _gridHeaderHeight = 35;
+var _gridHeaderHeight = 33;
+var _gridRowHeight = 30;
 var _gridPaginationHeight = 28;
 var _defaultRecordCountPerPage = 30;
 tui.Grid.applyTheme('kspo',{
@@ -113,7 +114,7 @@ tui.Grid.applyTheme('kspo',{
 	            border: '#CCCCCC'
 		}
 	},
-      selection: {
+      	selection: {
             background: '#4daaf9',
             border: '#004082'
           },
@@ -994,9 +995,9 @@ function createGridObject(grd) {
             var options = {
                 el : container,
                 data : dataSource,
-                minRowHeight : 35,
-//                header: {height:30},
-                rowHeight : 'auto',
+                minRowHeight : _gridRowHeight,
+                header: {height:_gridHeaderHeight},
+                rowHeight : _gridRowHeight /*'auto'*/,
 //              bodyHeight : bodyHeight - pageHeightOffset /*fitToParent*/, 
                 bodyHeight : 'fitToParent',
                 // data: null,
@@ -1017,9 +1018,14 @@ function createGridObject(grd) {
                 options.selectionUnit = "row"; 
             }
             if(meta.headerRows>1){
-                options.header={
-                    height: meta.headerRows * _gridHeaderHeight
-                };
+				if(options.header){
+					options.header={
+	                    height: meta.headerRows * _gridHeaderHeight
+	                };	
+				} else {
+					options.header.height = meta.headerRows * _gridHeaderHeight;
+				}
+                
             }
             if (rowHeaders.length)
                 options.rowHeaders = rowHeaders;
