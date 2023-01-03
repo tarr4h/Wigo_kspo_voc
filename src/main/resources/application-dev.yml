@@ -57,7 +57,4 @@ spring:
 
 #log
 logging:
-  config: classpath:logback-dev.xml
-  level:
-    com.kspo: DEBUG
-    org.springframework.web: INFO
+  config: classpath:log4j2-dev.xml

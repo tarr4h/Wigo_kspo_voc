@@ -57,7 +57,7 @@ spring:
 
 #log
 logging:
-  config: classpath:logback-local.xml
-  level:
-    com.kspo: DEBUG
-    org.springframework.web: INFO
+  config: classpath:log4j2-local.xml
+#  level:
+#    com.kspo: DEBUG
+#    org.springframework.web: INFO
