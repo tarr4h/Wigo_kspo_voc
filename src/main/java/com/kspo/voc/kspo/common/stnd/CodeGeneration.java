@@ -12,6 +12,7 @@ public enum CodeGeneration {
     PROCEDURE("PD", 10),
     TASK_BAS("TB", 10),
     TASK("TK", 10),
+    ACTIVITY_BAS("AB", 10),
     ACTIVITY("AT", 10),
     PROCEDURE_MAPPING("PM", 10),
     REGISTRATION("VM", 12),
