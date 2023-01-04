@@ -12,41 +12,45 @@
 	<tiles:insertTemplate template="header.jsp" />
 </head>
 
-<body class="bgGray"> <!-- 회색배경 : class="bgGray" -->
+<body class="bg-light-blue"> <!-- 회색배경 : class="bgGray" -->
 <%-- <form id="frmMain" name="frmMain"> --%>
     <!-- module -->
-    <div class="mVm1 mLogin1">
-    
-        <div class="cont">
-            <fieldset>
-                <legend>로그인</legend>
-                <h1>
-<%--                    <img src="/static/voc/images/logo_login.png" alt="Create Well Life CERAGEM 통함 CRM">--%>
-                    VOC
-                </h1>
-                <dl>
-                    <dt>아이디</dt>
-                    <dd>
-                        <input type="text" class="it" data-enter="signIn" id="loginId" name="loginId" class="form-control" placeholder="id" value="wigo" >
-                    </dd>
-                    <dt>비밀번호</dt>
-                    <dd>
-                        <input type="password" data-enter="signIn" id="loginPwd" name="loginPwd" value="1qa@WS" class="it">
-                    </dd>
-                </dl>
-                <div class="save">
-                    <label class="mCheckbox1">
-                        <input type="checkbox" title="아이디 저장" id="saveId">
-                        <span class="label">아이디 저장</span>
-                    </label>
+<%--    <div class="mVm1 mLogin1">--%>
+
+        <div class="login-con">
+            <div class="login-box">
+                <div class="login-img"></div>
+                <div class="login-form">
+                    <fieldset>
+                        <legend>로그인</legend>
+                        <div><img src="/static/kspo/images/logo_login.png" alt="KSPO국민체육진흥공단"></div>
+                        <h1>KSPO-VOC</h1>
+                        <dl>
+                            <dt>아이디</dt>
+                            <dd>
+                                <input type="text" id="loginId" data-enter="signIn" class="it" title="아이디" placeholder="아이디를 입력하세요.">
+                            </dd>
+                            <dt>비밀번호</dt>
+                            <dd>
+                                <input type="password" data-enter="signIn" id="loginPwd" class="it" title="비밀번호" placeholder="비밀번호를 입력하세요.">
+                            </dd>
+                        </dl>
+                        <div class="save">
+                            <label class="mCheckbox1">
+                                <input type="checkbox" id="saveId" title="아이디 저장">
+                                <span class="label">아이디 저장</span>
+                            </label>
+                        </div>
+                        <div class="button">
+                            <a href="#" class="btn">로그인</a>
+                        </div>
+                    </fieldset>
+
                 </div>
-                <div class="button">
-                    <a href="#" class="btn" data-click="signIn">로그인</a>
-                </div>
-            </fieldset>
+            </div>
         </div>
-      
-    </div>
+
+<%--    </div>--%>
     <!-- //module -->
 
 <%-- 	 </form> --%>
