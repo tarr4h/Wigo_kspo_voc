@@ -51,7 +51,14 @@ spring:
 #    callback-url: https://localhost:8081/login/oauth
 #    client-id: zEgB3stWau126Qf9SWHf
 #    client-secret: asdfjalsdjflajsdfljalsdfjlajsdflj
-
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    path: /api-docs
+  server-url : http://localhost:8080/
+  swagger-ui:
+    path: /api/
+    enabled: true
 
 #log
 logging:

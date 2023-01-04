@@ -39,8 +39,15 @@ public class EzJwtAuthenticationFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		request.setAttribute("httpServletResponse", response);
 		HttpServletRequest req = (HttpServletRequest) request;
+		if(!req.getRequestURI().toString().startsWith(Constants._API_URL+"/"))
+		{
+			chain.doFilter(request, response);
+			return;
+		}
+		
+		request.setAttribute("httpServletResponse", response);
+		
 		request.setAttribute(Constants._API_CALL_URL_KEY, req.getRequestURI());
 		String token = EzJwtService.resolveToken((HttpServletRequest) request);
 		Authentication auth = jwtTokenProvider.getAuthentication(token, (HttpServletRequest) request);

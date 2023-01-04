@@ -160,7 +160,7 @@ public class EzJwtService {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if ("ceragem-token".equals(cookie.getName())) {
+				if ("voc-token".equals(cookie.getName())) {
 					String tokenCookie = cookie.getValue();
 					try {
 						JwtUtility.verifyJWT(tokenCookie);

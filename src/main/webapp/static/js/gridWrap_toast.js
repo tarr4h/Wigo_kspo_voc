@@ -96,22 +96,22 @@ var _gridRowHeight = 30;
 var _gridPaginationHeight = 28;
 var _defaultRecordCountPerPage = 30;
 tui.Grid.applyTheme('kspo',{
-//	outline : {
-//		showVerticalBorder : true,
-//		border : '#CCCCCC'
-//	},
+	outline : {
+		showVerticalBorder : false,
+		border : '#C3D7ED'
+	},
 	area : {
 		header : {
 			 background: '#FAFCFF',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		},
 		body : {
 			 background: '#eeeeee',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		},
 		summary : {
 			 background: '#eeeeee',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		}
 	},
       	selection: {
@@ -142,19 +142,19 @@ tui.Grid.applyTheme('kspo',{
           cell: {
             normal: {
               background: '#fbfbfb',
-//              border: '#fbfbfb',
+              border: '#C3D7ED',
               text : '#333333',
               showVerticalBorder: false
             },
             header: {
               background: '#FAFCFF',
-//              border: '#FAFCFF',
+              border: '#C3D7ED',
               text : '#333333',
               showVerticalBorder: false
             },
             summary : {
                 background: '#F6F6F6',
-                border: '#cccccc',
+                border: '#C3D7ED',
                 text : '#333333',
                 showVerticalBorder: true,
                 showHorizontalBorder : true

@@ -291,9 +291,9 @@ width: 100%;
 .gridWrap{
 border-top : solid 0px;
 border-bottom : solid 0px;
-border-left : solid 1px;
-border-right : solid 1px;
-border-color : #AAAAAA
+border-left : solid 0px;
+border-right : solid 0px;
+border-color : #C3D7ED
 }
 .tui-grid-container {
   width: 100%;
@@ -322,7 +322,7 @@ border-color : #AAAAAA
 	text-align : left;
 }
 .gridViewChecked {	
-	background-color : #ebebeb !important;
+	background-color : #FFFFFF !important;
 }
   .gridView {
   	text-align:center;

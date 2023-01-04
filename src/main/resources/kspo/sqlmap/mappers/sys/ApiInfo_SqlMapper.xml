@@ -81,12 +81,16 @@
                  FROM TB_SYS_API_INFO_BAS
         <include refid="sqlConditions"/>
     </select>
-    <select id="selectList" resultType="com.kspo.voc.sys.model.ApiInfoBaseVo">
+    <select id="selectList" resultType="com.kspo.voc.sys.model.ApiExecHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
                SELECT <include refid="sqlCols"/>
                  FROM TB_SYS_API_INFO_BAS
         <include refid="sqlConditions"/>
-               ORDER BY REG_DT DESC
+                ORDER BY USE_YN DESC
+                   , REGEXP_COUNT(API_URL,'{')
+                   , CALL_MTHD_CD
+                   , SYS_CD
+                   , API_ID DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.ApiInfoBaseVo">

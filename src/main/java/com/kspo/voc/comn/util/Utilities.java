@@ -763,7 +763,9 @@ public class Utilities {
 	 */
 	public static String getTimeString(Date dt, String strSpliter) {
 		try {
-			
+			String strFormat = "HH" + strSpliter + "mm" + strSpliter + "ss";
+			SimpleDateFormat sf = new SimpleDateFormat(strFormat, Locale.KOREA);
+			return sf.format(dt);
 		} catch (Exception ex) {
 			Utilities.trace(ex);
 		}

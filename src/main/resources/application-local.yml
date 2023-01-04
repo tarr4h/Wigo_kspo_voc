@@ -54,7 +54,17 @@ spring:
 #    client-id: zEgB3stWau126Qf9SWHf
 #    client-secret: asdfjalsdjflajsdfljalsdfjlajsdflj
 
-
+# swagger config    
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    path: /api-docs
+  server-url : http://localhost:8080/
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
+  
+  
 #log
 logging:
   config: classpath:log4j2-local.xml
