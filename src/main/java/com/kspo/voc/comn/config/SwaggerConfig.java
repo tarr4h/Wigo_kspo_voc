@@ -25,8 +25,7 @@ public class SwaggerConfig {
 	public OpenAPI openAPI(@Value("${springdoc.version}") String appVersion) {
 		Info info = new Info().title("VOC API Server").version(appVersion).description("VOC API 서버입니다.");
 
-		List<Server> servers = Arrays.asList(new Server().url(serverUrl).description("VOC API"),
-				new Server().url(serverUrl.replace("https", "http")).description("VOC API"));
+		List<Server> servers = Arrays.asList(new Server().url(serverUrl).description("VOC API"));
 
 		SecurityScheme securityScheme = new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer")
 				.bearerFormat("JWT").in(SecurityScheme.In.HEADER).name("Authorization");

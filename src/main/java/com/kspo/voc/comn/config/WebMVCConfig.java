@@ -118,14 +118,9 @@ class WebMVCConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/login/**").excludePathPatterns("/genGrid/**").excludePathPatterns("/error/**")
 				.excludePathPatterns("/commCode/**").excludePathPatterns("/api/**").excludePathPatterns("/tutor/**")
 				.excludePathPatterns("/util/**").excludePathPatterns("/example/**").excludePathPatterns(docUrl + "/**")
-				.excludePathPatterns(swaggerUrl + "/**");
+				.excludePathPatterns(swaggerUrl + "/**")
+				;
 
-//				/api-docs/
-//			 List<String> patterns = new ArrayList<String>();
-//			 patterns.add("/api/**");
-//			 patterns.add("/tutor/**");
-//			 registry.addInterceptor(apiAuthIntercepter)
-//	         .addPathPatterns(patterns);
 	}
 
 }
