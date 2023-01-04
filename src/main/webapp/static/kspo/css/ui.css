@@ -1196,6 +1196,7 @@ input::-ms-clear{display:none;}
 
 /* etc */
 .bgGray{background-color:#f0f0f0;}
+.bg-light-blue{background-color:#F0F5F9;}
 
 .mList3{position:relative;margin:16px auto 0;width:520px;zoom:1;}
 .mList3:after{display:block;clear:both;content:''}
@@ -1275,21 +1276,21 @@ input::-ms-clear{display:none;}
 .mAttach1 li .delete{position:absolute;top:0;right:0;background:url(../images/ico_delete3.png) 50% 50% no-repeat;text-indent:-9999px;font-size:0;width:18px;height:18px;}
 .mAttach1 li + li{margin-top:4px;}
 
-.mVm1{display:table;padding:30px 0;width:100%;height:calc(100% - 60px);}
-.mVm1 .cont{display:table-cell;vertical-align:middle;padding:0 30px;}
+/*.mVm1{display:table;padding:30px 0;width:100%;height:calc(100% - 60px);}*/
+/*.mVm1 .cont{display:table-cell;vertical-align:middle;padding:0 30px;}*/
 
-.mLogin1{position:relative;}
-.mLogin1 fieldset{background-color:#fff;border-radius:10px;margin:0 auto;padding:91px 65px 110px;width:346px;}
-.mLogin1 h1 + dl{margin-top:45px;}
-.mLogin1 dt{display:none;}
-.mLogin1 dd{margin:0 0 10px;}
-.mLogin1 .it{border:1px solid #000;border-radius:5px;color:#212121;font-size:16px;padding-left:20px;width:calc(100% - 22px);line-height:45px;height:45px;}
-.mLogin1 .save{margin:18px 0 0 -5px;}
-.mLogin1 .mCheckbox1 input[type="checkbox"] + .label{color:#000;font-size:16px;padding-left:23px;}
-.mLogin1 .mCheckbox1 input[type="checkbox"] + .label:before{background-image:url(../images/ico_checkbox1_l.png);width:18px;height:18px;}
-.mLogin1 .mCheckbox1 input[type="checkbox"]:checked + .label::before{background-image:url(../images/ico_checkbox1_l_a.png);}
-.mLogin1 .button{margin:40px 0 0;text-align:center;}
-.mLogin1 .button a{display:inline-block;background-color:#d00e2d;border-radius:5px;color:#fff;font-size:18px;text-align:center;min-width:210px;line-height:48px;height:48px;}
+/*.mLogin1{position:relative;}*/
+/*.mLogin1 fieldset{background-color:#fff;border-radius:10px;margin:0 auto;padding:91px 65px 110px;width:346px;}*/
+/*.mLogin1 h1 + dl{margin-top:45px;}*/
+/*.mLogin1 dt{display:none;}*/
+/*.mLogin1 dd{margin:0 0 10px;}*/
+/*.mLogin1 .it{border:1px solid #000;border-radius:5px;color:#212121;font-size:16px;padding-left:20px;width:calc(100% - 22px);line-height:45px;height:45px;}*/
+/*.mLogin1 .save{margin:18px 0 0 -5px;}*/
+/*.mLogin1 .mCheckbox1 input[type="checkbox"] + .label{color:#000;font-size:16px;padding-left:23px;}*/
+/*.mLogin1 .mCheckbox1 input[type="checkbox"] + .label:before{background-image:url(../images/ico_checkbox1_l.png);width:18px;height:18px;}*/
+/*.mLogin1 .mCheckbox1 input[type="checkbox"]:checked + .label::before{background-image:url(../images/ico_checkbox1_l_a.png);}*/
+/*.mLogin1 .button{margin:40px 0 0;text-align:center;}*/
+/*.mLogin1 .button a{display:inline-block;background-color:#d00e2d;border-radius:5px;color:#fff;font-size:18px;text-align:center;min-width:210px;line-height:48px;height:48px;}*/
 
 .mError1{color:#212121;font-size:18px;line-height:150%;text-align:center;width:100%;}
 .mError1 .tit{display:block;background:url(../images/img_error1.png) 50% 0 no-repeat;font-size:30px;margin:0 0 12px;padding:222px 0 0;}
@@ -1483,4 +1484,53 @@ input::-ms-clear{display:none;}
     height: 500px;
     background-color: #F1F1F1;
 }
+
+/* KSPO-Login */
+.login-con{
+    position: relative;
+    width: 100%;
+    height: 96%;
+}
+.login-box{
+    display: flex;
+    width: 900px;
+    height: 500px;
+    position: absolute;
+    background-color: #fff;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 4px 35px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+}
+.login-img{
+    width: 450px;
+    height: 500px;
+    background: url(../images/img-login.png) center no-repeat #F0F0F0;
+    background-size: cover;
+    border-radius: 10px 0px 0px 10px;
+}
+.login-form{ margin: 0 auto; width: 300px;}
+.login-form div img{width: 200px;padding: 60px 0 25px 50px;}
+.login-form h1 {
+    font-size: 50px;
+    font-weight: 500;
+    text-align: center;
+}
+.mVm1{display:table;padding:30px 0;width:100%;height:calc(100% - 60px);}
+.mVm1 .cont{display:table-cell;vertical-align:middle;padding:0 30px;}
+.mLogin1{position:relative;}
+.mLogin1 fieldset{background-color:#fff;border-radius:10px;margin:0 auto;padding:91px 65px 110px;width:346px;}
+.login-form  h1 + dl{margin-top:60px;}
+.login-form  dt{display:none;}
+.login-form  dd{margin:0 0 10px;}
+.login-form  .it{border:1px solid #000;border-radius:5px;color:#212121;font-size:16px;padding-left:20px;width:calc(100% - 22px);line-height:45px;height:45px;}
+.login-form  .save{margin:18px 0 0 -5px;}
+.login-form  .mCheckbox1 input[type="checkbox"] + .label{color:#000;font-size:16px;padding-left:23px;}
+.login-form  .mCheckbox1 input[type="checkbox"] + .label:before{background-image:url(../images/ico_checkbox1_l.png);width:18px;height:18px;}
+.login-form  .mCheckbox1 input[type="checkbox"]:checked + .label::before{background-image:url(../images/ico_checkbox1_l_a.png);}
+.login-form  .button{margin:40px 0 0;text-align:center;}
+.login-form  .button a{display:inline-block;background-color:#2A62BB;border-radius:5px;color:#fff;font-size:18px;text-align:center;min-width:210px;line-height:45px;height:45px;}
+/* //KSPO-Login */
 /* //KSPO */
+
