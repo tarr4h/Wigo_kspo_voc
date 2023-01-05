@@ -138,8 +138,8 @@
         };
     })
 
-    function onTreeSelect(data, node, tree){
-        selectedDirCd = selectDirCd(data.mgmtCd);
+    async function onTreeSelect(data, node, tree){
+        selectedDirCd = await selectDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
     }
 
@@ -190,7 +190,7 @@
                 console.log(res);
             },
             error: console.log
-        })
+        });
     }
 
     /**
@@ -198,7 +198,8 @@
      * @param data
      */
     function orgSearchCallback(data){
-        insertDirOrg(selectedDirCd, data.id);
+        console.log('data : ', data);
+        insertDirOrg(selectedDirCd, data.orgId);
     }
 
     /**

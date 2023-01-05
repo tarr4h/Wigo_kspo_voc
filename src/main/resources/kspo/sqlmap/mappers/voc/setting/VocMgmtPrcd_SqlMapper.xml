@@ -20,4 +20,44 @@
                 ) = 1
     </select>
 
+    <select id="selectMaxDirCd" resultType="String">
+        SELECT
+            MAX(DIR_CD)
+        FROM
+            TB_VOC_DIR_CD_BAS
+    </select>
+
+    <insert id="insertDirCd">
+        INSERT INTO TB_VOC_DIR_CD_BAS
+        (DIR_CD, REGR_ID, AMDR_ID)
+        VALUES(
+               #{dirCd},
+               #{loginUsr},
+               #{loginUsr}
+              )
+    </insert>
+
+    <insert id="insertDirOrg">
+        INSERT INTO TB_VOC_DIR_ORG_REL
+        (DIR_CD, ORG_ID, PRIM_PROC_ORG_YN, REGR_ID, AMDR_ID)
+        VALUES(
+               #{dirCd},
+               #{orgId},
+               #{primProcOrgYn},
+               #{loginUsr},
+               #{loginUsr}
+              )
+    </insert>
+
+    <select id="selectDirOrg" resultType="com.kspo.voc.program.setting.model.VocDirOrgVo">
+        SELECT
+            *
+        FROM
+            TB_VOC_DIR_ORG_REL
+        WHERE
+            DIR_CD = #{dirCd}
+    </select>
+
+
+
 </mapper>
