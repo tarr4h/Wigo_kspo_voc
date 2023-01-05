@@ -12,9 +12,7 @@ public enum ManageCodeCategory {
 
     CHANNEL("001", "channel", "채널"),
     TYPE("002", "type", "유형"),
-    LOCATION("003", "location", "장소"),
-    CAUSE("004", "cause", "원인"),
-    TARGET("005", "target", "대상");
+    TARGET("003", "target", "대상");
     
     private String topComnCd;
     private String comnCd;

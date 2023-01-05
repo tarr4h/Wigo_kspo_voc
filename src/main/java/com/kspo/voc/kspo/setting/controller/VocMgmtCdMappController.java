@@ -29,8 +29,8 @@ public class VocMgmtCdMappController {
 	@PostMapping(value = { "vocMgmtCdTree" })
 	public @ResponseBody Object vocMgmtCdTree(@RequestBody EzMap param) throws EgovBizException {
 		ManageCodeCategory.setComnCdListTreeMap(param,
-				Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE, ManageCodeCategory.CAUSE,
-						ManageCodeCategory.LOCATION, ManageCodeCategory.TARGET));
+				Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE,
+						ManageCodeCategory.TARGET));
 		return service.vocMgmtCdTree(param);
 	}
 

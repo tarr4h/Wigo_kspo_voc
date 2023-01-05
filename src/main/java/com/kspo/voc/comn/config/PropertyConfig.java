@@ -44,6 +44,7 @@ public class PropertyConfig {
 
 		map.setString("tiles.voc", "voc/");
 		map.setString("tiles.voc.blank", "voc/blank/");
+		map.setString("tiles.voc.vblank", "voc/vblank/");
 
 		propertyService.setProperties(map);
 
