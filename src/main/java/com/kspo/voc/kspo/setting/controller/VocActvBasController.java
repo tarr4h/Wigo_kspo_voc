@@ -68,6 +68,11 @@ public class VocActvBasController {
         return service.update(param);
     }
 
+    @PostMapping(value = "delete")
+    public @ResponseBody Object delete(@RequestBody EzMap param) throws EgovBizException {
+        return service.delete(param);
+    }
+
     @GetMapping(value = "getFuncTp", produces = "application/text;charset=utf-8")
     public @ResponseBody Object getFuncTp(@RequestParam Map<String, Object> param) throws EgovBizException{
         return VocUtils.selectComnCdOptionList(param);

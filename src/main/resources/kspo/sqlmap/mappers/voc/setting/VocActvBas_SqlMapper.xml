@@ -40,6 +40,14 @@
         </foreach>
     </update>
 
+    <delete id="delete">
+        DELETE FROM TB_VOC_ACTV_BAS
+        WHERE
+            <foreach collection="rows" item="item" separator="," open="ACTV_CD IN (" close=")">
+                #{item.actvCd}
+            </foreach>
+    </delete>
+
     <select id="selectMaxCd" resultType="String">
         SELECT
             MAX(ACTV_CD)
