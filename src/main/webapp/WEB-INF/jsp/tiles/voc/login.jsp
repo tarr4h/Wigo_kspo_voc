@@ -42,7 +42,7 @@
                             </label>
                         </div>
                         <div class="button">
-                            <a href="#" class="btn">로그인</a>
+                            <a href="#;" class="btn" data-click="signIn">로그인</a>
                         </div>
                     </fieldset>
 
