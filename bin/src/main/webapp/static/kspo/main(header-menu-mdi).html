@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>KSPO-VOC</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<link rel="stylesheet" href="css/svg.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+<!-- skipnavi -->
+<div id="skipnavigation">
+	<strong class="sound-only">반복영역 건너뛰기</strong>
+	<a href="#gnbNav">메뉴 바로가기</a>
+	<a href="#body">본문 바로가기</a>
+</div>
+<!-- //skipnav -->
+
+<div id="wrap">
+	<!-- header -->
+	<div id="header">
+		<h1><img src="images/logo.png" alt="국민체육진흥공단"></h1>
+		<!-- gnb kspo -->
+		<nav>
+			<ul class="main_menu">
+				<li><a href="#">MY VOC</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">MY VOC</a></dt> <!-- 2 Depth -->
+							<dd><a href="#">나의 VOC 처리현황</a></dd>
+							<dd><a href="#">나의 VOC 목록</a></dd>
+							<dd><a href="#">나의결제 목록</a></dd>
+							<dd><a href="#">답안관리</a></dd>		
+							<dd><a href="#">관심등록글</a></dd>						
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">VOC 관리</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">VOC 통합검색</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 통합검색</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 등록</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 신규등록</a></dd>
+							<dd><a href="#">VOC 등록</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 접수</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 접수</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 분배</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 분배</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 처리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 처리</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 완료</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 완료</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">VOC 모니터링</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">VOC 모니터링</a></dt><!-- 2 Depth -->
+							<dd><a href="#">실시간 통합 모니터링</a></dd>
+							<dd><a href="#">처리현황 모니터링</a></dd>
+							<dd><a href="#">유형별 모니터링</a></dd>
+							
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 만족도 조사</a></dt><!-- 2 Depth -->
+							<dd><a href="#">만족도조사</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">VOC 설정</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">VOC분류코드관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC분류코드</a></dd>
+							<dd><a href="#">VOC분류코드 매핑</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 표준절차 코드관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 절차코드</a></dd>
+							<dd><a href="#">VOC TASK코드</a></dd>
+							<dd><a href="#">VOC 절차 상태명</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 표준절차 관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">VOC 등록절차</a></dd>
+							<dd><a href="#">VOC 접수절차</a></dd>
+							<dd><a href="#">VOC 관리옵션 설정</a></dd>
+							<dd><a href="#">VOC 처리기한 상태매핑</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">VOC 부가편의관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">답변서식관리</a></dd>
+							<dd><a href="#">관심키워드관리</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">VOC 통계</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">VOC 통계</a></dt><!-- 2 Depth -->
+							<dd><a href="#">통합요약</a></dd>
+							<dd><a href="#">현황분석통계</a></dd>
+							<dd><a href="#">소요시간분석통계</a></dd>
+							<dd><a href="#">비용분석통계</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">결재관리</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">결재목록</a></dt><!-- 2 Depth -->
+							<dd><a href="#">전체</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">결재라인관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">결재라인관리</a></dd>
+						</dl>
+					</div>
+				</li>
+				<li><a href="#">공통</a><!-- 1 Depth -->
+					<div class="sub_menu">
+						<dl>
+							<dt><a href="#">시스템관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">메뉴관리</a></dd>
+							<dd><a href="#">그룹관리</a></dd>
+							<dd><a href="#">부서관리</a></dd>
+							<dd><a href="#">직원관리</a></dd>
+							<dd><a href="#">고객관리</a></dd>
+							<dd><a href="#">공통코드관리</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">API관리</a></dt><!-- 2 Depth -->
+							<dd><a href="#">API키관리</a></dd>
+							<dd><a href="#">API실행이력</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">로그</a></dt><!-- 2 Depth -->
+							<dd><a href="#">로그인이력</a></dd>
+							<dd><a href="#">정보변경이력</a></dd>
+							<dd><a href="#">그룹메뉴변경이력</a></dd>
+							<dd><a href="#">그룹부서변경이력</a></dd>
+							<dd><a href="#">그룹사원변경이력</a></dd>
+							<dd><a href="#">예외발생이력</a></dd>
+							<dd><a href="#">엑셀다운로드이력</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">공지사항</a></dt><!-- 2 Depth -->
+							<dd><a href="#">공지사항</a></dd>
+						</dl>
+						<dl>
+							<dt><a href="#">개발</a></dt><!-- 2 Depth -->
+							<dd><a href="#">주소검색(행자부)</a></dd>
+							<dd><a href="#">그리드XML</a></dd>
+						</dl>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<!-- //gnb kspo -->
+		<div class="gRt">
+			<span class="log">김국민(Kspo)님 환영합니다.</span>
+			<span class="time">00:00</span>
+			<a href="#" class="btn s btn-blue">연장</a>
+			<a href="#" class="btn s">로그아웃</a>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<!-- midTab -->
+	<div class="mMidTab">
+		<div class="swiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide active">
+					<span class="iHome">메인화면</span>
+				</div>
+				<div class="swiper-slide">
+					VOC 등록
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					VOC 접수
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					Text
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					결제관리메뉴
+					<button class="delete">삭제</button>
+				</div>
+			</div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="gRt">
+				<a href="#" class="btn s">전체닫기</a>
+			</div>
+		</div>
+
+		<script>
+			var jsMidTab = new Swiper(".mMidTab .swiper", {
+				slidesPerView: "auto",
+				navigation: {
+					nextEl: ".mMidTab .swiper-button-next",
+					prevEl: ".mMidTab .swiper-button-prev",
+				},
+			});
+			$(".mMidTab .delete").on("click",function(){
+				$(this).parent().remove();
+				property.update();
+				return false;
+			});
+		</script>
+	</div>
+	<!-- //midTab -->
+
+	<!-- body -->
+	<div id="body">
+		
+	</div>
+	<!-- //body -->
+</div>
+</body>
+</html>

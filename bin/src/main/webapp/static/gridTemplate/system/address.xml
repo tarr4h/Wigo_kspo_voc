@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="Y"/>
+        <showCheckbox value="N"/>
+        <showNumber value="Y"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <gridfitStyle value="even"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+        <headerRows value="1"/>
+    </meta>
+    <!-- textAlignment : near:기본(좌측정렬), center:중앙정렬, far:우측정렬  -->
+    <!-- <column field='compxCd' name='단지코드' type='char' width='100'/> -->
+<!--     <group name="주소명"  direction="H" title="주소명"> -->
+       
+        
+        
+        <column name="도로명주소(참고항목 제외)"   field="roadAddrPart1" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="도로명주소 참고항목"   field="roadAddrPart2" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="도로명주소(영문)"   field="engAddr" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="우편번호"   field="zipNo" type="char" maxLength="1000" width="20" textAlignment="center" required="Y" hidden="N"/>
+        <column name="행정구역코드"   field="admCd" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="도로명코드"   field="rnMgtSn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="건물관리번호"   field="bdMgtSn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="상세건물명"   field="detBdNmList" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="건물명"   field="bdNm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="공동주택여부(1 : 공동주택, 0 : 비공동주택)"   field="bdKdcd" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="시도"   field="siNm" type="char" maxLength="1000" width="20" textAlignment="center" required="Y" hidden="N"/>
+        <column name="시군구"   field="sggNm" type="char" maxLength="1000" width="20" textAlignment="center" required="Y" hidden="N"/>
+        <column name="읍면동명"   field="emdNm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="법정리명"   field="liNm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        
+        <column name="도로명 주소" field="roadAddr" type="char" maxLength="1000" width="400" textAlignment="left" required="Y" readOnly="Y" hidden="N"/>
+        <column name="지번 주소"   field="jibunAddr" type="char" maxLength="1000" width="400" textAlignment="left" required="Y" hidden="N"/>
+        
+        <column name="도로명"   field="rn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="지하여부"   field="udrtYn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="건물본번"   field="buldMnnm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="건물부번"   field="buldSlno" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="산여부"   field="mtYn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="지번본번"   field="lnbrMnnm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="지번부번"   field="lnbrSlno" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="읍면동일련번호"   field="emdNo" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="변동이력여부"   field="hstryYn" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="관련지번"   field="relJibun" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="관할주민센터"   field="hemdNm" type="char" maxLength="1000" width="10" textAlignment="left" required="Y" hidden="Y"/>
+        <column name="선택" field="btnSel" type="button" width="20" textAlignment="center"  hidden="N"/>
+        
+
+        
+        
+<!--    </group> -->
+</grid>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.kspo.setting.dao.VocMgmtCdDao">
+
+    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
+        select
+            MGMT_CD,
+            TOP_MGMT_CD,
+            PRNTS_MGMT_CD,
+            TOP_COMN_CD,
+            COMN_CD,
+            MGMT_CD_ORDR,
+            MGMT_CD_LVL_NO,
+            MGMT_CD_NM,
+            USE_YN,
+            REGR_ID,
+            REG_DT,
+            AMDR_ID,
+            AMD_DT,
+            nvl((
+                select
+                    MGMT_CD_NM
+                from
+                    TB_VOC_MGMT_CD_BAS
+                where
+                    MGMT_CD = vmc.PRNTS_MGMT_CD
+            ), '-') prntsMgmtCdNm,
+            (
+                select
+                    MGMT_CD_NM
+                from
+                    TB_VOC_MGMT_CD_BAS
+                where
+                    MGMT_CD = vmc.TOP_MGMT_CD
+            ) topMgmtCdNm
+        from
+            TB_VOC_MGMT_CD_BAS vmc
+        where
+            <if test="prntsMgmtCd != null and !prntsMgmtCd.equals('')">
+                PRNTS_MGMT_CD = #{prntsMgmtCd}
+            </if>
+            <if test="prntsMgmtCd == null">
+                PRNTS_MGMT_CD is null
+            </if>
+        order by
+            MGMT_CD_ORDR, MGMT_CD
+    </select>
+
+    <insert id="insert">
+        insert into TB_VOC_MGMT_CD_BAS
+        (MGMT_CD, TOP_MGMT_CD, PRNTS_MGMT_CD, TOP_COMN_CD, COMN_CD, MGMT_CD_ORDR, MGMT_CD_LVL_NO, MGMT_CD_NM, REGR_ID, AMDR_ID)
+        values(
+               #{mgmtCd},
+               #{topMgmtCd},
+               #{prntsMgmtCd},
+               #{topComnCd},
+               #{comnCd},
+               #{mgmtCdOrdr},
+               #{mgmtCdLvlNo},
+               #{mgmtCdNm},
+               #{loginUsr},
+               #{loginUsr}
+              )
+    </insert>
+
+    <update id="update">
+        <foreach collection="rows" item="item" open="DECLARE BEGIN" separator=";" close="; END;">
+            update TB_VOC_MGMT_CD_BAS
+            set
+                MGMT_CD_ORDR = #{item.mgmtCdOrdr},
+                MGMT_CD_NM = #{item.mgmtCdNm},
+                USE_YN = #{item.useYn}
+            where
+                MGMT_CD = #{item.mgmtCd}
+        </foreach>
+    </update>
+
+    <delete id="delete">
+        delete from TB_VOC_MGMT_CD_BAS
+        where
+            MGMT_CD in
+            <foreach collection="list" separator="," item="item" open="(" close=")">
+                #{item.mgmtCd}
+            </foreach>
+    </delete>
+
+    <select id="maxChildCd" resultType="string">
+        select
+            MAX(MGMT_CD)
+        from
+            TB_VOC_MGMT_CD_BAS
+        where
+            <if test="prntsMgmtCd != null">
+                PRNTS_MGMT_CD = #{prntsCd}
+            </if>
+            <if test="prntsMgmtCd == null">
+                PRNTS_MGMT_CD is null
+            </if>
+    </select>
+
+</mapper>

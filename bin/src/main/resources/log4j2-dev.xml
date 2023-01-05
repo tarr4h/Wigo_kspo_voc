@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<configuration status="debug">
+ 
+    <Appenders>
+        <!-- 콜솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+    </Appenders>
+    
+    <loggers>
+        <root level="ERROR" additivity="true">
+            <AppenderRef ref="console"/>
+        </root>
+        <logger name="org.egovframe.rte" level="info" additivity="false" >
+	      <AppenderRef ref="console" />
+	    </logger>
+        <logger name="org.springframework" level="info" additivity="false" >
+	      <AppenderRef ref="console" />
+	    </logger>
+	    <logger name="jdbc.sqlonly" level="info" additivity="false" >
+	      <AppenderRef ref="console" />
+	    </logger>
+	    <logger name="com.kspo.voc.*.dao" level="OFF" additivity="true"/>
+    </loggers>
+ 
+</configuration>
