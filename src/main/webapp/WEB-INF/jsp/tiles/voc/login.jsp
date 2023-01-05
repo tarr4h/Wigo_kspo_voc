@@ -28,11 +28,11 @@
                         <dl>
                             <dt>아이디</dt>
                             <dd>
-                                <input type="text" id="loginId" data-enter="signIn" class="it" title="아이디" placeholder="아이디를 입력하세요.">
+                                <input type="text" id="loginId" data-enter="signIn" class="it" title="아이디" placeholder="아이디를 입력하세요." value="wigo">
                             </dd>
                             <dt>비밀번호</dt>
                             <dd>
-                                <input type="password" data-enter="signIn" id="loginPwd" class="it" title="비밀번호" placeholder="비밀번호를 입력하세요.">
+                                <input type="password" data-enter="signIn" id="loginPwd" class="it" title="비밀번호" placeholder="비밀번호를 입력하세요." value="1234">
                             </dd>
                         </dl>
                         <div class="save">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.kspo.setting.dao.VocTaskBasDao">
+<mapper namespace="com.kspo.voc.program.setting.dao.VocTaskBasDao">
 
     <sql id="prcdCols">
         PRCD_CD,
@@ -11,7 +11,7 @@
         NVL(DUTY_ROLE_CD, '-') dutyRoleCd
     </sql>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocTaskBasVo">
+    <select id="selectList" resultType="com.kspo.voc.program.setting.model.VocTaskBasVo">
         select
             TASK_CD,
             TASK_NM,
@@ -111,7 +111,7 @@
             TASK_CD = #{targetInfo.taskCd}
     </update>
 
-    <select id="selectAppliedPrcd" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
+    <select id="selectAppliedPrcd" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
             <include refid="prcdCols"/>
         FROM
@@ -120,7 +120,7 @@
             PRCD_CD = #{prcdCd}
     </select>
 
-    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
+    <select id="selectAvailablePrcdList" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
             <include refid="prcdCols"/>
         FROM

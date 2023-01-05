@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.program.setting.dao.VocMgmtPrcdDao">
+
+    <select id="selectDirCd" resultType="com.kspo.voc.program.setting.model.VocDirCdVo">
+        SELECT
+            *
+        FROM
+            TB_VOC_DIR_MGMT_REL
+        WHERE
+            MGMT_CD = #{mgmtCd}
+            AND
+            (
+                SELECT
+                    COUNT(*)
+                FROM
+                    TB_VOC_DIR_MGMT_REL
+                WHERE
+                    MGMT_CD = #{mgmtCd}
+                ) = 1
+    </select>
+
+</mapper>

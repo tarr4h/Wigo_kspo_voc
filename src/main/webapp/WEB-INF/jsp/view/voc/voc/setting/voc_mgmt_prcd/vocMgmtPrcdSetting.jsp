@@ -82,17 +82,17 @@
             </div>
             <div class="btn_area">
                 <div class="btn_wrapper">
-                    <button class="btn func_btn" data-event="save">저장</button>
-                    <button class="btn btn-blue func_btn" data-event="add">추가</button>
-                    <button class="btn btn-red func_btn" data-event="delete">삭제</button>
+                    <button class="btn func_btn" data-event="orgSave">저장</button>
+                    <button class="btn btn-blue func_btn" data-event="orgAdd">추가</button>
+                    <button class="btn btn-red func_btn" data-event="orgDel">삭제</button>
                 </div>
             </div>
             <div class="grid_wrapper">
                 <div id="divGrid1"
                      data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
-                     data-grid-id="mgmtCdGrid"
+                     data-grid-id="dirOrgGrid"
                      data-type="grid"
-                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtCd.xml${urlSuffix}'/>"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocDirOrg.xml${urlSuffix}'/>"
                      style="width:100%;height:200px;"
                 >
                 </div>
@@ -108,8 +108,8 @@
             </div>
             <div class="btn_area">
                 <div class="btn_wrapper">
-                    <button class="btn func_btn" data-event="add">추가</button>
-                    <button class="btn btn-red func_btn" data-event="delete">삭제</button>
+                    <button class="btn func_btn" data-event="prcdAdd">추가</button>
+                    <button class="btn btn-red func_btn" data-event="prcdDel">삭제</button>
                 </div>
             </div>
             <div class="grid_wrapper">
@@ -128,7 +128,88 @@
 
 
 <script>
+    let selectedDirCd = null;
+
+    $('.func_btn').on('click', function(){
+        let evt = $(this).data('event');
+
+        switch(evt){
+            case 'orgAdd' : openComnModal('vocOrgSearchModal', 900, 650);break;
+        };
+    })
+
     function onTreeSelect(data, node, tree){
+        selectedDirCd = selectDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
     }
+
+    function loadGrid(dirCd){
+        let param = {
+            dirCd,
+            recordCountPerPage : 10
+        };
+
+        vocDirOrg.loadUrl('', param);
+    }
+
+    /**
+     * 경로코드 조회
+     * @param mgmtCd
+     * @return dirCd
+     */
+    function selectDirCd(mgmtCd){
+        return new Promise(function(resolve, reject){
+            $.ajax({
+               url : '<c:url value="${urlPrefix}/selectDirCd${urlSuffix}"/>',
+               data: {
+                   mgmtCd
+               },
+               success(res){
+                   resolve(res);
+               },
+               error: console.log
+            });
+        })
+    }
+
+    /**
+     * 경로코드 부서 등록
+     * @param dirCd
+     * @param orgId
+     */
+    function insertDirOrg(dirCd, orgId){
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertDirOrg${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                dirCd,
+                orgId
+            }),
+            success(res){
+                console.log(res);
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 부서조회 callback
+     * @param data
+     */
+    function orgSearchCallback(data){
+        insertDirOrg(selectedDirCd, data.id);
+    }
+
+    /**
+     * 공통모달 open : 부서, 직원 조회 모달
+     * @param pageNm
+     * @param width
+     * @param height
+     */
+    function openComnModal(pageNm, width, height){
+        let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+        Utilities.openModal(url, width, height);
+    }
+
 </script>
