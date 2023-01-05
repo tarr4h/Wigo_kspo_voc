@@ -47,8 +47,13 @@ public class VocMgmtPrcdController {
     }
 
     @GetMapping(value = "selectDirCd")
-    public @ResponseBody Object selectDirCd(@RequestParam Map<String, Object> param) {
+    public @ResponseBody Object selectDirCd(@RequestParam Map<String, Object> param) throws EgovBizException {
         return service.selectDirCd(param);
+    }
+
+    @PostMapping(value = "insertDirOrg")
+    public @ResponseBody Object insertDirOrg(@RequestBody EzMap param) throws EgovBizException{
+        return service.insertDirOrg(param);
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
