@@ -114,6 +114,23 @@
         });
     }
 
+    function deleteRows(){
+        let rows = actvBasGrid.getCheckedJson();
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({rows}),
+            success(res, status, jqXHR){
+                console.log(res);
+                alert('삭제되었습니다.');
+                window.location.reload();
+            },
+            error: console.log
+        })
+    }
+
     /**
      * 현 페이지 호출 requestMapping인 directory에서 모달 호출
      * @param pageNm
