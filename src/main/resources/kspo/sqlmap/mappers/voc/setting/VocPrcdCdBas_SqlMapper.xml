@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.kspo.setting.dao.VocPrcdCdBasDao">
+<mapper namespace="com.kspo.voc.program.setting.dao.VocPrcdCdBasDao">
 
     <select id="selectMaxCd" resultType="string">
         select
@@ -9,7 +9,7 @@
             TB_VOC_PRCD_BAS
     </select>
 
-    <select id="selectList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
+    <select id="selectList" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         select
             PRCD_CD,
             PRCD_NM,

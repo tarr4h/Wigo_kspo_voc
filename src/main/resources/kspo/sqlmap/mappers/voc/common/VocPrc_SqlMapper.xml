@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kspo.voc.kspo.common.dao.IVocPrcDao">
+<mapper namespace="com.kspo.voc.program.common.dao.IVocPrcDao">
 
-<!--    <resultMap type="com.kspo.voc.kspo.setting.model.VocActivityVo" id="VocActivityVo">-->
+<!--    <resultMap type="com.kspo.voc.program.setting.model.VocActivityVo" id="VocActivityVo">-->
 <!--        <result property="explanation"  column="EXPLANATION"  jdbcType="CLOB" javaType="java.lang.String" />-->
 <!--    </resultMap>-->
 
@@ -22,7 +22,7 @@
         AMD_DT
     </sql>
 
-    <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
+    <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.program.setting.model.VocMgmtCdVo">
         select
             <include refid="vocMgmtCdCols"/>
         from
@@ -49,7 +49,7 @@
             MGMT_CD
     </select>
 
-    <select id="selectMgmtCd" resultType="com.kspo.voc.kspo.setting.model.VocMgmtCdVo">
+    <select id="selectMgmtCd" resultType="com.kspo.voc.program.setting.model.VocMgmtCdVo">
         select
             <include refid="vocMgmtCdCols"/>
         from
@@ -65,7 +65,7 @@
         </where>
     </select>
 
-    <select id="selectPrcdBas" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
+    <select id="selectPrcdBas" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
             *
         FROM
@@ -74,7 +74,7 @@
             PRCD_CD = #{prcdCd}
     </select>
 
-    <select id="selectPrcdBasList" resultType="com.kspo.voc.kspo.setting.model.VocPrcdBasVo">
+    <select id="selectPrcdBasList" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
             *
         FROM
@@ -85,7 +85,7 @@
             PRCD_CD
     </select>
 
-    <select id="selectTaskBasList" resultType="com.kspo.voc.kspo.setting.model.VocTaskBasVo">
+    <select id="selectTaskBasList" resultType="com.kspo.voc.program.setting.model.VocTaskBasVo">
         SELECT
             *
         FROM
