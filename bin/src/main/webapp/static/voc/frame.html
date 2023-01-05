@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+	
+<!-- skipnavi -->
+<div id="skipnavigation">
+	<strong class="sound-only">반복영역 건너뛰기</strong>
+	<a href="#gnbNav">메뉴 바로가기</a>
+	<a href="#body">본문 바로가기</a>
+</div>
+<!-- //skipnav -->
+
+<div id="wrap" class="closed">  <!-- 고객정보 닫힘 -->
+
+	<!-- header -->
+	<div id="header">
+		<a href="#jsMenu1" class="menu">메뉴보기</a>
+		<h1><img src="images/logo.png" alt="CERAGEM 통합고객"></h1>
+		<!-- gnb -->
+		<div id="gnbNav" class="mGnb hover">
+			<ul>
+				<li>
+					<a href="#" class="dep1">통합고객</a>
+					<div class="dep2">
+						<ul>
+							<li>
+								<strong class="tit">통합고객정보 관리</strong>
+								<div class="ls"><button class="iFavor1 active"></button> <a href="#">통합고객 기본정보</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">통합고객 목록-개인</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">통합고객 목록-법인</a></div>
+							</li>
+							<li>
+								<strong class="tit">블렉리스트관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">블랙리스트목록</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">잠재고객관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">잠재고객 목록 ( 검색 )</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">고객그룹관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">고객그룹 목록 ( 검색 )</a></div>
+							</li>
+							<li class="w23per">
+								<strong class="tit">고객등급관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">고객등급별(멤버쉽) 정책 목록</a></div>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li>
+					<a href="#" class="dep1">멤버십</a>
+					<div class="dep2">
+						<ul>
+							<li>
+								<strong class="tit">회원정보 관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">회원 기본정보(CSV)</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">회원 목록 (검색)-개인</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">회원 목록 (검색)-법인</a></div>
+							</li>
+							<li>
+								<strong class="tit">블렉리스트관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">블랙리스트목록</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">잠재고객관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">잠재고객 목록 ( 검색 )</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">고객그룹관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">고객그룹 목록 ( 검색 )</a></div>
+							</li>
+							<li class="w23per">
+								<strong class="tit">고객등급관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">고객등급별(멤버쉽) 정책 목록</a></div>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<strong class="tit">쿠폰관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">쿠폰 마스터 관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">쿠폰 관리</a></div>
+							</li>
+							<li>
+								<strong class="tit">포인트관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">포인트 발생 관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">부정적립포인트 관리</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">스템프관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">스템프발행 관리</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">카드관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">카드유형관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">카드 마스터 관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">발행카드 관리</a></div>
+							</li>
+							<li class="w23per">
+								<strong class="tit">프로모션관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">프로모션관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">프로모션 현황관리</a></div>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<strong class="tit">정산관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">주문 현황</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">포인트 사용 현황</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">스템프 사용현황</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">쿠폰 사용현황</a></div>
+							</li>
+							<li>
+								<strong class="tit">매장 관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">매장 목록</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">매장 상세</a></div>
+							</li>
+							<li>
+								<strong class="tit">제휴사관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">제휴사 목록</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">제휴사 상세</a></div>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li>
+					<a href="#" class="dep1">캠페인</a>
+					<div class="dep2">
+						<ul>
+							<li class="w55per">
+								<strong class="tit">캠페인관리</strong>
+								<div class="row">
+									<div class="col">
+										<div class="ls"><button class="iFavor1"></button> <a href="#">캠페인 기획관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">캠페인 승인관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">캠페인 실행관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">캠페인 유형 관리</a></div>
+									</div>
+									<div class="col">
+										<div class="ls"><button class="iFavor1"></button> <a href="#">발송채널관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">발송 템플릿 관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">혜택 관리</a></div>
+										<div class="ls"><button class="iFavor1"></button> <a href="#">고객그룹 관리</a></div>
+									</div>
+									<div class="col">
+										<div class="ls"><button class="iFavor1"></button> <a href="#">예산관리</a></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<li>
+					<a href="#" class="dep1">공통</a>
+					<div class="dep2">
+						<ul>
+							<li>
+								<strong class="tit">메뉴관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">메뉴 관리</a></div>
+							</li>
+							<li>
+								<strong class="tit">그룹관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">그룹관리</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">부서관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">부서관리</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">사원관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">사원관리</a></div>
+							</li>
+							<li class="w23per">
+								<strong class="tit">공통코드관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">공통코드관리</a></div>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<strong class="tit">API 관리</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">API 관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">API KEY 관리</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">API 실행이력</a></div>
+							</li>
+							<li class="w18per">
+								<strong class="tit">로그인이력</strong>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">로그인이력</a></div>
+								<div class="ls"><button class="iFavor1"></button> <a href="#">정보변경이력</a></div>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!-- //gnb -->
+		<div class="gRt">
+			<span class="log">세라젬(PA9999999)님 환영합니다.</span>
+			<a href="#" class="mBtn1 s lWhite">로그아웃</a>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<!-- midTab -->
+	<div class="mMidTab">
+		<div class="swiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide active">
+					<span class="iHome">통합고객정보 관리</span> <!-- modify20220329 -->
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					쿠폰마스터
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 기획관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 유형관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					쿠폰마스터
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 기획관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 유형관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					쿠폰마스터
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 기획관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 유형관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					쿠폰마스터
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 기획관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 관리
+					<button class="delete">삭제</button>
+				</div>
+				<div class="swiper-slide">
+					캠페인 유형관리
+					<button class="delete">삭제</button>
+				</div>
+			</div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="gRt">
+				<a href="#" class="mBtn1 s lWhite">전체닫기</a>
+			</div>
+		</div>
+		<script>
+			var jsMidTab = new Swiper(".mMidTab .swiper", {
+				slidesPerView: "auto",
+				navigation: {
+					nextEl: ".mMidTab .swiper-button-next",
+					prevEl: ".mMidTab .swiper-button-prev",
+				},
+			});
+			$(".mMidTab .delete").on("click",function(){
+				$(this).parent().remove();
+				property.update();
+				return false;
+			});
+		</script>
+	</div>
+	<!-- //midTab -->
+
+	<!-- body -->
+	<div id="body">
+		
+		<!-- 위젯 -->
+		<div class="mWidget1">
+			<a href="#sFavor1" class="btn">마이메뉴</a>
+			<div id="jsFavor1" class="list mCustomScrollbar">
+				<strong class="ti">마이메뉴</strong>
+				<ul>
+					<li><a href="#">제휴카드 인증자료 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">폐업매장 회원정보 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">부정 적립포인트 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">고객등급 마스터 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">고객그룹정보 일괄삭제</a> <button class="delete">삭제</button></li>
+					<li><a href="#">제휴사 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">프로모션 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">쿠폰발행</a> <button class="delete">삭제</button></li>
+					<li><a href="#">제휴카드 인증자료 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">폐업매장 회원정보 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">부정 적립포인트 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">고객등급 마스터 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">고객그룹정보 일괄삭제</a> <button class="delete">삭제</button></li>
+					<li><a href="#">제휴사 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">프로모션 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">쿠폰발행</a> <button class="delete">삭제</button></li>
+					<li><a href="#">제휴카드 인증자료 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">폐업매장 회원정보 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">부정 적립포인트 관리</a> <button class="delete">삭제</button></li>
+					<li><a href="#">고객등급 마스터 관리</a> <button class="delete">삭제</button></li>
+				</ul>
+			</div>
+		</div>
+		<!-- //위젯 -->
+
+        <!-- iframe -->
+        <iframe src="coupon.html" id="jsContent" title="컨텐츠영역"></iframe>
+        <!-- //iframe -->
+
+	</div>
+	<!-- //body -->
+
+</div>
+
+<!-- menu -->
+<div id="jsMenu1" class="lMenu">
+	<div class="modal"></div>
+	<div class="con mCustomScrollbar">
+		<ul>
+			<li class="active"> <!-- 메뉴활성화 -->
+				<a href="#" class="dep1">회원정보 관리</a>
+				<ul style="display:block;">
+					<li>
+						<a href="#">회원정보 등록</a>
+						<ul>
+							<li><a href="#">4 depth</a></li>
+							<li><a href="#">4 depth</a></li>
+							<li><a href="#">4 depth</a></li>
+						</ul>
+					</li>
+					<li><a href="#">회원정보 수정</a></li>
+					<li><a href="#">회원정보 삭제</a></li>
+					<li><a href="#">회원정보 싱글뷰</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">회원등급 관리</a>
+				<ul>
+					<li><a href="#">회원등급 마스터 관리</a></li>
+					<li><a href="#">등급 적용 규칙 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">매장 관리</a>
+				<ul>
+					<li><a href="#">매장정보 관리</a></li>
+					<li><a href="#">폐업매장 회원정보 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">제휴사 관리</a>
+				<ul>
+					<li><a href="#">제휴사 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">쿠폰 관리</a>
+				<ul>
+					<li><a href="#">쿠폰유형 관리</a></li>
+					<li><a href="#">쿠폰 마스터 등록</a></li>
+					<li><a href="#">쿠폰 마스터 수정</a></li>
+					<li><a href="#">쿠폰발행</a></li>
+					<li><a href="#">발행 쿠폰 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">포인트 관리</a>
+				<ul>
+					<li><a href="#">포인트유형 관리</a></li>
+					<li><a href="#">포인트적용규칙 관리</a></li>
+					<li><a href="#">포인트 발행</a></li>
+					<li><a href="#">발행 포인트 관리</a></li>
+					<li><a href="#">부정 적립포인트 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">스탬프 관리</a>
+				<ul>
+					<li><a href="#">스탬프 발행</a></li>
+					<li><a href="#">발행 스탬프 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">카드 관리</a>
+				<ul>
+					<li><a href="#">카드유형 관리</a></li>
+					<li><a href="#">유형별 마스터 등록</a></li>
+					<li><a href="#">유형별 마스터 수정</a></li>
+					<li><a href="#">카드발행</a></li>
+					<li><a href="#">발행카드관리</a></li>
+					<li><a href="#">제휴카드 인증자료 관리</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">프로모션 관리</a>
+				<ul>
+					<li><a href="#">프로모션 유형 관리</a></li>
+					<li><a href="#">채널관리</a></li>
+					<li><a href="#">전송템플릿 관리</a></li>
+					<li><a href="#">혜택관리</a></li>
+					<li><a href="#">멤버십 고객군 관리</a></li>
+					<li><a href="#">제품관리</a></li>
+					<li><a href="#">매장관리</a></li>
+					<li><a href="#">프로모션 기획관리</a></li>
+					<li><a href="#">프로모션 실행</a></li>
+					<li><a href="#">프로모션 중지</a></li>
+					<li><a href="#">프로모션 모니터링</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="dep1">정산 관리</a>
+				<ul>
+					<li><a href="#">기간별 사용내역 관리</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+<!-- //menu -->
+
+</body>
+</html>

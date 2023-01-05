@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세라젬 CRM</title>
+
+    <!-- ======================= css ===================== -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header_menu">
+                <a href="#" class="full_menu" id="full-toggle"><img src="images/menu.png" alt="fullmenu"></a>
+                <h1><a href="#"><img src="images/logo.png" alt=""></a></h1>
+    
+
+
+                <!-- ===================== gnb ===================-->
+                <ul class="gnb">
+                    <li><a href="#" class="gnb_link">통합고객</a>
+                        <ul class="sub">
+                            <li>
+                                <a href="#" class="sub_link">통합고객정보 관리</a>
+                                <a href="#" class="sub_link">고객그룹 관리</a>
+                                <a href="#" class="sub_link">고객등급 관리</a>
+                                <a href="#" class="sub_link">잠재고객 관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="gnb_link">멤버십</a>
+                        <ul class="sub">
+                            <li>
+                                <a href="#" class="sub_link">회원정보 관리</a>
+                                <a href="#" class="sub_link">회원등급 관리</a>
+                                <a href="#" class="sub_link">매장 관리</a>
+                                <a href="#" class="sub_link">제휴사 관리</a>
+                                <a href="#" class="sub_link">쿠폰 관리</a>
+                                <a href="#" class="sub_link">포인트 관리</a>
+                                <a href="#" class="sub_link">스탬프 관리</a>
+                                <a href="#" class="sub_link">카드 관리</a>
+                                <a href="#" class="sub_link">프로모션 관리</a>
+                                <a href="#" class="sub_link">정산 관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="gnb_link">캠페인</a>
+                        <ul class="sub">
+                            <li>
+                                <a href="#" class="sub_link">캠페인 관리</a>
+                                <a href="#" class="sub_link">채널 관리</a>
+                                <a href="#" class="sub_link">전송템플릿 관리</a>
+                                <a href="#" class="sub_link">혜택 관리</a>
+                                <a href="#" class="sub_link">고객군 관리</a>
+                                <a href="#" class="sub_link">예산 관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="gnb_link">공통</a>
+                        <ul class="sub">
+                            <li>
+                                <a href="#" class="sub_link">시스템 관리</a>
+                                <a href="#" class="sub_link">API 관리</a>
+                                <a href="#" class="sub_link">커뮤니티 관리</a>
+                                <a href="#" class="sub_link">통계 관리</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="header_user">
+                <img src="images/user1.png" alt="">
+                <p>세라젬(PA9999999)님 환영합니다.</p>
+                <button class="btn_login">로그아웃</button>
+            </div>
+        </div>
+
+        <ul class="header_side">
+            <li>
+                <a href="#" class="side_depth1 active">회원정보 관리</a>
+                <ul class="sub_depth2 active">
+                    <li>
+                        <a href="#" class="side_depth2">회원정보 등록</a>
+                        <ul class="sub_depth3 active">
+                            <li>
+                                <a href="#" class="side_depth3 active">- 4depth</a>
+                            </li>
+                            <li>
+                                <a href="#" class="side_depth3">- 4depth</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="side_depth2">회원정보 수정</a></li>
+                    <li><a href="#" class="side_depth2">회원정보 삭제</a></li>
+                    <li><a href="#" class="side_depth2">회원정보 싱글뷰</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">회원등급 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">매장관리 </a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">제휴사 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">쿠폰 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">포인트 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">스탬프 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">카드 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">프로모션 관리</a>
+            </li>
+            <li>
+                <a href="#" class="side_depth1">정산 관리</a>
+            </li>
+        </ul>
+    </header>
+
+
+
+    <div class="main">
+        <div class="container main_grid">
+            <div class="main_side show-side">
+                <h2>통합고객정보 관리</h2>
+
+                <div class="contents">
+                    <h3>고객정보</h3>
+
+                    <form action="">
+                        <div class="side_search">
+                           <label class="custom_radio">개인
+                               <input type="radio" name="side_group" checked="checked">
+                               <span class="side_group_radio"></span>
+                            </label> 
+                           <label class="custom_radio">그룹
+                               <input type="radio" name="side_group">
+                               <span class="side_group_radio"></span>
+                            </label> 
+
+                           <input type="text" class="name" placeholder="고객명">
+                           <input type="text" class="number"  placeholder="전화번호">
+                           <input type="text" class="total"  placeholder="통합검색">
+                           <button class="search">검색</button>
+                        </div>
+                    </form>
+
+                    <div class="side_table">
+                        <ul class="table_list">
+                            <li class="table_tr table_sticky">
+                                <p class="table_th table_w8">NO</p>
+                                <p class="table_th table_w25">통합고객번호</p>
+                                <p class="table_th table_w25">멤버십 ID</p>
+                                <p class="table_th table_w18">이름</p>
+                                <p class="table_th table_w18">성별</p>
+                                <p class="table_th table_w12">연령</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">1</p>
+                                <p class="table_td table_w25">4000161440001614</p>
+                                <p class="table_td table_w25">ceragemjjangceragemjjang</p>
+                                <p class="table_td table_w18">김세라김세라김세라김세라</p>
+                                <p class="table_td table_w18">남남남남남</p>
+                                <p class="table_td table_w12">202020202020</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+
+                            <li class="table_tr">
+                                <p class="table_td table_w8">2</p>
+                                <p class="table_td table_w25">40001614</p>
+                                <p class="table_td table_w25">ceragemjjang</p>
+                                <p class="table_td table_w18">김세라</p>
+                                <p class="table_td table_w18">남</p>
+                                <p class="table_td table_w12">20</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="side_toggle open-side" id="side-toggle">
+                        <img src="images/arrow_2.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="main_wide">
+                <div class="main_location">
+                    <div class="location">
+                        <span>홈</span>
+                        &gt;
+                        <span>통합 고객정보 관리</span>
+                    </div>
+
+                    <div class="main_quick">
+                        <a href="#" class="quick_link"><img src="images/icon1.png" alt=""> 포인트</a>
+                        <a href="#" class="quick_link"><img src="images/icon2.png" alt=""> 스탬프</a>
+                        <a href="#" class="quick_link"><img src="images/icon3.png" alt=""> 쿠폰</a>
+                        <a href="#" class="quick_link"><img src="images/icon4.png" alt=""> 카트</a>
+                    </div>
+                </div>
+
+                <div class="contents">
+                    <form action="">
+                        <div class="contents_block">
+                            <h3>기본정보</h3>
+                            <div class="contents_table">
+                                <ul class="table_form">
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">통합고객번호</div>
+                                        <div class="table_td" style="width: 20%">
+                                            <input type="text" class="input_color1" placeholder="IND000000000XXXXXX">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">고객명</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <input type="text" class="" placeholder="김세라">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">생년월일</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <input type="text" class="" placeholder="1995-05-05">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">성별</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <select name="" id="">
+                                                <option value="">남</option>
+                                                <option value="">여</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">외국인</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <select name="" id="">
+                                                <option value="">N</option>
+                                                <option value="">Y</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">일반전화</div>
+                                        <div class="table_td" style="width: 20%">
+                                            <select name="" id="" class="select_w150">
+                                                <option value="">02</option>
+                                                <option value="">Y031</option>
+                                            </select>
+                                            <input type="text" placeholder="555-5555">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">휴대전화</div>
+                                        <div class="table_td" style="width: 29%">
+                                            <select name="" id="" class="select_w150">
+                                                <option value="">SKT</option>
+                                                <option value="">KT</option>
+                                            </select>
+                                            <input type="text" class="" placeholder="1010-555-5555">
+                                            <button class="btn_white">중복체크</button>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">이메일</div>
+                                        <div class="table_td" style="width: 29%">
+                                            <input type="text" class="" placeholder="email@email.com">
+                                                <button class="btn_white">중복체크</button>
+                                        </div>
+                                    </li>
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">고객상태</div>
+                                        <div class="table_td" style="width: 20%">
+                                            <select name="" id="" class="input_color2">
+                                                <option value="">휴면/정상탈회</option>
+                                                <option value="">휴면/정상탈회</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">고객유형</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <select name="" id="" class="input_color2">
+                                                <option value="">가망고객</option>
+                                                <option value="">가망고객</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">고객구분</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <select name="" id="" class="input_color2">
+                                                <option value="">개인</option>
+                                                <option value="">개인</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">상태변경</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <input type="text" class="input_color1" placeholder="2022-01-01">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">정보변경</div>
+                                        <div class="table_td" style="width: 11%">
+                                            <input type="text" class="input_color1" placeholder="2022-01-01">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="contents_block">
+                            <h3>선택정보</h3>
+                            <div class="contents_table">
+                                <ul class="table_form">
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">주소1</div>
+                                        <div class="table_td" style="width: 43%">
+                                            <p class="input_search"><input type="text" class="input_bodernone" placeholder="14568"><button><img src="images/search.png" alt=""></button></p>
+                                            <input type="text" style="margin: 0 2px" placeholder="서울시 서울구 서울동">
+                                            <input type="text" placeholder="서울아파트 104 2003호">
+                                        </div>
+                                        <div class="table_th" style="width: 5%;">주소2</div>
+                                        <div class="table_td" style="width: 44%">
+                                            <p class="input_search"><input type="text" class="input_bodernone" placeholder="14568"><button><img src="images/search.png" alt=""></button></p>
+                                            <input type="text" style="margin: 0 2px" placeholder="서울시 서울구 서울동">
+                                            <input type="text" placeholder="서울아파트 104 2003호">
+                                        </div>
+                                    </li>
+
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">추천인 고객번호</div>
+                                        <div class="table_td" style="width: 16%">
+                                            <input type="text" placeholder="S13546651322">
+                                        </div>
+                                        <div class="table_th" style="width: 8%;">추천인 임직원</div>
+                                        <div class="table_td" style="width: 12%">
+                                            <input type="text" class="" placeholder="임직원">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">가입매장</div>
+                                        <div class="table_td" style="width: 12%">
+                                            <input type="text" class="" placeholder="00082">
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">매장명</div>
+                                        <div class="table_td" style="width: 30%">
+                                            <input type="text" class="" placeholder="현대백화점 서울역점">
+                                        </div>
+                                    </li>
+
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 8%;">결혼여부</div>
+                                        <div class="table_td" style="width: 16%">
+                                            <select name="" id="">
+                                                <option value="">선택</option>
+                                                <option value="">개인</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 8%;">가족관계</div>
+                                        <div class="table_td" style="width: 12%">
+                                            <select name="" id="">
+                                                <option value="">선택</option>
+                                                <option value="">개인</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">주거평수</div>
+                                        <div class="table_td" style="width: 12%">
+                                            <select name="" id="">
+                                                <option value="">선택</option>
+                                                <option value="">개인</option>
+                                            </select>
+                                        </div>
+                                        <div class="table_th" style="width: 7%;">관심분야</div>
+                                        <div class="table_td" style="width: 30%">
+                                            <input type="checkbox" id="td_check1" checked> <label for="td_check1">건강</label>
+                                            <input type="checkbox" id="td_check2"> <label for="td_check2">음식</label>
+                                            <input type="checkbox" id="td_check3"> <label for="td_check3">주거</label>
+                                            <input type="checkbox" id="td_check4"> <label for="td_check4">의료</label>
+                                            <input type="checkbox" id="td_check5"> <label for="td_check5">스포츠</label>
+                                            <input type="checkbox" id="td_check6"> <label for="td_check6">연예</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="contents_block flex_grid">
+                            <div class="contents_half40">
+                                <h3>멤버십 정보</h3>
+                                <div class="contents_table flex_grid">
+                                    <p class="half_user"><img src="images/user2.png" alt=""></p>
+                                    <ul class="table_form">
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">멤버십 ID</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <input type="text" class="input_color1" placeholder="a1313131313">
+                                            </div>
+                                            <div class="table_th" style="width: 13%;">멤버십 PW</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <input type="password" class="input_color1" placeholder="a1313131313">
+                                            </div>
+
+                                            <div class="table_th" style="width: 18%;">멤버십 가입일자</div>
+                                            <div class="table_td" style="width: 20%">
+                                                <p class="input_date"><input type="TEXT" class="input_bodernone" placeholder="2021-02-03"><button><img src="images/calendar.png" alt=""></button></p>
+                                            </div>
+                                        </li>
+
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">회원구분</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <select name="" id="" class="input_color2">
+                                                    <option value="">임직원</option>
+                                                    <option value="">개인</option>
+                                                </select>
+                                            </div>
+                                            <div class="table_th" style="width: 13%;">정보변경</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <input type="password" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_th" style="width: 18%;">정보확인</div>
+                                            <div class="table_td" style="width: 20%">
+                                                <input type="password" placeholder="PD-1231231234">
+                                            </div>
+                                        </li>
+
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">회원등급</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <select name="" id="" class="input_color2">
+                                                    <option value="">일반</option>
+                                                    <option value="">개인</option>
+                                                </select>
+                                            </div>
+                                            <div class="table_th" style="width: 13%;">등급변경</div>
+                                            <div class="table_td" style="width: 18%">
+                                                <input type="password" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_th" style="width: 18%;">멤버십 채널</div>
+                                            <div class="table_td" style="width: 20%">
+                                                <input type="password" placeholder="멤버십앱">
+                                            </div>
+                                        </li>
+    
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="contents_half60">
+                                <h3>정보 활용동의</h3>
+                                <div class="contents_table">
+                                    <ul class="table_form">
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">SMS 수신동의</div>
+                                            <div class="table_td" style="width: 5.5%">
+                                                <select name="" id="">
+                                                    <option value="">Y</option>
+                                                    <option value="">N</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="table_td" style="width: 6%;">동의일</div>
+                                            <div class="table_td" style="width: 11.5%">
+                                                <input type="text" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_td" style="width: 5.5%;">채널</div>
+                                            <div class="table_td" style="width: 8.5%">
+                                                <input type="text" class="input_color1" placeholder="멤버쉽앱">
+                                            </div>
+
+                                            <div class="table_th" style="width: 13%;">알림톡 수신동의</div>
+                                            <div class="table_td" style="width: 5.5%">
+                                                <select name="" id="">
+                                                    <option value="">Y</option>
+                                                    <option value="">N</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="table_td" style="width: 6%;">동의일</div>
+                                            <div class="table_td" style="width: 11.5%">
+                                                <input type="text" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_td" style="width: 5.5%;">채널</div>
+                                            <div class="table_td" style="width: 8.5%">
+                                                <input type="text" class="input_color1" placeholder="멤버쉽앱">
+                                            </div>
+                                        </li>
+
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">이메일수신동의</div>
+                                            <div class="table_td" style="width: 5.5%">
+                                                <select name="" id="">
+                                                    <option value="">Y</option>
+                                                    <option value="">N</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="table_td" style="width: 6%;">동의일</div>
+                                            <div class="table_td" style="width: 11.5%">
+                                                <input type="text" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_td" style="width: 5.5%;">채널</div>
+                                            <div class="table_td" style="width: 8.5%">
+                                                <input type="text" class="input_color1" placeholder="멤버쉽앱">
+                                            </div>
+
+                                            <div class="table_th" style="width: 13%;">PUSH 수신동의</div>
+                                            <div class="table_td" style="width: 5.5%">
+                                                <select name="" id="">
+                                                    <option value="">Y</option>
+                                                    <option value="">N</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="table_td" style="width: 6%;">동의일</div>
+                                            <div class="table_td" style="width: 11.5%">
+                                                <input type="text" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_td" style="width: 5.5%;">채널</div>
+                                            <div class="table_td" style="width: 8.5%">
+                                                <input type="text" class="input_color1" placeholder="멤버쉽앱">
+                                            </div>
+                                        </li>
+    
+                                        <li class="table_tr">
+                                            <div class="table_th" style="width: 13%;">정보유효기간</div>
+                                            <div class="table_td" style="width: 11.5%">
+                                                <input type="text" placeholder="2021-02-03">
+                                            </div>
+
+                                            <div class="table_th" style="width: 11.5%;">수신거부</div>
+                                            <div class="table_td" style="width: 5.5%">
+                                                <select name="" id="">
+                                                    <option value="">Y</option>
+                                                    <option value="">N</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="table_td" style="width: 8.5%;"></div>
+                                            <div class="table_td" style="width: 13%"></div>
+
+                                            <div class="table_th" style="width: 11.5%;"></div>
+                                            <div class="table_td" style="width: 11.5%"></div>
+
+                                            <div class="table_td" style="width: 5.5%;"></div>
+                                            <div class="table_td" style="width: 8.5%"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ================ 하단 탭 ==================  -->
+                <ul class="contents_tab">
+                    <li class="tab">
+                        <input type="radio" id="tab-1" name="tab-group-1" checked>
+                        <label for="tab-1">부가정보</label>
+                        <div class="content">
+                            <div class="tab_sub">
+                                <a href="#" class="active">가구정보</a>
+                                <a href="#">연락처정보</a>
+                                <a href="#">정보동의 이력</a>
+                                <a href="#">등급변경 이력</a>
+                                <a href="#">정보변경 이력</a>
+                            </div>
+
+                            <div class="tab_con">
+                                <ul class="table_form tablelist_search">
+                                    <li class="table_tr">
+                                        <div class="table_th" style="width: 5%;">기간</div>
+                                        <div class="table_td" style="width:18%">
+                                            <p class="input_date">
+                                                <input type="text" class="input_bodernone" placeholder="2021-02-03"><button><img src="images/calendar.png" alt=""></button>
+                                            </p>
+                                            <span style="padding: 0 5px;">~</span>
+                                            <p class="input_date">
+                                                <input type="text" class="input_bodernone" placeholder="2021-02-03"><button><img src="images/calendar.png" alt=""></button>
+                                            </p>
+                                        </div>
+
+                                        <div class="table_th" style="width: 5%;">관계</div>
+                                        <div class="table_td" style="width: 15%">
+                                            <select name="" id="">
+                                                <option value="">전체</option>
+                                                <option value="">N</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="table_th" style="width: 57%;">
+                                            <button class="btn_white2">검색</button>
+                                            <button class="btn_pink">관계등록</button>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="table_list" style="height: 256px;">
+                                    <li class="table_tr table_sticky">
+                                        <p class="table_th" style="width:8%">NO</p>
+                                        <p class="table_th" style="width:12%">관계등록일시</p>
+                                        <p class="table_th" style="width:10%">가구번호</p>
+                                        <p class="table_th" style="width:10%">고객통합번호</p>
+                                        <p class="table_th" style="width:8%">사용유형</p>
+                                        <p class="table_th" style="width:8%">관계</p>
+                                        <p class="table_th" style="width:8%">관계코드</p>
+                                        <p class="table_th" style="width:8%">이름</p>
+                                        <p class="table_th" style="width:12%">휴대폰</p>
+                                        <p class="table_th" style="width:8%">관계수정</p>
+                                        <p class="table_th" style="width:8%">관계삭제</p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                    <li class="table_tr">
+                                        <p class="table_td" style="width:8%">1</p>
+                                        <p class="table_td" style="width:12%">2021-01-02-00:00:01</p>
+                                        <p class="table_td" style="width:10%">40001614</p>
+                                        <p class="table_td" style="width:10%">40001612</p>
+                                        <p class="table_td" style="width:8%">AS신청자</p>
+                                        <p class="table_td" style="width:8%" >배우자</p>
+                                        <p class="table_td" style="width:8%">01</p>
+                                        <p class="table_td" style="width:8%">박**</p>
+                                        <p class="table_td" style="width:12%">010-555-5555</p>
+                                        <p class="table_td" style="width:8%"><button class="btn_whites">수정</button></p>
+                                        <p class="table_td" style="width:8%"><button class="btn_grays">삭제</button></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="tab">
+                        <input type="radio" id="tab-2" name="tab-group-1">
+                        <label for="tab-2" class="tab2">거래이력</label>
+                        <div class="content">
+                          탭2
+                          
+                        </div>
+                    </li>
+                    <li class="tab">
+                        <input type="radio" id="tab-3" name="tab-group-1">
+                        <label for="tab-3" class="tab3">접촉이력</label>
+                        <div class="content">
+                          탭3
+                        </div>
+                    </li>
+                    <li class="tab">
+                        <input type="radio" id="tab-4" name="tab-group-1">
+                        <label for="tab-4" class="tab4">회원이력</label>
+                        <div class="content">
+                          탭4
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="wedget">
+            <a href="#">
+                <img src="images/widget1.png" alt="">
+                <span>위젯1</span>
+            </a>
+            <a href="#">
+                <img src="images/widget2.png" alt="">
+                <span>위젯2</span>
+            </a>
+            <a href="#">
+                <img src="images/widget3.png" alt="">
+                <span>위젯3</span>
+            </a>
+        </div>
+
+        <div class="memo">
+            <a href="#" class="memo_toggle" id="memo-toggle">
+                <img src="images/arrow.png" alt="">
+            </a>
+
+            <div class="memo_container">
+                <form action="">
+                    <div class="memo_txt">
+                        <p>메모</p>
+    
+                        <div class="memo_btn">
+                            <button class="memo_new">신규</button>
+                            <button class="memo_del">삭제</button>
+                            <button class="memo_ok">저장</button>
+                        </div>
+                    </div>
+                    <div class="memo_write">
+                        <textarea></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+    </div>
+
+
+    <!-- ======================== js ================ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+#wrap {
+	min-width: 1200px;
+}
+
+/* contentsWrap */
+
+.contentsWrap {
+	padding: 30px 20px 50px;
+}
+
+#main {
+	padding: 20px;
+}
+#main, #sub {
+    position: absolute;
+    width: 100%;
+    min-width: 1280px;
+    min-height: 100%;
+    min-height: calc(100% - 110px);
+}
+.layout #main {
+	padding: 0;
+}
+.layout #main, .layout #sub {
+	position: relative;
+	min-width: auto;
+	min-height: auto;
+}
+
+
+#sub .lnb {
+	float: left;
+	width: 180px;
+}
+#sub > .contentsWrap {
+	margin-left: 179px;
+	min-height: 500px;
+	min-height: calc(100vh - 110px);
+}
+
+/* popup */
+.popup {
+	position: relative;
+	z-index: 999;
+}
+.popup > h3 {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	margin: 0;
+	padding: 0 20px;
+	font-size: 1.54em;
+	clear: inherit;
+}
+.popup > strong.title {
+	display: block;
+	height: 50px;
+	/* line-height: 45px; */
+	/* padding: 0 20px; */
+	padding: 18px 0px 17px 20px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.popupLayer .contentsWrap,
+.popupNotice .contentsWrap,
+.popup .contentsWrap {
+	padding: 30px 20px 30px 20px;
+}
+/* 기능버튼없는 layout */
+.popup .contentsWrap2 {
+	padding: 30px 20px 40px 20px;
+	background: #ffffff;
+}
+.popup > .btnClose {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	min-width: 30px;
+	height: 30px;
+	border: none;
+	text-indent: -99999px;
+}
+
+.popup .box {
+	margin-bottom: 0;
+}
+
+/* 과제채점관리 팝업 버튼 영역 */
+.popup .contentsWrap.mosa {
+	padding: 10px 0px 0px 0px;
+	background: #ffffff;
+}
+.popup .contentsWrap.mosa .btnArea {
+	padding: 0 10px 10px 0;
+	border-bottom: solid 2px #e6e8eb;
+}
+
+
+ /* popupNotice - 알파코 사용자 팝업공지 */
+.popupNotice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #9fc7e3;
+	z-index: 999;
+}
+.popupNotice h3 {
+	position: relative;
+	height: 40px;
+    line-height: 40px;
+    margin: 20px 20px 0;
+    padding: 0 25px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 1.38em; /* 18/13 */
+	background: #0057a8;
+}
+.popupNotice > .btnClose,
+.popupNotice > .btnClose:hover {
+	position: absolute;
+    top: 32px;
+    right: 45px;
+    min-width: 16px;
+	height: 16px;
+	padding:0;
+    border: none;
+    font-size: 0;
+	background: url('/images/common/button/popup_btn_close.png') center center no-repeat;
+}
+.popupNotice .contentsWrap {
+	width: 100%;
+    height: 90%;
+    height: calc(100% - 62px);
+    padding: 0;
+}
+.popupNotice  .contentsBox {
+	width: 100%;
+	min-height: 90%;
+    min-height: calc(100% - 25px);
+    padding: 25px;
+    border: 20px solid #9fc7e3;
+    background: #ffffff;
+}
+.popupNotice .todayClose {
+	padding: 5px 20px 5px 10px;
+	text-align: right;
+}
+.popupNotice .todayClose label {
+	color: #ffffff;
+}
+
+/* popupLayer - 알파코 사용자 레이어팝업  */
+.popupLayer {
+	position: absolute;
+    width: 100%;
+    height: 100%;
+	background: #ffffff;
+	z-index: 999;
+}
+.popupLayer > h3 {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	margin: 0;
+	padding: 0 20px;
+	font-size: 1.54em;
+	color: #ffffff;
+	background: #61696f;
+}
+.popupLayer > .btnClose,
+.popupLayer > .btnClose:hover {
+	position: absolute;
+	top: 17px;
+	right: 20px;
+	min-width: 16px;
+	height: 16px;
+	padding:0;
+    font-size: 0;
+    border: none;
+	background: url('/images/common/button/popup_btn_close.png') center center no-repeat;
+}
+.popupLayer .contentsWrap {
+	width: 100%;
+    height: 90%;
+    height: calc(100% - 50px);
+}
+.popupLayer .contentsWrap .contentsBox {
+	width: 100%;
+	min-height: 90%;
+    min-height: calc(100% - 25px);
+    padding: 20px;
+    background: #ffffff;
+}
+.popupLayer .todayClose {
+    padding: 10px 0px 0px 0px;
+	text-align: right;
+}
+.popupLayer .todayClose input[type="checkbox"]+label {
+	margin: 0 0 0 0;
+}

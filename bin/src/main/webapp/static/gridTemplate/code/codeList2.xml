@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="Y"/>
+        <showStateBar value="Y"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+<!--         <headerRows value="2"/> -->
+    </meta>
+    <column name="공통코드" field="comnCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" hidden="N"/>
+    <column name="최상위공통코드" field="topComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+    <column name="공통코드레벨번호" field="comnCdLvlNo" type="int" maxLength="3" width="80" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
+    <column name="공통코드순번" field="comnCdOdrg" type="int" maxLength="3" width="80" textAlignment="right" required="Y" digit="3" place="0" hidden="Y"/>
+    <column name="부모공통코드" field="prntsComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="공통코드명" field="comnCdNm" type="char" maxLength="1000" width="200" textAlignment="left" required="Y" hidden="N"/>
+    <column name="사용여부" field="useYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="N"/>
+    <column name="참조1공통코드" field="rfrn1ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조2공통코드" field="rfrn2ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조3공통코드" field="rfrn3ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조4공통코드" field="rfrn4ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조5공통코드" field="rfrn5ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조6공통코드" field="rfrn6ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조7공통코드" field="rfrn7ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조8공통코드" field="rfrn8ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+    <column name="참조9공통코드" field="rfrn9ComnCd" type="char" maxLength="20" width="80" textAlignment="left" required="N" hidden="Y"/>
+<!--      <group name="사용여부" direction="H" title="사용여부" > -->
+    <column name="사용여부1" field="comnCd1UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부2" field="comnCd2UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부3" field="comnCd3UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부4" field="comnCd4UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부5" field="comnCd5UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부6" field="comnCd6UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부7" field="comnCd7UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부8" field="comnCd8UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+    <column name="사용여부9" field="comnCd9UseYn" type="checkbox" maxLength="1" width="80" textAlignment="center" required="N" defaultValue="Y" hidden="N"/>
+<!--     </group> -->
+    <column name="등록자ID" field="regrId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" hidden="Y"/>
+    <column name="등록일시" field="regDt" type="date" width="80" textAlignment="center" required="Y" defaultValue="SYSDATE" hidden="Y"/>
+    <column name="수정자ID" field="amdrId" type="char" maxLength="20" width="80" textAlignment="center" required="Y" hidden="Y"/>
+    <column name="수정일시" field="amdDt" type="date" width="80" textAlignment="center" required="Y" defaultValue="SYSDATE" hidden="Y"/>
+</grid>

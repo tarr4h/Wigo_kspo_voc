@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+
+<div class="mPopup1">
+    
+    <!-- header -->
+    <div class="title">
+        <h1>회원쿠폰발급</h1>
+        <a href="javascript:window.close();" class="close">팝업 닫기</a>
+    </div>
+    <!-- //header -->
+
+    <!-- cont -->
+    <div class="cont">
+        
+        <div class="gTitle1 line">
+            <h3 class="mTitle1">기본정보</h3>
+        </div>
+        <!-- board -->
+        <div class="mBoard2">
+            <table>
+                <caption>기본정보</caption>
+                <colgroup>
+                    <col width="11%">
+                    <col width="19%">
+                    <col width="8%">
+                    <col width="20%">
+                    <col width="11%">
+                    <col width="*">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="left"><span class="iMust">쿠폰 마스터 코드</span></th>
+                        <td>
+                            <input type="text" class="it must" title="쿠폰 마스터 코드" value="PM20200001">
+                        </td>
+                        <th scope="row" class="left">쿠폰유형</th>
+                        <td>
+                            <div class="mFlex2">
+                                <span class="flex">
+                                    <input type="text" class="it" title="쿠폰유형" value="음료쿠폰">
+                                </span>
+                                <a href="#" class="mBtn1 m lWhite">버튼</a>
+                            </div>
+                        </td>
+                        <th scope="row" class="left">쿠폰 마스터명</th>
+                        <td>
+                            <input type="text" class="it" title="쿠폰 마스터명" value="회원가입 축하쿠폰 ( 멤버십 전용)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //board -->
+        
+        <!-- sort -->
+        <div class="mSort2 type3">
+            <div class="row">
+                <div class="titl">기본조건</div>
+                <ul>
+                    <li class="w21per">
+                        <div class="tit w85">지역</div>
+                        <div class="txt">
+                            <input type="text" class="it" title="지역">
+                        </div>
+                    </li>
+                    <li class="w12per">
+                        <div class="tit w35">이름</div>
+                        <div class="txt">
+                            <input type="text" class="it" title="이름">
+                        </div>
+                    </li>
+                    <li class="w22per">
+                        <div class="tit w65">연락처</div>
+                        <div class="txt">
+                            <input type="text" class="it w105" title="연락처">
+                        </div>
+                    </li>
+                    <li class="w13per">
+                        <div class="tit w35">성별</div>
+                        <div class="txt">
+                            <select class="select" title="성별">
+								<option>선택</option>
+							</select>
+                        </div>
+                    </li>
+                    <li class="w15per">
+                        <div class="tit">연령대</div>
+                        <div class="txt">
+                            <select class="select" title="연령대">
+								<option>선택</option>
+							</select>
+                        </div>
+                    </li>
+                    <li class="w16per">
+                        <div class="tit w35">등급</div>
+                        <div class="txt">
+                            <select class="select" title="등급">
+								<option>선택</option>
+							</select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="titl">판매조건</div>
+                <ul>
+                    <li class="w33per">
+                        <div class="tit">구매총액</div>
+                        <div class="txt">
+                            <input type="text" class="it right w80" title="구매 시작 총액" value="1000,000">
+                            ~
+                            <input type="text" class="it right w80" title="구매 끝 총액" value="2000,000">
+                        </div>
+                    </li>
+                    <li class="wAuto">
+                        <div class="tit w65">기간</div>
+                        <div class="txt">
+							<div class="mDate1">
+								<input type="text" class="it date" title="캠페인 시작일" value="2022-01-01">
+								<span class="bar">~</span>
+								<input type="text" class="it date" title="캠페인 마지막일" value="2022-01-03">
+							</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="titl">기타조건</div>
+                <ul>
+                    <li class="w33per">
+                        <div class="tit">추천횟수</div>
+                        <div class="txt">
+                            <input type="text" class="it right w41" title="추천 시작 횟수" value="20">
+                            ~
+                            <input type="text" class="it right w41" title="추천 끝 횟수" value="50">
+                        </div>
+                    </li>
+                    <li class="w22per">
+                        <div class="tit w65">체험횟수</div>
+                        <div class="txt">
+                            <input type="text" class="it right w41" title="체험 시작 횟수" value="20">
+                            ~
+                            <input type="text" class="it right w41" title="체험 끝 횟수" value="50">
+                        </div>
+                    </li>
+                    <li class="w22per">
+                        <div class="tit w80">세라체크횟수</div>
+                        <div class="txt">
+                            <input type="text" class="it right w35" title="세라체크 시작 횟수" value="20">
+                            ~
+                            <input type="text" class="it right w35" title="세라체크 끝 횟수" value="50">
+                        </div>
+                    </li>
+                    <li class="w22per">
+                        <div class="tit w90">제휴사여부</div>
+                        <div class="txt">
+                            <select class="select" title="제휴사여부">
+								<option>Y</option>
+							</select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="button posVm"> <!-- 버튼 상하 가운데 정렬 : class="posVm" -->
+                <a href="#" class="mBtn1">검색</a>
+            </div>
+        </div>
+        <!-- //sort -->
+        
+        <div class="gTitle1">
+            <h3 class="mTitle1">회원쿠폰발급 목록</h3>
+            <div class="gRt">
+                <a href="#" class="mBtn1 lWhite">선택</a>
+                <a href="#" class="mBtn1 gray">전체선택</a>
+            </div>
+        </div>
+        <!-- board -->
+        <div class="mBoard1 mCustomScrollbar hRow7 pType1"> 
+            <!--
+                class="hRow7"       => 리스트 갯수 7개 이상일때 스크롤 적용
+                class="pType1"      => td height="30px"
+            -->
+            <table>
+                <caption>회원쿠폰발급 목록</caption>
+                <colgroup>
+                    <col width="3%">
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="*">
+                    <col span="3" width="12%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" title="전체선택">
+                                <span class="label">전체선택</span>
+                            </label>
+                        </th>
+                        <th scope="col">통합고객번호</th>
+                        <th scope="col">멤버십ID</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">성별</th>
+                        <th scope="col">연령</th>
+                        <th scope="col">휴대전화번호</th>
+                        <th scope="col">구매내역</th>
+                        <th scope="col">구매일자</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">등록일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>
+                            <label class="mCheckbox1 notext">
+                                <input type="checkbox" name="" title="선택">
+                                <span class="label">선택</span>
+                            </label>
+                        </td>
+                        <td>40001614</td>
+                        <td>m-pj138d357</td>
+                        <td>김세라</td>
+                        <td>남</td>
+                        <td>20</td>
+                        <td>010-****-02**</td>
+                        <td>Master V4</td>
+                        <td>2022-11-01</td>
+                        <td class="right">97,502</td>
+                        <td>2022-11-01</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- //board -->
+        <!-- paging -->
+        <div class="mPag1">
+            <div class="mCount1">총 <strong>10</strong>건</div>
+
+            <span title="처음 리스트" class="first">처음으로</span>
+            <span title="이전 리스트" href="###" class="prev">이전</span>
+            <!-- able 버튼
+                <a title="처음 리스트" href="###" class="first">처음으로</a>
+                <a title="이전 리스트" href="###" class="prev">이전</a>
+            -->
+            <a title="현재페이지" href="###" class="active">1</a>
+            <a title="2 페이지" href="###">2</a>
+            <a title="3 페이지" href="###">3</a>
+            <a title="4 페이지" href="###">4</a>
+            <a title="5 페이지" href="###">5</a>
+            <a title="6 페이지" href="###">6</a>
+            <a title="다음 리스트" href="###" class="next">다음</a>
+            <a title="마지막 리스트" href="###" class="last">마지막으로</a>
+            <!-- disabled 버튼
+                <span title="다음 리스트" class="next">다음</span>
+                <span title="마지막 리스트" class="last">마지막으로</span>
+            -->
+            <select class="select" title="갯수선택">
+                <option>10</option>
+                <option>20</option>
+                <option>30</option>
+            </select>
+        </div>
+        <!-- //paging -->
+        
+    </div>
+    <!-- //cont -->
+	
+</div>
+
+</body>
+</html>
