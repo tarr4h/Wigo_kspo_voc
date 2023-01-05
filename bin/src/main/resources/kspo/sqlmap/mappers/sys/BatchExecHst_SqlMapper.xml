@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.BatchExecHstDao">
+    <sql id="sqlPkConditions">
+                WHERE BATCH_HST_ID      =       #{batchHstId}
+    </sql>
+    <sql id="sqlCols">
+                      BATCH_HST_ID                    /*배치이력코드        */
+                    , BATCH_ID                    /*배치코드        */
+                    , SYS_CD                    /*시스템코드        */
+                    , WRK_ID                    /*작업ID        */
+                    , BATCH_RSLT_CD                    /*배치결과코드        */
+                    , BATCH_CALL_DT                    /*배치호출일시        */
+                    , BATCH_EXEC_MSEC                    /*배치실행밀리초        */
+                    , ERR_MSG_TXN                    /*오류메시지내역        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="batchHstId != null and batchHstId != ''">
+                      AND BATCH_HST_ID      =       #{batchHstId}
+        </if>
+        <if test="batchId != null and batchId != ''">
+                      AND BATCH_ID          =       #{batchId}
+        </if>
+        <if test="sysCd != null and sysCd != ''">
+            <choose>
+                <when test="sysCd instanceof String">
+                              AND SYS_CD            =       #{sysCd}
+                </when>
+                <otherwise>
+                    AND SYS_CD            IN
+                    <foreach item="item" index="index" collection="sysCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="wrkId != null and wrkId != ''">
+                      AND WRK_ID            =       #{wrkId}
+        </if>
+        <if test="batchRsltCd != null and batchRsltCd != ''">
+            <choose>
+                <when test="batchRsltCd instanceof String">
+                              AND BATCH_RSLT_CD     =       #{batchRsltCd}
+                </when>
+                <otherwise>
+                    AND BATCH_RSLT_CD     IN
+                    <foreach item="item" index="index" collection="batchRsltCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="batchCallDt != null and batchCallDt != ''">
+                      AND BATCH_CALL_DT     =       #{batchCallDt}
+        </if>
+        <if test="batchExecMsec != null and batchExecMsec != ''">
+                      AND BATCH_EXEC_MSEC   =       #{batchExecMsec}
+        </if>
+        <if test="errMsgTxn != null and errMsgTxn != ''">
+                      AND ERR_MSG_TXN       =       #{errMsgTxn}
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM TB_SYS_BATCH_EXEC_HST
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.BatchExecHstVo">
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_BATCH_EXEC_HST
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
+        
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.BatchExecHstVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_BATCH_EXEC_HST
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO TB_SYS_BATCH_EXEC_HST (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{batchHstId}
+                     , #{batchId}
+                     , #{sysCd}
+                     , #{wrkId}
+                     , #{batchRsltCd}
+                     , #{batchCallDt}
+                     , #{batchExecMsec}
+                     , #{errMsgTxn}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE TB_SYS_BATCH_EXEC_HST
+                  SET BATCH_ID            =         #{batchId}
+                    , SYS_CD              =         #{sysCd}
+                    , WRK_ID              =         #{wrkId}
+                    , BATCH_RSLT_CD       =         #{batchRsltCd}
+                    , BATCH_CALL_DT       =         #{batchCallDt}
+                    , BATCH_EXEC_MSEC     =         #{batchExecMsec}
+                    , ERR_MSG_TXN         =         #{errMsgTxn}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM TB_SYS_BATCH_EXEC_HST
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

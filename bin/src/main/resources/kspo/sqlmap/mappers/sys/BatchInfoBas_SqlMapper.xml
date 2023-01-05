@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.BatchInfoBasDao">
+    <sql id="sqlPkConditions">
+                WHERE BATCH_ID          =       #{batchId}
+    </sql>
+    <sql id="sqlCols">
+                      BATCH_ID                    /*배치코드        */
+                    , SYS_CD                    /*시스템코드        */
+                    , BATCH_NM                    /*배치명        */
+                    , WRK_ID                    /*작업ID        */
+                    , LAST_EXEC_DT                    /*최종실행일시        */
+                    , LAST_SUCC_YN                    /*최종성공여부        */
+                    , USE_YN                    /*사용여부        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="batchId != null and batchId != ''">
+                      AND BATCH_ID          =       #{batchId}
+        </if>
+        <if test="sysCd != null and sysCd != ''">
+            <choose>
+                <when test="sysCd instanceof String">
+                              AND SYS_CD            =       #{sysCd}
+                </when>
+                <otherwise>
+                    AND SYS_CD            IN
+                    <foreach item="item" index="index" collection="sysCd" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="batchNm != null and batchNm != ''">
+                      AND BATCH_NM          =       #{batchNm}
+        </if>
+        <if test="wrkId != null and wrkId != ''">
+                      AND WRK_ID            =       #{wrkId}
+        </if>
+        <if test="lastExecDt != null and lastExecDt != ''">
+                      AND LAST_EXEC_DT      =       #{lastExecDt}
+        </if>
+        <if test="lastSuccYn != null and lastSuccYn != ''">
+                      AND LAST_SUCC_YN      =       #{lastSuccYn}
+        </if>
+        <if test="useYn != null and useYn != ''">
+                      AND USE_YN            =       #{useYn}
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM TB_SYS_BATCH_INFO_BAS
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.BatchInfoBasVo">
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_BATCH_INFO_BAS
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.BatchInfoBasVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_BATCH_INFO_BAS
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO TB_SYS_BATCH_INFO_BAS (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{batchId}
+                     , #{sysCd}
+                     , #{batchNm}
+                     , #{wrkId}
+                     , #{lastExecDt}
+                     , #{lastSuccYn}
+                     , #{useYn}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE TB_SYS_BATCH_INFO_BAS
+                  SET SYS_CD              =         #{sysCd}
+                    , BATCH_NM            =         #{batchNm}
+                    , WRK_ID              =         #{wrkId}
+                    , LAST_EXEC_DT        =         #{lastExecDt}
+                    , LAST_SUCC_YN        =         #{lastSuccYn}
+                    , USE_YN              =         #{useYn}
+                    , AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM TB_SYS_BATCH_INFO_BAS
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

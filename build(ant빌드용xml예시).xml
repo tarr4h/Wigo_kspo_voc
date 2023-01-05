@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?> <!-- utf-8·Î ¾²¼¼¿ä-->
-<project name="kcms.kspo.or.kr" default="banner" basedir=".">  <!--- VOC ÀÌ¸§ Á¤ÇÏ¸é ¿¹¸¦µé¸é name="voc.kspo.or.kr"-->
+<?xml version="1.0" encoding="utf-8"?> <!-- utf-8ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-->
+<project name="kcms.kspo.or.kr" default="banner" basedir=".">  <!--- VOC ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ name="voc.kspo.or.kr"-->
 
   <!-- 0. set global properties for this build -->
   <property file="../build.properties"/>
@@ -10,8 +10,8 @@
   
   <property name="source-root" value="/data/xxxx"/>
   <property name="repository.URL" value="svn://140.101.1.183/svn/REAL/${ant.project.name}"/>            
-  <property name="svn.user" value="james"/> <!---SVN ¾ÆÀÌµð -->
-  <property name="svn.pw" value="passwd"/> <!---SVNÆÐ½º¿öµå-->
+  <property name="svn.user" value="james"/> <!---SVN ï¿½ï¿½ï¿½Ìµï¿½ -->
+  <property name="svn.pw" value="passwd"/> <!---SVNï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½-->
 
   <target name="banner">
     <echo>+--------------------------------------------------+</echo>
@@ -71,7 +71,7 @@
 
 
 	<target name="kcms" depends="compile" description="kcms.kspo.or.kr deploy">
-	<copy todir="/app/webapps/kcms.kspo.or.kr">  <!--°æ·ÎÁ¤ÀÇ--->
+	<copy todir="/app/webapps/kcms.kspo.or.kr"> 
 	  <fileset dir="${ant.project.name}/WebContent">
 		<exclude name="**/*.class"/>
 		<include name="**/*.jsp"/>
@@ -100,12 +100,12 @@
 	  </fileset>
 	</copy>
 	
-	<copy todir="/app/webapps/kcms.kspo.or.kr/WEB-INF/classes">  <!---°æ·ÎÁ¤ÀÇ--->
+	<copy todir="/app/webapps/kcms.kspo.or.kr/WEB-INF/classes">
 	  <fileset dir="./classes">
 		<include name="**/*.class"/>
 	  </fileset>
 	</copy>
-	<copy todir="/app/webapps/kcms.kspo.or.kr/WEB-INF/classes"> <!---°æ·ÎÁ¤ÀÇ--->
+	<copy todir="/app/webapps/kcms.kspo.or.kr/WEB-INF/classes">
 	  <fileset dir="${ant.project.name}/src">
                 <include name="**/*.xml"/>
                 <include name="**/*.properties"/>

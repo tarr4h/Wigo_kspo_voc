@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.GrpUserRelDao">
+    <sql id="sqlPkConditions">
+                WHERE GRP_ID            =       #{grpId}
+                  AND USER_ID           =       #{userId}
+    </sql>
+    <sql id="sqlCols">
+                      GRP_ID                    /*그룹코드        */
+                    , USER_ID                    /*사용자코드        */
+                    , REGR_ID                    /*등록자ID        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+    </sql>
+    <sql id="sqlConditions">
+                WHERE 1 = 1
+        <if test="grpId != null and grpId != ''">
+            <choose>
+                <when test="grpId instanceof String">
+                              AND GRP_ID            =       #{grpId}
+                </when>
+                <otherwise>
+                    AND GRP_ID            IN
+                    <foreach item="item" index="index" collection="grpId" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+        <if test="userId != null and userId != ''">
+            <choose>
+                <when test="userId instanceof String">
+                              AND USER_ID           =       #{userId}
+                </when>
+                <otherwise>
+                    AND USER_ID           IN
+                    <foreach item="item" index="index" collection="userId" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT COUNT(1)
+                 FROM TB_SYS_GRP_USER_REL
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.GrpUserRelVo">
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_GRP_USER_REL
+        <include refid="sqlConditions"/>
+               ORDER BY REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.GrpUserRelVo">
+               SELECT <include refid="sqlCols"/>
+                 FROM TB_SYS_GRP_USER_REL
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT INTO TB_SYS_GRP_USER_REL (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       #{grpId}
+                     , #{userId}
+                     , #{regrId}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                 )
+    </insert>
+    <update id="update">
+               UPDATE TB_SYS_GRP_USER_REL
+                  SET AMDR_ID             =         #{amdrId}
+                    , AMD_DT              =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE FROM TB_SYS_GRP_USER_REL
+        <include refid="sqlPkConditions"/>
+    </delete>
+    
+    <delete id="deleteUserId">
+               DELETE 
+                 FROM TB_SYS_GRP_USER_REL
+                WHERE USER_ID = #{userId}
+    </delete>
+    
+    <delete id="deleteGrpId">
+               DELETE 
+                 FROM TB_SYS_GRP_USER_REL
+                WHERE GRP_ID = #{grpId}
+    </delete>
+</mapper>

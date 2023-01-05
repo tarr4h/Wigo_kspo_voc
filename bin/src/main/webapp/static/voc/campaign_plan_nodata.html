@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>CERAGEM</title>
+<link rel="shortcut icon" href="images/favicon.ico">
+<!-- library -->
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/swiper/swiper.min.css">
+<script type="text/javascript" src="plugins/swiper/swiper.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css">
+<script type="text/javascript" src="plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<!-- //library -->
+<!-- customer -->
+<link rel="stylesheet" href="css/ui.css">
+<script type="text/javascript" src="js/ui.js"></script>
+<!-- //customer -->
+</head>
+
+<body>
+
+<div id="wrapIframe" class="closed"> <!-- 고객정보 닫힘 -->
+		
+	<div class="mGrid1">
+		<!-- right -->
+		<div class="gRight">
+
+			<!-- sort -->
+			<div class="mSort2">
+				<ul>
+					<li class="w32per">
+						<div class="tit">캠페인유형</div>
+						<div class="txt">
+							<div class="mFlex2">
+								<span class="flex"><input type="text" class="it" title="캠페인유형"></span>
+								<a href="#" class="mBtn1 lWhite">버튼</a>
+							</div>
+						</div>
+					</li>
+					<li class="w26per">
+						<div class="tit">캠페인형태</div>
+						<div class="txt">
+							<select class="select" title="캠페인형태">
+								<option>전체</option>
+							</select>
+						</div>
+					</li>
+					<li class="w16per">
+						<div class="tit">차수</div>
+						<div class="txt">
+							<select class="select" title="차수">
+								<option>전체</option>
+							</select>
+						</div>
+					</li>
+					<li class="w26per">
+						<div class="tit">캠페인상태</div>
+						<div class="txt">
+							<select class="select" title="캠페인상태">
+								<option>전체</option>
+							</select>
+						</div>
+					</li>
+					<li class="w100per">
+						<div class="tit">쿠폰마스터상태</div>
+						<div class="txt">
+							<input type="text" class="it w485" title="쿠폰마스터상태">
+						</div>
+					</li>
+					<li class="w100per">
+						<div class="tit">캠페인 시작일</div>
+						<div class="txt">
+							<div class="mDate1">
+								<input type="text" class="it date" title="캠페인 시작일" value="2022-01-01">
+								<span class="bar">~</span>
+								<input type="text" class="it date" title="캠페인 마지막일" value="2022-01-03">
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="button">
+					<a href="#" class="mBtn1">검색</a>
+				</div>
+			</div>
+			<!-- //sort -->
+
+			<!-- box -->
+			<div class="mBox1 p24">
+				
+				<div class="gTitle1">
+					<h3 class="mTitle1">캠페인 목록</h3>
+					<div class="gRt">
+						<a href="#" class="mBtn1 gray">복사</a>
+						<a href="#" class="mBtn1 primary">신규등록</a>
+					</div>
+				</div>
+				<!-- board -->
+				<div class="mBoard1 mCustomScrollbar hSortRow3 pType1"> 
+                    <!--
+                        class="hSortRow3"   => 상단 검색이 3줄 일 경우
+                        class="pType1"      => td height="30px"
+                    -->
+					<table>
+						<caption>캠페인 목록</caption>
+						<colgroup>
+							<col span="2" width="3%">
+							<col span="2" width="7%">
+							<col width="*">
+							<col span="2" width="5%">
+							<col width="5%">
+							<col span="2" width="11%">
+							<col width="7%">
+							<col span="2" width="6%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">NO</th>
+								<th scope="col">선택</th>
+								<th scope="col" colspan="2">캠페인 ID</th>
+								<th scope="col">캠페인명</th>
+								<th scope="col">형태</th>
+								<th scope="col">반복</th>
+								<th scope="col">진행상태</th>
+								<th scope="col">시작일시</th>
+								<th scope="col">종료일시</th>
+								<th scope="col">대상자수</th>
+								<th scope="col">혜택</th>
+								<th scope="col">발송채널</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="nodata">
+								<td colspan="13">
+                                    <p>검색된 결과가 없습니다.</p>
+                                </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- //board -->
+				<!-- paging -->
+				<div class="mPag1">
+					<div class="mCount1">총 <strong>0</strong>건</div>
+
+					<span title="처음 리스트" class="first">처음으로</span>
+					<span title="이전 리스트" href="###" class="prev">이전</span>
+					<a title="현재페이지" href="###">1</a>
+                    <span title="다음 리스트" class="next">다음</span>
+                    <span title="마지막 리스트" class="last">마지막으로</span>
+					<select class="select" title="갯수선택">
+						<option>10</option>
+						<option>20</option>
+						<option>30</option>
+					</select>
+				</div>
+				<!-- //paging -->
+			</div>
+			<!-- //box -->
+
+		</div>
+		<!-- //right -->
+	</div>
+	
+</div>
+
+</body>
+</html>

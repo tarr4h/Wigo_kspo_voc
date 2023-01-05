@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N" />
+        <rollbackable value="N" />
+        <appendable value="N" />
+        <readOnly value="Y" />
+        <showCheckbox value="Y" />
+        <showNumber value="Y" />
+        <showStateBar value="N" />
+        <showHeaderSum value="N" />
+        <showFooter value="N" />
+        <insertable value="N" />
+        <editable value="Y" />
+        <rowSelection value="N" />
+        <gridfitStyle value="even" />
+        <columnMove value="N" />
+        <setSort value="none" />
+    </meta>
+    <column name="체크" field="checkYn" type="checkbox" maxLength="100" width="80" textAlignment="left" required="Y" hidden="Y" />
+    <column name="그룹아이디" field="grpId" type="char" maxLength="10" width="80" textAlignment="left" required="Y" Pk="Y" readOnly="Y" hidden="N" />
+    <column name="그룹명" field="grpNm" type="char" maxLength="100" width="80" textAlignment="left" required="Y" hidden="N" />
+</grid>

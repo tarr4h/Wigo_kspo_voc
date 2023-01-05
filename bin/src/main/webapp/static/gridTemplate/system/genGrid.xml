@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<grid>
+    <meta>
+        <deletable value="N"/>
+        <rollbackable value="N"/>
+        <appendable value="N"/>
+        <readOnly value="N"/>
+        <showCheckbox value="Y"/>
+        <showNumber value="N"/>
+        <showStateBar value="N"/>
+        <showHeaderSum value="N"/>
+        <showFooter value="N"/>
+        <insertable value="N"/>
+        <editable value="Y"/>
+        <rowSelection value="N"/>
+        <autoColumnWidth value="Y"/>
+        <columnMove value="N"/>
+        <setSort value="none"/>
+    </meta>
+    <column name="columnId" field="columnId" type="char" maxLength="10" width="200" textAlignment="center" required="Y" Pk="Y" readOnly="Y" hidden="Y"/>
+<!--     <column name="field" field="field" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="Y"/> -->
+<!--     <column name="name" field="name" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="Y"/> -->
+<!--     <column name="required" field="required" type="char" maxLength="1000" width="80" textAlignment="left" required="Y" hidden="Y"/> -->
+<!--     <column name="readOnly" field="readOnly" type="combo" rootCodeId="040" upCodeId="040" codeLevel="2"  maxLength="3" width="80" textAlignment="left" required="Y" hidden="Y"/> -->
+<!--     <column name="pk" field="pk" type="checkbox" maxLength="1" width="80" textAlignment="center" required="Y" defaultValue="Y" hidden="Y"/> -->
+    <column name="컬럼명" field="name" type="char" maxLength="1000" width="200" textAlignment="left" required="N" hidden="N"/>
+    <column name="Column" field="field" type="char" width="200" textAlignment="left" required="N" hidden="N"/>
+    <column name="type" field="type" type="combo" codeId="S070" width="80" textAlignment="center" required="N" hidden="N"/>
+    
+<!--     <column name="max" field="colName" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="N"/> -->
+    <column name="max-length" field="maxLength" type="int" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="width" field="width" type="int" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N" defaultValue="80"/>
+    <column name="text-align" field="textAlignment" type="combo" codeId="S080" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="필수" field="required" type="combo" codeId="S050" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="PK" field="Pk" type="combo" codeId="S050" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N" />
+    <column name="읽기전용" field="readOnly" type="combo" codeId="S050"  maxLength="1000" width="80" textAlignment="center" required="N" hidden="N" defaultValue="N"/>
+    <column name="기본값" field="defaultValue" type="char" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="자리수" field="digit" type="int" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="소수점" field="place" type="int" maxLength="1000" width="80" textAlignment="center" required="N" hidden="N"/>
+    <column name="format" field="pattern" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="N"/>
+    <column name="공통코드" field="codeId" type="char" maxLength="1000" width="80" textAlignment="left" required="N" hidden="N"/>
+    <column name="감추기" field="hidden" type="combo" codeId="S050"  maxLength="1000" width="80" textAlignment="center" defaultValue="N" required="N" hidden="N"/>
+
+</grid>
