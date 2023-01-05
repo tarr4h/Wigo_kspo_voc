@@ -41,8 +41,8 @@
                                 <span class="label">아이디 저장</span>
                             </label>
                         </div>
-                        <div class="button" onclick="signIn();">
-                            <a href="#" class="btn">로그인</a>
+                        <div class="button">
+                            <a href="#;" class="btn" data-click="signIn">로그인</a>
                         </div>
                     </fieldset>
 
@@ -99,6 +99,7 @@ function signIn(){
             }
         }
     });
+	
 }
 </script>
 </body>
