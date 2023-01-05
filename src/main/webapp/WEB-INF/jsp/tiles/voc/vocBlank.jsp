@@ -30,7 +30,8 @@
 </head>
 <body>
 <div class="mPopup1">
- <tiles:insertAttribute name="content" />
+    vocBlank
+    <tiles:insertAttribute name="content" />
 </div>
  </body>
 </html>
