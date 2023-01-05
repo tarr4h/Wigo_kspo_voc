@@ -1,10 +1,10 @@
 package com.kspo.voc.comn.config;
 
-import org.apache.catalina.Context;
-import org.apache.tomcat.util.scan.StandardJarScanner;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -40,6 +38,12 @@ import java.util.concurrent.TimeUnit;
 @ComponentScan({ "com.kspo" })
 class WebMVCConfig implements WebMvcConfigurer {
 
+	@Value("${springdoc.api-docs.path}")
+	String docUrl;
+
+	@Value("${springdoc.swagger-ui.path}")
+	String swaggerUrl;
+
 	@Autowired
 	@Qualifier(value = "basicInterceptor")
 	private HandlerInterceptor basicInterceptor;
@@ -56,15 +60,15 @@ class WebMVCConfig implements WebMvcConfigurer {
 //	    @Qualifier(value = "apiAuthIntercepter")
 //		private HandlerInterceptor apiAuthIntercepter;
 
-	@Bean
-	TomcatServletWebServerFactory tomcatFactory() {
-		return new TomcatServletWebServerFactory() {
-			@Override
-			protected void postProcessContext(Context context) {
-				((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
-			}
-		};
-	}
+//	@Bean
+//	TomcatServletWebServerFactory tomcatFactory() {
+//		return new TomcatServletWebServerFactory() {
+//			@Override
+//			protected void postProcessContext(Context context) {
+//				((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
+//			}
+//		};
+//	}
 
 	// 뷰 세팅1
 	@Bean
@@ -90,26 +94,33 @@ class WebMVCConfig implements WebMvcConfigurer {
 		// Packaging resources
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/")
 				.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
+
+//        registry.addResourceHandler("/swagger-ui.html")
+//		.addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/");
+//registry.addResourceHandler("/webjars/**")
+//		.addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
-		registry.addInterceptor(basicInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
+		registry.addInterceptor(basicInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
+				.excludePathPatterns(docUrl + "/**").excludePathPatterns(swaggerUrl + "/**");
+		;
 
 		registry.addInterceptor(menuInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
-				.excludePathPatterns("/login/**").excludePathPatterns("/commCode/**").excludePathPatterns("/api/**");
+				.excludePathPatterns("/login/**").excludePathPatterns("/commCode/**").excludePathPatterns("/api/**")
+				.excludePathPatterns(docUrl + "/**").excludePathPatterns(swaggerUrl + "/**");
+		;
 
 		registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
 				.excludePathPatterns("/login/**").excludePathPatterns("/genGrid/**").excludePathPatterns("/error/**")
 				.excludePathPatterns("/commCode/**").excludePathPatterns("/api/**").excludePathPatterns("/tutor/**")
-				.excludePathPatterns("/util/**").excludePathPatterns("/example/**");
+				.excludePathPatterns("/util/**").excludePathPatterns("/example/**").excludePathPatterns(docUrl + "/**")
+				.excludePathPatterns(swaggerUrl + "/**")
+				;
 
-//			 List<String> patterns = new ArrayList<String>();
-//			 patterns.add("/api/**");
-//			 patterns.add("/tutor/**");
-//			 registry.addInterceptor(apiAuthIntercepter)
-//	         .addPathPatterns(patterns);
 	}
 
 }

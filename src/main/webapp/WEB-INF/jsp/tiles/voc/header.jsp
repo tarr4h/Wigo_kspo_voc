@@ -291,17 +291,18 @@ width: 100%;
 .gridWrap{
 border-top : solid 0px;
 border-bottom : solid 0px;
-border-left : solid 1px;
-border-right : solid 1px;
-border-color : #AAAAAA
+border-left : solid 0px;
+border-right : solid 0px;
+border-color : #C3D7ED
 }
 .tui-grid-container {
   width: 100%;
   position: relative;
   border-width: 0;
   clear: both;
-  font-size: 12px;
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-family: Arial, Helvetica, sans-serif; /* default 12px */    
+   font-size: 12px; 
+/*   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; */
 }
 
 th.tui-grid-cell.tui-grid-cell-header.tui-grid-cell-row-header {
@@ -322,7 +323,7 @@ border-color : #AAAAAA
 	text-align : left;
 }
 .gridViewChecked {	
-	background-color : #ebebeb !important;
+	background-color : #E8E8E8 !important;
 }
   .gridView {
   	text-align:center;
@@ -433,4 +434,7 @@ a.ui-button:active,
 	color: #ffffff;
 }
 
+.ui-datepicker {
+z-index: 9999 !important;
+}
 </style>

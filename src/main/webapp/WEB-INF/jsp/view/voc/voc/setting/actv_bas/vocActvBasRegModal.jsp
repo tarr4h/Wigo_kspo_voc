@@ -11,7 +11,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld" %>
 
-
 <style>
     .header{
         height: 15px;

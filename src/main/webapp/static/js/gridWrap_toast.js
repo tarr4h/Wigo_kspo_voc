@@ -91,29 +91,30 @@ $(document).ready(function() {
 	});
 });
 
-var _gridHeaderHeight = 35;
+var _gridHeaderHeight = 33;
+var _gridRowHeight = 30;
 var _gridPaginationHeight = 28;
 var _defaultRecordCountPerPage = 30;
 tui.Grid.applyTheme('kspo',{
-//	outline : {
-//		showVerticalBorder : true,
-//		border : '#CCCCCC'
-//	},
+	outline : {
+		showVerticalBorder : false,
+		border : '#C3D7ED'
+	},
 	area : {
 		header : {
 			 background: '#FAFCFF',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		},
 		body : {
 			 background: '#eeeeee',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		},
 		summary : {
 			 background: '#eeeeee',
-	            border: '#CCCCCC'
+	            border: '#C3D7ED'
 		}
 	},
-      selection: {
+      	selection: {
             background: '#4daaf9',
             border: '#004082'
           },
@@ -141,19 +142,19 @@ tui.Grid.applyTheme('kspo',{
           cell: {
             normal: {
               background: '#fbfbfb',
-//              border: '#fbfbfb',
+              border: '#C3D7ED',
               text : '#333333',
               showVerticalBorder: false
             },
             header: {
               background: '#FAFCFF',
-//              border: '#FAFCFF',
+              border: '#C3D7ED',
               text : '#333333',
               showVerticalBorder: false
             },
             summary : {
                 background: '#F6F6F6',
-                border: '#cccccc',
+                border: '#C3D7ED',
                 text : '#333333',
                 showVerticalBorder: true,
                 showHorizontalBorder : true
@@ -400,6 +401,7 @@ function createGridObject(grd) {
     var isPost = grd.attr("data-post") != "N";
     var forceReadOnly = grd.attr("data-read-only") == "Y";
     var scrollX = grd.attr("data-scroll-x") == "Y";
+    var scrollY = grd.attr("data-scroll-y") != "N";
     var autoResize = grd.attr("data-auto-resize") != "N";
     var loadFocus = grd.attr("data-load-focus") == "Y";
     var hasMenu = grd.attr("data-menu") != "N";
@@ -443,6 +445,7 @@ function createGridObject(grd) {
         gridHeight : gridHeight,
         forceReadOnly : forceReadOnly,
         scrollX : scrollX,
+        scrollY : scrollY,
         autoResize : autoResize,
         loadFocus : loadFocus,
         tmplUrl : url,
@@ -994,14 +997,14 @@ function createGridObject(grd) {
             var options = {
                 el : container,
                 data : dataSource,
-                minRowHeight : 35,
-//                header: {height:30},
-                rowHeight : 'auto',
+                minRowHeight : _gridRowHeight,
+                header: {height:_gridHeaderHeight},
+                rowHeight : _gridRowHeight /*'auto'*/,
 //              bodyHeight : bodyHeight - pageHeightOffset /*fitToParent*/, 
                 bodyHeight : 'fitToParent',
                 // data: null,
                  scrollX : this.scrollX, 
-                // scrollY : false,
+                 scrollY : this.scrollY,
                 // columns : jsonColumns,
                 
                 
@@ -1017,9 +1020,14 @@ function createGridObject(grd) {
                 options.selectionUnit = "row"; 
             }
             if(meta.headerRows>1){
-                options.header={
-                    height: meta.headerRows * _gridHeaderHeight
-                };
+				if(options.header){
+					options.header={
+	                    height: meta.headerRows * _gridHeaderHeight
+	                };	
+				} else {
+					options.header.height = meta.headerRows * _gridHeaderHeight;
+				}
+                
             }
             if (rowHeaders.length)
                 options.rowHeaders = rowHeaders;

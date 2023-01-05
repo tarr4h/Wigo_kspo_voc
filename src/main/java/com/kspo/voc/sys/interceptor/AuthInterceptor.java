@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.webmvc.api.OpenApiWebMvcResource;
+import org.springdoc.webmvc.ui.SwaggerWelcomeWebMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Component;
@@ -50,7 +52,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return true;
 		if (HandlerUtils.isInstance(handler, ErrorController.class))
 			return true;
-
+		if (HandlerUtils.isInstance(handler, OpenApiWebMvcResource.class))
+			return true;
+		if (HandlerUtils.isInstance(handler, SwaggerWelcomeWebMvc.class))
+			return true;
+//if(1<2)
+//	return true;
 		String targetURI = request.getServletPath();
 
 		if (logger.isDebugEnabled()) {

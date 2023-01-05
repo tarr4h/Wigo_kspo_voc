@@ -53,7 +53,7 @@ public class TokenController extends BaseRestController {
 		HttpHeaders headers = new HttpHeaders();
 		// 24 hours
 		int maxAge = 60 * 60 * 24;
-		headers.add("Set-Cookie", "ceragem-token=" + tokenVo.getToken() + "; Max-Age=" + maxAge + "; Path=/; HttpOnly");
+		headers.add("Set-Cookie", "voc-token=" + tokenVo.getToken() + "; Max-Age=" + maxAge + "; Path=/; HttpOnly");
 
 		return successResponse(tokenVo, headers);
 	}

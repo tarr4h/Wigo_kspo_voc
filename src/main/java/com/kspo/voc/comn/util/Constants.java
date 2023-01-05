@@ -49,6 +49,7 @@ public class Constants {
 	
 	public final static String _UNKNOWN_SYSTEM_CD = "000";
 	
+	public static final String _API_URL = "/api";
 	public static final String _API_INFO_KEY = "apiInfo";
 	public static final String _APIKEY_PAYLOAD = "apikeyInfo";
 	public static final String _APIKEY_PAYLOAD_KEY_SYSTEM = "systemCd";
