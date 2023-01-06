@@ -70,7 +70,7 @@
 <div class="gRight" data-has-size="Y">
     <div class="mBox1">
         <div class="gTitle1">
-            <h3 class="mTitle1" id="boxTitle"></h3>
+            <h3 class="mTitle1" id="boxTitle">채널을 선택해주세요.</h3>
         </div>
         <div class="grid_box">
             <div class="header">
@@ -89,7 +89,7 @@
             </div>
             <div class="grid_wrapper">
                 <div id="divGrid1"
-                     data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
+                     data-get-url="<c:url value='${urlPrefix}/selectDirOrgGrid${urlSuffix}'/>"
                      data-grid-id="dirOrgGrid"
                      data-type="grid"
                      data-tpl-url="<c:url value='/static/gridTemplate/voc/vocDirOrg.xml${urlSuffix}'/>"
@@ -135,21 +135,55 @@
 
         switch(evt){
             case 'orgAdd' : openComnModal('vocOrgSearchModal', 900, 650);break;
+            case 'orgSave' : updateDirOrg();break;
         };
     })
 
     async function onTreeSelect(data, node, tree){
         selectedDirCd = await selectDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
+        loadGrid(selectedDirCd, window.dirOrgGrid);
     }
 
-    function loadGrid(dirCd){
+    function loadGrid(dirCd, grid){
         let param = {
             dirCd,
             recordCountPerPage : 10
         };
 
-        vocDirOrg.loadUrl('', param);
+        grid.loadUrl('', param);
+    }
+
+    /**
+     * 담당부서 업데이트
+     */
+    function updateDirOrg(){
+        let rows = window.dirOrgGrid.getJsonRows();
+        let cnt = 0;
+        $.each(rows, (i, e) => {
+            if(e.primProcOrgYn === 'Y'){
+                cnt++;
+            }
+        });
+        if(cnt > 1){
+            alert('주처리부서는 1개의 부서만 지정 가능합니다.');
+            loadGrid(selectedDirCd, window.dirOrgGrid);
+            return false;
+        }
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/updateDirOrg${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                rows,
+                dirCd : selectedDirCd
+            }),
+            success(res){
+                console.log(res);
+            },
+            error: console.log
+        })
     }
 
     /**
@@ -165,7 +199,7 @@
                    mgmtCd
                },
                success(res){
-                   resolve(res);
+                   resolve(res.dirCd);
                },
                error: console.log
             });
@@ -187,7 +221,12 @@
                 orgId
             }),
             success(res){
-                console.log(res);
+                if(res > 0){
+                    alert('부서가 추가되었습니다.');
+                    location.reload();
+                } else {
+                    alert('오류가 발생했습니다. 관리자에게 문의해주세요.');
+                }
             },
             error: console.log
         });
@@ -198,7 +237,6 @@
      * @param data
      */
     function orgSearchCallback(data){
-        console.log('data : ', data);
         insertDirOrg(selectedDirCd, data.orgId);
     }
 

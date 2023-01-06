@@ -34,7 +34,7 @@ public class VocTaskBasController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/task_bas/vocTaskBasSetting";
+        return Utilities.getProperty("tiles.voc") + "program/setting/task_bas/vocTaskBasSetting";
     }
 
     @PostMapping(value = "selectTaskCodeList")
@@ -70,14 +70,14 @@ public class VocTaskBasController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/task_bas/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/setting/task_bas/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/common/" + pageNm;
     }
 
     @PostMapping(value = "getOrgTree")

@@ -33,7 +33,7 @@ public class VocMgmtCdController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/mgmt_cd_bas/vocMgmtCdSetting";
+        return Utilities.getProperty("tiles.voc") + "program/setting/mgmt_cd_bas/vocMgmtCdSetting";
     }
 
     @PostMapping(value = {"vocMgmtCdTree"})
@@ -82,6 +82,6 @@ public class VocMgmtCdController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/mgmt_cd_bas/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/setting/mgmt_cd_bas/" + pageNm;
     }
 }
