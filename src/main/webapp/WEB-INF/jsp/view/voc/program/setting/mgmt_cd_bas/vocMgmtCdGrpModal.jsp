@@ -13,23 +13,6 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
-    .header{
-        height: 15px;
-        padding: 13px;
-        background-color: #676767;
-    }
-    .header h3{
-        display: inline;
-        font-weight: 500;
-        color: white;
-    }
-    .header button{
-        float: right;
-        border: none;
-        background-color: inherit;
-        color: white;
-    }
-
     .register_wrapper{
         display: flex;
         flex-direction: row;
@@ -65,34 +48,11 @@
         font-size: 12px;
         margin-left: 10px;
     }
-
-    .btn_area{
-        width: 98%;
-        min-height: 2vh;
-    }
-    .btn_wrapper{
-        float: right;
-        margin-bottom: 0.5em;
-    }
-
-    .grid_btn{
-        width: 6em;
-        height: 2em;
-        background-color: #e3e3e3;
-        border: 1px solid gray;
-        margin-left: 0.5em;
-    }
-
-    .grid_wrapper{
-        width: 97%;
-        margin: 25px auto auto;
-    }
-
 </style>
 
 
 
-<div class="header">
+<div class="v_modal_header">
     <h3>분류코드 그룹 등록</h3>
     <button id="close_btn" class="func_btn" data-event="close">X</button>
 </div>
@@ -106,14 +66,14 @@
     <button id="register_btn" class="register_btn func_btn" data-event="add">등록</button>
 </div>
 
-<div class="btn_area">
-    <div class="btn_wrapper">
-        <button class="grid_btn func_btn" data-event="save">저장</button>
-        <button class="grid_btn func_btn" data-event="delete">삭제</button>
+<div class="v_btn_area">
+    <div class="v_btn_wrapper">
+        <button class="v_grid_btn func_btn" data-event="save">저장</button>
+        <button class="v_grid_btn func_btn" data-event="delete">삭제</button>
     </div>
 </div>
 
-<div class="grid_wrapper">
+<div class="v_grid_wrapper">
     <div id="divGrid1"
          data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
          data-grid-id="mgmtCdGrid"

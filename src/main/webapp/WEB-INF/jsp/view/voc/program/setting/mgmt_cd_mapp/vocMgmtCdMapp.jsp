@@ -13,19 +13,6 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
-    .guide{
-        margin-left: 1em;
-        margin-top: 0.5em;
-    }
-    .guideDot{
-        display: inline-block;
-        transform: translateY(-1px);
-        width: 5px;
-        height: 5px;
-        background-color: green;
-        border-radius: 50px;
-    }
-
     .gTitle1{
         border-bottom: 1px solid black;
         padding-bottom: 7px;

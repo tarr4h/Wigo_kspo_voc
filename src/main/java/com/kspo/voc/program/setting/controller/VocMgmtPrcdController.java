@@ -72,7 +72,16 @@ public class VocMgmtPrcdController {
         return service.updateDirOrg(param);
     }
 
+    @PostMapping(value = "deleteDirOrg")
+    public @ResponseBody Object deleteDirOrg(@RequestBody EzMap param){
+        return service.deleteDirOrg(param);
+    }
 
+    @GetMapping(value = { "openModal/{pageNm}"})
+    public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
+        model.addAttribute("param", param);
+        return Utilities.getProperty("tiles.voc.blank") + "program/setting/voc_mgmt_prcd/" + pageNm;
+    }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
