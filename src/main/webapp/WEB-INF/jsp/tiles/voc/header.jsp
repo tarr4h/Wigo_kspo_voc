@@ -323,7 +323,7 @@ border-color : #AAAAAA
 	text-align : left;
 }
 .gridViewChecked {	
-	background-color : #E8E8E8 !important;
+	background-color : #DBE0EA !important;
 }
   .gridView {
   	text-align:center;

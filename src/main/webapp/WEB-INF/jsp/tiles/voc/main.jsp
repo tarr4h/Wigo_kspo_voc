@@ -13,7 +13,7 @@
 <tiles:insertTemplate template="header.jsp" />
 </head>
 
-<body>
+<body class="voc-main">
 	
 <!-- skipnavi -->
 <div id="skipnavigation">

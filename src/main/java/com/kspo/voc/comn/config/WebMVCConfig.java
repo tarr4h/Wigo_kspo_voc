@@ -94,7 +94,8 @@ class WebMVCConfig implements WebMvcConfigurer {
 		// Packaging resources
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/")
 				.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
-
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("/")
+		.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 //        registry.addResourceHandler("/swagger-ui.html")
 //		.addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/");

@@ -5,44 +5,35 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<div id="skipnavigation">
+    <strong class="sound-only">반복영역 건너뛰기</strong>
+    <a href="#gnbNav">메뉴 바로가기</a>
+    <a href="#body">본문 바로가기</a>
+</div>
+<!-- //skipnav -->
 
-<!-- wrap -->
-	<div id="wrap">
-		<!-- header -->
-		<header id="header" class="sub">
-			
-		</header>
-		<!-- //header -->
+<div id="wrap">
+    <!-- body error -->
+    <div id="body">
+        <div class="mGrid1">
 
+            <div class="error-con">
+                <div class="img-error"></div>
+                <div>
+                    <ul>
+                        <li>해당 서비스 접속이 원활하지 않습니다.</li>
+                        <li>잠시 후에 다시 접속해 주시기 바랍니다.</li>
+                    </ul>
+                    <div class="text-center">
+                        <a href="#;" class="btn btn-blue-fill big" data-click="goBack" >Go Home</a>
+                    </div>      
+                </div>
+            </div>  
 
-		<!-- container -->
-		<div id="container">
-
-				<!-- contentsWrap -->
-				<div class="contentsWrap" style="padding-top: 100px;">
-					<!-- error -->
-					<div class="errorWrap">
-						<!-- contWrap -->
-						<div class="contWrap2"> 
-							<span class="imgError2"></span>
-							<div class="infoWrap2">
-								<p class="info2">해당 서비스 접속이 원활하지 않습니다.</p>
-								<p class="info2">잠시 후에 다시 접속해 주시기 바랍니다.</p>
-							</div>
-
-							<div class="errorBtnArea">
-								<button type="button" data-click="goBack"  class="btnSearch btnError"><span class="imgHome"></span>go home</button>
-							</div>
-						</div>
-					</div>
-					<!-- //error -->
-
-				</div>
-				<!-- //contentsWrap -->
-			
-		</div>
-		<!-- //container -->
-	</div>
+        </div>
+    </div>
+    <!-- //body error -->
+</div>
 	<!-- //wrap -->
 
 <!-- //error -->
