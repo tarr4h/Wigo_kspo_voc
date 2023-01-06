@@ -133,7 +133,7 @@
     </select>
     <select id="selectList" resultMap="CrmApiExecHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT API_HST_ID                    /*API이력코드        */
+               SELECT /* com.kspo.voc.sys.dao.ApiExecHstDao.selectList */ API_HST_ID                    /*API이력코드        */
                     , API_ID                    /*API코드        */
                     , API_CALL_URL                    /*API호출URL        */
                     , API_RSLT_CD                    /*API결과코드        */
@@ -153,12 +153,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultMap="CrmApiExecHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.ApiExecHstDao.select */  <include refid="sqlCols"/>
                  FROM TB_SYS_API_EXEC_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_API_EXEC_HST (
+                INSERT /* com.kspo.voc.sys.dao.ApiExecHstDao.insert */INTO TB_SYS_API_EXEC_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        NVL(#{apiHstId},FN_VOC_AUTO_SEQ('API'))
@@ -178,7 +178,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_API_EXEC_HST
+               UPDATE /* com.kspo.voc.sys.dao.ApiExecHstDao.update */ TB_SYS_API_EXEC_HST
                   SET API_ID              =         #{apiCd}
                     , API_CALL_URL        =         #{apiCallUrl}
                     , API_RSLT_CD         =         #{apiRsltCd}
@@ -192,7 +192,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_API_EXEC_HST
+               DELETE /* com.kspo.voc.sys.dao.ApiExecHstDao.delete */ FROM TB_SYS_API_EXEC_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

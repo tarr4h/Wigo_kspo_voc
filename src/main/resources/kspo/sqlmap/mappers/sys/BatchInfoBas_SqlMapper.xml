@@ -52,25 +52,25 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.BatchInfoBasDao.selectListCount*/ COUNT(1)
                  FROM TB_SYS_BATCH_INFO_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.BatchInfoBasVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.BatchInfoBasDao.selectList*/ <include refid="sqlCols"/>
                  FROM TB_SYS_BATCH_INFO_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.BatchInfoBasVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.BatchInfoBasDao.select*/ <include refid="sqlCols"/>
                  FROM TB_SYS_BATCH_INFO_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_BATCH_INFO_BAS (
+                INSERT /* com.kspo.voc.sys.dao.BatchInfoBasDao.insert*/ INTO TB_SYS_BATCH_INFO_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{batchId}

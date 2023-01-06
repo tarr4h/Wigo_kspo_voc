@@ -66,13 +66,13 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.BatchExecHstDao.selectListCount*/ COUNT(1)
                  FROM TB_SYS_BATCH_EXEC_HST
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.BatchExecHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.BatchExecHstDao.selectList*/ <include refid="sqlCols"/>
                  FROM TB_SYS_BATCH_EXEC_HST
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
@@ -80,12 +80,12 @@
         
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.BatchExecHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.BatchExecHstDao.select*/ <include refid="sqlCols"/>
                  FROM TB_SYS_BATCH_EXEC_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_BATCH_EXEC_HST (
+                INSERT /* com.kspo.voc.sys.dao.BatchExecHstDao.insert*/ INTO TB_SYS_BATCH_EXEC_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{batchHstId}
@@ -103,7 +103,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_BATCH_EXEC_HST
+               UPDATE /* com.kspo.voc.sys.dao.BatchExecHstDao.update*/ TB_SYS_BATCH_EXEC_HST
                   SET BATCH_ID            =         #{batchId}
                     , SYS_CD              =         #{sysCd}
                     , WRK_ID              =         #{wrkId}
@@ -116,7 +116,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_BATCH_EXEC_HST
+               DELETE /* com.kspo.voc.sys.dao.BatchExecHstDao.delete*/ FROM TB_SYS_BATCH_EXEC_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>
