@@ -34,7 +34,7 @@
         from
             TB_VOC_PRCD_BAS
         order by
-            1
+            COMN_CD
     </select>
 
     <insert id="insert">

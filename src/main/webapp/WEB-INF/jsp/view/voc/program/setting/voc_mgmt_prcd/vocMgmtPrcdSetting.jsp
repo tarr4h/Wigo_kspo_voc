@@ -115,7 +115,7 @@
             <div class="grid_wrapper">
                 <div id="divGrid2"
                      data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
-                     data-grid-id="mcPrcdGrid"
+                     data-grid-id="mgmtPrcdGrid"
                      data-type="grid"
                      data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtPrcd.xml${urlSuffix}'/>"
                      style="width:100%;height:353px;"
@@ -144,7 +144,8 @@
     async function onTreeSelect(data, node, tree){
         selectedDirCd = await selectDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
-        loadGrid(selectedDirCd, window.dirOrgGrid);
+        loadGrid(selectedDirCd, window['dirOrgGrid']);
+        loadGrid(selectedDirCd, window['mgmtPrcdGrid']);
     }
 
     function loadGrid(dirCd, grid){
@@ -156,8 +157,36 @@
         grid.loadUrl('', param);
     }
 
+    /**
+     * 경로코드 절차 등록
+     * @param prcdBasList
+     */
+    function insertDirPrcd(prcdBasList){
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertDirPrcd${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                dirCd : selectedDirCd,
+                prcdBasList
+            }),
+            success(res){
+                alert(res.msg);
+                if(res.result){
+                    location.reload();
+                } else {
+                    window['mgmtPrcdGrid'].reload();
+                }
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 담당부서 삭제
+     */
     function deleteDirOrg(){
-        let rows = window.dirOrgGrid.getCheckedJson();
+        let rows = window['dirOrgGrid'].getCheckedJson();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/deleteDirOrg${urlSuffix}"/>',
@@ -172,7 +201,7 @@
                 if(res.result){
                     location.reload();
                 } else {
-                    window.dirOrgGrid.reload();
+                    window['dirOrgGrid'].reload();
                 }
             },
             error: console.log
@@ -183,7 +212,7 @@
      * 담당부서 업데이트
      */
     function updateDirOrg(){
-        let rows = window.dirOrgGrid.getJsonRows();
+        let rows = window['dirOrgGrid'].getJsonRows();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/updateDirOrg${urlSuffix}"/>',
@@ -198,7 +227,7 @@
                 if(res.result){
                     location.reload();
                 } else {
-                    window.dirOrgGrid.reload();
+                    window['dirOrgGrid'].reload();
                 }
             },
             error: console.log
