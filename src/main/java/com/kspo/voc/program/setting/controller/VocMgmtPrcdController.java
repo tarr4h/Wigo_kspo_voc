@@ -1,8 +1,10 @@
 package com.kspo.voc.program.setting.controller;
 
 import com.kspo.base.common.model.EzMap;
+import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.program.common.util.VocUtils;
+import com.kspo.voc.program.setting.model.VocDirOrgVo;
 import com.kspo.voc.program.setting.service.VocMgmtPrcdService;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +41,7 @@ public class VocMgmtPrcdController {
         model.addAllAttributes(param);
 
         log.debug("tiles property = {}", Utilities.getProperty("tiles.voc"));
-        return Utilities.getProperty("tiles.voc") + "voc/setting/voc_mgmt_prcd/vocMgmtPrcdSetting";
+        return Utilities.getProperty("tiles.voc") + "program/setting/voc_mgmt_prcd/vocMgmtPrcdSetting";
     }
 
     @PostMapping(value = {"vocMgmtCdTree"})
@@ -56,10 +59,25 @@ public class VocMgmtPrcdController {
         return service.insertDirOrg(param);
     }
 
+    @PostMapping(value = "selectDirOrgGrid")
+    public @ResponseBody Object selectDirOrgGrid(@RequestBody EzMap param) {
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocDirOrgVo> list = service.selectDirOrgGrid(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
+
+    @PostMapping(value = "updateDirOrg")
+    public @ResponseBody Object updateDirOrg(@RequestBody EzMap param){
+        return service.updateDirOrg(param);
+    }
+
+
+
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/common/" + pageNm;
     }
 
     @PostMapping(value = "getOrgTree")

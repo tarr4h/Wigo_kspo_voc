@@ -42,7 +42,7 @@ public class VocActvBasController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/actv_bas/vocActvBasSetting";
+        return Utilities.getProperty("tiles.voc") + "program/setting/actv_bas/vocActvBasSetting";
     }
 
     @PostMapping(value = "selectActvBasList")
@@ -77,7 +77,7 @@ public class VocActvBasController {
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
 
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/actv_bas/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/setting/actv_bas/" + pageNm;
     }
 }
 

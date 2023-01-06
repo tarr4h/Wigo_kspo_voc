@@ -6,12 +6,15 @@ import com.kspo.voc.program.common.service.VocAbstractService;
 import com.kspo.voc.program.common.stnd.CodeGeneration;
 import com.kspo.voc.program.common.stnd.ManageCodeCategory;
 import com.kspo.voc.program.setting.dao.VocMgmtPrcdDao;
+import com.kspo.voc.program.setting.model.VocDirCdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,16 +48,17 @@ public class VocMgmtPrcdService extends VocAbstractService {
     }
 
     public Object selectDirCd(Map<String, Object> param) throws EgovBizException {
+        if(dao.selectDirCd(param) == null){
+            String maxDirCd = dao.selectMaxDirCd();
+            param.put("dirCd", CodeGeneration.generateCode(maxDirCd, CodeGeneration.DIRCD));
+            dao.insertDirCd(param);
+            dao.insertDirMgmt(param);
+        }
+
         return dao.selectDirCd(param);
     }
 
     public Object insertDirOrg(EzMap param) throws EgovBizException {
-        if(param.get("dirCd") == null || param.get("dirCd").equals("")){
-            String maxDirCd = dao.selectMaxDirCd();
-            param.put("dirCd", CodeGeneration.generateCode(maxDirCd, CodeGeneration.DIRCD));
-            dao.insertDirCd(param);
-        }
-
         int orgCnt = dao.selectDirOrg(param).size();
         String primProcOrgYn = "N";
         if(orgCnt == 0){
@@ -65,4 +69,12 @@ public class VocMgmtPrcdService extends VocAbstractService {
         return dao.insertDirOrg(param);
     }
 
+    public <T> List<T> selectDirOrgGrid(EzMap param) {
+        return dao.selectDirOrg(param);
+    }
+
+    public Object updateDirOrg(EzMap param) {
+
+        return dao.updateDirOrg(param);
+    }
 }

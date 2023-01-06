@@ -58,6 +58,29 @@
             DIR_CD = #{dirCd}
     </select>
 
+    <insert id="insertDirMgmt">
+        INSERT INTO TB_VOC_DIR_MGMT_REL
+        (DIR_CD, MGMT_CD, REGR_ID, REG_DT, AMDR_ID, AMD_DT)
+        VALUES(
+            #{dirCd},
+            #{mgmtCd},
+            #{loginUsr},
+            sysdate,
+            #{loginUsr},
+            sysdate
+        )
+    </insert>
 
+    <update id="updateDirOrg">
+        <foreach collection="rows" item="item" open="DECLARE BEGIN" separator=";" close=";END;">
+            UPDATE TB_VOC_DIR_ORG_REL
+            SET
+                PRIM_PROC_ORG_YN = #{item.primProcOrgYn}
+            WHERE
+                ORG_ID = #{item.orgId}
+                AND
+                DIR_CD = #{dirCd}
+        </foreach>
+    </update>
 
 </mapper>

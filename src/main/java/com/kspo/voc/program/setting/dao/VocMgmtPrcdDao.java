@@ -1,6 +1,7 @@
 package com.kspo.voc.program.setting.dao;
 
 import com.kspo.base.common.model.EzMap;
+import com.kspo.voc.program.setting.model.VocDirCdVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
@@ -22,9 +23,13 @@ import java.util.Map;
 
 @VocMapper
 public interface VocMgmtPrcdDao extends IVocDao {
-    Object selectDirCd(Map<String, Object> param);
-    int insertDirCd(EzMap param);
+    <T> T selectDirCd(Map<String, Object> param);
+    int insertDirCd(Map<String, Object> param);
     int insertDirOrg(EzMap param);
     String selectMaxDirCd();
     <T> List<T> selectDirOrg(EzMap param);
+
+    int insertDirMgmt(Map<String, Object> param);
+
+    int updateDirOrg(EzMap param);
 }

@@ -27,7 +27,7 @@ public class VocPrcdCdBasController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/setting/prcd_bas/vocPrcdCdBasSetting";
+        return Utilities.getProperty("tiles.voc") + "program/setting/prcd_bas/vocPrcdCdBasSetting";
     }
 
     @PostMapping(value = "selectPrcdCdGrid")
@@ -78,13 +78,13 @@ public class VocPrcdCdBasController {
     @GetMapping(value = { "openModal/{pageNm}"})
     public String openModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.voc.blank") + "voc/setting/prcd_bas/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/setting/prcd_bas/" + pageNm;
     }
 
     @GetMapping(value = { "openComnModal/{pageNm}"})
     public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
-        return Utilities.getProperty("tiles.voc.blank") + "voc/common/" + pageNm;
+        return Utilities.getProperty("tiles.voc.blank") + "program/common/" + pageNm;
     }
 
     @PostMapping(value = "getOrgTree")

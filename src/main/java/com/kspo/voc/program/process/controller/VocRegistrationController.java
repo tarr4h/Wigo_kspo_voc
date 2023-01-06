@@ -32,6 +32,6 @@ public class VocRegistrationController {
     public String init(@RequestParam Map<String, Object> param, Model model) {
         model.addAllAttributes(param);
 
-        return Utilities.getProperty("tiles.voc") + "voc/process/enroll/vocRegistration";
+        return Utilities.getProperty("tiles.voc") + "program/process/enroll/vocRegistration";
     }
 }
