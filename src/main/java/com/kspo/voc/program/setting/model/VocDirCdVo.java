@@ -4,6 +4,8 @@ import com.kspo.base.common.model.BaseVo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * <pre>
  * com.kspo.voc.program.setting.model.VocDirCdVo
@@ -21,6 +23,8 @@ import lombok.Setter;
 @Setter
 public class VocDirCdVo extends BaseVo {
 
+
+    private static final long serialVersionUID = -9092179687302744061L;
     private String dirCd;
     private String spDirYn;
     private String regrId;

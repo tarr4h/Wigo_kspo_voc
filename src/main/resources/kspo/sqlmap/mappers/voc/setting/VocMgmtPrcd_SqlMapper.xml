@@ -56,6 +56,8 @@
             TB_VOC_DIR_ORG_REL
         WHERE
             DIR_CD = #{dirCd}
+        ORDER BY
+            PRIM_PROC_ORG_YN DESC, REG_DT
     </select>
 
     <insert id="insertDirMgmt">
@@ -83,4 +85,14 @@
         </foreach>
     </update>
 
+    <delete id="deleteDirOrg">
+        DELETE FROM TB_VOC_DIR_ORG_REL
+        WHERE
+            ORG_ID IN
+            <foreach collection="rows" item="item" open="(" separator="," close=")">
+                #{item.orgId}
+            </foreach>
+            AND
+            DIR_CD = #{dirCd}
+    </delete>
 </mapper>

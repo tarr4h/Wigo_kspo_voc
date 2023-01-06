@@ -32,4 +32,6 @@ public interface VocMgmtPrcdDao extends IVocDao {
     int insertDirMgmt(Map<String, Object> param);
 
     int updateDirOrg(EzMap param);
+
+    int deleteDirOrg(EzMap param);
 }

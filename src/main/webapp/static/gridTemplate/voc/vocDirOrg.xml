@@ -5,7 +5,7 @@
         <rollbackable value="N"/>
         <appendable value="N"/>
         <readOnly value="N"/>
-        <showCheckbox value="N"/>
+        <showCheckbox value="Y"/>
         <showNumber value="Y"/>
         <showStateBar value="N"/>
         <showHeaderSum value="N"/>

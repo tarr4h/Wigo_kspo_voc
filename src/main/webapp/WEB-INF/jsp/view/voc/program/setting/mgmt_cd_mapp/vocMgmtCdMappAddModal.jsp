@@ -13,11 +13,6 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
-    .mPopup1{
-        padding-top: 46px;
-        padding-bottom: 35px;
-    }
-
     #regBtn{
         position: fixed;
         bottom: 0;
