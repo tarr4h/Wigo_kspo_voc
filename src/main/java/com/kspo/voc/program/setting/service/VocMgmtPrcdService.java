@@ -1,17 +1,20 @@
 package com.kspo.voc.program.setting.service;
 
+import com.github.mustachejava.Code;
 import com.kspo.base.common.model.AbstractTreeVo;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.program.common.service.VocAbstractService;
 import com.kspo.voc.program.common.stnd.CodeGeneration;
 import com.kspo.voc.program.common.stnd.ManageCodeCategory;
 import com.kspo.voc.program.setting.dao.VocMgmtPrcdDao;
+import com.kspo.voc.program.setting.model.VocDirOrgVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -127,5 +130,39 @@ public class VocMgmtPrcdService extends VocAbstractService {
         param.put("result", result);
 
         return param;
+    }
+
+    public Object insertDirPrcd(EzMap param) {
+        List<Map<String, Object>> prcdBasList = (List<Map<String, Object>>) param.get("prcdBasList");
+
+        int i = 1;
+        for(Map<String, Object> prcdBas : prcdBasList){
+            String maxMgmtPrcdCd = dao.selectMaxMgmtPrcdCd();
+            prcdBas.put("mgmtPrcdCd", CodeGeneration.generateCode(maxMgmtPrcdCd, CodeGeneration.MGMT_PRCD));
+            prcdBas.put("mgmtPrcdOdrd", i);
+            dao.insertMgmtPrcd(prcdBas);
+
+            prcdBas.put("dirCd", param.get("dirCd"));
+            dao.insertDirPrcd(prcdBas);
+            i++;
+        }
+
+        param.put("msg", i+"건이 등록되었습니다.");
+        param.put("result", true);
+
+        return param;
+    }
+
+    public <T> List<T> selectMgmtPrcdList(EzMap param) {
+        List<EzMap> list = dao.selectDirPrcdList(param);
+        log.debug("list size = {}", list.size());
+        for(EzMap map : list){
+            log.debug("map mgmtPrcdCd : {}, {}", map.get("mgmtPrcdCd"), map.get("MGMT_PRCD_CD"));
+        }
+        if(list.size() == 0){
+            return new ArrayList<>();
+        }
+        param.put("dirPrcdList", list);
+        return dao.selectMgmtPrcdList(param);
     }
 }

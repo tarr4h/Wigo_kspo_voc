@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.program.setting.dao.VocMgmtPrcdDao">
 
+    <sql id="mgmtPrcdCols">
+        TVMPD.MGMT_PRCD_CD /* 관리절차코드 */,
+        TVMPD.PRCD_CD /* 절차코드 */,
+        TVMPD.MGMT_PRCD_ODRD /* 관리절차순번 */,
+        TVMPD.DDLN_SEC /* 처리기한 초 */,
+        TVMPD.DUTY_ORG_ID /* 담당부서 아이디 */,
+        TVMPD.DUTY_EMP_ID /* 담당직원 아이디 */,
+        TVMPD.DUTY_ROLE_CD /* 담당권한코드 */,
+        TVMPD.REGR_ID /* 등록자 아이디 */,
+        TVMPD.REG_DT /* 등록일시 */,
+        TVMPD.AMDR_ID /* 수정자 아이디 */,
+        TVMPD.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="dirPrcdCols">
+        DIR_CD /* 경로 코드 */,
+        MGMT_PRCD_CD /* 관리절차 코드 */
+    </sql>
+
     <select id="selectDirCd" resultType="com.kspo.voc.program.setting.model.VocDirCdVo">
         SELECT
             *
@@ -95,4 +114,62 @@
             AND
             DIR_CD = #{dirCd}
     </delete>
+
+    <insert id="insertMgmtPrcd">
+        INSERT INTO TB_VOC_MGMT_PRCD_DTL
+        (MGMT_PRCD_CD, PRCD_CD, MGMT_PRCD_ODRD, DDLN_SEC, DUTY_ORG_ID, DUTY_EMP_ID, DUTY_ROLE_CD, REGR_ID, AMDR_ID)
+        VALUES(
+            #{mgmtPrcdCd},
+            #{prcdCd},
+            #{mgmtPrcdOdrd},
+            #{ddlnSec},
+            #{dutyOrgId},
+            #{dutyEmpId},
+            #{dutyRoleCd},
+            #{loginUsr},
+            #{loginUsr}
+        )
+    </insert>
+
+    <insert id="insertDirPrcd">
+        INSERT INTO TB_VOC_DIR_PRCD_REL
+        (DIR_CD, MGMT_PRCD_CD)
+        VALUES(
+            #{dirCd},
+            #{mgmtPrcdCd}
+        )
+    </insert>
+
+    <select id="selectDirPrcdList" resultType="EzMap">
+        SELECT
+            <include refid="dirPrcdCols"/>
+        FROM
+            TB_VOC_DIR_PRCD_REL
+        WHERE
+            DIR_CD = #{dirCd}
+    </select>
+
+    <select id="selectMgmtPrcdList" resultType="com.kspo.voc.program.setting.model.VocMgmtPrcdVo">
+        SELECT
+            <include refid="mgmtPrcdCols"/>
+            ,
+            TVPB.PRCD_NM,
+            TVPB.DUTY_ORG_NM,
+            TVPB.DUTY_EMP_NM
+        FROM
+            TB_VOC_MGMT_PRCD_DTL TVMPD INNER JOIN TB_VOC_PRCD_BAS TVPB
+            ON TVMPD.PRCD_CD = TVPB.PRCD_CD
+        WHERE
+            MGMT_PRCD_CD IN
+            <foreach collection="dirPrcdList" item="item" open="(" separator="," close=")">
+                #{item.mgmtPrcdCd}
+            </foreach>
+    </select>
+
+    <select id="selectMaxMgmtPrcdCd" resultType="String">
+        SELECT
+            MAX(MGMT_PRCD_CD)
+        FROM
+            TB_VOC_MGMT_PRCD_DTL
+    </select>
 </mapper>

@@ -7,19 +7,42 @@
 <!--    </resultMap>-->
 
     <sql id="vocMgmtCdCols">
-        MGMT_CD,
-        TOP_MGMT_CD,
-        PRNTS_MGMT_CD,
-        TOP_COMN_CD,
-        COMN_CD,
-        MGMT_CD_ORDR,
-        MGMT_CD_LVL_NO,
-        MGMT_CD_NM,
-        USE_YN,
-        REGR_ID,
-        REG_DT,
-        AMDR_ID,
-        AMD_DT
+        MGMT_CD /* 관리코드 */,
+        TOP_MGMT_CD /* 최상단 관리코드 */,
+        PRNTS_MGMT_CD /* 부모 관리코드 */,
+        TOP_COMN_CD /* 최상단 공통코드 */,
+        COMN_CD /* 공통코드 */,
+        MGMT_CD_ORDR /* 관리코드 순번 */,
+        MGMT_CD_LVL_NO /* 관리코드 레벨 번호 */,
+        MGMT_CD_NM /* 관리코드명*/,
+        USE_YN /* 사용여부 */,
+        REGR_ID /* 등록자 아이디 */,
+        REG_DT /* 등록일시 */,
+        AMDR_ID /* 수정자 아이디 */,
+        AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="vocPrcdBasCols">
+        PRCD_CD /* 절차코드 */,
+        PRCD_NM /* 절차명 */,
+        TOP_COMN_CD /* 최상단 공통코드 */,
+        COMN_CD /* 공통코드 */,
+        DDLN_SEC /* 처리기한 초 */,
+        DUTY_ORG_ID /* 담당부서 아이디 */,
+        DUTY_ORG_NM /* 담당부서명 */,
+        DUTY_EMP_ID /* 담당자 아이디 */,
+        DUTY_EMP_NM /* 담당자명 */,
+        DUTY_ROLE_CD /* 담당권한 코드 */,
+        DUTY_CHNG_YN /* 변경가능여부 */,
+        VOC_APPLY_YN /* VOC 적용여부 */,
+        VOC_DTL_APPLY_YN /* 상세VOC 적용여부 */,
+        VOC_ESTL_APPLY_YN /* VOC 필수적용여부 */,
+        VOC_DTL_ESTL_APPLY_YN /* 상세VOC 필수적용여부 */,
+        TASK_USE_YN /* TASK 사용여부 */,
+        REGR_ID /* 등록자 아이디 */,
+        REG_DT /* 등록일시 */,
+        AMDR_ID /* 수정자 아이디 */,
+        AMD_DT /* 수정일시 */
     </sql>
 
     <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.program.setting.model.VocMgmtCdVo">
@@ -67,7 +90,7 @@
 
     <select id="selectPrcdBas" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
-            *
+            <include refid="vocPrcdBasCols"/>
         FROM
             TB_VOC_PRCD_BAS
         WHERE
@@ -76,13 +99,13 @@
 
     <select id="selectPrcdBasList" resultType="com.kspo.voc.program.setting.model.VocPrcdBasVo">
         SELECT
-            *
+            <include refid="vocPrcdBasCols"/>
         FROM
             TB_VOC_PRCD_BAS
         WHERE
             VOC_APPLY_YN = 'Y'
         ORDER BY
-            PRCD_CD
+            COMN_CD
     </select>
 
     <select id="selectTaskBasList" resultType="com.kspo.voc.program.setting.model.VocTaskBasVo">

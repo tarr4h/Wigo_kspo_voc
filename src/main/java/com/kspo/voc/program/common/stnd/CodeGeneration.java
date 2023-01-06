@@ -9,15 +9,13 @@ public enum CodeGeneration {
 
     DIRCD("DI", 10),
     PROCEDURE_BAS("PB", 10),
-    PROCEDURE("PD", 10),
+    MGMT_PRCD("MP", 10),
     TASK_BAS("TB", 10),
     TASK("TK", 10),
     ACTIVITY_BAS("AB", 10),
     ACTIVITY("AT", 10),
     PROCEDURE_MAPPING("PM", 10),
-    REGISTRATION("VM", 12),
-
-    REG_PROCEDURE("RP", 12);
+    REGISTRATION("VM", 12),;
 
 
     private String preFix;

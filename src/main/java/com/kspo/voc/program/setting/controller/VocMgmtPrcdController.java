@@ -5,6 +5,8 @@ import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.program.common.util.VocUtils;
 import com.kspo.voc.program.setting.model.VocDirOrgVo;
+import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
+import com.kspo.voc.program.setting.model.VocPrcdBasVo;
 import com.kspo.voc.program.setting.service.VocMgmtPrcdService;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -75,6 +77,27 @@ public class VocMgmtPrcdController {
     @PostMapping(value = "deleteDirOrg")
     public @ResponseBody Object deleteDirOrg(@RequestBody EzMap param){
         return service.deleteDirOrg(param);
+    }
+
+    @PostMapping(value = "selectPrcdBasListGrid")
+    public @ResponseBody Object selectPrcdBasListGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocPrcdBasVo> list = service.selectPrcdBasList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
+    }
+
+    @PostMapping(value = "insertDirPrcd")
+    public @ResponseBody Object insertDirPrcd(@RequestBody EzMap param){
+        return service.insertDirPrcd(param);
+    }
+
+    @PostMapping(value = "selectMgmtPrcdGrid")
+    public @ResponseBody Object selectMgmtPrcdGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocMgmtPrcdVo> list = service.selectMgmtPrcdList(param);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(list, page);
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})

@@ -11,7 +11,7 @@ input, select, textarea, option  {
     display: inline-block;
 }
 body {
-    min-width: 1850px;
+    /*!*min-width: 1850px;*! 한태우 : 모달width도 조정되어 주석*/
     background-color:#ffffff;
     font-size:12px;
     line-height:150%;
