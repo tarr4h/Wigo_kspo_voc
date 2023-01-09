@@ -13,10 +13,6 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
-    .content_wrapper{
-        height: 106px;
-        padding-top: 41px;
-    }
     #reg_btn{
         width: 100%;
         height: 53px;

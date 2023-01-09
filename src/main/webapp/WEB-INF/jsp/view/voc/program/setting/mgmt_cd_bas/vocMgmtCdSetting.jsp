@@ -13,38 +13,9 @@
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
 <style>
-    .guide{
-        margin-left: 1em;
-        margin-top: 0.5em;
-    }
-    .guideDot{
-        display: inline-block;
-        transform: translateY(-1px);
-        width: 5px;
-        height: 5px;
-        background-color: green;
-        border-radius: 50px;
-    }
-
     .gTitle1{
         border-bottom: 1px solid black;
         padding-bottom: 7px;
-    }
-
-    .btn_area{
-        width: 100%;
-        min-height: 2vh;
-    }
-    .btn_wrapper{
-        float: right;
-        margin-bottom: 0.5em;
-    }
-    .grid_btn{
-        width: 6em;
-        height: 2em;
-        background-color: #e3e3e3;
-        border: 1px solid gray;
-        margin-left: 0.5em;
     }
     .tree_btn{
         width: 95px;
@@ -53,11 +24,6 @@
         border: 1px solid black;
         font-size: 11px;
         color: black;
-    }
-
-    .grid_wrapper{
-        width: 100%;
-        min-height: 5vh;
     }
 </style>
 
@@ -80,19 +46,19 @@
     <div class="mBox1">
         <div class="header">
             <h3 class="title" id="grid_title"></h3>
-            <div class="guide">
-                <div class="guideDot"></div>
+            <div class="v_guide">
+                <div class="v_guideDot"></div>
                 <span>분류코드 목록입니다.</span>
             </div>
         </div>
-        <div class="btn_area">
-            <div class="btn_wrapper">
-                <button class="grid_btn func_btn" data-event="save">저장</button>
-                <button class="grid_btn func_btn" data-event="add">추가</button>
-                <button class="grid_btn func_btn" data-event="delete">삭제</button>
+        <div class="v_btn_area">
+            <div class="v_btn_wrapper">
+                <button class="v_grid_btn func_btn" data-event="save">저장</button>
+                <button class="v_grid_btn func_btn" data-event="add">추가</button>
+                <button class="v_grid_btn func_btn" data-event="delete">삭제</button>
             </div>
         </div>
-        <div class="grid_wrapper">
+        <div class="v_grid_wrapper">
             <div id="divGrid1"
                  data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
                  data-grid-id="mgmtCdGrid"

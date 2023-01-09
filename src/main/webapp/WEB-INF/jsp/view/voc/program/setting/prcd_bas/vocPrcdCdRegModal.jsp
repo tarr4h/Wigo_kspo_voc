@@ -12,26 +12,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld"%>
 
-<style>
-    .header{
-      height: 15px;
-      padding: 13px;
-      background-color: #676767;
-    }
-    .header h3{
-      display: inline;
-      font-weight: 500;
-      color: white;
-    }
-    .header button{
-      float: right;
-      border: none;
-      background-color: inherit;
-      color: white;
-    }
-</style>
-
-<div class="header">
+<div class="v_modal_header">
     <h3>절차코드 등록모달</h3>
     <button id="close_btn" data-event="close">X</button>
 </div>

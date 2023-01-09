@@ -114,10 +114,10 @@
             </div>
             <div class="grid_wrapper">
                 <div id="divGrid2"
-                     data-get-url="<c:url value='${urlPrefix}/vocMgmtCdGrid${urlSuffix}'/>"
-                     data-grid-id="mcPrcdGrid"
+                     data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
+                     data-grid-id="mgmtPrcdGrid"
                      data-type="grid"
-                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtCd.xml${urlSuffix}'/>"
+                     data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtPrcd.xml${urlSuffix}'/>"
                      style="width:100%;height:353px;"
                 >
                 </div>
@@ -136,13 +136,16 @@
         switch(evt){
             case 'orgAdd' : openComnModal('vocOrgSearchModal', 900, 650);break;
             case 'orgSave' : updateDirOrg();break;
+            case 'orgDel' : deleteDirOrg();break;
+            case 'prcdAdd' : openModal('vocMgmtPrcdRegModal', 600, 400);break;
         };
     })
 
     async function onTreeSelect(data, node, tree){
         selectedDirCd = await selectDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
-        loadGrid(selectedDirCd, window.dirOrgGrid);
+        loadGrid(selectedDirCd, window['dirOrgGrid']);
+        loadGrid(selectedDirCd, window['mgmtPrcdGrid']);
     }
 
     function loadGrid(dirCd, grid){
@@ -155,21 +158,61 @@
     }
 
     /**
+     * 경로코드 절차 등록
+     * @param prcdBasList
+     */
+    function insertDirPrcd(prcdBasList){
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertDirPrcd${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                dirCd : selectedDirCd,
+                prcdBasList
+            }),
+            success(res){
+                alert(res.msg);
+                if(res.result){
+                    location.reload();
+                } else {
+                    window['mgmtPrcdGrid'].reload();
+                }
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 담당부서 삭제
+     */
+    function deleteDirOrg(){
+        let rows = window['dirOrgGrid'].getCheckedJson();
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteDirOrg${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                rows,
+                dirCd : selectedDirCd
+            }),
+            success(res){
+                alert(res.msg);
+                if(res.result){
+                    location.reload();
+                } else {
+                    window['dirOrgGrid'].reload();
+                }
+            },
+            error: console.log
+        })
+    }
+
+    /**
      * 담당부서 업데이트
      */
     function updateDirOrg(){
-        let rows = window.dirOrgGrid.getJsonRows();
-        let cnt = 0;
-        $.each(rows, (i, e) => {
-            if(e.primProcOrgYn === 'Y'){
-                cnt++;
-            }
-        });
-        if(cnt > 1){
-            alert('주처리부서는 1개의 부서만 지정 가능합니다.');
-            loadGrid(selectedDirCd, window.dirOrgGrid);
-            return false;
-        }
+        let rows = window['dirOrgGrid'].getJsonRows();
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/updateDirOrg${urlSuffix}"/>',
@@ -179,11 +222,16 @@
                 rows,
                 dirCd : selectedDirCd
             }),
-            success(res){
-                console.log(res);
+            success(res, status, jqXHR){
+                alert(res.msg);
+                if(res.result){
+                    location.reload();
+                } else {
+                    window['dirOrgGrid'].reload();
+                }
             },
             error: console.log
-        })
+        });
     }
 
     /**
@@ -238,6 +286,17 @@
      */
     function orgSearchCallback(data){
         insertDirOrg(selectedDirCd, data.orgId);
+    }
+
+    /**
+     * 모달 open
+     * @param pageNm
+     * @param width
+     * @param height
+     */
+    function openModal(pageNm, width, height){
+        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        Utilities.openModal(url, width, height);
     }
 
     /**
