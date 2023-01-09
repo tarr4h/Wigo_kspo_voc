@@ -33,7 +33,7 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpEmpRelDao.selectListCount */  COUNT(1)
                  FROM TB_SYS_GRP_EMP_REL A
                 INNER JOIN TB_SYS_EMP_BAS B ON A.EMP_ID = B.EMP_ID
                 INNER JOIN TB_SYS_ORG_BAS C ON B.ORG_ID = C.ORG_ID
@@ -41,7 +41,7 @@
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpEmpRelVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.GRP_ID                    /*그룹코드        */
+               SELECT /* com.kspo.voc.sys.dao.GrpEmpRelDao.selectList */ A.GRP_ID                    /*그룹코드        */
                     , A.EMP_ID                    /*사원ID        */
                     , A.REGR_ID                    /*등록자ID        */
                     , A.REG_DT                    /*등록일시        */
@@ -59,12 +59,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpEmpRelVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpEmpRelDao.select */<include refid="sqlCols"/>
                  FROM TB_SYS_GRP_EMP_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_EMP_REL (
+                INSERT /* com.kspo.voc.sys.dao.GrpEmpRelDao.insert */ INTO TB_SYS_GRP_EMP_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpId}
@@ -76,17 +76,19 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_EMP_REL
+               UPDATE /* com.kspo.voc.sys.dao.GrpEmpRelDao.update */ TB_SYS_GRP_EMP_REL
                   SET AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_EMP_REL
+               DELETE /* com.kspo.voc.sys.dao.GrpEmpRelDao.delete */
+                 FROM TB_SYS_GRP_EMP_REL
         <include refid="sqlPkConditions"/>
     </delete>
      <delete id="deleteGrpId">
-               DELETE FROM TB_SYS_GRP_EMP_REL
+               DELETE /* com.kspo.voc.sys.dao.GrpEmpRelDao.deleteGrpId */
+                 FROM TB_SYS_GRP_EMP_REL
                 WHERE GRP_ID            =       #{grpId}
     </delete>
 </mapper>

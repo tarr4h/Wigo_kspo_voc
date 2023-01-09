@@ -43,25 +43,25 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpUserRelDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_GRP_USER_REL
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpUserRelVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpUserRelDao.selectList */<include refid="sqlCols"/>
                  FROM TB_SYS_GRP_USER_REL
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpUserRelVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpUserRelDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_USER_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_USER_REL (
+                INSERT /* com.kspo.voc.sys.dao.GrpUserRelDao.insert */ INTO TB_SYS_GRP_USER_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpId}
@@ -73,24 +73,24 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_USER_REL
+               UPDATE /* com.kspo.voc.sys.dao.GrpUserRelDao.update */ TB_SYS_GRP_USER_REL
                   SET AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_USER_REL
+               DELETE /* com.kspo.voc.sys.dao.GrpUserRelDao.delete */ FROM TB_SYS_GRP_USER_REL
         <include refid="sqlPkConditions"/>
     </delete>
     
     <delete id="deleteUserId">
-               DELETE 
+               DELETE /* com.kspo.voc.sys.dao.GrpUserRelDao.deleteUserId */
                  FROM TB_SYS_GRP_USER_REL
                 WHERE USER_ID = #{userId}
     </delete>
     
     <delete id="deleteGrpId">
-               DELETE 
+               DELETE /* com.kspo.voc.sys.dao.GrpUserRelDao.deleteGrpId */
                  FROM TB_SYS_GRP_USER_REL
                 WHERE GRP_ID = #{grpId}
     </delete>

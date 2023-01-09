@@ -48,14 +48,14 @@
         
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.UserWdgtDao.selectListCount */  COUNT(1)
                  FROM TB_SYS_USER_WDGT_BAS A
                     , TB_SYS_MENU_BAS B
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.UserWdgtVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.USER_ID                    /*사용자코드        */
+               SELECT  /* com.kspo.voc.sys.dao.UserWdgtDao.selectList */ A.USER_ID                    /*사용자코드        */
                     , A.MENU_ID                    /*메뉴코드        */
                     , A.MENU_ODRG                    /*메뉴순번        */
                     , A.REGR_ID                    /*등록자ID        */
@@ -73,7 +73,7 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.UserWdgtVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.UserWdgtDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_USER_WDGT_BAS
         <include refid="sqlPkConditions"/>
     </select>
@@ -83,7 +83,7 @@
               FROM TB_SYS_USER_WDGT_BAS
              WHERE USER_ID = TO_CHAR(#{userId}) 
         </selectKey>
-                INSERT INTO TB_SYS_USER_WDGT_BAS (
+                INSERT /* com.kspo.voc.sys.dao.UserWdgtDao.insert */  INTO TB_SYS_USER_WDGT_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{userId}
@@ -96,18 +96,20 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_USER_WDGT_BAS
+               UPDATE /* com.kspo.voc.sys.dao.UserWdgtDao.update */  TB_SYS_USER_WDGT_BAS
                   SET MENU_ODRG           =         #{menuOdrg}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_USER_WDGT_BAS
+               DELETE /* com.kspo.voc.sys.dao.UserWdgtDao.delete */  
+                 FROM TB_SYS_USER_WDGT_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     <delete id="deleteMenuId">
-               DELETE FROM TB_SYS_USER_WDGT_BAS
+               DELETE /* com.kspo.voc.sys.dao.UserWdgtDao.deleteMenuId */  
+                 FROM TB_SYS_USER_WDGT_BAS
                 WHERE MENU_ID = #{menuId}
     </delete>
     

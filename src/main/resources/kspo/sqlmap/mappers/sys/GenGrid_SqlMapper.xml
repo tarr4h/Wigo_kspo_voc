@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.sys.dao.GenGridDao">
 <select id="selectList" resultType="EzMap">
-        SELECT  /* com.kspo.voc.sys.dao.GenGridDao.selectList*/  A.COLUMN_ID
+           SELECT  /* com.kspo.voc.sys.dao.GenGridDao.selectList*/  A.COLUMN_ID
                 , A.TABLE_NAME
                 , A.COLUMN_NAME
                 , A.DATA_TYPE

@@ -51,7 +51,7 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT  /* com.kspo.voc.sys.dao.UserLoginHstDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_USER_LOGIN_HST A
                     , TB_SYS_USER_BAS B
                     , TB_SYS_EMP_BAS C
@@ -60,7 +60,7 @@
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.UserLoginHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.USER_ID                    /*사용자코드        */
+               SELECT  /* com.kspo.voc.sys.dao.UserLoginHstDao.selectList */ A.USER_ID                    /*사용자코드        */
                     , A.LOGIN_DT                    /*로그인일시        */
                     , A.LOGIN_IP_ADDR                /*로그인IP주소        */
                     , B.LOGIN_ID
@@ -78,12 +78,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.UserLoginHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.UserLoginHstDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_USER_LOGIN_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_USER_LOGIN_HST (
+                INSERT /* com.kspo.voc.sys.dao.UserLoginHstDao.insert */ INTO TB_SYS_USER_LOGIN_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{userId}
@@ -96,14 +96,15 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_USER_LOGIN_HST
+               UPDATE /* com.kspo.voc.sys.dao.UserLoginHstDao.update */ TB_SYS_USER_LOGIN_HST
                   SET LOGIN_IP_ADDR       =         #{loginIpAddr}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_USER_LOGIN_HST
+               DELETE /* com.kspo.voc.sys.dao.UserLoginHstDao.delete */ 
+                 FROM TB_SYS_USER_LOGIN_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

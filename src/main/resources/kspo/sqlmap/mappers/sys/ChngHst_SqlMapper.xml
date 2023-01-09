@@ -81,14 +81,14 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.ChngHstDao.selectListCount*/  COUNT(1)
                  FROM TB_SYS_CHNG_HST A
                 INNER JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
                 INNER JOIN TB_SYS_USER_BAS C ON A.REGR_ID = C.USER_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.ChngHstVo">
-        SELECT A.* 
+        SELECT  /* com.kspo.voc.sys.dao.ChngHstDao.selectList*/ A.* 
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                    FROM TB_SYS_MENU_BAS
                   WHERE 1=1
@@ -123,7 +123,7 @@
         ) A
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.ChngHstVo">
-               SELECT A.CHNG_HST_ID                    /*변경이력코드        */
+               SELECT /* com.kspo.voc.sys.dao.ChngHstDao.select */ A.CHNG_HST_ID                    /*변경이력코드        */
                     , A.MENU_ID                    /*메뉴코드        */
                     , A.CHNG_CALL_URL                    /*변경호출URL        */
                     , A.CHNG_RSLT_TXN                    /*변경결과내역        */
@@ -151,7 +151,7 @@
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_CHNG_HST (
+                INSERT  /* com.kspo.voc.sys.dao.ChngHstDao.insert */ INTO TB_SYS_CHNG_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        NVL(#{chngHstId},FN_VOC_AUTO_SEQ('C'))
@@ -170,7 +170,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_CHNG_HST
+               UPDATE /* com.kspo.voc.sys.dao.ChngHstDao.update */ TB_SYS_CHNG_HST
                   SET MENU_ID             =         #{menuId}
                     , CHNG_CALL_URL       =         #{chngCallUrl}
                     , CHNG_RSLT_TXN       =         #{chngRsltTxn}
@@ -184,7 +184,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_CHNG_HST
+               DELETE /* com.kspo.voc.sys.dao.ChngHstDao.delete */ 
+                 FROM TB_SYS_CHNG_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

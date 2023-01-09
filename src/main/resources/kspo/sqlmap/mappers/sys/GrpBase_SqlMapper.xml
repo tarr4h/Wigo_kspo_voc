@@ -32,25 +32,26 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpBaseVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.selectList */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpBaseVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_BAS (
+                INSERT /* com.kspo.voc.sys.dao.GrpBaseDao.insert */ 
+                  INTO TB_SYS_GRP_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpId}
@@ -62,14 +63,15 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_BAS
+               UPDATE /* com.kspo.voc.sys.dao.GrpBaseDao.update */ TB_SYS_GRP_BAS
                   SET GRP_NM              =         #{grpNm}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_BAS
+               DELETE /* com.kspo.voc.sys.dao.GrpBaseDao.delete */ 
+                 FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     

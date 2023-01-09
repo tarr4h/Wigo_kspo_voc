@@ -107,13 +107,13 @@
          </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.UserBaseDao.selectListCount */   COUNT(1)
                  FROM TB_SYS_USER_BAS A
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.UserBaseVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.USER_ID                    /*사용자코드        */
+               SELECT /* com.kspo.voc.sys.dao.UserBaseDao.selectList */ A.USER_ID                    /*사용자코드        */
                     , A.LOGIN_ID                   /*로그인ID        */
 <!--                     , A.LOGIN_PWD                  /*로그인비밀번호        */ -->
                     , A.USER_NM                    /*사용자명        */
@@ -136,12 +136,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.UserBaseVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.UserBaseDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_USER_BAS A
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_USER_BAS (
+                INSERT /* com.kspo.voc.sys.dao.UserBaseDao.insert */ INTO TB_SYS_USER_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{userId}
@@ -165,7 +165,7 @@
     </insert>
     
     <update id="update">
-               UPDATE TB_SYS_USER_BAS
+               UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.update */ TB_SYS_USER_BAS
                   SET LOGIN_ID            =         NVL(#{loginId},LOGIN_ID)
                     , USER_NM             =         #{userNm}
                     , EMAIL_ADDR          =         #{emailAddr}
@@ -178,7 +178,7 @@
         <include refid="sqlPkConditions"/>
     </update>
     <update id="updateEmp">
-               UPDATE TB_SYS_USER_BAS
+               UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updateEmp */ TB_SYS_USER_BAS
                   SET USER_NM             =         #{userNm}
                     , EMAIL_ADDR          =         #{emailAddr}
                     , MPHON_NO            =         #{mphonNo}
@@ -190,11 +190,12 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_USER_BAS
+               DELETE /* com.kspo.voc.sys.dao.UserBaseDao.delete */ 
+                 FROM TB_SYS_USER_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     <select id="selectUser" resultType="com.kspo.voc.sys.model.LoginUserVo">
-               SELECT A.USER_ID                    /*사용자코드        */
+               SELECT /* com.kspo.voc.sys.dao.UserBaseDao.selectUser */ A.USER_ID                    /*사용자코드        */
                     , A.LOGIN_ID                    /*로그인ID        */
                     , A.LOGIN_PWD                    /*로그인비밀번호        */
                     , A.USER_NM                    /*사용자명        */
@@ -226,26 +227,26 @@
       <include refid="sqlPkConditions" />
     </select>
      <update id="updateLogin">
-           UPDATE TB_SYS_USER_BAS
+           UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updateLogin */ TB_SYS_USER_BAS
               SET LAST_LOGIN_DT        =    SYSDATE
                 , LOGIN_FAIL_CNT       =    0   
             <include refid="sqlPkConditions" />
     </update>
     <update id="updateLoginFail">
-            UPDATE TB_SYS_USER_BAS
+            UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updateLoginFail */ TB_SYS_USER_BAS
               SET LAST_LOGIN_DT        =    SYSDATE
                 , LOGIN_FAIL_CNT       =    NVL(LOGIN_FAIL_CNT,0) + 1   
          <include refid="sqlPkConditions" />
     </update>
     <update id="updatePassword">
-        UPDATE TB_SYS_USER_BAS
+        UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updatePassword */ TB_SYS_USER_BAS
               SET LOGIN_PWD        =    #{loginPwd}
                 , LOGIN_FAIL_CNT       =    0
                 , PWD_AMD_DT          =    SYSDATE
          <include refid="sqlPkConditions" />
     </update>
      <insert id="insertLoginHist">
-        INSERT INTO TB_SYS_USER_LOGIN_HST (
+        INSERT /* com.kspo.voc.sys.dao.UserBaseDao.insertLoginHist */ INTO TB_SYS_USER_LOGIN_HST (
                   USER_ID
                 , LOGIN_DT
                 , LOGIN_IP_ADDR
@@ -264,7 +265,7 @@
             )
     </insert>
      <update id="updateMyInfo">
-       UPDATE TB_SYS_USER_BAS
+       UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updateMyInfo */  TB_SYS_USER_BAS
           SET EMAIL_ADDR           =         #{emailAddr}
             , MPHON_NO             =         #{mphonNo}
             , AMDR_ID              =         #{amdrId}

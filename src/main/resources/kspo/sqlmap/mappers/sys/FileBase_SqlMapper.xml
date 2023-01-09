@@ -57,7 +57,7 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.FileBasDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_FILE_BAS
         <include refid="sqlConditions"/>
     </select>

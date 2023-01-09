@@ -87,7 +87,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_BATCH_INFO_BAS
+               UPDATE  /* com.kspo.voc.sys.dao.BatchInfoBasDao.update*/ TB_SYS_BATCH_INFO_BAS
                   SET SYS_CD              =         #{sysCd}
                     , BATCH_NM            =         #{batchNm}
                     , WRK_ID              =         #{wrkId}
@@ -99,7 +99,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_BATCH_INFO_BAS
+               DELETE  /* com.kspo.voc.sys.dao.BatchInfoBasDao.delete*/  
+                 FROM TB_SYS_BATCH_INFO_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

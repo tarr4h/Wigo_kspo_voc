@@ -14,7 +14,7 @@
          WHERE   T.ROW_INDEX BETWEEN NVL(#{firstRecordIndex},1) AND NVL(#{lastRecordIndex},30)
     </sql>
     <select id="getAutoSeq" resultType="String">
-        SELECT FN_VOC_AUTO_SEQ(#{prefix}) 
+        SELECT  /* com.kspo.voc.sys.dao.CommonDao.getAutoSeq */  FN_VOC_AUTO_SEQ(#{prefix}) 
           FROM DUAL
     </select>
      

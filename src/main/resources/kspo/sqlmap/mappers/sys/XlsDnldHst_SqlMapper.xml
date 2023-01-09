@@ -61,14 +61,14 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.XlsDnldHstDao.selectListCount */  COUNT(1)
                   FROM TB_SYS_XLS_DNLD_HST A
                   LEFT JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.XlsDnldHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.DNLD_HST_ID                    /*다운로드이력코드        */
+               SELECT /* com.kspo.voc.sys.dao.XlsDnldHstDao.selectList */ A.DNLD_HST_ID                    /*다운로드이력코드        */
                     , A.MENU_ID                    /*메뉴코드        */
                     , A.DNLD_NM                    /*다운로드명        */
                     , A.REGR_ID                    /*등록자ID        */
@@ -88,12 +88,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.XlsDnldHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.XlsDnldHstDao.select */<include refid="sqlCols"/>
                  FROM TB_SYS_XLS_DNLD_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_XLS_DNLD_HST (
+                INSERT /* com.kspo.voc.sys.dao.XlsDnldHstDao.insert */INTO TB_SYS_XLS_DNLD_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('XDH')
@@ -106,7 +106,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_XLS_DNLD_HST
+               UPDATE /* com.kspo.voc.sys.dao.XlsDnldHstDao.update */ TB_SYS_XLS_DNLD_HST
                   SET MENU_ID             =         #{menuId}
                     , DNLD_NM             =         #{dnldNm}
                     , AMDR_ID             =         #{amdrId}
@@ -114,7 +114,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_XLS_DNLD_HST
+               DELETE /* com.kspo.voc.sys.dao.XlsDnldHstDao.delete */ 
+                 FROM TB_SYS_XLS_DNLD_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>
