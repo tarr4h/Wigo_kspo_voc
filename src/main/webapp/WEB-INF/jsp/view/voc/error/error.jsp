@@ -25,7 +25,7 @@
                         <li>잠시 후에 다시 접속해 주시기 바랍니다.</li>
                     </ul>
                     <div class="text-center">
-                        <a href="#;" class="btn btn-blue-fill big" data-click="goBack" >Go Home</a>
+                        <a href="#;" class="btn btn-blue-fill big" data-click="goBack" id="btnBack">Go Home</a>
                     </div>      
                 </div>
             </div>  
@@ -38,9 +38,25 @@
 
 <!-- //error -->
 <script>
-	function goBack() {
+    $(document).ready(function(){
+    	if (parent != window) {
+    		if(parent.closeActiveTab){
+    			$("#btnBack").html("닫기");
+    		}
+    		if (document.referrer == parent.document.referrer
+                    || document.referrer == parent.location.href) {
+    			$("#btnBack").html("닫기");
+            }
+    	}
+    	
+    });
+	function goBack(element) {
 
 		if (parent != window) {
+			if(parent.closeActiveTab){
+				parent.closeActiveTab();
+				return;
+			}
 			if (document.referrer == parent.document.referrer
 					|| document.referrer == parent.location.href) {
 				Utilities.closeModal();
