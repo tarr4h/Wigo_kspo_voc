@@ -38,10 +38,6 @@ public interface VocMgmtPrcdDao extends IVocDao {
 
     int insertDirPrcd(Map<String, Object> prcdBas);
 
-    <T> List<T> selectMgmtPrcdList(EzMap param);
-
-    <T> List<T> selectDirPrcdList(EzMap param);
-
     String selectMaxMgmtPrcdCd();
 
     int deleteMgmtPrcd(EzMap param);

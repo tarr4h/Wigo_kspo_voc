@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
+import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
+import com.kspo.voc.program.setting.model.VocMgmtTaskVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
@@ -27,5 +29,14 @@ public interface IVocPrcDao extends IVocDao {
 
     <T> List<T> selectDirOrg(EzMap param);
 
+    <T> List<T> selectMgmtPrcdList(EzMap param);
+
+    <T> List<T> selectDirPrcdList(EzMap param);
+
+    <T> List<T> selectMgmtTaskList(EzMap param);
+
+    <T> List<T> selectActvBasList(Object param);
+
+    <T> List<T> selectMgmtActvList(EzMap param);
 }
 

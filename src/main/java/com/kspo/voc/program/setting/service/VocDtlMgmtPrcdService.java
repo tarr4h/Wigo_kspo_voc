@@ -7,10 +7,10 @@ import com.kspo.voc.program.common.service.VocAbstractService;
 import com.kspo.voc.program.common.stnd.CodeGeneration;
 import com.kspo.voc.program.common.stnd.ManageCodeCategory;
 import com.kspo.voc.program.setting.dao.VocDtlMgmtPrcdDao;
-import com.kspo.voc.program.setting.model.VocDirCdVo;
-import com.kspo.voc.program.setting.model.VocDirMgmtVo;
+import com.kspo.voc.program.setting.model.*;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,8 +86,78 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return param;
     }
 
-    public Object insertDirPrcd(EzMap param) {
+    public Object insertDirPrcd(Map<String, Object> param) throws EgovBizException {
+        List<Map<String, Object>> prcdList = (List<Map<String, Object>>) param.get("prcdList");
 
-        return null;
+        int i = 1;
+        for(Map<String, Object> prcd : prcdList){
+            log.debug("prcd : {}", prcd);
+            String maxMgmtPrcdCd = dao.selectMaxMgmtPrcdCd();
+            prcd.put("mgmtPrcdCd", CodeGeneration.generateCode(maxMgmtPrcdCd, CodeGeneration.MGMT_PRCD));
+            prcd.put("mgmtPrcdOrdr", i);
+            dao.insertMgmtPrcd(prcd);
+            i++;
+
+            prcd.put("dirCd", param.get("dirCd"));
+            dao.insertDirPrcd(prcd);
+
+            List<VocTaskBasVo> taskList = selectTaskBasList(prcd);
+            if(taskList.size() != 0){
+                int j = 1;
+                for(VocTaskBasVo task : taskList){
+                    Map<String, Object> taskMap = Utilities.beanToMap(task);
+                    String maxMgmtTaskCd = dao.selectMaxMgmtTaskCd();
+                    taskMap.put("mgmtTaskCd", CodeGeneration.generateCode(maxMgmtTaskCd, CodeGeneration.MGMT_TASK));
+                    taskMap.put("mgmtPrcdCd", prcd.get("mgmtPrcdCd"));
+                    taskMap.put("mgmtTaskOrdr", j);
+
+                    dao.insertMgmtTask(taskMap);
+                    j++;
+                }
+            }
+
+        }
+
+        return (i-1);
     }
+
+
+    public Object insertMgmtActv(EzMap param) {
+        List<Map<String, Object>> actvList = (List<Map<String, Object>>) param.get("actvList");
+
+        int i = 1;
+        for(Map<String, Object> actv : actvList){
+            String maxActvCd = dao.selectMaxMgmtActvCd();
+            actv.put("mgmtActvCd", CodeGeneration.generateCode(maxActvCd, CodeGeneration.MGMT_ACTV));
+            actv.put("mgmtTaskCd", param.get("mgmtTaskCd"));
+            actv.put("mgmtActvOrdr", i);
+            dao.insertMgmtActv(actv);
+            i++;
+        }
+
+        return actvList.size();
+    }
+
+    public List<VocPrcdBasVo> selectAvailablePrcdBasList(EzMap param) {
+        List<VocPrcdBasVo> list = selectPrcdBasList(param);
+
+        List<VocMgmtPrcdVo> mgmtPrcdList = selectMgmtPrcdList(param);
+        for(VocMgmtPrcdVo mgmtPrcdVo : mgmtPrcdList){
+            list.removeIf(value -> value.getPrcdCd().equals(mgmtPrcdVo.getPrcdCd()));
+        }
+
+        return list;
+    }
+
+    public List<VocActvBasVo> selectAvailableActvBasList(EzMap param) {
+        List<VocActvBasVo> list = selectActvBasList(param);
+
+        List<VocMgmtActvVo> mgmtActvList = selectMgmtActvList(param);
+        for(VocMgmtActvVo mgmtActvVo : mgmtActvList){
+            list.removeIf(value -> value.getActvCd().equals(mgmtActvVo.getActvCd()));
+        }
+
+        return list;
+    }
+
 }

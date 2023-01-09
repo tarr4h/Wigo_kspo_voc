@@ -86,7 +86,7 @@
                     <h3 class="title">관리절차 등록</h3>
                     <div class="v_guide">
                         <div class="v_guideDot"></div>
-                        <span>채널별로 절차를 등록/수정/삭제하고, 하위 업무를 관리합니다.</span>
+                        <span>채널별 유형마다 절차를 등록/수정/삭제하고, 하위 업무를 관리합니다.</span>
                     </div>
                 </div>
                 <div class="v_btn_area">
@@ -123,10 +123,10 @@
                     </div>
                     <div class="v_grid_wrapper">
                         <div id="divGrid2"
-                             data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
+                             data-get-url="<c:url value='${urlPrefix}/selectMgmtTaskGrid${urlSuffix}'/>"
                              data-grid-id="mgmtTaskGrid"
                              data-type="grid"
-                             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtPrcd.xml${urlSuffix}'/>"
+                             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtTask.xml${urlSuffix}'/>"
                              style="width:100%;height:251px;"
                         >
                         </div>
@@ -148,10 +148,10 @@
                     </div>
                     <div class="v_grid_wrapper">
                         <div id="divGrid3"
-                             data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
+                             data-get-url="<c:url value='${urlPrefix}/selectMgmtActvGrid${urlSuffix}'/>"
                              data-grid-id="mgmtActvGrid"
                              data-type="grid"
-                             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtPrcd.xml${urlSuffix}'/>"
+                             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtActv.xml${urlSuffix}'/>"
                              style="width:100%;height:251px;"
                         >
                         </div>
@@ -179,9 +179,12 @@
         let evt = $(this).data('event');
 
         switch(evt){
-            case 'prcdAdd' : openAddModal('vocDtlMgmtPrcdRegModal', 600, 400);break;
+            case 'prcdAdd' : openAddModal('vocDtlMgmtPrcdRegModal', tpDirCd, 600, 400);break;
+            case 'actvAdd' : openActvModal();break;
         }
     });
+
+
 
     /**
      * 우측영역에 안내문구를 삽입
@@ -232,13 +235,81 @@
             // 우측 그리드 호출
             let dirCd = await selectComboDirCd(chMgmtCd, tpMgmtCd);
             tpDirCd = dirCd;
+            loadMgmtPrcdGrid(dirCd);
         }
     }
 
-    function insertDirPrcd(prcdList){
-        console.log('regPrcdList : ', prcdList);
-        console.log('tpDirCd : ', tpDirCd);
+    function onGridCellClick(gridView,rowIndex,columnName,colIndex,fieldIndex){
+        let grid = gridView;
+        let gridId = grid.gridId;
+        let targetCol = grid.getJsonRow(rowIndex);
+        grid.check(rowIndex);
 
+        switch(gridId){
+            case 'mgmtPrcdGrid' : loadMgmtTaskGrid(tpDirCd, targetCol.mgmtPrcdCd);break;
+            case 'mgmtTaskGrid' : loadMgmtActvGrid(targetCol.mgmtTaskCd);break;
+        }
+    }
+
+    function loadMgmtActvGrid(mgmtTaskCd){
+        let param = {
+            mgmtTaskCd,
+            recordCountPerPage: 10
+        };
+
+        window['mgmtActvGrid'].loadUrl('', param);
+    }
+
+    function loadMgmtTaskGrid(dirCd, mgmtPrcdCd){
+        let param = {
+            dirCd,
+            mgmtPrcdCd,
+            recordCountPerPage: 10
+        };
+
+        window['mgmtTaskGrid'].loadUrl('', param);
+    }
+
+    /**
+     * 경로코드 별 관리절차 그리드 호출
+     * @param dirCd
+     */
+    function loadMgmtPrcdGrid(dirCd){
+        let param = {
+            dirCd,
+            recordCountPerPage : 10
+        };
+
+        window['mgmtPrcdGrid'].loadUrl('', param);
+    }
+
+    /**
+     * 관리 수행을 등록
+     * @param actvList
+     */
+    function insertMgmtActv(actvList){
+        let mgmtTaskCd = window['mgmtTaskGrid'].getCheckedJson()[0].mgmtTaskCd;
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertMgmtActv${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                actvList,
+                mgmtTaskCd
+            }),
+            success(res){
+                console.log(res);
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 경로 절차를 등록
+     * @param prcdList
+     */
+    function insertDirPrcd(prcdList){
         $.ajax({
             url : '<c:url value="${urlPrefix}/insertDirPrcd${urlSuffix}"/>',
             method : 'POST',
@@ -248,7 +319,7 @@
                 dirCd : tpDirCd
             }),
             success(res){
-                console.log(res);
+                alert('등록되었습니다.');
             },
             error: console.log
         });
@@ -296,8 +367,22 @@
         })
     }
 
-    function openAddModal(pageNm, width, height){
-        let url = '<c:url value="${urlPrefix}/openAddModal${urlSuffix}"/>' + "/" + pageNm;
+    function openActvModal(){
+        let checkedTask = window['mgmtTaskGrid'].getCheckedJson();
+        if(checkedTask.length > 1){
+            alert('1개의 TASK만 선택해 주세요.');
+            return false;
+        } else if(checkedTask.length === 0){
+            alert('TASK를 먼저 지정해 주세요');
+            return false;
+        }
+
+        let mgmtTaskCd = checkedTask[0].mgmtTaskCd;
+        openAddModal('vocDtlMgmtActvRegModal', mgmtTaskCd, 600, 400)
+    }
+
+    function openAddModal(pageNm, key, width, height){
+        let url = '<c:url value="${urlPrefix}/openAddModal${urlSuffix}"/>' + "/" + pageNm + "/" + key;
         Utilities.openModal(url, width, height);
     }
 

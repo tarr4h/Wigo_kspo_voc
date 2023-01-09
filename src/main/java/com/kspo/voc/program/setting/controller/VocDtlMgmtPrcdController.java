@@ -3,6 +3,9 @@ package com.kspo.voc.program.setting.controller;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
+import com.kspo.voc.program.setting.model.VocActvBasVo;
+import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
+import com.kspo.voc.program.setting.model.VocMgmtTaskVo;
 import com.kspo.voc.program.setting.model.VocPrcdBasVo;
 import com.kspo.voc.program.setting.service.VocDtlMgmtPrcdService;
 import lombok.extern.slf4j.Slf4j;
@@ -67,18 +70,60 @@ public class VocDtlMgmtPrcdController {
     @PostMapping(value = "selectPrcdBasListGrid")
     public @ResponseBody Object selectPrcdBasListGrid(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocPrcdBasVo> list = service.selectPrcdBasList(param);
+        List<VocPrcdBasVo> list = service.selectAvailablePrcdBasList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
 
     @PostMapping(value = "insertDirPrcd")
-    public @ResponseBody Object insertDirPrcd(@RequestBody EzMap param){
+    public @ResponseBody Object insertDirPrcd(@RequestBody EzMap param) throws EgovBizException {
         return service.insertDirPrcd(param);
     }
 
-    @GetMapping(value = { "openAddModal/{pageNm}"})
-    public String openAddModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
+    @PostMapping(value = "selectMgmtPrcdGrid")
+    public @ResponseBody Object selectMgmtPrcdGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocMgmtPrcdVo> list = service.selectMgmtPrcdList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selectMgmtTaskGrid")
+    public @ResponseBody Object selectMgmtTaskGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocMgmtTaskVo> list = service.selectMgmtTaskList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selectActvBasListGrid")
+    public @ResponseBody Object selectActvBasListGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocActvBasVo> list = service.selectAvailableActvBasList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "insertMgmtActv")
+    public @ResponseBody Object insertMgmtActv(@RequestBody EzMap param){
+        return service.insertMgmtActv(param);
+    }
+
+    @PostMapping(value = "selectMgmtActvGrid")
+    public @ResponseBody Object selectMgmtActvGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocMgmtTaskVo> list = service.selectMgmtActvList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @GetMapping(value = { "openAddModal/{pageNm}/{key}"})
+    public String openAddModal(@PathVariable String pageNm, @PathVariable String key, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
+        param.put("key", key);
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "program/setting/voc_mgmt_prcd/" + pageNm;
     }

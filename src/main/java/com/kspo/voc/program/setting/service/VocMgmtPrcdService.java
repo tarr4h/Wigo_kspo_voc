@@ -135,7 +135,7 @@ public class VocMgmtPrcdService extends VocAbstractService {
         for(Map<String, Object> prcdBas : prcdBasList){
             String maxMgmtPrcdCd = dao.selectMaxMgmtPrcdCd();
             prcdBas.put("mgmtPrcdCd", CodeGeneration.generateCode(maxMgmtPrcdCd, CodeGeneration.MGMT_PRCD));
-            prcdBas.put("mgmtPrcdOdrd", i);
+            prcdBas.put("mgmtPrcdOrdr", i);
             dao.insertMgmtPrcd(prcdBas);
 
             prcdBas.put("dirCd", param.get("dirCd"));
@@ -147,19 +147,6 @@ public class VocMgmtPrcdService extends VocAbstractService {
         param.put("result", true);
 
         return param;
-    }
-
-    public <T> List<T> selectMgmtPrcdList(EzMap param) {
-        List<EzMap> list = dao.selectDirPrcdList(param);
-
-        for(EzMap map : list){
-            log.debug("map mgmtPrcdCd : {}, {}", map.get("mgmtPrcdCd"), map.get("MGMT_PRCD_CD"));
-        }
-        if(list.size() == 0){
-            return new ArrayList<>();
-        }
-        param.put("dirPrcdList", list);
-        return dao.selectMgmtPrcdList(param);
     }
 
     public Object deleteMgmtPrcd(EzMap param) {

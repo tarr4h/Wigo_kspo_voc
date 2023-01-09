@@ -45,6 +45,19 @@
         AMD_DT /* 수정일시 */
     </sql>
 
+    <sql id="vocActvBasCols">
+        ACTV_CD /* 수행코드 */,
+        FUNC_TP_CD /* 기능유형코드 */,
+        ACTV_NM /* 수행명 */,
+        CALL_MTHD_CD /* 호출메소드코드 */,
+        ACTV_EXPLN /* 수행설명 */,
+        USE_YN /* 사용여부 */,
+        REGR_ID /* 등록자 아이디 */,
+        REG_DT /* 등록일시 */,
+        AMDR_ID /* 수정자 아이디 */,
+        AMD_DT /* 수정일시 */
+    </sql>
+
     <sql id="dirMgmtCols">
         TVDMR.DIR_CD /* 경로 코드 */,
         TVDMR.MGMT_CD /* 관리절차 코드 */,
@@ -52,6 +65,54 @@
         TVDMR.REG_DT /* 등록일시 */,
         TVDMR.AMDR_ID /* 수정자 아이디 */,
         TVDMR.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="dirPrcdCols">
+        DIR_CD /* 경로 코드 */,
+        MGMT_PRCD_CD /* 관리절차 코드 */
+    </sql>
+
+    <sql id="mgmtPrcdCols">
+        TVMPD.MGMT_PRCD_CD /* 관리절차코드 */,
+        TVMPD.PRCD_CD /* 절차코드 */,
+        TVMPD.MGMT_PRCD_ORDR /* 관리절차순번 */,
+        TVMPD.DDLN_SEC /* 처리기한 초 */,
+        TVMPD.DUTY_ORG_ID /* 담당부서 아이디 */,
+        TVMPD.DUTY_EMP_ID /* 담당직원 아이디 */,
+        TVMPD.DUTY_ROLE_CD /* 담당권한코드 */,
+        TVMPD.REGR_ID /* 등록자 아이디 */,
+        TVMPD.REG_DT /* 등록일시 */,
+        TVMPD.AMDR_ID /* 수정자 아이디 */,
+        TVMPD.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="mgmtTaskCols">
+        TVMTD.MGMT_TASK_CD /* 관리TASK코드 */,
+        TVMTD.TASK_CD /* TASK코드 */,
+        TVMTD.MGMT_PRCD_CD /* 관리절차코드 */,
+        TVMTD.MGMT_TASK_ORDR /* 관리TASK순번 */,
+        TVMTD.DDLN_SEC /* 처리기한 초 */,
+        TVMTD.DUTY_ORG_ID /* 담당부서 아이디 */,
+        TVMTD.DUTY_EMP_ID /* 담당자 아이디 */,
+        TVMTD.DUTY_ROLE_CD /* 담당권한 코드 */,
+        TVMTD.REGR_ID /* 등록자 아이디 */,
+        TVMTD.REG_DT /* 등록일시 */,
+        TVMTD.AMDR_ID /* 수정자 아이디 */,
+        TVMTD.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="mgmtActvCols">
+        TVMAD.MGMT_ACTV_CD /* 관리TASK코드 */,
+        TVMAD.ACTV_CD /* TASK코드 */,
+        TVMAD.MGMT_TASK_CD /* 관리절차코드 */,
+        TVMAD.MGMT_ACTV_ORDR /* 관리TASK순번 */,
+        TVMAD.DUTY_ORG_ID /* 담당부서 아이디 */,
+        TVMAD.DUTY_EMP_ID /* 담당자 아이디 */,
+        TVMAD.DUTY_ROLE_CD /* 담당권한 코드 */,
+        TVMAD.REGR_ID /* 등록자 아이디 */,
+        TVMAD.REG_DT /* 등록일시 */,
+        TVMAD.AMDR_ID /* 수정자 아이디 */,
+        TVMAD.AMD_DT /* 수정일시 */
     </sql>
 
     <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.program.setting.model.VocMgmtCdVo">
@@ -133,20 +194,21 @@
                 AUTO_APPLY_ALL_PRCD_YN = #{autoApplyAllPrcdYn}
             </if>
             <if test="autoApplyPrcdCd != null and !autoApplyPrcdCd.equals('')">
-                or
+                OR
                 AUTO_APPLY_PRCD_CD = #{autoApplyPrcdCd}
             </if>
-            <if test="mcPrcdCd != null and !mcPrcdCd.equals('')">
-                TASK_CD NOT IN (
-                    SELECT
-                        TASK_CD
-                    FROM
-                        TB_VOC_MC_TASK_DTL
-                    WHERE
-                        MC_PRCD_CD = #{mcPrcdCd}
-                )
+            <if test="prcdCd != null and !prcdCd.equals('')">
+                AND
+                AUTO_APPLY_PRCD_CD = #{prcdCd}
             </if>
         </where>
+    </select>
+
+    <select id="selectActvBasList" resultType="com.kspo.voc.program.setting.model.VocActvBasVo">
+        SELECT
+            <include refid="vocActvBasCols"/>
+        FROM
+            TB_VOC_ACTV_BAS
     </select>
 
     <select id="selectChannelDirCd" resultType="com.kspo.voc.program.setting.model.VocDirCdVo">
@@ -176,6 +238,76 @@
             DIR_CD = #{dirCd}
         ORDER BY
             PRIM_PROC_ORG_YN DESC, REG_DT
+    </select>
+
+    <select id="selectDirPrcdList" resultType="EzMap">
+        SELECT
+            <include refid="dirPrcdCols"/>
+        FROM
+            TB_VOC_DIR_PRCD_REL
+        WHERE
+            DIR_CD = #{dirCd}
+    </select>
+
+    <select id="selectMgmtPrcd" resultType="com.kspo.voc.program.setting.model.VocMgmtPrcdVo">
+        SELECT
+            <include refid="mgmtPrcdCols"/>
+            ,
+            TVPB.PRCD_NM,
+            TVPB.DUTY_ORG_NM,
+            TVPB.DUTY_EMP_NM
+        FROM
+            TB_VOC_MGMT_PRCD_DTL TVMPD INNER JOIN TB_VOC_PRCD_BAS TVPB
+            ON TVMPD.PRCD_CD = TVPB.PRCD_CD
+        WHERE
+            MGMT_PRCD_CD = #{mgmtPrcdCd}
+        ORDER BY
+            TVMPD.MGMT_PRCD_ORDR
+    </select>
+
+    <select id="selectMgmtPrcdList" resultType="com.kspo.voc.program.setting.model.VocMgmtPrcdVo">
+        SELECT
+            <include refid="mgmtPrcdCols"/>
+            ,
+            TVPB.PRCD_NM,
+            TVPB.DUTY_ORG_NM,
+            TVPB.DUTY_EMP_NM
+        FROM
+            TB_VOC_MGMT_PRCD_DTL TVMPD INNER JOIN TB_VOC_PRCD_BAS TVPB
+            ON TVMPD.PRCD_CD = TVPB.PRCD_CD
+        WHERE
+            MGMT_PRCD_CD IN
+            <foreach collection="dirPrcdList" item="item" open="(" separator="," close=")">
+                #{item.mgmtPrcdCd}
+            </foreach>
+        ORDER BY
+            TVMPD.MGMT_PRCD_ORDR
+    </select>
+
+    <select id="selectMgmtTaskList" resultType="com.kspo.voc.program.setting.model.VocMgmtTaskVo">
+        SELECT
+            <include refid="mgmtTaskCols"/>
+            ,
+            TVTB.TASK_NM,
+            TVTB.DUTY_ORG_NM,
+            TVTB.DUTY_EMP_NM
+        FROM
+            TB_VOC_MGMT_TASK_DTL TVMTD INNER JOIN TB_VOC_TASK_BAS TVTB
+            ON TVMTD.TASK_CD = TVTB.TASK_CD
+        WHERE
+            TVMTD.MGMT_PRCD_CD = #{mgmtPrcdCd}
+    </select>
+
+    <select id="selectMgmtActvList" resultType="com.kspo.voc.program.setting.model.VocMgmtActvVo">
+        SELECT
+            <include refid="mgmtActvCols"/>
+            ,
+            TVAB.ACTV_NM
+        FROM
+            TB_VOC_MGMT_ACTV_DTL TVMAD INNER JOIN TB_VOC_ACTV_BAS TVAB
+            ON TVMAD.ACTV_CD = TVAB.ACTV_CD
+        WHERE
+            TVMAD.MGMT_TASK_CD = #{mgmtTaskCd}
     </select>
 
 </mapper>
