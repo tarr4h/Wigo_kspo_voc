@@ -14,8 +14,6 @@ import com.kspo.voc.sys.model.OrgBaseVo;
 public class OrgBaseService extends AbstractVocService {
    @Autowired
    OrgBaseDao dao;
-   @Autowired
-//   CrmJadeService jadeService;
    @Override
    public IVocDao getDao() {
        return dao;

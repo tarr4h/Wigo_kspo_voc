@@ -30,4 +30,9 @@ public class GrpBaseVo extends BaseVo {
 	 * </p>
 	 */
 	private String checkYn;
+	
+	/**
+	 * IP Addr
+	 */
+	private String ipAddr;
 }

@@ -2,7 +2,7 @@ package com.kspo.base.api.jwt.exception;
 
 /** 
 * <pre>
-* com.ceragem.crm.common.jwt.exception
+* com.kspo.base.api.jwt.exception
 *	- EzJwtException.java
 * </pre>
 *

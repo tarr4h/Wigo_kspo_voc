@@ -22,7 +22,7 @@ import com.kspo.voc.sys.model.UserWdgtVo;
 import com.kspo.voc.sys.service.UserWdgtService;
 
 @Controller
-@RequestMapping(value = { "crmUserWdgt", "{menuId}/crmUserWdgt" })
+@RequestMapping(value = { "userWdgt", "{menuId}/userWdgt" })
 public class UserWdgtController{
 
 @Autowired
@@ -31,7 +31,7 @@ UserWdgtService service;
 @GetMapping(value = { "", "index" })
 public String init(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
     model.addAllAttributes(param);
-    return Utilities.getProperty("tiles.voc") + "sys/crmUserWdgtList";
+    return Utilities.getProperty("tiles.voc") + "sys/userWdgtList";
 }
 
 @PostMapping(value = { "getList" })

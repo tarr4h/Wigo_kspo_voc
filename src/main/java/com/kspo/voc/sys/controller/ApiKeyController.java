@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.ExampleController
+* com.kspo.base.common.ExampleController
 *	- ExampleController.java
 * </pre>
 *

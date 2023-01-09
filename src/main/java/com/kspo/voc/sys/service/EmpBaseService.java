@@ -19,8 +19,6 @@ public class EmpBaseService extends AbstractVocService {
 	@Autowired
 	UserBaseDao userDao;
 
-//	@Autowired
-//	CrmJadeService jadeService;
 
 	@Override
 	public IVocDao getDao() {
@@ -28,9 +26,6 @@ public class EmpBaseService extends AbstractVocService {
 	}
 
 	public void saveSyncEmp() throws EgovBizException {
-//		List<CrmLoginUserVo> list = jadeService.getCeragemHrList();
-//		list.addAll(jadeService.getCeragemCnsHrList());
-//		insertList(list);
 	}
 
 	@Override

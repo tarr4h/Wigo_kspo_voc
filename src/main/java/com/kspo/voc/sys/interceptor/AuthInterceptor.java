@@ -25,7 +25,7 @@ import com.kspo.voc.sys.service.LoginService;
 /**
  * 
  * <pre>
- * com.wigo.crm.interceptor - AuthInterceptor.java
+ * com.kspo.voc.sys.interceptor - AuthInterceptor.java
  * </pre>
  *
  * @ClassName : AuthInterceptor

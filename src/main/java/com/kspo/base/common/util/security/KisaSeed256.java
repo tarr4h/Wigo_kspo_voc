@@ -18,7 +18,7 @@ import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util.security
+* com.kspo.base.common.util.security
 *	- KisaSeed256.java
 * </pre>
 *

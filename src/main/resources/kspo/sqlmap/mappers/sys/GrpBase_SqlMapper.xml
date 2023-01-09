@@ -155,6 +155,15 @@
             AND C.MENU_LVL_NO > 1
             AND C.MENU_AUTH_YN = 'Y'
     </select>
+    <select id="selectGroupIpInfo" resultType="EzMap">
+            SELECT A.COMN_CD_NM REF_TP_CD_NM
+                 , CASE WHEN #{refTpCd} = '010' THEN (SELECT EMP_NM FROM TB_SYS_EMP_BAS WHERE EMP_ID = #{refId}) 
+                        WHEN #{refTpCd} = '020' THEN (SELECT GRP_NM FROM TB_SYS_GRP_BAS WHERE GRP_ID = #{refId})
+                        WHEN #{refTpCd} = '030' THEN (SELECT ORG_NM FROM TB_SYS_ORG_BAS WHERE ORG_ID = #{refId}) END REF_ID_NM
+              FROM TB_SYS_COMN_CD_BAS A
+             WHERE A.TOP_COMN_CD = 'S090' 
+               AND A.COMN_CD = #{refTpCd}
+    </select>
     <select id="selectGroupMenuList" resultType="com.kspo.voc.sys.model.GrpMenuRelVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
        SELECT A.GRP_ID

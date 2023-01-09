@@ -16,7 +16,7 @@ import com.kspo.voc.comn.util.Constants;
 
 /**
  * <pre>
- * com.ceragem.crm.common.jwt.handler - EzJwtAccessDeniedHandler.java
+ * com.kspo.base.api.jwt.security - EzJwtAccessDeniedHandler.java
  * </pre>
  *
  * @ClassName : EzJwtAccessDeniedHandler

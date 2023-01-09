@@ -20,6 +20,7 @@ import com.kspo.base.common.util.NasUtil;
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.controller.MainController;
+import com.kspo.voc.sys.model.LoginUserVo;
 import com.kspo.voc.sys.model.MenuBaseVo;
 import com.kspo.voc.sys.model.MenuVo;
 import com.kspo.voc.sys.service.MenuService;
@@ -27,7 +28,7 @@ import com.kspo.voc.sys.service.MenuService;
 /**
  * 
  * <pre>
- * com.wigo.crm.interceptor - MenuInterceptor.java
+ * com.kspo.voc.sys.interceptor - MenuInterceptor.java
  * </pre>
  *
  * @ClassName : MenuInterceptor
@@ -85,10 +86,15 @@ public class MenuInterceptor implements HandlerInterceptor {
 		} else
 			menuUrl = sPath;
 
-		EzMap so = new EzMap();
+//		EzMap so = new EzMap();
 		String topMenuId = "0100000000";
-		so.put("topMenuId", topMenuId);
-		so.put("userId", SessionUtil.getLoginUserId());
+//		so.put("topMenuId", topMenuId);
+//		so.put("userId", SessionUtil.getLoginUserId());
+
+		LoginUserVo so = Utilities.getLoginUser();
+		if (so == null)
+			so = new LoginUserVo();
+		so.setTopMenuId(topMenuId);
 
 		EzMap menuMap = new EzMap();
 		List<ITreeVo> menuTree = menuService.getUserMenuTree(so, menuMap);

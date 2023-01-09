@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <pre>
- * com.wigo.crm.common.util - AwsS3Util.java
+ * com.kspo.base.common.util - AwsS3Util.java
  * </pre>
  *
  * @ClassName : AwsS3Util

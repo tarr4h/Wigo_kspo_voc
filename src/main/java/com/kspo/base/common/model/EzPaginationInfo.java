@@ -3,7 +3,7 @@ package com.kspo.base.common.model;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.model - EzPaginationInfo.java
+ * com.kspo.base.common.model - EzPaginationInfo.java
  * </pre>
  *
  * @ClassName : EzPaginationInfo

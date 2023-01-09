@@ -22,7 +22,7 @@ import com.kspo.voc.sys.service.UserService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.controller
+* com.kspo.base.common.controller
 *	- MyInfoController.java
 * </pre>
 *

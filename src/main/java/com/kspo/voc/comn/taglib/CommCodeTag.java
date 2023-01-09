@@ -14,7 +14,7 @@ import com.kspo.voc.sys.service.ComnCdService;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.taglib - CommCodeTag.java
+ * com.kspo.base.common.taglib - CommCodeTag.java
  * </pre>
  *
  * @ClassName : CommCodeTag

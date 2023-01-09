@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- ExcelVo.java
 * </pre>
 *

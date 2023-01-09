@@ -25,12 +25,12 @@ import com.kspo.voc.sys.service.ChngHstService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.ChngHstController
-*	- CrmChngHstController.java
+* com.kspo.base.common.ChngHstController
+*	- ChngHstController.java
 * </pre>
 *
-* @ClassName	: CrmChngHstService 
-* @Description	: CrmChngHstService 컨트롤러 
+* @ClassName	: ChngHstController 
+* @Description	: ChngHstController 컨트롤러 
 * @author 		: 김성태
 * @date 		: 2022. 1. 8.
 * @Version 		: 1.0 

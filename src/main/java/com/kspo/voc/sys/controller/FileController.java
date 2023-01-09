@@ -31,7 +31,7 @@ import com.kspo.voc.sys.service.FileService;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.controller - FileController.java
+ * com.kspo.base.common.controller - FileController.java
  * </pre>
  *
  * @ClassName : FileController

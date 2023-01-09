@@ -13,7 +13,7 @@ import com.kspo.voc.comn.util.Utilities;
 
 /**
  * <pre>
- * com.ceragem.crm.common.jwt.entity - JwtUser.java
+ * com.kspo.base.api.jwt.entity - JwtUser.java
  * </pre>
  *
  * @ClassName : JwtUser

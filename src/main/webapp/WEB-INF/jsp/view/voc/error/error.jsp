@@ -53,15 +53,16 @@
 	function goBack(element) {
 
 		if (parent != window) {
-			if(parent.closeActiveTab){
-				parent.closeActiveTab();
-				return;
-			}
+			
 			if (document.referrer == parent.document.referrer
 					|| document.referrer == parent.location.href) {
 				Utilities.closeModal();
 				return;
 			}
+			if(parent.closeActiveTab){
+                parent.closeActiveTab();
+                return;
+            }
 			history.back();
 
 		} else {

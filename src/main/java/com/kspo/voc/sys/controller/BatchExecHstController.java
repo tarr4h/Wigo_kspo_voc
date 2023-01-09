@@ -39,7 +39,7 @@ BatchExecHstService service;
 @GetMapping(value = { "", "index" })
 public String init(@RequestParam Map<String, Object> param, ModelMap model) throws Exception {
     model.addAllAttributes(param);
-    return Utilities.getProperty("tiles.crm") + "sys/batchExecHstList";
+    return Utilities.getProperty("tiles.voc") + "sys/batchExecHstList";
 }
 
 @PostMapping(value = { "getList" })

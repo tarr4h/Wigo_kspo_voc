@@ -10,7 +10,7 @@ import com.kspo.voc.comn.util.Utilities;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- EzMap.java
 * </pre>
 *

@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util.security
+* com.kspo.base.common.util.security
 *	- ARIA.java
 * </pre>
 *

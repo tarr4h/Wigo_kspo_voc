@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util - SessionUtil.java
+ * com.kspo.base.common.util - SessionUtil.java
  * </pre>
  *
  * @ClassName : SessionUtil

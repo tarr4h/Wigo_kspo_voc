@@ -12,7 +12,7 @@ import lombok.Data;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- BaseBo.java
 * </pre>
 *

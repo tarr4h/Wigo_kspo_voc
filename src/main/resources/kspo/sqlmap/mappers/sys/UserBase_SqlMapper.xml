@@ -226,6 +226,38 @@
                  LEFT JOIN TB_SYS_EMP_BAS B ON A.USER_ID = B.EMP_ID
       <include refid="sqlPkConditions" />
     </select>
+    <select id="selectUserGroupList" resultType="com.kspo.voc.sys.model.GrpBaseVo">
+           SELECT A.GRP_ID
+                , A.GRP_NM
+                , C.IP_ADDR
+             FROM TB_SYS_GRP_BAS A
+            INNER JOIN TB_SYS_GRP_USER_REL B ON A.GRP_ID = B.GRP_ID AND B.USER_ID = #{userId}
+             LEFT JOIN TB_SYS_IP_REL C ON C.REF_TP_CD = '010' AND  B.USER_ID = C.REF_ID AND TO_CHAR(SYSDATE,'YYYYMMDD') BETWEEN C.USE_STA_YMD AND C.USE_END_YMD
+            UNION ALL
+           SELECT A.GRP_ID
+                , A.GRP_NM
+                , C.IP_ADDR
+             FROM TB_SYS_GRP_BAS A
+            INNER JOIN TB_SYS_GRP_EMP_REL B ON A.GRP_ID = B.GRP_ID AND B.EMP_ID = #{userId}
+             LEFT JOIN TB_SYS_IP_REL C ON C.REF_TP_CD = '010' AND  B.EMP_ID = C.REF_ID AND TO_CHAR(SYSDATE,'YYYYMMDD') BETWEEN C.USE_STA_YMD AND C.USE_END_YMD
+            UNION ALL
+           SELECT A.GRP_ID
+                , A.GRP_NM
+                , C.IP_ADDR
+             FROM TB_SYS_GRP_BAS A
+            INNER JOIN (  SELECT GRP_ID, EMP_ID , A.ORG_ID
+                            FROM ( SELECT A.ORG_ID
+                                        , B.GRP_ID 
+                                     FROM TB_SYS_ORG_BAS A
+                                        , TB_SYS_GRP_ORG_REL B
+                                    START WITH B.ORG_ID = A.ORG_ID
+                                  CONNECT BY PRIOR  A.ORG_ID = A.UP_ORG_ID ) A 
+                                , TB_SYS_EMP_BAS B 
+                            WHERE A.ORG_ID = B.ORG_ID
+                              AND EMP_ID = #{userId}
+                       ) B ON A.GRP_ID = B.GRP_ID 
+             LEFT JOIN TB_SYS_IP_REL C ON C.REF_TP_CD = '030' AND  B.ORG_ID = C.REF_ID AND TO_CHAR(SYSDATE,'YYYYMMDD') BETWEEN C.USE_STA_YMD AND C.USE_END_YMD
+    </select>
      <update id="updateLogin">
            UPDATE /* com.kspo.voc.sys.dao.UserBaseDao.updateLogin */ TB_SYS_USER_BAS
               SET LAST_LOGIN_DT        =    SYSDATE

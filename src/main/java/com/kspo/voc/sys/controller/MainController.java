@@ -13,15 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.sys.model.UserWdgtVo;
 import com.kspo.voc.sys.service.MenuService;
 
 @Controller
@@ -37,21 +34,21 @@ public class MainController {
 	@GetMapping(value = { "", "index" })
 	public String init(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Map<String, Object> param, ModelMap map) throws EgovBizException {
-		param.put("userId", SessionUtil.getLoginUserId());
-
-		map.addAttribute("wdgtList", menuService.getWdgtList(param));
+//		param.put("userId", SessionUtil.getLoginUserId());
+//
+//		map.addAttribute("wdgtList", menuService.getWdgtList(param));
 		return "main";
 	}
 
-	@PostMapping(value = { "addWdgt" })
-	public @ResponseBody Object addWdgt(@RequestBody UserWdgtVo vo) throws EgovBizException {
-		return menuService.insertWdgt(vo);
-	}
-
-	@PostMapping(value = { "removeWdgt" })
-	public @ResponseBody Object removeWdgt(@RequestBody UserWdgtVo vo) throws EgovBizException {
-		return menuService.deleteWdgt(vo);
-	}
+//	@PostMapping(value = { "addWdgt" })
+//	public @ResponseBody Object addWdgt(@RequestBody UserWdgtVo vo) throws EgovBizException {
+//		return menuService.insertWdgt(vo);
+//	}
+//
+//	@PostMapping(value = { "removeWdgt" })
+//	public @ResponseBody Object removeWdgt(@RequestBody UserWdgtVo vo) throws EgovBizException {
+//		return menuService.deleteWdgt(vo);
+//	}
 
 	@GetMapping(value = { "main" })
 	public String main(HttpServletRequest request, HttpServletResponse response,

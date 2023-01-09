@@ -16,7 +16,7 @@ import com.kspo.voc.sys.service.FileService;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.taglib - FileInfoTag.java
+ * com.kspo.base.common.taglib - FileInfoTag.java
  * </pre>
  *
  * @ClassName : FileInfoTag

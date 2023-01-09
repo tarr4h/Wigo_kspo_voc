@@ -17,7 +17,7 @@ import com.kspo.voc.comn.util.Constants;
 
 /**
  * <pre>
- * com.ceragem.crm.common.jwt.security - EzJwtAuthenticationFilter.java
+ * com.kspo.base.api.jwt.security - EzJwtAuthenticationFilter.java
  * </pre>
  *
  * @ClassName : EzJwtAuthenticationFilter

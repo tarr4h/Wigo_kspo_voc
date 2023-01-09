@@ -30,7 +30,7 @@ import com.kspo.voc.sys.service.LoginService;
 
 /**
  * <pre>
- * com.wigo.crm.common.controller - ErrorController.java
+ * com.kspo.base.common.controller - ErrorController.java
  * </pre>
  *
  * @ClassName : ErrorController

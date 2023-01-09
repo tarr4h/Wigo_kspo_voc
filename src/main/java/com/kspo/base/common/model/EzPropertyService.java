@@ -26,7 +26,7 @@ import java.util.Vector;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- EzPropertyService.java
 * </pre>
 *

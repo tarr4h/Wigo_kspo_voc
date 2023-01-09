@@ -5,7 +5,7 @@ import org.springframework.web.method.HandlerMethod;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util
+* com.kspo.base.common.util
 *	- HandlerUtils.java
 * </pre>
 *

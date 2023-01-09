@@ -23,12 +23,12 @@ import com.kspo.voc.sys.service.UserLoginHstService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.UserLoginHstController
-*	- CrmMenuController.java
+* com.kspo.base.common.UserLoginHstController
+*	- MenuController.java
 * </pre>
 *
-* @ClassName	: CrmUserLoginHstController 
-* @Description	: CrmUserLoginHstController 컨트롤러 
+* @ClassName	: UserLoginHstController 
+* @Description	: UserLoginHstController 컨트롤러 
 * @author 		: 김성태
 * @date 		: 2022. 1. 8.
 * @Version 		: 1.0 

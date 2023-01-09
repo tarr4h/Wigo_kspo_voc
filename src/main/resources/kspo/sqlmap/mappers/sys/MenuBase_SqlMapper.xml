@@ -267,21 +267,37 @@
     <select id="selectUserMenuList" resultType="com.kspo.voc.sys.model.MenuVo">
     /* com.kspo.voc.sys.dao.MenuBaseDao.selectUserMenuList */
     WITH GRP_USR AS
-    (   SELECT GRP_ID, USER_ID
-          FROM TB_SYS_GRP_USER_REL
-            UNION ALL
-        SELECT GRP_ID, EMP_ID
-          FROM  TB_SYS_GRP_EMP_REL
-         UNION ALL
-        SELECT GRP_ID, EMP_ID 
-          FROM ( SELECT A.ORG_ID
-                      , B.GRP_ID 
-                    FROM TB_SYS_ORG_BAS A
-                       , TB_SYS_GRP_ORG_REL B
-                   START WITH B.ORG_ID = A.ORG_ID
-                CONNECT BY PRIOR   A.ORG_ID = A.UP_ORG_ID ) A 
-             , TB_SYS_EMP_BAS B 
-         WHERE A.ORG_ID = B.ORG_ID )
+<!--     (   SELECT GRP_ID, USER_ID -->
+<!--           FROM TB_SYS_GRP_USER_REL -->
+<!--             UNION ALL -->
+<!--         SELECT GRP_ID, EMP_ID -->
+<!--           FROM  TB_SYS_GRP_EMP_REL -->
+<!--          UNION ALL -->
+<!--         SELECT GRP_ID, EMP_ID  -->
+<!--           FROM ( SELECT A.ORG_ID -->
+<!--                       , B.GRP_ID  -->
+<!--                     FROM TB_SYS_ORG_BAS A -->
+<!--                        , TB_SYS_GRP_ORG_REL B -->
+<!--                    START WITH B.ORG_ID = A.ORG_ID -->
+<!--                 CONNECT BY PRIOR   A.ORG_ID = A.UP_ORG_ID ) A  -->
+<!--              , TB_SYS_EMP_BAS B  -->
+<!--          WHERE A.ORG_ID = B.ORG_ID ) -->
+         (
+               SELECT GRP_ID
+                    , #{userId} USER_ID
+                 FROM TB_SYS_GRP_BAS
+                 <choose>
+                <when test="groupList != null ">
+                  WHERE GRP_ID IN 
+                    <foreach item="item" index="index" collection="groupList" open="(" separator="," close=")">
+                        #{item.grpId}
+                    </foreach>
+                </when>
+                <otherwise>
+                  WHERE GRP_ID  = '999'  
+                </otherwise>
+            </choose>
+         )
          SELECT    A.*
                , B.MENU_REG_AUTH_YN
                , B.MENU_READ_AUTH_YN

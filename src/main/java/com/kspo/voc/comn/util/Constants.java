@@ -7,7 +7,7 @@ import java.util.TimeZone;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util - Constants.java
+ * com.kspo.base.common.util - Constants.java
  * </pre>
  *
  * @ClassName : Constants

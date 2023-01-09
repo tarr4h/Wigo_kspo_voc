@@ -39,7 +39,7 @@ public class BatchInfoBasController {
 	@GetMapping(value = { "", "index" })
 	public String init(@RequestParam Map<String, Object> param, ModelMap model) throws Exception {
 		model.addAllAttributes(param);
-		return Utilities.getProperty("tiles.crm") + "model/BatchInfoBasList";
+		return Utilities.getProperty("tiles.voc") + "model/BatchInfoBasList";
 	}
 
 	@PostMapping(value = { "getList" })

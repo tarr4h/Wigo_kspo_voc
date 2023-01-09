@@ -5,7 +5,7 @@ import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util.ftp
+* com.kspo.base.common.util.ftp
 *	- IFtpClient.java
 * </pre>
 *

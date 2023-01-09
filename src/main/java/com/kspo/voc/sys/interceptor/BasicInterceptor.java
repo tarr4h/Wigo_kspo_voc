@@ -17,7 +17,7 @@ import com.kspo.voc.sys.service.MenuService;
 /**
  * 
  * <pre>
- * com.wigo.crm.interceptor - BasicInterceptor.java
+ * com.kspo.voc.sys.interceptor - BasicInterceptor.java
  * </pre>
  *
  * @ClassName : BasicInterceptor

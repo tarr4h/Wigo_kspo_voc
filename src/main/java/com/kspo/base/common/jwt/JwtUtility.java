@@ -19,7 +19,7 @@ import io.jsonwebtoken.SignatureException;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - JwtUtility.java
+ * com.kspo.base.common.jwt - JwtUtility.java
  * </pre>
  *
  * @ClassName : JwtUtility
