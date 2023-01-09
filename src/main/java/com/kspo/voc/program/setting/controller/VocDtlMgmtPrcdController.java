@@ -72,6 +72,11 @@ public class VocDtlMgmtPrcdController {
         return Utilities.getGridData(list, page);
     }
 
+    @PostMapping(value = "insertDirPrcd")
+    public @ResponseBody Object insertDirPrcd(@RequestBody EzMap param){
+        return service.insertDirPrcd(param);
+    }
+
     @GetMapping(value = { "openAddModal/{pageNm}"})
     public String openAddModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
