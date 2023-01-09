@@ -29,4 +29,18 @@ public interface VocDtlMgmtPrcdDao extends IVocDao {
     int insertDirMgmtCombo(Map<String, Object> param);
 
     <T> List<T> selectDirMgmtList(Map<String, Object> param);
+
+    int insertDirPrcd(Map<String, Object> prcd);
+
+    String selectMaxMgmtPrcdCd();
+
+    int insertMgmtPrcd(Map<String, Object> prcd);
+
+    String selectMaxMgmtTaskCd();
+
+    int insertMgmtTask(Map<String, Object> taskMap);
+
+    int insertMgmtActv(Map<String, Object> param);
+
+    String selectMaxMgmtActvCd();
 }

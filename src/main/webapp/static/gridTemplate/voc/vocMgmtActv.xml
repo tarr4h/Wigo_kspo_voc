@@ -18,11 +18,11 @@
         <setSort value="none"/>
 <!--        <headerRows value="1"/>-->
     </meta>
-        <column name="코드" field="prcdCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
-        <column name="관리절차코드" field="mgmtPrcdCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="절차명" field="prcdNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="순번" field="mgmtPrcdOrdr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="처리기한(초)" field="ddlnSec" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="코드" field="actvCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="관리수행 코드" field="mgmtActvCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="관리TASK 코드" field="mgmtTaskCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="수행명" field="actvNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="순번" field="mgmtActvOrdr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당부서ID" field="dutyOrgId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당자ID" field="dutyEmpId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N" defaultValue="-"/>

@@ -11,8 +11,11 @@ public enum CodeGeneration {
     PROCEDURE_BAS("PB", 10),
     MGMT_PRCD("MP", 10),
     TASK_BAS("TB", 10),
+    MGMT_TASK("MT", 10),
     TASK("TK", 10),
     ACTIVITY_BAS("AB", 10),
+    MGMT_ACTV("MA", 10),
+
     ACTIVITY("AT", 10),
     PROCEDURE_MAPPING("PM", 10),
     REGISTRATION("VM", 12),;

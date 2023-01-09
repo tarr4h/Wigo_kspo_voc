@@ -5,7 +5,7 @@
     <sql id="mgmtPrcdCols">
             TVMPD.MGMT_PRCD_CD /* 관리절차코드 */
         ,   TVMPD.PRCD_CD /* 절차코드 */,
-        ,   TVMPD.MGMT_PRCD_ODRD /* 관리절차순번 */
+        ,   TVMPD.MGMT_PRCD_ORDR /* 관리절차순번 */
         ,   TVMPD.DDLN_SEC /* 처리기한 초 */
         ,   TVMPD.DUTY_ORG_ID /* 담당부서 아이디 */
         ,   TVMPD.DUTY_EMP_ID /* 담당직원 아이디 */
@@ -89,4 +89,86 @@
               )
         select * from dual
     </insert>
+
+    <select id="selectMaxMgmtPrcdCd" resultType="String">
+        SELECT
+            MAX(MGMT_PRCD_CD)
+        FROM
+            TB_VOC_MGMT_PRCD_DTL
+    </select>
+
+    <select id="selectMaxMgmtTaskCd" resultType="String">
+        SELECT
+            MAX(MGMT_TASK_CD)
+        FROM
+            TB_VOC_MGMT_TASK_DTL
+    </select>
+
+    <select id="selectMaxMgmtActvCd" resultType="String">
+        SELECT
+            MAX(MGMT_ACTV_CD)
+        FROM
+            TB_VOC_MGMT_ACTV_DTL
+    </select>
+
+    <insert id="insertMgmtPrcd">
+        INSERT INTO TB_VOC_MGMT_PRCD_DTL
+        (MGMT_PRCD_CD, PRCD_CD, MGMT_PRCD_ORDR, DDLN_SEC, DUTY_ORG_ID, DUTY_EMP_ID, DUTY_ROLE_CD, REGR_ID, AMDR_ID)
+        VALUES(
+                  #{mgmtPrcdCd},
+                  #{prcdCd},
+                  #{mgmtPrcdOrdr},
+                  #{ddlnSec},
+                  #{dutyOrgId},
+                  #{dutyEmpId},
+                  #{dutyRoleCd},
+                  #{loginUsr},
+                  #{loginUsr}
+              )
+    </insert>
+
+    <insert id="insertMgmtTask">
+        INSERT INTO TB_VOC_MGMT_TASK_DTL
+        (MGMT_TASK_CD, TASK_CD, MGMT_PRCD_CD, MGMT_TASK_ORDR, DDLN_SEC, DUTY_ORG_ID, DUTY_EMP_ID, DUTY_ROLE_CD, REGR_ID, AMDR_ID)
+        VALUES(
+               #{mgmtTaskCd},
+               #{taskCd},
+               #{mgmtPrcdCd},
+               #{mgmtTaskOrdr},
+               #{ddlnSec},
+               #{dutyOrgId},
+               #{dutyEmpId},
+               #{dutyRoleCd},
+               #{loginUsr},
+               #{loginUsr}
+        )
+    </insert>
+
+    <insert id="insertMgmtActv">
+        INSERT INTO TB_VOC_MGMT_ACTV_DTL
+        (MGMT_ACTV_CD, ACTV_CD, MGMT_TASK_CD, MGMT_ACTV_ORDR, DUTY_ORG_ID, DUTY_EMP_ID, DUTY_ROLE_CD, REGR_ID, AMDR_ID)
+        VALUES(
+            #{mgmtActvCd},
+            #{actvCd},
+            #{mgmtTaskCd},
+            #{mgmtActvOrdr},
+            #{dutyOrgId},
+            #{dutyEmpId},
+            #{dutyRoleCd},
+            #{loginUsr},
+            #{loginUsr}
+        )
+    </insert>
+
+    <insert id="insertDirPrcd">
+        INSERT INTO TB_VOC_DIR_PRCD_REL
+            (DIR_CD, MGMT_PRCD_CD)
+        VALUES(
+                  #{dirCd},
+                  #{mgmtPrcdCd}
+              )
+    </insert>
+
+
+
 </mapper>
