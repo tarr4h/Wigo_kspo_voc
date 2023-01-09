@@ -1,7 +1,7 @@
 <%--
   @author: tarr4h
-  @date: 2023-01-06
-  @time: AM 9:37
+  @date: 2023-01-09
+  @time: PM 1:22
   @description
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -11,9 +11,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="code" uri="/WEB-INF/tlds/ezTagLib.tld" %>
 
-
 <div class="v_modal_header">
-    <h3>관리절차 등록</h3>
+    <h3>상세VOC 관리절차 등록</h3>
     <button id="close_btn" data-event="close">X</button>
 </div>
 
@@ -23,7 +22,7 @@
          data-grid-id="prcdBasGrid"
          data-type="grid"
          data-grid-callback="onGridLoad"
-         data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasListSearch.xml${urlSuffix}'/>"
+         data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasListSearch_dtl.xml${urlSuffix}'/>"
          style="width:100%;height:300px;"
     >
     </div>
@@ -35,17 +34,17 @@
     function onGridLoad(){
         let param = {
             recordCountPerPage : 10,
-            vocApplyYn : 'Y'
+            vocDtlApplyYn : 'Y'
         };
         window['prcdBasGrid'].loadUrl('', param);
     }
 
     $('#regBtn').on('click', function(){
-       let opnr = Utilities.getOpener();
-       let rows = window['prcdBasGrid'].getCheckedJson();
+        let opnr = Utilities.getOpener();
+        let rows = window['prcdBasGrid'].getCheckedJson();
 
-       opnr.insertDirPrcd(rows);
-       Utilities.closeModal();
+        opnr.insertDirPrcd(rows);
+        Utilities.closeModal();
     });
 
     /**

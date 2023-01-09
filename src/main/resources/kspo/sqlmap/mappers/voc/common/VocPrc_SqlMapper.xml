@@ -45,6 +45,15 @@
         AMD_DT /* 수정일시 */
     </sql>
 
+    <sql id="dirMgmtCols">
+        TVDMR.DIR_CD /* 경로 코드 */,
+        TVDMR.MGMT_CD /* 관리절차 코드 */,
+        TVDMR.REGR_ID /* 등록자 아이디 */,
+        TVDMR.REG_DT /* 등록일시 */,
+        TVDMR.AMDR_ID /* 수정자 아이디 */,
+        TVDMR.AMD_DT /* 수정일시 */
+    </sql>
+
     <select id="selectVocMgmtCdTree" resultType="com.kspo.voc.program.setting.model.VocMgmtCdVo">
         select
             <include refid="vocMgmtCdCols"/>
@@ -102,8 +111,14 @@
             <include refid="vocPrcdBasCols"/>
         FROM
             TB_VOC_PRCD_BAS
-        WHERE
-            VOC_APPLY_YN = 'Y'
+        <where>
+            <if test="vocApplyYn != null and !vocApplyYn.equals('')">
+                VOC_APPLY_YN = #{vocApplyYn}
+            </if>
+            <if test="vocDtlApplyYn != null and !vocDtlApplyYn.equals('')">
+                VOC_DTL_APPLY_YN = #{vocDtlApplyYn}
+            </if>
+        </where>
         ORDER BY
             COMN_CD
     </select>
@@ -134,7 +149,33 @@
         </where>
     </select>
 
+    <select id="selectChannelDirCd" resultType="com.kspo.voc.program.setting.model.VocDirCdVo">
+        SELECT
+            <include refid="dirMgmtCols"/>
+        FROM
+            TB_VOC_DIR_MGMT_REL TVDMR
+        WHERE
+            MGMT_CD = #{chMgmtCd}
+            AND
+                (
+                    SELECT
+                        COUNT(*)
+                    FROM
+                        TB_VOC_DIR_MGMT_REL
+                    WHERE
+                        DIR_CD = TVDMR.DIR_CD
+                ) = 1
+    </select>
 
-
+    <select id="selectDirOrg" resultType="com.kspo.voc.program.setting.model.VocDirOrgVo">
+        SELECT
+            *
+        FROM
+            TB_VOC_DIR_ORG_REL
+        WHERE
+            DIR_CD = #{dirCd}
+        ORDER BY
+            PRIM_PROC_ORG_YN DESC, REG_DT
+    </select>
 
 </mapper>

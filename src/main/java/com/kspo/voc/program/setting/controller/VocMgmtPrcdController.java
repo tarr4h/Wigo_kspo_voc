@@ -52,7 +52,7 @@ public class VocMgmtPrcdController {
     }
 
     @GetMapping(value = "selectDirCd")
-    public @ResponseBody Object selectDirCd(@RequestParam Map<String, Object> param) throws EgovBizException {
+    public @ResponseBody Object selectSingleDirCd(@RequestParam Map<String, Object> param) throws EgovBizException {
         return service.selectDirCd(param);
     }
 
@@ -64,7 +64,7 @@ public class VocMgmtPrcdController {
     @PostMapping(value = "selectDirOrgGrid")
     public @ResponseBody Object selectDirOrgGrid(@RequestBody EzMap param) {
         EzPaginationInfo page = param.getPaginationInfo();
-        List<VocDirOrgVo> list = service.selectDirOrgGrid(param);
+        List<VocDirOrgVo> list = service.selectDirOrg(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
     }
@@ -98,6 +98,11 @@ public class VocMgmtPrcdController {
         List<VocMgmtPrcdVo> list = service.selectMgmtPrcdList(param);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(list, page);
+    }
+
+    @PostMapping(value = "deleteMgmtPrcd")
+    public @ResponseBody Object deleteMgmtPrcd(@RequestBody EzMap param){
+        return service.deleteMgmtPrcd(param);
     }
 
     @GetMapping(value = { "openModal/{pageNm}"})

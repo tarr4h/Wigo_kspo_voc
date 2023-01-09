@@ -3,6 +3,7 @@ package com.kspo.voc.program.common.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.ITreeVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
@@ -21,6 +22,10 @@ public interface IVocPrcDao extends IVocDao {
     <T> List<T> selectPrcdBasList(Object param);
 
     <T> List<T> getMgmtCdSelect(Map<String, Object> param);
+
+    <T> T selectChannelDirCd(Map<String, Object> param);
+
+    <T> List<T> selectDirOrg(EzMap param);
 
 }
 

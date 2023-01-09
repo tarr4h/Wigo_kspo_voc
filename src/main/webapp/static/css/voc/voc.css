@@ -328,3 +328,18 @@
     width: 100%;
     min-height: 5vh;
 }
+
+.v_grid_box{
+    margin-top: 10px;
+    border: 1px solid gray;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.v_grid_children{
+    display: flex;
+    justify-content: space-between;
+}
+.v_grid_box_half{
+    width: 47%!important;
+}

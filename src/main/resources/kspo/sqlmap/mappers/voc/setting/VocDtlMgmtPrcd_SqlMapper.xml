@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.program.setting.dao.VocDtlMgmtPrcdDao">
+
+    <sql id="mgmtPrcdCols">
+            TVMPD.MGMT_PRCD_CD /* 관리절차코드 */
+        ,   TVMPD.PRCD_CD /* 절차코드 */,
+        ,   TVMPD.MGMT_PRCD_ODRD /* 관리절차순번 */
+        ,   TVMPD.DDLN_SEC /* 처리기한 초 */
+        ,   TVMPD.DUTY_ORG_ID /* 담당부서 아이디 */
+        ,   TVMPD.DUTY_EMP_ID /* 담당직원 아이디 */
+        ,   TVMPD.DUTY_ROLE_CD /* 담당권한코드 */
+        ,   TVMPD.REGR_ID /* 등록자 아이디 */
+        ,   TVMPD.REG_DT /* 등록일시 */
+        ,   TVMPD.AMDR_ID /* 수정자 아이디 */
+        ,   TVMPD.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="dirCdCols">
+            TVDCB.DIR_CD /* 경로코드 */
+        ,   TVDCB.SP_DIR_YN /* 특수경로 여부 */
+        ,   TVDCB.REGR_ID /* 등록자 아이디 */
+        ,   TVDCB.REG_DT /* 등록일시 */
+        ,   TVDCB.AMDR_ID /* 수정자 아이디 */
+        ,   TVDCB.AMD_DT /* 수정일시 */
+    </sql>
+
+    <sql id="dirMgmtCols">
+            TVDMR.DIR_CD /* 경로코드 */
+        ,   TVDMR.MGMT_CD /* 관리코드 */
+        ,   TVDMR.REGR_ID /* 등록자 아이디 */
+        ,   TVDMR.REG_DT /* 등록일시 */
+        ,   TVDMR.AMDR_ID /* 수정자 아이디 */
+        ,   TVDMR.AMD_DT /* 수정일시 */
+    </sql>
+
+    <select id="selectDirMgmtList" resultType="com.kspo.voc.program.setting.model.VocDirMgmtVo">
+        SELECT
+            <include refid="dirMgmtCols"/>
+        FROM
+            TB_VOC_DIR_MGMT_REL TVDMR
+        WHERE
+            <if test="tpMgmtCd != null and !tpMgmtCd.equals('')">
+                TVDMR.MGMT_CD = #{tpMgmtCd}
+            </if>
+            <if test="dirCd != null and !dirCd.equals('')">
+                TVDMR.DIR_CD = #{dirCd}
+            </if>
+    </select>
+
+    <select id="selectMaxDirCd" resultType="String">
+        SELECT
+            MAX(DIR_CD)
+        FROM
+            TB_VOC_DIR_CD_BAS
+    </select>
+
+    <insert id="insertDirCd">
+        INSERT INTO TB_VOC_DIR_CD_BAS
+            (DIR_CD, REGR_ID, AMDR_ID)
+        VALUES(
+                  #{dirCd},
+                  #{loginUsr},
+                  #{loginUsr}
+              )
+    </insert>
+
+    <insert id="insertDirMgmtCombo">
+        INSERT ALL
+        INTO TB_VOC_DIR_MGMT_REL
+            (DIR_CD, MGMT_CD, REGR_ID, REG_DT, AMDR_ID, AMD_DT)
+        VALUES(
+                  #{dirCd},
+                  #{chMgmtCd},
+                  #{loginUsr},
+                  sysdate,
+                  #{loginUsr},
+                  sysdate
+              )
+        INTO TB_VOC_DIR_MGMT_REL
+            (DIR_CD, MGMT_CD, REGR_ID, REG_DT, AMDR_ID, AMD_DT)
+        VALUES(
+                  #{dirCd},
+                  #{tpMgmtCd},
+                  #{loginUsr},
+                  sysdate,
+                  #{loginUsr},
+                  sysdate
+              )
+        select * from dual
+    </insert>
+</mapper>
