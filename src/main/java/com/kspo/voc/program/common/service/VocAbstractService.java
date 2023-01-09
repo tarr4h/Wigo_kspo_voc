@@ -2,6 +2,8 @@ package com.kspo.voc.program.common.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.kspo.base.common.model.EzMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kspo.base.common.model.ITreeVo;
 import com.kspo.voc.program.common.dao.IVocPrcDao;
@@ -32,7 +34,13 @@ public abstract class VocAbstractService extends AbstractVocService {
         return dao.selectPrcdBasList(param);
     }
 
+    public <T> T selectChannelDirCd(Map<String, Object> param){
+        return dao.selectChannelDirCd(param);
+    }
 
+    public <T> List<T> selectDirOrg(EzMap param){
+        return dao.selectDirOrg(param);
+    }
 
 
 

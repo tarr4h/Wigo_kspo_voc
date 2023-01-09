@@ -21,23 +21,6 @@
         MGMT_PRCD_CD /* 관리절차 코드 */
     </sql>
 
-    <select id="selectDirCd" resultType="com.kspo.voc.program.setting.model.VocDirCdVo">
-        SELECT
-            *
-        FROM
-            TB_VOC_DIR_MGMT_REL
-        WHERE
-            MGMT_CD = #{mgmtCd}
-            AND
-            (
-                SELECT
-                    COUNT(*)
-                FROM
-                    TB_VOC_DIR_MGMT_REL
-                WHERE
-                    MGMT_CD = #{mgmtCd}
-                ) = 1
-    </select>
 
     <select id="selectMaxDirCd" resultType="String">
         SELECT
@@ -68,23 +51,12 @@
               )
     </insert>
 
-    <select id="selectDirOrg" resultType="com.kspo.voc.program.setting.model.VocDirOrgVo">
-        SELECT
-            *
-        FROM
-            TB_VOC_DIR_ORG_REL
-        WHERE
-            DIR_CD = #{dirCd}
-        ORDER BY
-            PRIM_PROC_ORG_YN DESC, REG_DT
-    </select>
-
     <insert id="insertDirMgmt">
         INSERT INTO TB_VOC_DIR_MGMT_REL
         (DIR_CD, MGMT_CD, REGR_ID, REG_DT, AMDR_ID, AMD_DT)
         VALUES(
             #{dirCd},
-            #{mgmtCd},
+            #{chMgmtCd},
             #{loginUsr},
             sysdate,
             #{loginUsr},
@@ -164,6 +136,8 @@
             <foreach collection="dirPrcdList" item="item" open="(" separator="," close=")">
                 #{item.mgmtPrcdCd}
             </foreach>
+        ORDER BY
+            TVMPD.MGMT_PRCD_ODRD
     </select>
 
     <select id="selectMaxMgmtPrcdCd" resultType="String">
@@ -172,4 +146,13 @@
         FROM
             TB_VOC_MGMT_PRCD_DTL
     </select>
+
+    <delete id="deleteMgmtPrcd">
+        DELETE FROM TB_VOC_MGMT_PRCD_DTL
+        WHERE
+            MGMT_PRCD_CD IN
+            <foreach collection="mgmtPrcdList" item="item" open="(" separator="," close=")">
+                #{item.mgmtPrcdCd}
+            </foreach>
+    </delete>
 </mapper>

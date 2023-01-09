@@ -22,9 +22,9 @@
     </div>
     <div class="v_btn_area">
         <div class="v_btn_wrapper">
-            <button class="v_grid_btn func_btn" data-event="save">저장</button>
-            <button class="v_grid_btn func_btn" data-event="add">추가</button>
-            <button class="v_grid_btn func_btn" data-event="delete">삭제</button>
+            <button class="btn func_btn" data-event="save">저장</button>
+            <button class="btn btn-blue func_btn" data-event="add">추가</button>
+            <button class="btn btn-red func_btn" data-event="delete">삭제</button>
         </div>
     </div>
     <div class="v_grid_wrapper">

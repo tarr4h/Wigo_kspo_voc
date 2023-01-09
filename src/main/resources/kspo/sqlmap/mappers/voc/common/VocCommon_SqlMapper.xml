@@ -2,34 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kspo.voc.program.common.dao.VocComnDao">
 
+    <sql id="comnCdCols">
+        COMN_CD,
+        TOP_COMN_CD,
+        COMN_CD_LVL_NO,
+        COMN_CD_ODRG,
+        PRNTS_COMN_CD,
+        COMN_CD_NM,
+        USE_YN,
+        RFRN_1_COMN_CD,
+        RFRN_2_COMN_CD,
+        RFRN_3_COMN_CD,
+        RFRN_4_COMN_CD,
+        RFRN_5_COMN_CD,
+        RFRN_6_COMN_CD,
+        RFRN_7_COMN_CD,
+        RFRN_8_COMN_CD,
+        RFRN_9_COMN_CD,
+        COMN_CD_1_USE_YN,
+        COMN_CD_2_USE_YN,
+        COMN_CD_3_USE_YN,
+        COMN_CD_4_USE_YN,
+        COMN_CD_5_USE_YN,
+        COMN_CD_6_USE_YN,
+        COMN_CD_7_USE_YN,
+        COMN_CD_8_USE_YN,
+        COMN_CD_9_USE_YN,
+        REGR_ID,
+        REG_DT,
+        AMDR_ID,
+        AMD_DT
+    </sql>
+
     <!--  공통코드 관련  -->
     <select id="selectComnCd" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
-        select
-            *
-        from
-            tb_sys_comn_cd_bas
-        where
-            top_comn_cd = #{topComnCd}
-            and
-            comn_cd = #{comnCd}
-            and
-            use_yn = 'Y'
+        SELECT
+            <include refid="comnCdCols"/>
+        FROM
+            TB_SYS_COMN_CD_BAS
+        WHERE
+            TOP_COMN_CD = #{topComnCd}
+            AND
+            COMN_CD = #{comnCd}
+            AND
+            USE_YN = 'Y'
     </select>
 
     <select id="selectComnCdList" resultType="com.kspo.voc.sys.model.ComnCdBaseVo">
-        select
-            *
-        from
-            tb_sys_comn_cd_bas
-        where
-            top_comn_cd = #{topComnCd}
-            and
-            comn_cd != #{topComnCd}
-            and
-            use_yn = 'Y'
+        SELECT
+            <include refid="comnCdCols"/>
+        FROM
+            TB_SYS_COMN_CD_BAS
+        WHERE
+            TOP_COMN_CD = #{topComnCd}
+            AND
+            COMN_CD != #{topComnCd}
+            AND
+            USE_YN = 'Y'
             <if test="existCd != null and !existCd.isEmpty()">
-                and
-                comn_cd not in
+                AND
+                COMN_CD NOT IN
                 <foreach collection="existCd" item="item" separator="," open="(" close=")">
                     #{item.comnCd}
                 </foreach>
@@ -38,41 +70,41 @@
 
     <!--  부서/사원 관련  -->
     <select id="selectOrg" resultType="com.kspo.voc.sys.model.OrgBaseVo">
-        select
+        SELECT
             *
-        from
-            tb_sys_org_bas
-        where
-            org_id = #{orgId}
+        FROM
+            TB_SYS_ORG_BAS
+        WHERE
+            ORG_ID = #{orgId}
     </select>
 
     <select id="selectEmp" resultType="com.kspo.voc.sys.model.EmpBaseVo">
-        select
+        SELECT
             *
-        from
+        FROM
             TB_SYS_EMP_BAS
-        where
-            emp_id = #{empId}
+        WHERE
+            EMP_ID = #{empId}
     </select>
 
     <select id="selectOrgList" resultType="com.kspo.voc.sys.model.OrgBaseVo">
-        select
+        SELECT
             *
-        from
-            tb_sys_org_bas
-        where
-            org_nm like '%' || #{keyword} || '%'
+        FROM
+            TB_SYS_ORG_BAS
+        WHERE
+            ORG_NM LIKE '%' || #{keyword} || '%'
     </select>
 
     <select id="selectEmpList" resultType="com.kspo.voc.sys.model.EmpBaseVo">
-        select
-        ceb.*,
-        (select org_nm from tb_sys_org_bas where org_id = ceb.org_id) orgNm
-        from
-        tb_sys_emp_bas ceb
-        where
-        <if test="orgId != null">
-            org_id = #{orgId}
-        </if>
+        SELECT
+            CEB.*,
+            (select org_nm from tb_sys_org_bas where org_id = ceb.org_id) orgNm
+        FROM
+            TB_SYS_EMP_BAS CEB
+        WHERE
+            <if test="orgId != null">
+                ORG_ID = #{orgId}
+            </if>
     </select>
 </mapper>

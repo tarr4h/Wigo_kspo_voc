@@ -50,18 +50,18 @@ public class VocMgmtPrcdService extends VocAbstractService {
     }
 
     public Object selectDirCd(Map<String, Object> param) throws EgovBizException {
-        if(dao.selectDirCd(param) == null){
+        if(selectChannelDirCd(param) == null){
             String maxDirCd = dao.selectMaxDirCd();
             param.put("dirCd", CodeGeneration.generateCode(maxDirCd, CodeGeneration.DIRCD));
             dao.insertDirCd(param);
             dao.insertDirMgmt(param);
         }
 
-        return dao.selectDirCd(param);
+        return selectChannelDirCd(param);
     }
 
     public Object insertDirOrg(EzMap param) throws EgovBizException {
-        int orgCnt = dao.selectDirOrg(param).size();
+        int orgCnt = selectDirOrg(param).size();
         String primProcOrgYn = "N";
         if(orgCnt == 0){
             primProcOrgYn = "Y";
@@ -69,10 +69,6 @@ public class VocMgmtPrcdService extends VocAbstractService {
         param.put("primProcOrgYn", primProcOrgYn);
 
         return dao.insertDirOrg(param);
-    }
-
-    public <T> List<T> selectDirOrgGrid(EzMap param) {
-        return dao.selectDirOrg(param);
     }
 
     public Object updateDirOrg(EzMap param) {
@@ -147,7 +143,7 @@ public class VocMgmtPrcdService extends VocAbstractService {
             i++;
         }
 
-        param.put("msg", i+"건이 등록되었습니다.");
+        param.put("msg", (i-1)+"건이 등록되었습니다.");
         param.put("result", true);
 
         return param;
@@ -155,7 +151,7 @@ public class VocMgmtPrcdService extends VocAbstractService {
 
     public <T> List<T> selectMgmtPrcdList(EzMap param) {
         List<EzMap> list = dao.selectDirPrcdList(param);
-        log.debug("list size = {}", list.size());
+
         for(EzMap map : list){
             log.debug("map mgmtPrcdCd : {}, {}", map.get("mgmtPrcdCd"), map.get("MGMT_PRCD_CD"));
         }
@@ -164,5 +160,26 @@ public class VocMgmtPrcdService extends VocAbstractService {
         }
         param.put("dirPrcdList", list);
         return dao.selectMgmtPrcdList(param);
+    }
+
+    public Object deleteMgmtPrcd(EzMap param) {
+        boolean result = false;
+        StringBuilder msg = new StringBuilder();
+
+        List<EzMap> list = (List<EzMap>) param.get("mgmtPrcdList");
+
+        log.debug("list null or size is 0 = {}", list == null || list.size() == 0);
+        if(list == null || list.size() == 0){
+            msg.append("삭제할 관리절차를 먼저 선택해 주세요.");
+        } else {
+            dao.deleteMgmtPrcd(param);
+            result = true;
+            msg.append("삭제되었습니다.");
+        }
+
+        param.put("msg", msg);
+        param.put("result", result);
+
+        return param;
     }
 }

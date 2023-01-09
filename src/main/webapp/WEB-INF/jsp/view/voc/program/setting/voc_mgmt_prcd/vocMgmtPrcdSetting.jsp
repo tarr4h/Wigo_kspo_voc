@@ -13,50 +13,16 @@
 
 
 <style>
-    .guide{
-        margin-left: 1em;
-        margin-top: 0.5em;
-    }
-    .guideDot{
-        display: inline-block;
-        transform: translateY(-1px);
-        width: 5px;
-        height: 5px;
-        background-color: green;
-        border-radius: 50px;
-    }
-
     .gTitle1{
         border-bottom: 1px solid black;
         padding-bottom: 7px;
-    }
-
-    .grid_box{
-        margin-top: 10px;
-        border: 1px solid gray;
-        padding: 15px;
-        border-radius: 3px;
-    }
-
-    .btn_area{
-        width: 100%;
-        min-height: 2vh;
-    }
-    .btn_wrapper{
-        float: right;
-        margin-bottom: 0.5em;
-    }
-
-    .grid_wrapper{
-        width: 100%;
-        min-height: 5vh;
     }
 </style>
 
 <div class="gLeft" data-has-size="Y">
     <div class="mBox1">
         <div class="gTitle1">
-            <h3 class="mTitle1">VOC 절차관리</h3>
+            <h3 class="mTitle1">VOC 관리절차 설정</h3>
         </div>
         <div id="divTree"
              data-type="tree"
@@ -72,22 +38,22 @@
         <div class="gTitle1">
             <h3 class="mTitle1" id="boxTitle">채널을 선택해주세요.</h3>
         </div>
-        <div class="grid_box">
+        <div class="v_grid_box">
             <div class="header">
                 <h3 class="title">담당부서</h3>
-                <div class="guide">
-                    <div class="guideDot"></div>
-                    <span>담당 부서를 등록/수정/삭제 하고, 주처리부서를 지정합니다.</span>
+                <div class="v_guide">
+                    <div class="v_guideDot"></div>
+                    <span>담당 부서를 등록/수정/삭제 하고, 전체 프로세스에 대한 담당부서를 지정합니다.</span>
                 </div>
             </div>
-            <div class="btn_area">
-                <div class="btn_wrapper">
+            <div class="v_btn_area">
+                <div class="v_btn_wrapper">
                     <button class="btn func_btn" data-event="orgSave">저장</button>
                     <button class="btn btn-blue func_btn" data-event="orgAdd">추가</button>
                     <button class="btn btn-red func_btn" data-event="orgDel">삭제</button>
                 </div>
             </div>
-            <div class="grid_wrapper">
+            <div class="v_grid_wrapper">
                 <div id="divGrid1"
                      data-get-url="<c:url value='${urlPrefix}/selectDirOrgGrid${urlSuffix}'/>"
                      data-grid-id="dirOrgGrid"
@@ -98,21 +64,21 @@
                 </div>
             </div>
         </div>
-        <div class="grid_box">
+        <div class="v_grid_box">
             <div class="header">
-                <h3 class="title">절차 등록</h3>
-                <div class="guide">
-                    <div class="guideDot"></div>
+                <h3 class="title">관리절차 등록</h3>
+                <div class="v_guide">
+                    <div class="v_guideDot"></div>
                     <span>채널별로 절차를 등록/수정/삭제하고, 하위 업무를 관리합니다.</span>
                 </div>
             </div>
-            <div class="btn_area">
-                <div class="btn_wrapper">
+            <div class="v_btn_area">
+                <div class="v_btn_wrapper">
                     <button class="btn func_btn" data-event="prcdAdd">추가</button>
                     <button class="btn btn-red func_btn" data-event="prcdDel">삭제</button>
                 </div>
             </div>
-            <div class="grid_wrapper">
+            <div class="v_grid_wrapper">
                 <div id="divGrid2"
                      data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
                      data-grid-id="mgmtPrcdGrid"
@@ -138,11 +104,12 @@
             case 'orgSave' : updateDirOrg();break;
             case 'orgDel' : deleteDirOrg();break;
             case 'prcdAdd' : openModal('vocMgmtPrcdRegModal', 600, 400);break;
+            case 'prcdDel' : deleteMgmtPrcd();break;
         };
     })
 
     async function onTreeSelect(data, node, tree){
-        selectedDirCd = await selectDirCd(data.mgmtCd);
+        selectedDirCd = await selectSingleDirCd(data.mgmtCd);
         $('#boxTitle').text(data.mgmtCdNm);
         loadGrid(selectedDirCd, window['dirOrgGrid']);
         loadGrid(selectedDirCd, window['mgmtPrcdGrid']);
@@ -155,6 +122,30 @@
         };
 
         grid.loadUrl('', param);
+    }
+
+    /**
+     * 관리절차 삭제
+     */
+    function deleteMgmtPrcd(){
+        let mgmtPrcdList = window['mgmtPrcdGrid'].getCheckedJson();
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteMgmtPrcd${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                mgmtPrcdList,
+                dirCd : selectedDirCd
+            }),
+            success(res){
+                alert(res.msg);
+                if(res.result){
+                    location.reload();
+                }
+            },
+            error: console.log
+        })
     }
 
     /**
@@ -239,12 +230,12 @@
      * @param mgmtCd
      * @return dirCd
      */
-    function selectDirCd(mgmtCd){
+    function selectSingleDirCd(mgmtCd){
         return new Promise(function(resolve, reject){
             $.ajax({
                url : '<c:url value="${urlPrefix}/selectDirCd${urlSuffix}"/>',
                data: {
-                   mgmtCd
+                   chMgmtCd : mgmtCd
                },
                success(res){
                    resolve(res.dirCd);

@@ -23,11 +23,10 @@ import java.util.Map;
 
 @VocMapper
 public interface VocMgmtPrcdDao extends IVocDao {
-    <T> T selectDirCd(Map<String, Object> param);
+
     int insertDirCd(Map<String, Object> param);
     int insertDirOrg(EzMap param);
     String selectMaxDirCd();
-    <T> List<T> selectDirOrg(EzMap param);
 
     int insertDirMgmt(Map<String, Object> param);
 
@@ -44,4 +43,6 @@ public interface VocMgmtPrcdDao extends IVocDao {
     <T> List<T> selectDirPrcdList(EzMap param);
 
     String selectMaxMgmtPrcdCd();
+
+    int deleteMgmtPrcd(EzMap param);
 }
