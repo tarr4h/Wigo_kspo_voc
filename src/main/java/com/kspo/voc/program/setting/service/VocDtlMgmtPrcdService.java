@@ -85,4 +85,9 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
 
         return param;
     }
+
+    public Object insertDirPrcd(EzMap param) {
+
+        return null;
+    }
 }

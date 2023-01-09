@@ -28,7 +28,7 @@
                         <dl>
                             <dt>아이디</dt>
                             <dd>
-                                <input type="text" id="loginId" data-enter="signIn" class="it" title="아이디" placeholder="아이디를 입력하세요." value="wigo">
+                                <input type="text" id="loginId" data-enter="signIn" class="it" title="아이디" placeholder="아이디를 입력하세요." value="admin">
                             </dd>
                             <dt>비밀번호</dt>
                             <dd>

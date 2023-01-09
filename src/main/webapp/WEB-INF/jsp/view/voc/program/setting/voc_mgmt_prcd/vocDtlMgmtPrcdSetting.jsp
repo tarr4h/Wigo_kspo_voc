@@ -238,6 +238,20 @@
     function insertDirPrcd(prcdList){
         console.log('regPrcdList : ', prcdList);
         console.log('tpDirCd : ', tpDirCd);
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertDirPrcd${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                prcdList,
+                dirCd : tpDirCd
+            }),
+            success(res){
+                console.log(res);
+            },
+            error: console.log
+        });
     }
 
     /**
