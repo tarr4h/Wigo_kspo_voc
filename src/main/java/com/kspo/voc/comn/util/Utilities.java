@@ -2905,13 +2905,13 @@ public class Utilities {
 			return false;
 		if ("*".equals(area))
 			return true;
-		String[] arr = area.split("\\.");;
+		String[] arr = area.split("\\.");
 		for (int i = 0; i < arr.length && i < 4; i++) {
 			if (i == arr.length - 1) {
 				if ("*".equals(arr[i]))
 					return true;
 			}
-			if (arr[i] != ips[i])
+			if (!arr[i].equals(ips[i]))
 				return false;
 		}
 		return true;
