@@ -168,7 +168,6 @@
             , B.MENU_DEL_AUTH_YN
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
-                         WHERE 1=1
                          START WITH MENU_ID = C.MENU_ID 
                        CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
          FROM TB_SYS_GRP_BAS A

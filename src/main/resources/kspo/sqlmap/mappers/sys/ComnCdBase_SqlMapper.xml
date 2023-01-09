@@ -349,7 +349,7 @@
     <sql id="sqlCode" >
         SELECT /* com.kspo.voc.sys.dao.ComnCdBaseDao.sqlCode */  <include refid="sqlCols"/>
                  FROM TB_SYS_COMN_CD_BAS
-         WHERE  1=1
+         <where>
          <choose>
             <when test="codeName !=null and codeName !=''" >
             AND COMN_CD = #{codeCd}
@@ -408,7 +408,7 @@
         <if test="comnCdLike != null and comnCdLike != ''">
                       AND COMN_CD       LIKE      #{comnCdLike} || '%'
         </if>
-        
+        </where>
                ORDER BY COMN_CD_LVL_NO
                       , TOP_COMN_CD
                       , COMN_CD_ODRG
@@ -418,8 +418,7 @@
         SELECT /* com.kspo.voc.sys.dao.ComnCdBaseDao.sqlSystemCd */ MENU_ID COMN_CD
              , MENU_NM COMN_CD_NM
           FROM TB_SYS_MENU_BAS
-         WHERE  1=1 
-           AND MENU_LVL_NO = 1
+         WHERE MENU_LVL_NO = 1
            AND USE_YN = 'Y'
          ORDER BY MENU_ODRG
              , MENU_ID
@@ -429,7 +428,6 @@
         SELECT /* com.kspo.voc.sys.dao.ComnCdBaseDao.sqlGroupCd */ GRP_ID COMN_CD
              , GRP_NM COMN_CD_NM
           FROM TB_SYS_GRP_BAS
-         WHERE  1=1 
          ORDER BY GRP_NM
              , GRP_ID
     </sql>

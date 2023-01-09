@@ -140,7 +140,6 @@
                     , 'Y' MENU_DEL_AUTH_YN
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
-                         WHERE 1=1
                          START WITH MENU_ID = A.MENU_ID 
                        CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                  FROM TB_SYS_MENU_BAS A
@@ -220,7 +219,7 @@
              SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.selectMaxInfo */ MAX(MENU_ID) MENU_ID
                   , MAX(MENU_ODRG) MENU_ODRG 
                FROM TB_SYS_MENU_BAS  
-              WHERE 1=1
+         <where>
          <choose>
             <when test="menuId == '0000000000'">
                 AND MENU_LVL_NO = 1
@@ -232,6 +231,7 @@
                 AND MENU_LVL_NO = 1
             </otherwise>
          </choose>
+         </where>
     </select>
     <select id="selectTreeList" resultType="com.kspo.voc.sys.model.MenuVo">
         SELECT   /* com.kspo.voc.sys.dao.MenuBaseDao.selectTreeList */  MENU_ID
