@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- ITreeVo.java
 * </pre>
 *

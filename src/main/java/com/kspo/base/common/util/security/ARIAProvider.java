@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util.security - ARIAProvider.java
+ * com.kspo.base.common.util.security - ARIAProvider.java
  * </pre>
  *
  * @ClassName : ARIAProvider

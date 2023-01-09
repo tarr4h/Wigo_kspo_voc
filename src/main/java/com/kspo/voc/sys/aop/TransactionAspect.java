@@ -17,7 +17,7 @@ import java.util.Map;
 public class TransactionAspect {
 //	private static final String AOP_TRANSACTION_METHOD_NAME = "*";
 	private static final String AOP_TRANSCTION_EXPRESSION = "execution(* com.kspo..service.*Impl.*(..))";
-	private static final String CRM_AOP_TRANSCTION_EXPRESSION = "execution(* com.kspo.voc..*Service.*(..))";
+	private static final String VOC_AOP_TRANSCTION_EXPRESSION = "execution(* com.kspo.voc..*Service.*(..))";
 	private static int TX_TIMEOUT = 600;
 	@Resource(name = "txManager")
 	private TransactionManager txManager;
@@ -25,8 +25,8 @@ public class TransactionAspect {
 //	@Qualifier("transactionManager")
 //	private TransactionManager transactionManager;
 //
-//	@Qualifier("crmTransactionManager")
-//	private TransactionManager crmTransactionManager;
+//	@Qualifier("vocTransactionManager")
+//	private TransactionManager vocTransactionManager;
 
 	@Bean
 	TransactionInterceptor transactionAdvice() {
@@ -41,16 +41,16 @@ public class TransactionAspect {
 	}
 
 	@Bean
-	TransactionInterceptor crmTransactionAdvice() {
+	TransactionInterceptor vocTransactionAdvice() {
 		return advice(txManager);
 	}
 
 	@Bean
-	Advisor crmTransactionAdviceAdvisor() {
+	Advisor vocTransactionAdviceAdvisor() {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		pointcut.setExpression(CRM_AOP_TRANSCTION_EXPRESSION);
+		pointcut.setExpression(VOC_AOP_TRANSCTION_EXPRESSION);
 
-		return new DefaultPointcutAdvisor(pointcut, crmTransactionAdvice());
+		return new DefaultPointcutAdvisor(pointcut, vocTransactionAdvice());
 	}
 
 	TransactionInterceptor advice(TransactionManager txManager) {

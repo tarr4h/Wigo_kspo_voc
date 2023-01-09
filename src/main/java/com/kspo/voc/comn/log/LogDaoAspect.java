@@ -29,7 +29,7 @@ import com.kspo.voc.sys.service.ChngHstService;
 
 /**
  * <pre>
- * com.wigo.crm.common.log - LogDaoAspect.java
+ * com.kspo.base.common.log - LogDaoAspect.java
  * </pre>
  *
  * @ClassName : LogDaoAspect

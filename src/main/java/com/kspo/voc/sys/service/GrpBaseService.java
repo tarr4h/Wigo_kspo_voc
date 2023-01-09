@@ -79,4 +79,9 @@ public class GrpBaseService extends AbstractVocService {
 	public int getGroupEmpListCount(Object param) throws EgovBizException {
 		return grpEmpDao.selectListCount(param);
 	}
+
+	public EzMap getGroupIpInfo(Object param) throws EgovBizException {
+		return dao.selectGroupIpInfo(param);
+
+	}
 }

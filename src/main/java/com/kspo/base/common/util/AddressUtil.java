@@ -13,7 +13,7 @@ import com.kspo.voc.comn.util.Utilities;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util - AddressUtil.java
+ * com.kspo.base.common.util - AddressUtil.java
  * </pre>
  *
  * @ClassName : AddressUtil

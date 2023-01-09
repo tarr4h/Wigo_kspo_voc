@@ -59,25 +59,25 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpMenuRelDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpMenuRelVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpMenuRelDao.selectList*/<include refid="sqlCols"/>
                  FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpMenuRelVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpMenuRelDao.select */<include refid="sqlCols"/>
                  FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_MENU_REL (
+                INSERT /* com.kspo.voc.sys.dao.GrpMenuRelDao.insert */ INTO TB_SYS_GRP_MENU_REL (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpId}
@@ -93,7 +93,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_MENU_REL
+               UPDATE /* com.kspo.voc.sys.dao.GrpMenuRelDao.update */ TB_SYS_GRP_MENU_REL
                   SET MENU_REG_AUTH_YN    =         #{menuRegAuthYn}
                     , MENU_READ_AUTH_YN   =         #{menuReadAuthYn}
                     , MENU_AMD_AUTH_YN    =         #{menuAmdAuthYn}
@@ -103,16 +103,16 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_MENU_REL
+               DELETE /* com.kspo.voc.sys.dao.GrpMenuRelDao.delete */ FROM TB_SYS_GRP_MENU_REL
         <include refid="sqlPkConditions"/>
     </delete>
     <delete id="deleteMenuId">
-               DELETE 
+               DELETE /* com.kspo.voc.sys.dao.GrpMenuRelDao.deleteMenuId */
                  FROM TB_SYS_GRP_MENU_REL
                 WHERE MENU_ID  =  #{menuId}
     </delete>
     <delete id="deleteGrpId">
-               DELETE 
+               DELETE  /* com.kspo.voc.sys.dao.GrpMenuRelDao.deleteGrpId */
                  FROM TB_SYS_GRP_MENU_REL
                 WHERE GRP_ID  =  #{grpId}
     </delete>

@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- IExcelVo.java
 * </pre>
 *

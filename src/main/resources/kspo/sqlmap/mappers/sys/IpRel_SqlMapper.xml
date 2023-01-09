@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kspo.voc.sys.dao.IpRelDao">
+    <sql id="sqlPkConditions">
+                WHERE IP_REL_ID         =       #{ipRelId}
+    </sql>
+    <sql id="sqlCols">
+                      IP_REL_ID                    /*IP관계ID        */
+                    , REF_ID                    /*참조아이디        */
+                    , REF_TP_CD                    /*참조유형코드        */
+                    , IP_ADDR                    /*IP주소        */
+                    , USE_STA_YMD                    /*사용시작일        */
+                    , USE_END_YMD                    /*사용종료일        */
+                    , REG_DT                    /*등록일시        */
+                    , AMDR_ID                    /*수정자ID        */
+                    , AMD_DT                    /*수정일시        */
+                    , REGR_ID                    /*등록자ID        */
+    </sql>
+    <sql id="sqlSelectCols">
+                      A.IP_REL_ID                    /*IP관계ID        */
+                    , A.REF_ID                    /*참조아이디        */
+                    , A.REF_TP_CD                    /*참조유형코드        */
+                    , A.IP_ADDR                    /*IP주소        */
+                    , A.USE_STA_YMD                    /*사용시작일        */
+                    , A.USE_END_YMD                    /*사용종료일        */
+                    , TO_CHAR(A.REG_DT,'YYYYMMDDHH24MISS')    REG_DT                    /*등록일시        */
+                    , A.AMDR_ID                    /*수정자ID        */
+                    , TO_CHAR(A.AMD_DT,'YYYYMMDDHH24MISS')    AMD_DT                    /*수정일시        */
+                    , A.REGR_ID                    /*등록자ID        */
+    </sql>
+    <sql id="sqlConditions">
+        <where>
+            <if test="ipRelId != null and ipRelId != ''">
+                      AND A.IP_REL_ID       =       #{ipRelId}
+            </if>
+            <if test="refId != null and refId != ''">
+                      AND A.REF_ID          =       #{refId}
+            </if>
+            <if test="refTpCd != null and refTpCd != ''">
+                <choose>
+                    <when test="refTpCd instanceof String">
+                        AND A.REF_TP_CD       =       #{refTpCd}
+                    </when>
+                    <otherwise>
+                        AND A.REF_TP_CD       IN
+                        <foreach item="item" index="index" collection="refTpCd" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="ipAddr != null and ipAddr != ''">
+                      AND A.IP_ADDR         =       #{ipAddr}
+            </if>
+            <if test="useStaYmd != null and useStaYmd != ''">
+                      AND A.USE_STA_YMD     =       #{useStaYmd}
+            </if>
+            <if test="useEndYmd != null and useEndYmd != ''">
+                      AND A.USE_END_YMD     =       #{useEndYmd}
+            </if>
+        </where>
+    </sql>
+    <sql id="sqlOrderBy">
+        <choose>
+            <when test="colSortName ==null or colSortName == ''">
+                ORDER BY      REG_DT DESC
+            </when>
+            <when test="colSortName.equals('ipRelId')">
+                ORDER BY      IP_REL_ID
+            </when>
+            <when test="colSortName.equals('refId')">
+                ORDER BY      REF_ID
+            </when>
+            <when test="colSortName.equals('refTpCd')">
+                ORDER BY      REF_TP_CD
+            </when>
+            <when test="colSortName.equals('ipAddr')">
+                ORDER BY      IP_ADDR
+            </when>
+            <when test="colSortName.equals('useStaYmd')">
+                ORDER BY      USE_STA_YMD
+            </when>
+            <when test="colSortName.equals('useEndYmd')">
+                ORDER BY      USE_END_YMD
+            </when>
+            <when test="colSortName.equals('regDt')">
+                ORDER BY      REG_DT
+            </when>
+            <when test="colSortName.equals('amdrId')">
+                ORDER BY      AMDR_ID
+            </when>
+            <when test="colSortName.equals('amdDt')">
+                ORDER BY      AMD_DT
+            </when>
+            <when test="colSortName.equals('regrId')">
+                ORDER BY      REGR_ID
+            </when>
+            <otherwise>
+                ORDER BY      REG_DT
+            </otherwise>
+        </choose>
+        <if test="colSortName !=null and colSortDir !='' and colSortDir !=null and colSortDir !='' and colSortDir.equals('desc')">
+            DESC
+        </if>
+    </sql>
+    <select id="selectListCount" resultType="int">
+                SELECT /* com.kspo.voc.sys.dao.IpRelDao.selectListCount */ COUNT(1)
+                 FROM TB_SYS_IP_REL A
+        <include refid="sqlConditions"/>
+    </select>
+    <select id="selectList" resultType="com.kspo.voc.sys.model.IpRelVo">
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
+               SELECT /* com.kspo.voc.sys.dao.IpRelDao.selectList */ <include refid="sqlSelectCols"/>
+                 FROM TB_SYS_IP_REL A
+        <include refid="sqlConditions"/>
+        ORDER BY A.USE_STA_YMD DESC
+               , A.USE_END_YMD DESC
+               , A.IP_ADDR
+               , A.REG_DT DESC
+        <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
+    </select>
+    <select id="select" resultType="com.kspo.voc.sys.model.IpRelVo">
+               SELECT /* com.kspo.voc.sys.dao.IpRelDao.select */ <include refid="sqlSelectCols"/>
+                 FROM TB_SYS_IP_REL A
+        <include refid="sqlPkConditions"/>
+    </select>
+    <insert id="insert">
+                INSERT /* com.kspo.voc.sys.dao.IpRelDao.insert */ INTO TB_SYS_IP_REL (
+        <include refid="sqlCols"/>
+                 ) VALUES (
+                       NVL(#{ipRelId},FN_VOC_AUTO_SEQ('IP'))
+                     , #{refId}
+                     , #{refTpCd}
+                     , #{ipAddr}
+                     , #{useStaYmd}
+                     , #{useEndYmd}
+                     , SYSDATE
+                     , #{amdrId}
+                     , SYSDATE
+                     , #{regrId}
+                 )
+    </insert>
+    <update id="update">
+               UPDATE /* com.kspo.voc.sys.dao.IpRelDao.update */ TB_SYS_IP_REL
+                  SET REF_ID                                  =         #{refId}
+                    , REF_TP_CD                               =         #{refTpCd}
+                    , IP_ADDR                                 =         #{ipAddr}
+                    , USE_STA_YMD                             =         #{useStaYmd}
+                    , USE_END_YMD                             =         #{useEndYmd}
+                    , AMDR_ID                                 =         #{amdrId}
+                    , AMD_DT                                  =         SYSDATE
+        <include refid="sqlPkConditions"/>
+    </update>
+    <delete id="delete">
+               DELETE /* com.kspo.voc.sys.dao.IpRelDao.delete */
+                 FROM TB_SYS_IP_REL
+        <include refid="sqlPkConditions"/>
+    </delete>
+</mapper>

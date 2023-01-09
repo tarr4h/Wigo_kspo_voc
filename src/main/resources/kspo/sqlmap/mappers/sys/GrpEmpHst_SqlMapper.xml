@@ -62,7 +62,7 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpEmpHstDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_GRP_EMP_HST A
                 INNER JOIN TB_SYS_GRP_BAS B ON A.GRP_ID = B.GRP_ID
                 INNER JOIN TB_SYS_EMP_BAS C ON A.EMP_ID = C.EMP_ID
@@ -71,7 +71,7 @@
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpEmpHstVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT A.GRP_EMP_HST_ID                    /*그룹사원이력코드        */
+               SELECT /* com.kspo.voc.sys.dao.GrpEmpHstDao.selectList */ A.GRP_EMP_HST_ID                    /*그룹사원이력코드        */
                     , A.GRP_ID                    /*그룹코드        */
                     , A.EMP_ID                    /*사원ID        */
                     , A.DEL_YN                    /*삭제여부        */
@@ -91,12 +91,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpEmpHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpEmpHstDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_EMP_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_EMP_HST (
+                INSERT /* com.kspo.voc.sys.dao.GrpEmpHstDao.insert */ INTO TB_SYS_GRP_EMP_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GEH')
@@ -110,7 +110,7 @@
                  )
     </insert>
     <insert id="insertDelete">
-                INSERT INTO TB_SYS_GRP_EMP_HST (
+                INSERT /* com.kspo.voc.sys.dao.GrpEmpHstDao.insertDelete */ INTO TB_SYS_GRP_EMP_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('GEH')
@@ -124,7 +124,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_EMP_HST
+               UPDATE /* com.kspo.voc.sys.dao.GrpEmpHstDao.update */ TB_SYS_GRP_EMP_HST
                   SET GRP_ID              =         #{grpId}
                     , EMP_ID              =         #{empId}
                     , DEL_YN              =         #{delYn}
@@ -133,7 +133,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_EMP_HST
+               DELETE /* com.kspo.voc.sys.dao.GrpEmpHstDao.delete */ 
+                 FROM TB_SYS_GRP_EMP_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

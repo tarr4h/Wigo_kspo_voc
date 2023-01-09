@@ -12,7 +12,7 @@ import com.kspo.voc.sys.service.ComnCdService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.taglib
+* com.kspo.base.common.taglib
 *	- CommCodeNameTag.java
 * </pre>
 *

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util
+* com.kspo.base.common.util
 *	- EzClobHandler.java
 * </pre>
 *

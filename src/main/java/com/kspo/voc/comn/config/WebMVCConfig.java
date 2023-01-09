@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - WebMVCConfig.java
+ * com.kspo.voc.comn.config - WebMVCConfig.java
  * </pre>
  *
  * @ClassName : WebMVCConfig

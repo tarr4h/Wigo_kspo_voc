@@ -21,7 +21,7 @@ import com.kspo.voc.comn.util.Utilities;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.util
+* com.kspo.base.common.util
 *	- PKZip.java
 * </pre>
 *

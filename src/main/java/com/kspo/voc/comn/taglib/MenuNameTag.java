@@ -14,7 +14,7 @@ import com.kspo.voc.sys.service.MenuService;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.taglib - MenuNameTag.java
+ * com.kspo.base.common.taglib - MenuNameTag.java
  * </pre>
  *
  * @ClassName : MenuNameTag

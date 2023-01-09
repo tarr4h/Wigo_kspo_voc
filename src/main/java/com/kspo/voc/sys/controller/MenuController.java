@@ -23,12 +23,12 @@ import com.kspo.voc.sys.service.MenuService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.MenuController
-*	- CrmMenuController.java
+* com.kspo.base.common.MenuController
+*	- MenuController.java
 * </pre>
 *
-* @ClassName	: CrmMenuController 
-* @Description	: CrmMenuController 컨트롤러 
+* @ClassName	: MenuController 
+* @Description	: MenuController 컨트롤러 
 * @author 		: 김성태
 * @date 		: 2022. 1. 8.
 * @Version 		: 1.0 

@@ -17,9 +17,8 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.dao.GrpMenuRelDao;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.dao.MenuBaseDao;
-import com.kspo.voc.sys.dao.UserWdgtDao;
+import com.kspo.voc.sys.model.LoginUserVo;
 import com.kspo.voc.sys.model.MenuVo;
-import com.kspo.voc.sys.model.UserWdgtVo;
 
 @Service("menuService")
 public class MenuService extends AbstractVocService {
@@ -29,8 +28,8 @@ public class MenuService extends AbstractVocService {
 	@Autowired
 	GrpMenuRelDao grpMenuDao;
 
-	@Autowired
-	UserWdgtDao wdgtDao;
+//	@Autowired
+//	UserWdgtDao wdgtDao;
 
 	@Override
 	public IVocDao getDao() {
@@ -43,7 +42,7 @@ public class MenuService extends AbstractVocService {
 		if (cnt > 0)
 			throw new EzAjaxException("하부메뉴가 존재합니다.");
 		grpMenuDao.deleteMenuId(param);
-		wdgtDao.deleteMenuId(param);
+//		wdgtDao.deleteMenuId(param);
 		return super.delete(param);
 	}
 
@@ -102,7 +101,7 @@ public class MenuService extends AbstractVocService {
 	 * @return
 	 * @throws EgovBizException
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param) throws EgovBizException {
+	public List<ITreeVo> getUserMenuTree(LoginUserVo param) throws EgovBizException {
 		EzMap itemMap = new EzMap();
 		return getUserMenuTree(param, itemMap);
 
@@ -123,7 +122,7 @@ public class MenuService extends AbstractVocService {
 	 * @param param
 	 * @return
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap) throws EgovBizException {
+	public List<ITreeVo> getUserMenuTree(LoginUserVo param, EzMap itemMap) throws EgovBizException {
 		return getUserMenuTree(param, itemMap, false);
 
 	}
@@ -134,7 +133,7 @@ public class MenuService extends AbstractVocService {
 	 * @param param
 	 * @return
 	 */
-	public List<ITreeVo> getUserMenuTree(Object param, EzMap itemMap, boolean force) throws EgovBizException {
+	public List<ITreeVo> getUserMenuTree(LoginUserVo param, EzMap itemMap, boolean force) throws EgovBizException {
 		if (itemMap == null)
 			itemMap = new EzMap();
 		EzMap map = force ? null : SessionUtil.getUserMenuMap();
@@ -165,7 +164,7 @@ public class MenuService extends AbstractVocService {
 		return list;
 	}
 
-	public List<MenuVo> getUserMenuList(Object param) throws EgovBizException {
+	public List<MenuVo> getUserMenuList(LoginUserVo param) throws EgovBizException {
 		return dao.selectUserMenuList(param);
 	}
 
@@ -182,25 +181,25 @@ public class MenuService extends AbstractVocService {
 		return Utilities.getSaveResult(result);
 	}
 
-	public Object insertWdgt(UserWdgtVo vo) {
-		vo.setUserId(Utilities.getLoginId());
-		wdgtDao.delete(vo);
-		EzMap map = SessionUtil.getUserMenuMap();
-		MenuVo menu = (MenuVo) map.get(vo.getMenuId());
-		menu.setWdgtYn("Y");
-		return Utilities.getUpdateResult(wdgtDao.insert(vo));
-	}
-
-	public Object deleteWdgt(UserWdgtVo vo) {
-		vo.setUserId(Utilities.getLoginId());
-		EzMap map = SessionUtil.getUserMenuMap();
-		MenuVo menu = (MenuVo) map.get(vo.getMenuId());
-		menu.setWdgtYn("N");
-		return Utilities.getDeleteResult(wdgtDao.delete(vo));
-
-	}
-
-	public List<UserWdgtVo> getWdgtList(Object param) {
-		return wdgtDao.selectList(param);
-	}
+//	public Object insertWdgt(UserWdgtVo vo) {
+//		vo.setUserId(Utilities.getLoginId());
+//		wdgtDao.delete(vo);
+//		EzMap map = SessionUtil.getUserMenuMap();
+//		MenuVo menu = (MenuVo) map.get(vo.getMenuId());
+//		menu.setWdgtYn("Y");
+//		return Utilities.getUpdateResult(wdgtDao.insert(vo));
+//	}
+//
+//	public Object deleteWdgt(UserWdgtVo vo) {
+//		vo.setUserId(Utilities.getLoginId());
+//		EzMap map = SessionUtil.getUserMenuMap();
+//		MenuVo menu = (MenuVo) map.get(vo.getMenuId());
+//		menu.setWdgtYn("N");
+//		return Utilities.getDeleteResult(wdgtDao.delete(vo));
+//
+//	}
+//
+//	public List<UserWdgtVo> getWdgtList(Object param) {
+//		return wdgtDao.selectList(param);
+//	}
 }

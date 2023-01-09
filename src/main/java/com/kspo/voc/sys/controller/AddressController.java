@@ -24,7 +24,7 @@ import com.kspo.voc.sys.service.AddressService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.ExampleController
+* com.kspo.base.common.ExampleController
 *	- ExampleController.java
 * </pre>
 *

@@ -46,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <pre>
- * com.ceragem.crm.common.controller - ErrorController.java
+ * com.kspo.base.api.controller- ErrorController.java
  * </pre>
  *
  * @ClassName : ErrorController

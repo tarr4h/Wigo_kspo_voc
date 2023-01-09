@@ -24,7 +24,7 @@ import com.zaxxer.hikari.HikariDataSource;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - DatabaseConfig.java
+ * com.kspo.voc.comn.config - DatabaseConfig.java
  * </pre>
  *
  * @ClassName : DatabaseConfig
@@ -35,8 +35,8 @@ import com.zaxxer.hikari.HikariDataSource;
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 @Primary
-@Configuration("crmDatabaseConfig")
-@MapperScan(basePackages = {"com.kspo"}, value = "최상위 패키지 경로", annotationClass = VocMapper.class, sqlSessionFactoryRef = "crmSqlSessionFactory"
+@Configuration("vocDatabaseConfig")
+@MapperScan(basePackages = {"com.kspo"}, value = "최상위 패키지 경로", annotationClass = VocMapper.class, sqlSessionFactoryRef = "vocSqlSessionFactory"
 	, basePackageClasses = MapperConfigurer.class)
 public class DatabaseConfig {
 	@Autowired
@@ -66,7 +66,7 @@ public class DatabaseConfig {
 	private int poolSize;
 
 	@Primary
-	@Bean(name = "crmDataSource")
+	@Bean(name = "vocDataSource")
 	DataSource dataSource() {
 		if("Y".equals(jdniYn) ) {
 			return getJndiSource();
@@ -95,8 +95,8 @@ public class DatabaseConfig {
 		
 	}
 	@Primary
-	@Bean(name = "crmSqlSessionFactory")
-	SqlSessionFactory sqlSessionFactory(@Qualifier("crmDataSource") DataSource dataSource,@Qualifier("logDaoAspect") LogDaoAspect interceptor) throws Exception {
+	@Bean(name = "vocSqlSessionFactory")
+	SqlSessionFactory sqlSessionFactory(@Qualifier("vocDataSource") DataSource dataSource,@Qualifier("logDaoAspect") LogDaoAspect interceptor) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:/kspo/sqlmap/config/sql-mapper-config.xml"));
@@ -108,7 +108,7 @@ public class DatabaseConfig {
 
 //
 	@Primary
-	@Bean(name = "crmSqlSessionFactory")
+	@Bean(name = "vocSqlSessionFactory")
 	SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}

@@ -23,7 +23,7 @@ import com.zaxxer.hikari.HikariDataSource;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - DatabaseConfig.java
+ * com.kspo.voc.comn.config - DatabaseConfig.java
  * </pre>
  *
  * @ClassName : DatabaseConfig
@@ -39,7 +39,6 @@ import com.zaxxer.hikari.HikariDataSource;
  * 22.11.01 : 전자정부프레임워크 Mapper 설정 적용(basePackageClasses)
  */
 @Configuration
-//@MapperScan(basePackages = {"com.wigo.voc"}, value = "최상위 패키지 경로", annotationClass = CrmLogMapper.class, sqlSessionFactoryRef = "logSqlSessionFactory")
 @MapperScan(basePackages = {"com.kspo.voc"}, value = "최상위 패키지 경로", annotationClass = LogMapper.class, sqlSessionFactoryRef = "logSqlSessionFactory"
 	, basePackageClasses = MapperConfigurer.class)
 public class LogDatabaseConfig {

@@ -20,7 +20,7 @@ import com.kspo.voc.sys.model.LoginUserVo;
 
 /**
  * <pre>
- * com.wigo.crm.common.aop - BaseDaoAspect.java
+ * com.kspo.base.common.aop - BaseDaoAspect.java
  * </pre>
  *
  * @ClassName : BaseDaoAspect

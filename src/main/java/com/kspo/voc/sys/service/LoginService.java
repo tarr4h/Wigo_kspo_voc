@@ -1,7 +1,10 @@
 package com.kspo.voc.sys.service;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.SessionUtil;
+import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.dao.UserBaseDao;
+import com.kspo.voc.sys.model.GrpBaseVo;
 import com.kspo.voc.sys.model.LoginUserVo;
 
 @Service("loginService")
@@ -55,12 +60,45 @@ public class LoginService extends AbstractVocService {
 		if (user == null) {
 			result.put("errorMsg", "사용자 아이디 또는 암호를 확인해 주세요");
 			result.put("errorCode", "FAILED LOGIN");
+			result.put("success", false);
 			return result;
 		}
-
+		List<GrpBaseVo> groupList = getGroupList(user);
+		if (Utilities.isEmpty(groupList)) {
+			result.put("errorMsg", "권한없는 사용자 입니다.");
+			result.put("errorCode", "FAILED LOGIN");
+			result.put("success", false);
+			return result;
+		}
 		result.put("success", true);
 		processLogin(user);
 		return result;
+	}
+
+	public List<GrpBaseVo> getGroupList(LoginUserVo user) throws EgovBizException {
+		List<GrpBaseVo> list = dao.selectUserGroupList(user);
+		Map<String, Object> grpMap = new HashMap<>();
+		String ip = Utilities.getPeerIp();
+		user.setGroupList(new ArrayList<>());
+		for (int i = 0; i < list.size(); i++) {
+			GrpBaseVo vo = list.get(i);
+			if (grpMap.containsKey(vo.getGrpId()))
+				continue;
+			if ("127.0.0.1".equals(ip)) {
+				grpMap.put(vo.getGrpId(), vo);
+				user.getGroupList().add(vo);
+				continue;
+			}
+			if (Utilities.isEmpty(vo.getIpAddr())) {
+				// 시스템관리자일때만?
+				continue;
+			}
+			if (Utilities.isInIpAddr(vo.getIpAddr(), ip)) {
+				grpMap.put(vo.getGrpId(), vo);
+				user.getGroupList().add(vo);
+			}
+		}
+		return user.getGroupList();
 	}
 
 	public Object updatelogout() throws EgovBizException {
@@ -90,7 +128,7 @@ public class LoginService extends AbstractVocService {
 	private void processLogout() throws EgovBizException {
 		SessionUtil.logOut();
 //		response.sendRedirect(logoutUrl);
-		
+
 	}
 
 	public String goSso(HttpServletResponse res) throws IOException {
@@ -156,7 +194,7 @@ public class LoginService extends AbstractVocService {
 //			return;
 //		}
 //
-//		CrmLoginUserVo user = new CrmLoginUserVo();
+//		LoginUserVo user = new LoginUserVo();
 //		user.setLoginId(loginId);
 //		updatelogin(user);
 //		request.getRequestDispatcher(returl).forward(request, response);

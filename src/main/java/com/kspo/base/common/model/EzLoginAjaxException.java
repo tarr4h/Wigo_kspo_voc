@@ -3,7 +3,7 @@ package com.kspo.base.common.model;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.model
+* com.kspo.base.common.model
 *	- EzAjaxException.java
 * </pre>
 *

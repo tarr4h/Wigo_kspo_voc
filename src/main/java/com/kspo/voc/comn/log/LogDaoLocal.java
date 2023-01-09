@@ -5,7 +5,7 @@ import com.kspo.voc.comn.util.Utilities;
 
 /**
  * <pre>
- * com.wigo.crm.common.log - LogDaoLocal.java
+ * com.kspo.base.common.log - LogDaoLocal.java
  * </pre>
  *
  * @ClassName : LogDaoLocal

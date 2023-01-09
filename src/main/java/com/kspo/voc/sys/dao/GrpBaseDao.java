@@ -23,4 +23,6 @@ public interface GrpBaseDao extends IVocDao {
 
 	List<GrpBaseVo> selectGroupCheckList(EzMap param) throws EgovBizException;
 
+	EzMap selectGroupIpInfo(Object param) throws EgovBizException;
+
 }

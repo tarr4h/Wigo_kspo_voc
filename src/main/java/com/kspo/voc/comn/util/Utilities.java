@@ -85,7 +85,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util - Utilities.java
+ * com.kspo.base.common.util - Utilities.java
  * </pre>
  *
  * @ClassName : Utilities
@@ -121,8 +121,7 @@ public class Utilities {
 
 	@Resource(name = "propertiesService")
 	private EzPropertyServiceImpl ezProperties;
-	
-	
+
 	private static final String _SALT_KEY = "$5$AvoubMud";
 
 	@PostConstruct
@@ -679,7 +678,7 @@ public class Utilities {
 	 * @param strText
 	 * @return
 	 * @throws Exception
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 
 	public static byte[] getStringByte(String strText) throws UnsupportedEncodingException {
@@ -2891,8 +2890,30 @@ public class Utilities {
 			return null;
 		return menu.getMenuId();
 	}
-	
+
 	public static String getTimeStamp() {
 		return Constants._TIMESTAMP_FORMAT.format(new Date());
+	}
+
+	public static boolean isInIpAddr(String area, String ipAddr) {
+		if (Utilities.isEmpty(ipAddr))
+			return false;
+		String[] ips = ipAddr.split("\\.");
+		if (ips.length != 4)
+			return false;
+		if (Utilities.isEmpty(area))
+			return false;
+		if ("*".equals(area))
+			return true;
+		String[] arr = area.split("\\.");
+		for (int i = 0; i < arr.length && i < 4; i++) {
+			if (i == arr.length - 1) {
+				if ("*".equals(arr[i]))
+					return true;
+			}
+			if (!arr[i].equals(ips[i]))
+				return false;
+		}
+		return true;
 	}
 }

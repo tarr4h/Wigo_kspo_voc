@@ -24,12 +24,12 @@ import com.kspo.voc.sys.service.ComnCdService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.ExampleController
+* com.kspo.base.common.ExampleController
 *	- ExampleController.java
 * </pre>
 *
 * @ClassName	: ExampleController 
-* @Description	: CrmComnCdController 컨트롤러 
+* @Description	: ComnCdController 컨트롤러 
 * @author 		: 김성태
 * @date 		: 2022. 1. 8.
 * @Version 		: 1.0 

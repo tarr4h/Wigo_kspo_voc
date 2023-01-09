@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <pre>
- * com.ceragem.crm.common.jwt - EzJwtToken.java
+ * com.kspo.base.api.jwt - EzJwtToken.java
  * </pre>
  *
  * @ClassName : EzJwtToken

@@ -32,25 +32,26 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.GrpBaseVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.selectList */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlConditions"/>
                ORDER BY REG_DT DESC
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.GrpBaseVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.GrpBaseDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_GRP_BAS (
+                INSERT /* com.kspo.voc.sys.dao.GrpBaseDao.insert */ 
+                  INTO TB_SYS_GRP_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{grpId}
@@ -62,14 +63,15 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_GRP_BAS
+               UPDATE /* com.kspo.voc.sys.dao.GrpBaseDao.update */ TB_SYS_GRP_BAS
                   SET GRP_NM              =         #{grpNm}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_GRP_BAS
+               DELETE /* com.kspo.voc.sys.dao.GrpBaseDao.delete */ 
+                 FROM TB_SYS_GRP_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     
@@ -153,6 +155,15 @@
             AND C.MENU_LVL_NO > 1
             AND C.MENU_AUTH_YN = 'Y'
     </select>
+    <select id="selectGroupIpInfo" resultType="EzMap">
+            SELECT A.COMN_CD_NM REF_TP_CD_NM
+                 , CASE WHEN #{refTpCd} = '010' THEN (SELECT EMP_NM FROM TB_SYS_EMP_BAS WHERE EMP_ID = #{refId}) 
+                        WHEN #{refTpCd} = '020' THEN (SELECT GRP_NM FROM TB_SYS_GRP_BAS WHERE GRP_ID = #{refId})
+                        WHEN #{refTpCd} = '030' THEN (SELECT ORG_NM FROM TB_SYS_ORG_BAS WHERE ORG_ID = #{refId}) END REF_ID_NM
+              FROM TB_SYS_COMN_CD_BAS A
+             WHERE A.TOP_COMN_CD = 'S090' 
+               AND A.COMN_CD = #{refTpCd}
+    </select>
     <select id="selectGroupMenuList" resultType="com.kspo.voc.sys.model.GrpMenuRelVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
        SELECT A.GRP_ID
@@ -166,7 +177,6 @@
             , B.MENU_DEL_AUTH_YN
              , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
-                         WHERE 1=1
                          START WITH MENU_ID = C.MENU_ID 
                        CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
          FROM TB_SYS_GRP_BAS A

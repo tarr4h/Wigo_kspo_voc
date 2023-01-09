@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - TransactionConfig.java
+ * com.kspo.voc.comn.config - TransactionConfig.java
  * </pre>
  *
  * @ClassName : TransactionConfig
@@ -34,8 +34,8 @@ public class TransactionConfig {
 //		return new DataSourceTransactionManager(dataSource);
 //	}
 	@Bean(name = "txManager")
-//	@Bean(name = "crmTransactionManager")
-	DataSourceTransactionManager crmTxManager(@Qualifier("crmDataSource") DataSource dataSource)
+//	@Bean(name = "vocTransactionManager")
+	DataSourceTransactionManager vocTxManager(@Qualifier("vocDataSource") DataSource dataSource)
 			throws Exception {
 		return new DataSourceTransactionManager(dataSource);
 	}
@@ -43,9 +43,9 @@ public class TransactionConfig {
 //	@Bean(name = "txManager")
 //	public PlatformTransactionManager chainedTransactionManager(
 //			@Qualifier("logTransactionManager") PlatformTransactionManager transactionManager,
-//			@Qualifier("crmTransactionManager") PlatformTransactionManager crmTransactionManager) {
+//			@Qualifier("vocTransactionManager") PlatformTransactionManager vocTransactionManager) {
 //		
-//		return new ChainedTransactionManager(transactionManager, crmTransactionManager);
+//		return new ChainedTransactionManager(transactionManager, vocTransactionManager);
 //	}
 	
 //	@Bean(name = "userTransaction")

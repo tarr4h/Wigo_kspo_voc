@@ -10,7 +10,7 @@ import com.kspo.base.common.model.EzPropertyServiceImpl;
 /**
  * 
  * <pre>
- * com.wigo.crm.config - TilesConfig.java
+ * com.kspo.voc.comn.config - TilesConfig.java
  * </pre>
  *
  * @ClassName : TilesConfig

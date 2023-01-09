@@ -1,6 +1,5 @@
 package com.kspo.voc.sys.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +24,18 @@ import com.kspo.voc.sys.model.GrpEmpRelVo;
 import com.kspo.voc.sys.model.GrpMenuRelVo;
 import com.kspo.voc.sys.model.GrpOrgRelVo;
 import com.kspo.voc.sys.model.GrpUserRelVo;
+import com.kspo.voc.sys.model.IpRelVo;
 import com.kspo.voc.sys.service.GrpBaseService;
 import com.kspo.voc.sys.service.GrpEmpRelService;
 import com.kspo.voc.sys.service.GrpMenuRelService;
 import com.kspo.voc.sys.service.GrpOrgRelService;
 import com.kspo.voc.sys.service.GrpUserRelService;
+import com.kspo.voc.sys.service.IpRelService;
 
 /**
  * 
  * <pre>
- * com.wigo.crm.common.controller - GroupController.java
+ * com.kspo.base.common.controller - GroupController.java
  * </pre>
  *
  * @ClassName : GroupController
@@ -54,12 +57,15 @@ public class GroupController {
 
 	@Autowired
 	GrpMenuRelService groupMenuService;
-	
+
 	@Autowired
 	GrpOrgRelService groupOrgService;
-	
+
 	@Autowired
 	GrpEmpRelService groupEmpService;
+
+	@Autowired
+	IpRelService ipService;
 
 	@GetMapping(value = { "", "index" })
 	public String init(@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
@@ -91,6 +97,17 @@ public class GroupController {
 		return Utilities.getProperty("tiles.voc.blank") + "sys/groupUserList";
 	}
 
+	@GetMapping(value = { "groupIpPopup/{refId}/{refTpCd}" })
+	public String groupIpPopup(@PathVariable("refId") String refId, @PathVariable("refTpCd") String refTpCd,
+		@ModelAttribute	@RequestParam Map<String, Object> param, ModelMap model) throws EgovBizException {
+		
+		param.put("refId", refId);
+		param.put("refTpCd", refTpCd);
+		model.addAllAttributes(groupService.getGroupIpInfo(param));
+		model.addAllAttributes(param);
+		return Utilities.getProperty("tiles.voc.blank") + "sys/groupIpList";
+	}
+
 	@PostMapping(value = { "getList" })
 	public @ResponseBody Object getList(@RequestBody EzMap param) throws EgovBizException {
 
@@ -117,7 +134,7 @@ public class GroupController {
 		page.setTotalRecordCount(groupService.getGroupMenuListCount(param));
 		return Utilities.getGridData(list, page);
 	}
-	
+
 	@PostMapping(value = { "getGroupOrgList" })
 	public @ResponseBody Object getGroupOrgList(@RequestBody EzMap param) throws EgovBizException {
 
@@ -126,7 +143,7 @@ public class GroupController {
 		page.setTotalRecordCount(groupService.getGroupOrgListCount(param));
 		return Utilities.getGridData(list, page);
 	}
-	
+
 	@PostMapping(value = { "getGroupEmpList" })
 	public @ResponseBody Object getGroupEmpList(@RequestBody EzMap param) throws EgovBizException {
 
@@ -135,7 +152,13 @@ public class GroupController {
 		page.setTotalRecordCount(groupService.getGroupEmpListCount(param));
 		return Utilities.getGridData(list, page);
 	}
-	
+
+	@PostMapping(value = { "getGroupIpList" })
+	public @ResponseBody Object getGroupIpList(@RequestBody EzMap param) throws EgovBizException {
+		param.setInt("recordCountPerPage", 10000);
+		List<GrpMenuRelVo> list = ipService.getList(param);
+		return Utilities.getGridData(list);
+	}
 
 	@PostMapping(value = { "getGroup" })
 	public @ResponseBody Object getGroup(@RequestBody EzMap param) throws EgovBizException {
@@ -176,6 +199,11 @@ public class GroupController {
 		return groupService.save(param);
 	}
 
+	@PostMapping(value = { "saveGroupIpList" })
+	public @ResponseBody Object saveGroupIpList(@RequestBody List<IpRelVo> list) throws EgovBizException {
+		return ipService.saveList(list);
+	}
+
 	@PostMapping(value = { "save" })
 	public @ResponseBody Object save(@RequestBody List<GrpBaseVo> param) throws EgovBizException {
 		return groupService.saveList(param);
@@ -191,10 +219,12 @@ public class GroupController {
 	public @ResponseBody Object addGroupMenuList(@RequestBody List<GrpMenuRelVo> list) throws EgovBizException {
 		return groupMenuService.insertList(list);
 	}
+
 	@PostMapping(value = { "saveGroupOrgList" })
 	public @ResponseBody Object saveGroupOrgList(@RequestBody List<GrpOrgRelVo> list) throws EgovBizException {
 		return groupOrgService.insertList(list);
 	}
+
 	@PostMapping(value = { "saveGroupEmpList" })
 	public @ResponseBody Object saveGroupEmpList(@RequestBody List<GrpEmpRelVo> list) throws EgovBizException {
 		return groupEmpService.insertList(list);
@@ -209,11 +239,17 @@ public class GroupController {
 	public @ResponseBody Object removeGroupMenuList(@RequestBody List<GrpMenuRelVo> list) throws EgovBizException {
 		return groupMenuService.deleteList(list);
 	}
+
 	@PostMapping(value = { "removeGroupOrgList" })
 	public @ResponseBody Object removeGroupOrgList(@RequestBody List<GrpOrgRelVo> list) throws EgovBizException {
 		return groupOrgService.deleteList(list);
 	}
-	
+
+	@PostMapping(value = { "removeGroupIpList" })
+	public @ResponseBody Object removeGroupIpList(@RequestBody List<IpRelVo> list) throws EgovBizException {
+		return ipService.deleteList(list);
+	}
+
 	@PostMapping(value = { "removeGroupEmpList" })
 	public @ResponseBody Object removeGroupEmpList(@RequestBody List<GrpEmpRelVo> list) throws EgovBizException {
 		return groupEmpService.deleteList(list);

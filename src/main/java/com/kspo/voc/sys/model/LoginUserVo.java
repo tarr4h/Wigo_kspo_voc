@@ -1,5 +1,7 @@
 package com.kspo.voc.sys.model;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +12,12 @@ public class LoginUserVo extends EmpBaseVo {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 소속 그룹목록
+	 */
+	List<GrpBaseVo> groupList;
+	
 	/*
 	 * <p>사용자 그룹 콤마로 구분</p>
 	 */
@@ -74,6 +82,9 @@ public class LoginUserVo extends EmpBaseVo {
 	 */
 	private String delYn;
 
+	
+	private String topMenuId;
+	
 	/**
 	 * <p>
 	 * 사용자코드

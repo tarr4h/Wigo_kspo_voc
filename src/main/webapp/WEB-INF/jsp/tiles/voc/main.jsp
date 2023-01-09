@@ -263,6 +263,13 @@ function activeTab(id){
 // 	swiper.slideTo(index, speed, runCallbacks)
 
 }
+function closeActiveTab(){
+	const id = getActiveTabId();
+	if(!id)
+		return;
+	removeTab(id);
+}
+
 function getActiveTabId(){
 	var div = $(".active[data-tab-type=menuTab][data-menu-id]");
 	if(div.length)

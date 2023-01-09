@@ -40,7 +40,7 @@ import org.springframework.util.Assert;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.model - EzPropertyServiceImpl.java
+ * com.kspo.base.common.model - EzPropertyServiceImpl.java
  * </pre>
  *
  * @ClassName : EzPropertyServiceImpl

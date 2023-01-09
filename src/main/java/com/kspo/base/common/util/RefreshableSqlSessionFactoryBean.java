@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util - RefreshableSqlSessionFactoryBean.java
+ * com.kspo.base.common.util - RefreshableSqlSessionFactoryBean.java
  * </pre>
  *
  * @ClassName : RefreshableSqlSessionFactoryBean

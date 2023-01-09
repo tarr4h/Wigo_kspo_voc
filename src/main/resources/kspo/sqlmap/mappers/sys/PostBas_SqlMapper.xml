@@ -109,13 +109,13 @@
 <!--          DBMS_LOB.INSTR(찾을컬럼이름, '찾을문자열') > 0 -->
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.PostBasDao.selectListCount */  COUNT(1)
                  FROM TB_SYS_POST_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.PostBasVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT POST_ID                    /*게시물ID        */
+               SELECT /* com.kspo.voc.sys.dao.PostBasDao.selectList */ POST_ID                    /*게시물ID        */
                     , BRD_ID                    /*게시판ID        */
                     , UP_POST_ID                    /*상위게시물ID        */
                     , TOP_POST_ID                    /*최상위게시물ID        */
@@ -141,12 +141,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.PostBasVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.PostBasDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_POST_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_POST_BAS (
+                INSERT /* com.kspo.voc.sys.dao.PostBasDao.insert */ INTO TB_SYS_POST_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{postId}
@@ -172,7 +172,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_POST_BAS
+               UPDATE /* com.kspo.voc.sys.dao.PostBasDao.update */ TB_SYS_POST_BAS
                   SET BRD_ID              =         #{brdId}
                     , UP_POST_ID        =         #{upPostId}
                     , TOP_POST_ID       =         #{topPostId}
@@ -193,7 +193,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_POST_BAS
+               DELETE /* com.kspo.voc.sys.dao.PostBasDao.delete */  
+                 FROM TB_SYS_POST_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

@@ -127,20 +127,19 @@
          </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_MENU_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.MenuVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.selectList */ <include refid="sqlCols"/>
                     , 'Y' MENU_REG_AUTH_YN
                     , 'Y' MENU_READ_AUTH_YN
                     , 'Y' MENU_AMD_AUTH_YN
                     , 'Y' MENU_DEL_AUTH_YN
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
-                         WHERE 1=1
                          START WITH MENU_ID = A.MENU_ID 
                        CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                  FROM TB_SYS_MENU_BAS A
@@ -151,7 +150,7 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.MenuVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.select */ <include refid="sqlCols"/>
                     , 'Y' MENU_REG_AUTH_YN
                     , 'Y' MENU_READ_AUTH_YN
                     , 'Y' MENU_AMD_AUTH_YN
@@ -160,7 +159,7 @@
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_MENU_BAS (
+                INSERT /* com.kspo.voc.sys.dao.MenuBaseDao.insert */  INTO TB_SYS_MENU_BAS (
         <include refid="sqlCols"/>
                  ) VALUES (
                        #{menuId}
@@ -186,7 +185,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_MENU_BAS
+               UPDATE /* com.kspo.voc.sys.dao.MenuBaseDao.update */  TB_SYS_MENU_BAS
                   SET MENU_NM             =         #{menuNm}
                     , MENU_URL            =         #{menuUrl}
                     , MENU_ICON_CD        =         #{menuIconCd}
@@ -203,23 +202,24 @@
         <include refid="sqlPkConditions"/>
     </update>
     <update id="updateSeq">
-               UPDATE TB_SYS_MENU_BAS
+               UPDATE /* com.kspo.voc.sys.dao.MenuBaseDao.updateSeq */ TB_SYS_MENU_BAS
                   SET MENU_ODRG           =         #{menuOdrg}
                     , AMDR_ID             =         #{amdrId}
                     , AMD_DT              =         SYSDATE
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_MENU_BAS
+               DELETE /* com.kspo.voc.sys.dao.MenuBaseDao.delete */
+                 FROM TB_SYS_MENU_BAS
         <include refid="sqlPkConditions"/>
     </delete>
     
     
     <select id="selectMaxInfo" resultType="com.kspo.voc.sys.model.MenuVo">
-             SELECT MAX(MENU_ID) MENU_ID
+             SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.selectMaxInfo */ MAX(MENU_ID) MENU_ID
                   , MAX(MENU_ODRG) MENU_ODRG 
                FROM TB_SYS_MENU_BAS  
-              WHERE 1=1
+         <where>
          <choose>
             <when test="menuId == '0000000000'">
                 AND MENU_LVL_NO = 1
@@ -231,9 +231,10 @@
                 AND MENU_LVL_NO = 1
             </otherwise>
          </choose>
+         </where>
     </select>
     <select id="selectTreeList" resultType="com.kspo.voc.sys.model.MenuVo">
-        SELECT  MENU_ID
+        SELECT   /* com.kspo.voc.sys.dao.MenuBaseDao.selectTreeList */  MENU_ID
              , MENU_NM
              , MENU_URL
              , PRNTS_MENU_ID
@@ -264,22 +265,39 @@
     </select>
     
     <select id="selectUserMenuList" resultType="com.kspo.voc.sys.model.MenuVo">
+    /* com.kspo.voc.sys.dao.MenuBaseDao.selectUserMenuList */
     WITH GRP_USR AS
-    (   SELECT GRP_ID, USER_ID
-          FROM TB_SYS_GRP_USER_REL
-            UNION ALL
-        SELECT GRP_ID, EMP_ID
-          FROM  TB_SYS_GRP_EMP_REL
-         UNION ALL
-        SELECT GRP_ID, EMP_ID 
-          FROM ( SELECT A.ORG_ID
-                      , B.GRP_ID 
-                    FROM TB_SYS_ORG_BAS A
-                       , TB_SYS_GRP_ORG_REL B
-                   START WITH B.ORG_ID = A.ORG_ID
-                CONNECT BY PRIOR   A.ORG_ID = A.UP_ORG_ID ) A 
-             , TB_SYS_EMP_BAS B 
-         WHERE A.ORG_ID = B.ORG_ID )
+<!--     (   SELECT GRP_ID, USER_ID -->
+<!--           FROM TB_SYS_GRP_USER_REL -->
+<!--             UNION ALL -->
+<!--         SELECT GRP_ID, EMP_ID -->
+<!--           FROM  TB_SYS_GRP_EMP_REL -->
+<!--          UNION ALL -->
+<!--         SELECT GRP_ID, EMP_ID  -->
+<!--           FROM ( SELECT A.ORG_ID -->
+<!--                       , B.GRP_ID  -->
+<!--                     FROM TB_SYS_ORG_BAS A -->
+<!--                        , TB_SYS_GRP_ORG_REL B -->
+<!--                    START WITH B.ORG_ID = A.ORG_ID -->
+<!--                 CONNECT BY PRIOR   A.ORG_ID = A.UP_ORG_ID ) A  -->
+<!--              , TB_SYS_EMP_BAS B  -->
+<!--          WHERE A.ORG_ID = B.ORG_ID ) -->
+         (
+               SELECT GRP_ID
+                    , #{userId} USER_ID
+                 FROM TB_SYS_GRP_BAS
+                 <choose>
+                <when test="groupList != null ">
+                  WHERE GRP_ID IN 
+                    <foreach item="item" index="index" collection="groupList" open="(" separator="," close=")">
+                        #{item.grpId}
+                    </foreach>
+                </when>
+                <otherwise>
+                  WHERE GRP_ID  = '999'  
+                </otherwise>
+            </choose>
+         )
          SELECT    A.*
                , B.MENU_REG_AUTH_YN
                , B.MENU_READ_AUTH_YN
@@ -331,7 +349,7 @@
                  ORDER BY A.TOP_MENU_ID, A.MENU_LVL_NO, A.MENU_ODRG
     </select>
     <select id="selectChildrenCount" resultType="int">
-            SELECT COUNT(1) 
+            SELECT /* com.kspo.voc.sys.dao.MenuBaseDao.selectChildrenCount */ COUNT(1) 
               FROM TB_SYS_MENU_BAS
              WHERE PRNTS_MENU_ID = #{menuId}
     </select>

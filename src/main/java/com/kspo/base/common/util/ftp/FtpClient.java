@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 
  * <pre>
- * com.wigo.crm.common.util.ftp - FtpClient.java
+ * com.kspo.base.common.util.ftp - FtpClient.java
  * </pre>
  *
  * @ClassName : FtpClient

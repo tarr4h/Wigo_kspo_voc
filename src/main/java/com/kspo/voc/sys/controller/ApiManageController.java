@@ -25,7 +25,7 @@ import com.kspo.voc.sys.service.ApiManageService;
 /**
  * 
 * <pre>
-* com.wigo.crm.common.ExampleController
+* com.kspo.base.common.ExampleController
 *	- ExampleController.java
 * </pre>
 *

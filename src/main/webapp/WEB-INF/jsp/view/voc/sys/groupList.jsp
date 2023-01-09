@@ -443,4 +443,11 @@ function newGroupEmp(){
     Utilities.openEmpPop("addGroupEmp");
 //    Utilities.windowOpen(url,"addGroupUser",700,680);
 }
+
+
+function onGridButtonClicked(gridView,row,col,json){
+	const isEmp = !!json.empId ;
+	var url = "<c:url value='${urlPrefix}/groupIpPopup${urlSuffix}'/>/" + (json.empId  || json.orgId ) + "/" + (isEmp? "010" : "030") ;
+    Utilities.openModal(url,1000,800);
+}
 </script>

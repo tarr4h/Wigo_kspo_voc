@@ -76,7 +76,7 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.ErrHstDao.selectList */ COUNT(1)
                  FROM TB_SYS_ERR_HST A
                  LEFT JOIN TB_SYS_MENU_BAS B ON A.MENU_ID = B.MENU_ID
         <include refid="sqlConditions"/>
@@ -94,7 +94,6 @@
                     , A.AMD_DT                    /*수정일시        */
                     , ( SELECT LISTAGG(MENU_NM, '>') WITHIN GROUP(ORDER BY MENU_LVL_NO)
                           FROM TB_SYS_MENU_BAS
-                         WHERE 1=1
                          START WITH MENU_ID = A.MENU_ID 
                        CONNECT BY PRIOR PRNTS_MENU_ID = MENU_ID ) MENU_PATH
                  FROM TB_SYS_ERR_HST A
@@ -104,12 +103,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.ErrHstVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.ErrHstDao.select */ <include refid="sqlCols"/>
                  FROM TB_SYS_ERR_HST
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_ERR_HST (
+                INSERT /* com.kspo.voc.sys.dao.ErrHstDao.insert */ INTO TB_SYS_ERR_HST (
         <include refid="sqlCols"/>
                  ) VALUES (
                        FN_VOC_AUTO_SEQ('ERC')
@@ -124,7 +123,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_ERR_HST
+               UPDATE /* com.kspo.voc.sys.dao.ErrHstDao.update */ TB_SYS_ERR_HST
                   SET MENU_ID             =         #{menuId}
                     , MENU_URL            =         #{menuUrl}
                     , ERR_CD              =         #{errCd}
@@ -134,7 +133,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_ERR_HST
+               DELETE /* com.kspo.voc.sys.dao.ErrHstDao.delete */ 
+                 FROM TB_SYS_ERR_HST
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>

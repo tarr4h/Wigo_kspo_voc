@@ -123,13 +123,13 @@
         </if>
     </sql>
     <select id="selectListCount" resultType="int">
-                SELECT COUNT(1)
+                SELECT /* com.kspo.voc.sys.dao.EmpBaseDao.selectListCount */ COUNT(1)
                  FROM TB_SYS_EMP_BAS
         <include refid="sqlConditions"/>
     </select>
     <select id="selectList" resultType="com.kspo.voc.sys.model.EmpBaseVo">
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingHeader"/>
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.EmpBaseDao.selectList */<include refid="sqlCols"/>
                     , (SELECT ORG_NM FROM TB_SYS_ORG_BAS WHERE A.ORG_ID = ORG_ID) ORG_NM
 <!--                         , ORG_NM -->
 <!--                           , CMP_NM -->
@@ -145,12 +145,12 @@
         <include refid="com.kspo.voc.sys.dao.CommonDao.pagingFooter"/>
     </select>
     <select id="select" resultType="com.kspo.voc.sys.model.EmpBaseVo">
-               SELECT <include refid="sqlCols"/>
+               SELECT /* com.kspo.voc.sys.dao.EmpBaseDao.select */<include refid="sqlCols"/>
                  FROM TB_SYS_EMP_BAS
         <include refid="sqlPkConditions"/>
     </select>
     <insert id="insert">
-                INSERT INTO TB_SYS_EMP_BAS (
+                INSERT /* com.kspo.voc.sys.dao.EmpBaseDao.insert */ INTO TB_SYS_EMP_BAS (
         <include refid="sqlCols"/>
 <!--                         , ORG_NM -->
 <!--                           , CMP_NM -->
@@ -191,7 +191,7 @@
                  )
     </insert>
     <update id="update">
-               UPDATE TB_SYS_EMP_BAS
+               UPDATE /* com.kspo.voc.sys.dao.EmpBaseDao.update */ TB_SYS_EMP_BAS
                   SET EMP_NM              =         #{empNm}
                     , CMP_CD              =         #{cmpCd}
                     , ORG_ID              =         #{orgId}
@@ -218,7 +218,8 @@
         <include refid="sqlPkConditions"/>
     </update>
     <delete id="delete">
-               DELETE FROM TB_SYS_EMP_BAS
+               DELETE /* com.kspo.voc.sys.dao.EmpBaseDao.delete */ 
+                 FROM TB_SYS_EMP_BAS
         <include refid="sqlPkConditions"/>
     </delete>
 </mapper>
