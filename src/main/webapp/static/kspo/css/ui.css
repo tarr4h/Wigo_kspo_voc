@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url('fonts.css');
+/* test1-2 */
 
 html, body,
 h1, h2, h3, h4, h5, h6, button{
@@ -194,7 +195,7 @@ input::-ms-clear{display:none;}
 #wrapIframe.wide .mGrid1 > .gLeft .btnWide{right:-20px;}
 #wrapIframe.wide .mGrid1 > .gLeft .btnWide:before{transform:rotate(0deg);}
 
-#wrap{height:100%;/*min-width:1900px;min-height:920px;*/overflow-x: hidden;}
+#wrap{height:100%;min-width:1600px;}
 
 #header{
     position:relative;
@@ -263,8 +264,7 @@ input::-ms-clear{display:none;}
     left: 0;
     top: 100%; 
     display: none;
-    padding-left: 296px;
-    /* padding-bottom: 20px; */
+    /* padding-left: 296px; */
     font-size: 14px;
     font-family: "Noto Sans KR", "Inter";
     /* font-family: Arial, Helvetica, sans-serif; */
@@ -277,6 +277,7 @@ input::-ms-clear{display:none;}
 }
 .sub_menu > dl:nth-child(1) {
     border-left: 1px solid #5BB1FF;
+    margin-left: 296px;
 }
 .sub_menu dl {
     border-right: 1px solid #5BB1FF; 
