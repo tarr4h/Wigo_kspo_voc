@@ -20,7 +20,7 @@
     </meta>
         <column name="코드" field="actvCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="관리수행 코드" field="mgmtActvCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="관리TASK 코드" field="mgmtTaskCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
+        <column name="관리TASK 코드" field="mgmtTaskCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="수행명" field="actvNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="순번" field="mgmtActvOrdr" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="담당부서ID" field="dutyOrgId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>

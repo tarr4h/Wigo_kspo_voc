@@ -82,7 +82,7 @@
         </div>
         <div id="avaliableDirCd">
             <div class="v_grid_box">
-                <div class="header">
+                <div class="v_header">
                     <h3 class="title">관리절차 등록</h3>
                     <div class="v_guide">
                         <div class="v_guideDot"></div>
@@ -90,6 +90,10 @@
                     </div>
                 </div>
                 <div class="v_btn_area">
+                    <div class="v_btn_wrapper_left">
+                        <button class="btn btn-blue func_btn" data-event="prcdOrgChng">처리부서 변경</button>
+                        <button class="btn btn-blue func_btn" data-event="prcdDdlnChng">처리기한 변경</button>
+                    </div>
                     <div class="v_btn_wrapper">
                         <button class="btn func_btn" data-event="prcdAdd">추가</button>
                         <button class="btn btn-red func_btn" data-event="prcdDel">삭제</button>
@@ -101,14 +105,14 @@
                          data-grid-id="mgmtPrcdGrid"
                          data-type="grid"
                          data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtPrcd.xml${urlSuffix}'/>"
-                         style="width:100%;height:300px;"
+                         style="width:100%;height:271px;"
                     >
                     </div>
                 </div>
             </div>
             <div class="v_grid_children">
                 <div class="v_grid_box v_grid_box_half">
-                    <div class="header">
+                    <div class="v_header">
                         <h3 class="title">TASK 등록</h3>
                         <div class="v_guide">
                             <div class="v_guideDot"></div>
@@ -116,6 +120,10 @@
                         </div>
                     </div>
                     <div class="v_btn_area">
+                        <div class="v_btn_wrapper_left">
+                            <button class="btn btn-blue func_btn" data-event="taskOrgChng">처리부서 변경</button>
+                            <button class="btn btn-blue func_btn" data-event="taskDdlnChng">처리기한 변경</button>
+                        </div>
                         <div class="v_btn_wrapper">
                             <button class="btn func_btn" data-event="taskAdd">추가</button>
                             <button class="btn btn-red func_btn" data-event="taskDel">삭제</button>
@@ -127,13 +135,13 @@
                              data-grid-id="mgmtTaskGrid"
                              data-type="grid"
                              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtTask.xml${urlSuffix}'/>"
-                             style="width:100%;height:251px;"
+                             style="width:100%;height:242px;"
                         >
                         </div>
                     </div>
                 </div>
                 <div class="v_grid_box v_grid_box_half">
-                    <div class="header">
+                    <div class="v_header">
                         <h3 class="title">ACTIVITY 등록</h3>
                         <div class="v_guide">
                             <div class="v_guideDot"></div>
@@ -141,6 +149,9 @@
                         </div>
                     </div>
                     <div class="v_btn_area">
+                        <div class="v_btn_wrapper_left">
+                            <button class="btn btn-blue func_btn" data-event="actvOrgChng">처리부서 변경</button>
+                        </div>
                         <div class="v_btn_wrapper">
                             <button class="btn func_btn" data-event="actvAdd">추가</button>
                             <button class="btn btn-red func_btn" data-event="actvDel">삭제</button>
@@ -152,7 +163,7 @@
                              data-grid-id="mgmtActvGrid"
                              data-type="grid"
                              data-tpl-url="<c:url value='/static/gridTemplate/voc/vocMgmtActv.xml${urlSuffix}'/>"
-                             style="width:100%;height:251px;"
+                             style="width:100%;height:242px;"
                         >
                         </div>
                     </div>
@@ -185,8 +196,94 @@
             case 'taskDel' : deleteMgmtTask();break;
             case 'actvAdd' : openActvModal();break;
             case 'actvDel' : deleteMgmtActv();break;
+            case 'prcdOrgChng' : chngDutyOrg('mgmtPrcdGrid', 'updateMgmtPrcd');break;
+            case 'taskOrgChng' : chngDutyOrg('mgmtTaskGrid', 'updateMgmtTask');break;
+            case 'actvOrgChng' : chngDutyOrg('mgmtActvGrid', 'updateMgmtActv');break;
+            case 'prcdDdlnChng' : chngDdlnSec('mgmtPrcdGrid', 'updateMgmtPrcd');break;
+            case 'taskDdlnChng' : chngDdlnSec('mgmtTaskGrid', 'updateMgmtTask');break;
         }
     });
+
+    /**
+     * 부서변경 콜백
+     * @param param
+     */
+    function orgSearchCallback(param){
+        let gridNm = window.localStorage.getItem('dtlMgmtPrcdSettingChngOrg');
+        let url = window.localStorage.getItem('dtlMgmtPrcdSettingChngOrgUrl');
+
+        let grid = window[gridNm];
+        let rows = grid.getCheckedJson();
+        let orgId = param.orgId;
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}"/>/' + url + '${urlSuffix}',
+            method: 'POST',
+            contentType: 'application/json',
+            data : JSON.stringify({
+                rows : rows,
+                orgId : orgId
+            }),
+            success : function(res){
+                alert('변경되었습니다.');
+                grid.reload();
+            },
+            error: console.log
+        });
+    }
+
+    /**
+     * 처리기한 변경 콜백
+     * @param param
+     */
+    function deadlineModifyCallback(param){
+        let gridNm = window.localStorage.getItem('dtlMgmtPrcdSettingChngDdln');
+        let url = window.localStorage.getItem('dtlMgmtPrcdSettingChngDdlnUrl');
+
+        let grid = window[gridNm];
+        let rows = grid.getCheckedJson();
+
+        $.ajax({
+            url: '<c:url value="${urlPrefix}"/>/' + url + '${urlSuffix}',
+            method: 'POST',
+            contentType: 'application/json',
+            data : JSON.stringify({
+                rows : rows,
+                ddln : param
+            }),
+            success : function(res){
+                alert('변경되었습니다.');
+                grid.reload();
+            },
+            error: console.log
+        });
+    }
+
+    /**
+     * 부서변경 호출
+     * @param gridNm
+     */
+    function chngDutyOrg(gridNm, url){
+        window.localStorage.setItem('dtlMgmtPrcdSettingChngOrg', gridNm);
+        window.localStorage.setItem('dtlMgmtPrcdSettingChngOrgUrl', url);
+        openComnModal('vocOrgSearchModal', 950, 650);
+    }
+
+    /**
+     * 처리기한변경 호출
+     * @param gridNm
+     * @param url
+     */
+    function chngDdlnSec(gridNm, url){
+        window.localStorage.setItem('dtlMgmtPrcdSettingChngDdln', gridNm);
+        window.localStorage.setItem('dtlMgmtPrcdSettingChngDdlnUrl', url);
+        openComnModal('vocDeadlineModifyModal', 600, 200);
+    }
+
+    function openComnModal(pageNm, width, height){
+        let url = '<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/' + pageNm;
+        Utilities.openModal(url, width, height);
+    }
 
     function onTreeSelect(data, node, tree){
         let comnCd = data.comnCd; // 001 : 채널, 002: 유형
@@ -391,6 +488,7 @@
         };
 
         window['mgmtPrcdGrid'].loadUrl('', param);
+        loadMgmtTaskGrid();
     }
 
     /**

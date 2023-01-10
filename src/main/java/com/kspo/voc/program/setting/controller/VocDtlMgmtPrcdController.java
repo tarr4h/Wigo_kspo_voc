@@ -3,6 +3,7 @@ package com.kspo.voc.program.setting.controller;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
+import com.kspo.voc.program.common.util.VocUtils;
 import com.kspo.voc.program.setting.model.*;
 import com.kspo.voc.program.setting.service.VocDtlMgmtPrcdService;
 import lombok.extern.slf4j.Slf4j;
@@ -147,9 +148,50 @@ public class VocDtlMgmtPrcdController {
         return service.deleteMgmtPrcdList(param);
     }
 
+    @PostMapping(value = "updateMgmtPrcd")
+    public @ResponseBody Object updateMgmtPrcd(@RequestBody EzMap param){
+        return service.updateMgmtList(param, VocMgmtPrcdVo.class);
+    }
+
+    @PostMapping(value = "updateMgmtTask")
+    public @ResponseBody Object updateMgmtTask(@RequestBody EzMap param){
+        return service.updateMgmtList(param, VocMgmtTaskVo.class);
+    }
+
+    @PostMapping(value = "updateMgmtActv")
+    public @ResponseBody Object updateMgmtActv(@RequestBody EzMap param){
+        return service.updateMgmtList(param, VocMgmtActvVo.class);
+    }
+
     @GetMapping(value = { "openAddModal/{pageNm}"})
     public String openAddModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "program/setting/voc_mgmt_prcd/" + pageNm;
+    }
+
+    @GetMapping(value = { "openComnModal/{pageNm}"})
+    public String openComnModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
+        model.addAttribute("param", param);
+        return Utilities.getProperty("tiles.voc.blank") + "program/common/" + pageNm;
+    }
+
+    @PostMapping(value = "getOrgTree")
+    public @ResponseBody Object getOrgTree(@RequestBody Map<String, Object> param){
+        return VocUtils.getOrgTree(param);
+    }
+
+    @GetMapping(value = "selectOrgList")
+    public @ResponseBody Object selectOrgList(@RequestParam Map<String, Object> param){
+        return VocUtils.selectOrgList(param);
+    }
+
+    @PostMapping(value = "getEmpGrid")
+    public @ResponseBody Object getEmpGrid(@RequestBody EzMap param){
+        return VocUtils.getEmpGrid(param);
+    }
+
+    @PostMapping(value = "getOrgGrid")
+    public @ResponseBody Object getOrgGrid(@RequestBody EzMap param){
+        return VocUtils.getOrgGrid(param);
     }
 }

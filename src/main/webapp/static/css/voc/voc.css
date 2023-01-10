@@ -1,6 +1,6 @@
 /* page */
 .v_header{
-    padding: 10px 10px;
+    padding: 5px 5px;
     margin-bottom: 10px;
 }
 .v_header_title{
@@ -318,6 +318,9 @@
 .v_btn_wrapper{
     float: right;
     margin-bottom: 0.5em;
+}
+.v_btn_wrapper_left{
+    float: left;
 }
 .v_grid_btn{
     width: 6em;

@@ -20,7 +20,7 @@
     </meta>
     <column name="TASK코드" field="taskCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
     <column name="TASK명" field="taskNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
-    <column name="처리기한(초)" field="ddlnSec" type="char" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
+    <column name="처리기한(분)" field="ddlnSec" type="char" maxLength="1000" width="10" textAlignment="center" required="Y" hidden="Y"/>
 
     <column name="담당변경가능여부" field="" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
     <column name="담당부서ID" field="dutyOrgId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>

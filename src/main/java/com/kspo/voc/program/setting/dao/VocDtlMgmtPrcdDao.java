@@ -1,11 +1,10 @@
 package com.kspo.voc.program.setting.dao;
 
 import com.kspo.base.common.model.EzMap;
-import com.kspo.voc.program.setting.model.VocDirCdVo;
-import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
-import com.kspo.voc.program.setting.model.VocMgmtTaskVo;
+import com.kspo.voc.program.setting.model.*;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 import java.util.Map;
@@ -59,4 +58,6 @@ public interface VocDtlMgmtPrcdDao extends IVocDao {
     int updateMgmtPrcd(VocMgmtPrcdVo existMgmtPrcd);
 
     int updateMgmtTask(VocMgmtTaskVo existTask);
+
+    int updateMgmtActv(VocMgmtActvVo existActv);
 }
