@@ -29,6 +29,7 @@
         <column name="담당부서명" field="dutyOrgNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N" defaultValue="-"/>
         <column name="담당자명" field="dutyEmpNm" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="적용권한" field="dutyRoleCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
+        <column name="적용수행 수" field="actvCnt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="등록자" field="regrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="등록일시" field="regDt" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>
         <column name="수정자" field="amdrId" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="Y"/>

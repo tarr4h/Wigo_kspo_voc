@@ -42,12 +42,6 @@
         min-width: 100px;
         color: #686868;
     }
-    .register_btn{
-        border: 1px solid gray;
-        width: 50px;
-        font-size: 12px;
-        margin-left: 10px;
-    }
 </style>
 
 

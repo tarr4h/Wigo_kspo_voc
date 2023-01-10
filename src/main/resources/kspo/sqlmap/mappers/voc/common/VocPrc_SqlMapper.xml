@@ -271,7 +271,8 @@
             ,
             TVPB.PRCD_NM,
             TVPB.DUTY_ORG_NM,
-            TVPB.DUTY_EMP_NM
+            TVPB.DUTY_EMP_NM,
+            (SELECT COUNT(*) FROM TB_VOC_MGMT_TASK_DTL WHERE MGMT_PRCD_CD = TVMPD.MGMT_PRCD_CD) taskCnt
         FROM
             TB_VOC_MGMT_PRCD_DTL TVMPD INNER JOIN TB_VOC_PRCD_BAS TVPB
             ON TVMPD.PRCD_CD = TVPB.PRCD_CD
@@ -290,7 +291,8 @@
             ,
             TVTB.TASK_NM,
             TVTB.DUTY_ORG_NM,
-            TVTB.DUTY_EMP_NM
+            TVTB.DUTY_EMP_NM,
+            (SELECT COUNT(*) FROM TB_VOC_MGMT_ACTV_DTL WHERE MGMT_TASK_CD = TVMTD.MGMT_TASK_CD) actvCnt
         FROM
             TB_VOC_MGMT_TASK_DTL TVMTD INNER JOIN TB_VOC_TASK_BAS TVTB
             ON TVMTD.TASK_CD = TVTB.TASK_CD

@@ -32,4 +32,5 @@ public class VocMgmtPrcdVo extends VocPrcdBasVo {
     private String amdrId;
     private String amdDt;
 
+    private int taskCnt;
 }
