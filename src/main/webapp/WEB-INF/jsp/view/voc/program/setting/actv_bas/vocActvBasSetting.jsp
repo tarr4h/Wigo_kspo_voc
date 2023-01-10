@@ -13,10 +13,10 @@
 
 <div class="wrapper">
     <div class="v_header">
-        <h3 class="title" id="grid_title">수행목록 관리</h3>
+        <h3 class="title" id="grid_title">ACTIVITY목록 관리</h3>
         <div class="v_guide">
             <div class="v_guideDot"></div>
-            <span>수행코드 목록입니다.</span>
+            <span>ACVITIVY코드 목록입니다.</span>
         </div>
     </div>
     <div class="v_btn_area">
@@ -66,9 +66,8 @@
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data: JSON.stringify({rows}),
-            success(res, status, jqXHR){
-                console.log(res);
+            data: JSON.stringify({rows:rows}),
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('저장되었습니다.');
                     window.location.reload();
@@ -85,9 +84,8 @@
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({rows}),
-            success(res, status, jqXHR){
-                console.log(res);
+            data : JSON.stringify({rows:rows}),
+            success : function(res, status, jqXHR){
                 alert('삭제되었습니다.');
                 window.location.reload();
             },
@@ -103,7 +101,7 @@
      * @param param
      */
     function openModal(pageNm, width, height, param){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 

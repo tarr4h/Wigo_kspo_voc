@@ -89,16 +89,13 @@
     });
 
     function deleteRows(){
-        let row = mgmtCdGrid.getCheckedJson();
-        let param = JSON.stringify({rows:row});
+        let rows = mgmtCdGrid.getCheckedJson();
+        let param = JSON.stringify(rows);
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            // data : JSON.stringify(
-            //     rows
-            // ),
             data : param,
             success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
@@ -114,15 +111,12 @@
 
     function saveRows(){
         let rows = mgmtCdGrid.getJsonRows();
-        let param = JSON.stringify({rows:row});
+        let param = JSON.stringify({rows:rows});
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            // data: JSON.stringify({
-            //     rows
-            // }),
             data : param,
             success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){

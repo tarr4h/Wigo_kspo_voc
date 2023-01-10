@@ -72,9 +72,9 @@ public class VocDtlMgmtPrcdController {
         return Utilities.getGridData(list, page);
     }
 
-    @PostMapping(value = "insertDirPrcd")
-    public @ResponseBody Object insertDirPrcd(@RequestBody EzMap param) throws EgovBizException {
-        return service.insertDirPrcd(param);
+    @PostMapping(value = "insertMgmtPrcd")
+    public @ResponseBody Object insertMgmtPrcd(@RequestBody EzMap param) throws EgovBizException {
+        return service.insertMgmtPrcd(param);
     }
 
     @PostMapping(value = "selectMgmtPrcdGrid")
@@ -127,9 +127,28 @@ public class VocDtlMgmtPrcdController {
         return Utilities.getGridData(convertList, page);
     }
 
-    @GetMapping(value = { "openAddModal/{pageNm}/{key}"})
-    public String openAddModal(@PathVariable String pageNm, @PathVariable String key, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
-        param.put("key", key);
+    @PostMapping(value = "insertMgmtTask")
+    public @ResponseBody Object insertMgmtTask(@RequestBody EzMap param){
+        return service.insertMgmtTask(param);
+    }
+
+    @PostMapping(value = "deleteMgmtActvList")
+    public @ResponseBody Object deleteMgmtActvList(@RequestBody EzMap param){
+        return service.deleteMgmtActvList(param);
+    }
+
+    @PostMapping(value = "deleteMgmtTaskList")
+    public @ResponseBody Object deleteMgmtTaskList(@RequestBody EzMap param){
+        return service.deleteMgmtTaskList(param);
+    }
+
+    @PostMapping(value = "deleteMgmtPrcdList")
+    public @ResponseBody Object deleteMgmtPrcdList(@RequestBody EzMap param){
+        return service.deleteMgmtPrcdList(param);
+    }
+
+    @GetMapping(value = { "openAddModal/{pageNm}"})
+    public String openAddModal(@PathVariable String pageNm, @RequestParam Map<String, Object> param, Model model) throws EgovBizException {
         model.addAttribute("param", param);
         return Utilities.getProperty("tiles.voc.blank") + "program/setting/voc_mgmt_prcd/" + pageNm;
     }

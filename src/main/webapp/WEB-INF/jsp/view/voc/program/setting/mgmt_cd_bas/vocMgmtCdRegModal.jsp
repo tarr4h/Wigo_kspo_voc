@@ -42,7 +42,7 @@
 
 <div class="v_modal_header">
     <h3>분류코드 등록모달</h3>
-    <button id="close_btn">X</button>
+    <a id="close_btn">X</a>
 </div>
 
 <section>
@@ -71,9 +71,9 @@
     let topComnCd;
     let comnCd;
 
-    $(() => {
+    window.onload = function(){
         getPrntsInfo();
-    });
+    };
 
     // eventListener
     $('#register_btn').on('click', function(e){
@@ -86,18 +86,19 @@
 
     function regCode(){
         let mgmtCdNm = $("#mgmtCdNm").val();
+        let param = JSON.stringify({
+            prntsMgmtCd : prntsMgmtCd,
+            topComnCd : topComnCd,
+            comnCd : comnCd,
+            mgmtCdNm : mgmtCdNm
+        });
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({
-                prntsMgmtCd,
-                topComnCd,
-                comnCd,
-                mgmtCdNm
-            }),
-            success(res){
+            data : param,
+            success : function(res){
                 alert(res.msg);
                 if(res.result){
                     let opnr = Utilities.getOpener();
@@ -119,7 +120,7 @@
             data : {
                 mgmtCd : prntsMgmtCd
             },
-            success(res){
+            success : function(res){
                 $("#prntsMgmtCdNm").text(res.mgmtCdNm);
                 topComnCd = res.topComnCd;
                 comnCd = res.comnCd;

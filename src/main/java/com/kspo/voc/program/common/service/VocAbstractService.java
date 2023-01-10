@@ -49,7 +49,11 @@ public abstract class VocAbstractService extends AbstractVocService {
         return dao.selectDirOrg(param);
     }
 
-    public <T> List<T> selectMgmtPrcdList(EzMap param) {
+    public <T> List<T> selectDirPrcdList(Map<String, Object> param){
+        return dao.selectDirPrcdList(param);
+    }
+
+    public <T> List<T> selectMgmtPrcdList(Map<String, Object> param) {
         List<EzMap> list = dao.selectDirPrcdList(param);
 
         if(list.size() == 0){
@@ -59,7 +63,7 @@ public abstract class VocAbstractService extends AbstractVocService {
         return dao.selectMgmtPrcdList(param);
     }
 
-    public <T> List<T> selectMgmtTaskList(EzMap param){
+    public <T> List<T> selectMgmtTaskList(Map<String, Object> param){
         return dao.selectMgmtTaskList(param);
     }
 

@@ -19,7 +19,7 @@
 <!--        <headerRows value="1"/>-->
     </meta>
         <column name="코드" field="actvCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
-        <column name="수행명" field="actvNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
+        <column name="ACTIVITY명" field="actvNm" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>
         <column name="기능유형코드" field="funcTpCd" type="combo" codeId="VOC030" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="호출메소드코드" field="callMthdCd" type="char" maxLength="1000" width="10" readOnly="Y" textAlignment="center" required="Y" hidden="N"/>
         <column name="설명" field="actvExpln" type="char" maxLength="1000" width="10" readOnly="N" textAlignment="center" required="Y" hidden="N"/>

@@ -169,6 +169,62 @@
               )
     </insert>
 
+    <delete id="deleteMgmtActvList">
+        DELETE FROM TB_VOC_MGMT_ACTV_DTL
+        WHERE
+            MGMT_ACTV_CD IN
+            <foreach collection="actvList" item="item" open="(" separator="," close=")">
+                #{item.mgmtActvCd}
+            </foreach>
+    </delete>
+    
+    <delete id="deleteChildMgmtActvList">
+        DELETE FROM TB_VOC_MGMT_ACTV_DTL
+        WHERE
+            MGMT_TASK_CD IN
+            <foreach collection="taskList" item="item" open="(" separator="," close=")">
+                #{item.mgmtTaskCd}
+            </foreach>
+    </delete>
 
+    <delete id="deleteMgmtTaskList">
+        DELETE FROM TB_VOC_MGMT_TASK_DTL
+        WHERE
+            MGMT_TASK_CD IN
+            <foreach collection="taskList" item="item" open="(" separator="," close=")">
+                #{item.mgmtTaskCd}
+            </foreach>
+    </delete>
 
+    <delete id="deleteMgmtPrcdList">
+        DELETE FROM TB_VOC_MGMT_PRCD_DTL
+        WHERE
+            MGMT_PRCD_CD IN
+            <foreach collection="prcdList" item="item" open="(" separator="," close=")">
+                #{item.mgmtPrcdCd}
+            </foreach>
+    </delete>
+
+    <delete id="deleteDirPrcd">
+        DELETE FROM TB_VOC_DIR_PRCD_REL
+        WHERE
+            MGMT_PRCD_CD IN
+            <foreach collection="prcdList" item="item" open="(" separator="," close=")">
+                #{item.mgmtPrcdCd}
+            </foreach>
+    </delete>
+
+    <update id="updateMgmtPrcd">
+        UPDATE TB_VOC_MGMT_PRCD_DTL
+        SET
+            MGMT_PRCD_ORDR = #{mgmtPrcdOrdr},
+            DDLN_SEC = #{ddlnSec},
+            DUTY_ORG_ID = #{dutyOrgId},
+            DUTY_EMP_ID = #{dutyEmpId},
+            DUTY_ROLE_CD = #{dutyRoleCd},
+            AMDR_ID = #{amdrId},
+            AMD_DT = SYSDATE
+        WHERE
+            MGMT_PRCD_CD = #{mgmtPrcdCd}
+    </update>
 </mapper>

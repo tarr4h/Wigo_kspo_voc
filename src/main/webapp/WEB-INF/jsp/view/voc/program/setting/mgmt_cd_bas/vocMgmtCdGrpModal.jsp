@@ -21,41 +21,20 @@
         justify-content: center;
         height: 70px;
     }
-    .register_title{
-        font-size: 15px;
-        margin-right: 10px;
-        margin-left: 10px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: center;
-    }
-    .register_input{
-        height: 26px;
-        width: 210px;
-        border: 1px solid gray;
-        text-align: center;
-    }
-    .register_select{
-        border: 1px solid gray;
-        min-width: 100px;
-        color: #686868;
-    }
-</style>
 
+</style>
 
 
 <div class="v_modal_header">
     <h3>분류코드 그룹 등록</h3>
-    <button id="close_btn" class="func_btn" data-event="close">X</button>
+    <a id="close_btn" class="func_btn" data-event="close">X</button>
 </div>
 
 <div class="register_wrapper">
-    <div class="register_title">등록 그룹명</div>
-    <input type="text" class="register_input" id="mgmtCdNm">
-    <div class="register_title">적용 구분</div>
-    <select id="comnCd" class="register_select">
+    <div>등록 그룹명</div>
+    <input type="text"id="mgmtCdNm">
+    <div>적용 구분</div>
+    <select id="comnCd">
     </select>
     <button id="register_btn" class="btn func_btn" data-event="add">등록</button>
 </div>
@@ -109,7 +88,7 @@
         $.ajax({
             url: '<c:url value="${urlPrefix}/selectComnCdList${urlSuffix}"/>',
             data: param,
-            success(res){
+            success : function(res){
                 $('#comnCd').append(res);
             },
             error: console.log
@@ -128,17 +107,18 @@
         let mgmtCdNm = $("#mgmtCdNm").val();
         let comnCd = $("#comnCd").val();
         let topComnCd = $("#comnCd").find('option:selected').data('top-comn-cd');
+        let param = JSON.stringify({
+            mgmtCdNm : mgmtCdNm,
+            comnCd : comnCd,
+            topComnCd : topComnCd
+        });
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({
-                mgmtCdNm,
-                comnCd,
-                topComnCd
-            }),
-            success(res){
+            data : param,
+            success : function(res){
                 alert(res.msg);
                 if(res.result){
                     let opnr = Utilities.getOpener();
@@ -156,22 +136,21 @@
 
     function deleteRows(){
         let rows = mgmtCdGrid.getCheckedJson();
+        let param = JSON.stringify(rows);
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify(
-                rows
-            ),
-            success(res, status, jqXHR){
+            data : param,
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
-                    alert(`\${res}건이 삭제되었습니다.`);
+                    alert(res + '건이 삭제되었습니다.');
                     let opnr = Utilities.getOpener();
                     opnr.location.reload();
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status}`);
+                    alert('오류가 발생했습니다.\n(에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log
@@ -180,22 +159,21 @@
 
     function saveRows(){
         let rows = mgmtCdGrid.getJsonRows();
+        let param = JSON.stringify({rows: rows});
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data: JSON.stringify({
-                rows
-            }),
-            success(res, status, jqXHR){
+            data: param,
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('저장되었습니다.');
                     let opnr = Utilities.getOpener();
                     opnr.location.reload();
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status})`);
+                    alert('오류가 발생했습니다.\n(에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log

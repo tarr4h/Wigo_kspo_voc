@@ -61,14 +61,15 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                targetInfo, chngMap
+                targetInfo : targetInfo,
+                chngMap : chngMap
             }),
-            success(res, status, jqXHR){
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('변경되었습니다.');
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n에러코드 : \${jqXHR.status}`);
+                    alert('오류가 발생했습니다.\n에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log
@@ -81,7 +82,7 @@
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(param),
-            success(res){
+            success : function(res){
                 if(res.result){
                     alert(res.msg);
                     window.location.reload();
@@ -165,13 +166,13 @@
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({rows}),
-            success(res, status, jqXHR){
+            data : JSON.stringify({rows : rows}),
+            success: function(res, status, jqXHR){
                 if(jqXHR.status === 200){
-                    alert(`\${res}건이 삭제되었습니다.`);
+                    alert(res + ' 건이 삭제되었습니다.');
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n에러코드 : \${jqXHR.status}`);
+                    alert('오류가 발생했습니다.\n에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error : console.log
@@ -185,13 +186,13 @@
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({rows}),
-            success(res, status, jqXHR){
+            data : JSON.stringify({rows : rows}),
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('저장되었습니다.');
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n에러코드 : \${jqXHR.status}`);
+                    alert('오류가 발생했습니다.\n에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log
@@ -199,12 +200,12 @@
     }
 
     function openComnModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 
     function openModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 </script>

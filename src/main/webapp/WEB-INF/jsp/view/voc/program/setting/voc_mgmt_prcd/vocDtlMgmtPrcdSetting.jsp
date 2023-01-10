@@ -134,10 +134,10 @@
                 </div>
                 <div class="v_grid_box v_grid_box_half">
                     <div class="header">
-                        <h3 class="title">수행 등록</h3>
+                        <h3 class="title">ACTIVITY 등록</h3>
                         <div class="v_guide">
                             <div class="v_guideDot"></div>
-                            <span>수행 관리</span>
+                            <span>ACTIVITY 관리</span>
                         </div>
                     </div>
                     <div class="v_btn_area">
@@ -179,13 +179,153 @@
         let evt = $(this).data('event');
 
         switch(evt){
-            case 'prcdAdd' : openAddModal('vocDtlMgmtPrcdRegModal', tpDirCd, 600, 400);break;
+            case 'prcdAdd' : openPrcdModal();break;
+            case 'prcdDel' : deleteMgmtPrcd();break;
             case 'taskAdd' : openTaskModal();break;
+            case 'taskDel' : deleteMgmtTask();break;
             case 'actvAdd' : openActvModal();break;
+            case 'actvDel' : deleteMgmtActv();break;
         }
     });
 
+    function onTreeSelect(data, node, tree){
+        let comnCd = data.comnCd; // 001 : 채널, 002: 유형
+        let mgmtCd = data.mgmtCd;
 
+        if(comnCd === '001'){
+            chMgmtCd = mgmtCd;
+
+            $.ajax({
+                url : '<c:url value="${urlPrefix}/selectSingleDirCd${urlSuffix}"/>',
+                data : {
+                    chMgmtCd : chMgmtCd
+                },
+                success : function(res){
+                    let dirCd = res.dirCd;
+                    if(dirCd === 'undefined' || dirCd == null){
+                        chDirCd = null;
+                        setUnavailableZone('001');
+                        $('#tpTree').hide();
+                        $('#unavailableDirCd').show();
+                        $('#avaliableDirCd').hide();
+                        $('#boxTitle').text('채널을 선택해 주세요.');
+                    } else {
+                        chDirCd = dirCd;
+                        setUnavailableZone('002');
+                        $('#tpTree').show();
+                        $('#boxTitle').text('유형을 선택해 주세요.');
+                    }
+                },
+                error: console.log
+            });
+        } else if(comnCd === '002'){
+            tpMgmtCd = mgmtCd;
+            let boxTitle = $('#boxTitle');
+            let chTxt = $('#divChTree').getSelectedNode().mgmtCdNm;
+            let tpTxt = data.mgmtCdNm;
+            boxTitle.text(chTxt + ' > ' +tpTxt);
+            $('#unavailableDirCd').hide();
+            $('#avaliableDirCd').show();
+
+            // 우측 그리드 호출
+            $.ajax({
+                url : '<c:url value="${urlPrefix}/selectComboDirCd${urlSuffix}"/>',
+                data : {
+                    chMgmtCd : chMgmtCd,
+                    tpMgmtCd : tpMgmtCd
+                },
+                success : function(res){
+                    let dirCd = res.dirCd;
+                    tpDirCd = dirCd;
+                    loadMgmtPrcdGrid(dirCd);
+                },
+                error: console.log
+            })
+
+        }
+    }
+
+    /**
+     * 관리 절차코드 삭제
+     *  - 이하의 TASK, ACTIVITY 삭제처리
+     * @return {boolean}
+     */
+    function deleteMgmtPrcd(){
+        let rows = window['mgmtPrcdGrid'].getCheckedJson();
+
+        if(rows.length === 0){
+            alert('삭제할 절차를 선택해주세요.');
+            return false;
+        }
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteMgmtPrcdList${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({prcdList : rows}),
+            success : function(res){
+                alert(res + '건이 삭제되었습니다.');
+                // window['mgmtPrcdGrid'].reload();
+                // window['mgmtTaskGrid'].reload();
+                // window['mgmtActvGrid'].reload();
+                loadMgmtPrcdGrid(tpDirCd);
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 관리 TASK코드 삭제
+     *  - MGMT_TASK 이하 MGMT_ACTV도 존재 시 삭제처리.
+     * @return {boolean}
+     */
+    function deleteMgmtTask(){
+        let rows = window['mgmtTaskGrid'].getCheckedJson();
+
+        if(rows.length === 0){
+            alert('삭제할 TASK를 선택해주세요.');
+            return false;
+        }
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteMgmtTaskList${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({taskList : rows}),
+            success : function(res){
+                alert(res + '건이 삭제되었습니다.');
+                window['mgmtTaskGrid'].reload();
+                window['mgmtActvGrid'].reload();
+            }
+        })
+    }
+
+    /**
+     * 관리 activity를 삭제
+     * @return {boolean}
+     */
+    function deleteMgmtActv(){
+        let rows = window['mgmtActvGrid'].getCheckedJson();
+
+        if(rows.length === 0){
+            alert('삭제할 activity를 선택해주세요.');
+            return false;
+        }
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/deleteMgmtActvList${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                actvList : rows
+            }),
+            success : function(res){
+                alert(res + '건이 삭제되었습니다.');
+                window['mgmtActvGrid'].reload();
+            },
+            error: console.log
+        })
+    }
 
     /**
      * 우측영역에 안내문구를 삽입
@@ -207,39 +347,6 @@
         $('#unavailableDirCd').empty().append(selected);
     }
 
-    async function onTreeSelect(data, node, tree){
-        let comnCd = data.comnCd; // 001 : 채널, 002: 유형
-        let mgmtCd = data.mgmtCd;
-
-        if(comnCd === '001'){
-            chMgmtCd = mgmtCd;
-            let dirCd = await selectSingleDirCd(mgmtCd);
-
-            if(dirCd === 'undefined' || dirCd == null){
-                chDirCd = null;
-                setUnavailableZone('001');
-                $('#tpTree').hide();
-                $('#unavailableDirCd').show();
-                $('#avaliableDirCd').hide();
-            } else {
-                chDirCd = dirCd;
-                setUnavailableZone('002');
-                $('#tpTree').show();
-                $('#boxTitle').text('유형을 선택해 주세요.');
-            }
-        } else if(comnCd === '002'){
-            tpMgmtCd = mgmtCd;
-            $('#boxTitle').text(data.mgmtCdNm);
-            $('#unavailableDirCd').hide();
-            $('#avaliableDirCd').show();
-
-            // 우측 그리드 호출
-            let dirCd = await selectComboDirCd(chMgmtCd, tpMgmtCd);
-            tpDirCd = dirCd;
-            loadMgmtPrcdGrid(dirCd);
-        }
-    }
-
     function onGridCellClick(gridView,rowIndex,columnName,colIndex,fieldIndex){
         let grid = gridView;
         let gridId = grid.gridId;
@@ -255,7 +362,7 @@
 
     function loadMgmtActvGrid(mgmtTaskCd){
         let param = {
-            mgmtTaskCd,
+            mgmtTaskCd : mgmtTaskCd,
             recordCountPerPage: 10
         };
 
@@ -264,12 +371,13 @@
 
     function loadMgmtTaskGrid(dirCd, mgmtPrcdCd){
         let param = {
-            dirCd,
-            mgmtPrcdCd,
+            dirCd : dirCd,
+            mgmtPrcdCd : mgmtPrcdCd,
             recordCountPerPage: 10
         };
 
         window['mgmtTaskGrid'].loadUrl('', param);
+        loadMgmtActvGrid();
     }
 
     /**
@@ -278,7 +386,7 @@
      */
     function loadMgmtPrcdGrid(dirCd){
         let param = {
-            dirCd,
+            dirCd : dirCd,
             recordCountPerPage : 10
         };
 
@@ -286,7 +394,51 @@
     }
 
     /**
-     * 관리 수행을 등록
+     * 관리 절차를 등록
+     * @param prcdList
+     */
+    function insertMgmtPrcd(prcdList){
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertMgmtPrcd${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data : JSON.stringify({
+                prcdList : prcdList,
+                dirCd : tpDirCd
+            }),
+            success : function(res){
+                alert('등록되었습니다.');
+                window['mgmtPrcdGrid'].reload();
+            },
+            error: console.log
+        });
+    }
+
+    /**
+     * 관리TASK를 등록
+     * @param taskList
+     */
+    function insertMgmtTask(taskList){
+        let mgmtPrcdCd = window['mgmtPrcdGrid'].getCheckedJson()[0].mgmtPrcdCd;
+
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/insertMgmtTask${urlSuffix}"/>',
+            method : 'POST',
+            contentType : 'application/json',
+            data: JSON.stringify({
+                taskList : taskList,
+                mgmtPrcdCd : mgmtPrcdCd
+            }),
+            success : function(res){
+                alert(res + '건이 등록되었습니다.');
+                window['mgmtTaskGrid'].reload();
+            },
+            error: console.log
+        })
+    }
+
+    /**
+     * 관리 activity를 등록
      * @param actvList
      */
     function insertMgmtActv(actvList){
@@ -297,76 +449,24 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                actvList,
-                mgmtTaskCd
+                actvList : actvList,
+                mgmtTaskCd : mgmtTaskCd
             }),
-            success(res){
-                console.log(res);
+            success : function(res){
+                alert(res + '건이 등록되었습니다.');
+                window['mgmtActvGrid'].reload();
             },
             error: console.log
         })
     }
 
     /**
-     * 경로 절차를 등록
-     * @param prcdList
+     * 절차 추가 모달 호출
      */
-    function insertDirPrcd(prcdList){
-        $.ajax({
-            url : '<c:url value="${urlPrefix}/insertDirPrcd${urlSuffix}"/>',
-            method : 'POST',
-            contentType : 'application/json',
-            data : JSON.stringify({
-                prcdList,
-                dirCd : tpDirCd
-            }),
-            success(res){
-                alert('등록되었습니다.');
-            },
-            error: console.log
-        });
-    }
-
-    /**
-     * 유형에 등록할 dirCd 조회
-     *  - 미존재 시 생성
-     * @param chMgmtCd
-     * @param tpMgmtCd
-     */
-    function selectComboDirCd(chMgmtCd, tpMgmtCd){
-        return new Promise(function(resolve, reject){
-            $.ajax({
-                url : '<c:url value="${urlPrefix}/selectComboDirCd${urlSuffix}"/>',
-                data : {
-                    chMgmtCd,
-                    tpMgmtCd
-                },
-                success(res){
-                    resolve(res.dirCd);
-                },
-                error: console.log
-            })
-        });
-    }
-
-    /**
-     * 단건의 경로코드 조회(채널)
-     * @param mgmtCd
-     * @return {Promise<unknown>}
-     */
-    function selectSingleDirCd(mgmtCd){
-        return new Promise(function(resolve, reject){
-            $.ajax({
-                url : '<c:url value="${urlPrefix}/selectSingleDirCd${urlSuffix}"/>',
-                data : {
-                    chMgmtCd : mgmtCd
-                },
-                success(res){
-                    resolve(res.dirCd);
-                },
-                error: console.log
-            });
-        })
+    function openPrcdModal(){
+        let pageNm = 'vocDtlMgmtPrcdRegModal';
+        let url = '<c:url value="${urlPrefix}/openAddModal${urlSuffix}"/>' + "/" + pageNm + "?chDirCd=" + chDirCd + "&tpDirCd=" + tpDirCd;
+        Utilities.openModal(url, 600, 400);
     }
 
     /**
@@ -384,7 +484,9 @@
         }
 
         let mgmtPrcdCd = checkedPrcd[0].mgmtPrcdCd;
-        openAddModal('vocDtlMgmtTaskRegModal', mgmtPrcdCd, 600, 400);
+        let pageNm = 'vocDtlMgmtTaskRegModal';
+        let url = '<c:url value="${urlPrefix}/openAddModal${urlSuffix}"/>' + "/" + pageNm + "?mgmtPrcdCd=" + mgmtPrcdCd;
+        Utilities.openModal(url, 600, 400);
     }
 
     /**
@@ -402,7 +504,9 @@
         }
 
         let mgmtTaskCd = checkedTask[0].mgmtTaskCd;
-        openAddModal('vocDtlMgmtActvRegModal', mgmtTaskCd, 600, 400);
+        let pageNm = 'vocDtlMgmtActvRegModal';
+        let url = '<c:url value="${urlPrefix}/openAddModal${urlSuffix}"/>' + "/" + pageNm + "?mgmtTaskCd=" + mgmtTaskCd;
+        Utilities.openModal(url, 600, 400);
     }
 
     function openAddModal(pageNm, key, width, height){

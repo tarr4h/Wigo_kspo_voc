@@ -14,7 +14,7 @@
 
 <div class="v_modal_header">
     <h3>관리절차 등록</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="grid_wrapper">

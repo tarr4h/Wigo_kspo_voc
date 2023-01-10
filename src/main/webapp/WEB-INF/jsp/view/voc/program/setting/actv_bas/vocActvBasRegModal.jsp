@@ -45,9 +45,9 @@
 </style>
 
 
-<div class="v_header">
-    <h3>수행코드 등록모달</h3>
-    <button id="close_btn" data-event="close">X</button>
+<div class="v_modal_header">
+    <h3>ACTIVITY코드 등록모달</h3>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <section>
@@ -61,7 +61,7 @@
                 </td>
             </tr>
             <tr>
-                <th>등록 수행명</th>
+                <th>등록 ACTIVITY명</th>
                 <td>
                     <input type="text" class="register_input" name="actvNm">
                 </td>
@@ -79,10 +79,9 @@
 </section>
 
 <script>
-
-    $(() => {
+    window.onload = function(){
         getFuncTp();
-    });
+    }
 
     /**
      * 모달 닫기
@@ -101,8 +100,8 @@
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({frmArr}),
-            success(res){
+            data : JSON.stringify({frmArr:frmArr}),
+            success : function(res){
                 if(res > 0){
                     alert('등록되었습니다.');
                     Utilities.getOpener().location.reload();
@@ -121,9 +120,9 @@
         $.ajax({
             url : '<c:url value="${urlPrefix}/getFuncTp${urlSuffix}"/>',
             data : {
-                topComnCd
+                topComnCd : topComnCd
             },
-            success(res){
+            success : function(res){
                 $('select[name="funcTpCd"]').append(res);
             },
             error: console.log

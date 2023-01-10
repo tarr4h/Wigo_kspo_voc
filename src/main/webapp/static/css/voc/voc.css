@@ -100,12 +100,15 @@
     font-weight: 500;
     color: white;
 }
-.v_modal_header button{
+.v_modal_header a{
     float: right;
     border: none;
     background-color: inherit;
     color: white;
     /*margin-right: 20px;*/
+}
+.v_modal_header a:hover{
+    cursor: pointer;
 }
 
 /*form*/

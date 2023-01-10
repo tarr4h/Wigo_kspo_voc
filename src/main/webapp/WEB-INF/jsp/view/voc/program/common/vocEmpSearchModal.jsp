@@ -18,23 +18,6 @@
         border: none;
     }
 
-    .header{
-      height: 15px;
-      padding: 13px;
-      background-color: #676767;
-    }
-    .header h3{
-      display: inline;
-      font-weight: 500;
-      color: white;
-    }
-    .header button{
-      float: right;
-      border: none;
-      background-color: inherit;
-      color: white;
-    }
-
     .org_container{
         display: flex;
     }
@@ -104,9 +87,9 @@
     }
 </style>
 
-<div class="header">
+<div class="v_modal_header">
     <h3>사원 조회</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="org_container">
@@ -176,13 +159,13 @@
     // opener에 empSearchCallback()을 만들어 놓기~
 
     // orgTree정보 제거
-    $(() => {
+    window.onload = function(){
         let opnr = Utilities.getOpener();
         let opnrPrgmId = opnr._PROGRAM_ID;
         let strgKey = opnrPrgmId + 'orgTree';
 
         window.localStorage.removeItem(strgKey);
-    });
+    }
 
     // event listener
     $('#close_btn').on('click', function(){
@@ -214,7 +197,7 @@
 
     function loadGrid(orgId){
         let param = {
-            orgId,
+            orgId : orgId,
             recordCountPerPage : 10
         };
 
@@ -236,12 +219,12 @@
         $target.empty();
 
         let ul = '<ul>';
-        $.each(list, (i, e) => {
-            let li = `
-                <li class='resultOrgRow' data-org-id='\${e.orgId}'>\${e.orgNm}</li>
-            `;
+        for(let i = 0; i < list.length; i++){
+            let li = '<li class="resultOrgRow" data-org-id="' + list[i].orgId + '">' +
+                list[i].orgNm + '</li>';
             ul += li;
-        });
+        }
+
         ul += '</li>';
 
         $target.append(ul);
@@ -251,9 +234,9 @@
         $.ajax({
             url : '<c:url value="${urlPrefix}/selectOrgList${urlSuffix}"/>',
             data: {
-                keyword
+                keyword : keyword
             },
-            success(res){
+            success : function(res){
                 setOrgList(res);
             },
             error: console.log

@@ -80,9 +80,8 @@
             url: '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({mappingSeq}),
-            success(res){
-                console.log(res);
+            data: JSON.stringify({mappCd : mappCd}),
+            success: function(res){
                 alert(res + '건이 삭제되었습니다.');
                 location.reload();
             },
@@ -99,8 +98,8 @@
         let node = target.getSelectedNode();
         let prntsMappCd = node == null ? null : node.id;
         let param = {
-            prntsMappCd,
-            mgmtCd
+            prntsMappCd : prntsMappCd,
+            mgmtCd : mgmtCd
         };
 
         $.ajax({
@@ -108,7 +107,7 @@
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(param),
-            success(res){
+            success : function(res){
                 if(res.result){
                     alert(res.msg);
                     target.reload();

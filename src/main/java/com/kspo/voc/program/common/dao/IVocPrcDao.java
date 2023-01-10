@@ -29,11 +29,11 @@ public interface IVocPrcDao extends IVocDao {
 
     <T> List<T> selectDirOrg(EzMap param);
 
-    <T> List<T> selectMgmtPrcdList(EzMap param);
+    <T> List<T> selectMgmtPrcdList(Map<String, Object> param);
 
-    <T> List<T> selectDirPrcdList(EzMap param);
+    <T> List<T> selectDirPrcdList(Map<String, Object> param);
 
-    <T> List<T> selectMgmtTaskList(EzMap param);
+    <T> List<T> selectMgmtTaskList(Map<String, Object> param);
 
     <T> List<T> selectActvBasList(Object param);
 

@@ -23,9 +23,9 @@
     }
 </style>
 
-<div class="v_modal_header" style="position: fixed; width: 100%">
+<div class="v_modal_header">
     <h3>절차 등록</h3>
-    <button id="close_btn">X</button>
+    <a id="close_btn">X</a>
 </div>
 
 <div id="divTree"
@@ -41,7 +41,6 @@
 <script>
     $("#regBtn").on('click', function(){
         let treeNode = $('#divTree').getSelectedNode();
-        console.log(treeNode);
         if(treeNode.topMgmtCd === treeNode.id){
             alert('최상단코드는 매핑에 추가하실 수 없습니다.');
             return false;
@@ -53,7 +52,7 @@
 
         let mgmtCd = treeNode.id;
         let param = {
-            mgmtCd
+            mgmtCd : mgmtCd
         };
 
         let opnr = Utilities.getOpener();
