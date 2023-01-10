@@ -134,6 +134,13 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
 
         int i = 1;
+        List<VocMgmtTaskVo> existTaskList = selectMgmtTaskList(param);
+        for(VocMgmtTaskVo existTask : existTaskList){
+            existTask.setMgmtTaskOrdr(i);
+            dao.updateMgmtTask(existTask);
+            i++;
+        }
+
         for(Map<String, Object> task : taskList){
             String maxTaskCd = dao.selectMaxMgmtTaskCd();
             task.put("mgmtTaskCd", CodeGeneration.generateCode(maxTaskCd, CodeGeneration.MGMT_TASK));

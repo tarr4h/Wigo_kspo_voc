@@ -3,6 +3,7 @@ package com.kspo.voc.program.setting.dao;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.program.setting.model.VocDirCdVo;
 import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
+import com.kspo.voc.program.setting.model.VocMgmtTaskVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.mapper.VocMapper;
 
@@ -56,4 +57,6 @@ public interface VocDtlMgmtPrcdDao extends IVocDao {
     int deleteDirPrcd(Map<String, Object> param);
 
     int updateMgmtPrcd(VocMgmtPrcdVo existMgmtPrcd);
+
+    int updateMgmtTask(VocMgmtTaskVo existTask);
 }
