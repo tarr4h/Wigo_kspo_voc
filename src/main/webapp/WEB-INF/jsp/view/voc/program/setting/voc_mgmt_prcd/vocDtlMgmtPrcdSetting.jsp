@@ -164,10 +164,10 @@
 
 
 <script>
-    $(() => {
+    window.onload = function(){
         window.localStorage.removeItem('vocDtlMgmtPrcddivChTree');
         window.localStorage.removeItem('vocDtlMgmtPrcddivTpTree');
-    });
+    };
 
     let chDirCd = null;
     let tpDirCd = null;
@@ -180,6 +180,7 @@
 
         switch(evt){
             case 'prcdAdd' : openAddModal('vocDtlMgmtPrcdRegModal', tpDirCd, 600, 400);break;
+            case 'taskAdd' : openTaskModal();break;
             case 'actvAdd' : openActvModal();break;
         }
     });
@@ -243,6 +244,7 @@
         let grid = gridView;
         let gridId = grid.gridId;
         let targetCol = grid.getJsonRow(rowIndex);
+        grid.uncheckAll();
         grid.check(rowIndex);
 
         switch(gridId){
@@ -367,6 +369,28 @@
         })
     }
 
+    /**
+     * TASK 추가 모달 호출
+     * @return {boolean}
+     */
+    function openTaskModal(){
+        let checkedPrcd = window['mgmtPrcdGrid'].getCheckedJson();
+        if(checkedPrcd.length > 1){
+            alert('1개의 절차만 선택해 주세요.');
+            return false;
+        } else if(checkedPrcd.length === 0){
+            alert('절차를 먼저 지정해 주세요');
+            return false;
+        }
+
+        let mgmtPrcdCd = checkedPrcd[0].mgmtPrcdCd;
+        openAddModal('vocDtlMgmtTaskRegModal', mgmtPrcdCd, 600, 400);
+    }
+
+    /**
+     * 수행 추가 모달 호출
+     * @return {boolean}
+     */
     function openActvModal(){
         let checkedTask = window['mgmtTaskGrid'].getCheckedJson();
         if(checkedTask.length > 1){
@@ -378,7 +402,7 @@
         }
 
         let mgmtTaskCd = checkedTask[0].mgmtTaskCd;
-        openAddModal('vocDtlMgmtActvRegModal', mgmtTaskCd, 600, 400)
+        openAddModal('vocDtlMgmtActvRegModal', mgmtTaskCd, 600, 400);
     }
 
     function openAddModal(pageNm, key, width, height){

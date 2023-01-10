@@ -3,10 +3,7 @@ package com.kspo.voc.program.setting.controller;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.EzPaginationInfo;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.program.setting.model.VocActvBasVo;
-import com.kspo.voc.program.setting.model.VocMgmtPrcdVo;
-import com.kspo.voc.program.setting.model.VocMgmtTaskVo;
-import com.kspo.voc.program.setting.model.VocPrcdBasVo;
+import com.kspo.voc.program.setting.model.*;
 import com.kspo.voc.program.setting.service.VocDtlMgmtPrcdService;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
@@ -93,6 +90,15 @@ public class VocDtlMgmtPrcdController {
     public @ResponseBody Object selectMgmtTaskGrid(@RequestBody EzMap param){
         EzPaginationInfo page = param.getPaginationInfo();
         List<VocMgmtTaskVo> list = service.selectMgmtTaskList(param);
+        List<Map<String, Object>> convertList = Utilities.beanToMap(list);
+        page.setTotalRecordCount(list.size());
+        return Utilities.getGridData(convertList, page);
+    }
+
+    @PostMapping(value = "selectTaskBasListGrid")
+    public @ResponseBody Object selectTaskBasListGrid(@RequestBody EzMap param){
+        EzPaginationInfo page = param.getPaginationInfo();
+        List<VocTaskBasVo> list = service.selectAvailableTaskBasList(param);
         List<Map<String, Object>> convertList = Utilities.beanToMap(list);
         page.setTotalRecordCount(list.size());
         return Utilities.getGridData(convertList, page);

@@ -160,4 +160,14 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return list;
     }
 
+    public List<VocTaskBasVo> selectAvailableTaskBasList(EzMap param) {
+        List<VocTaskBasVo> list = selectTaskBasList(param);
+
+        List<VocMgmtTaskVo> mgmtTaskList = selectMgmtTaskList(param);
+        for(VocMgmtTaskVo mgmtTaskVo : mgmtTaskList){
+            list.removeIf(value -> value.getTaskCd().equals(mgmtTaskVo.getTaskCd()));
+        }
+
+        return list;
+    }
 }

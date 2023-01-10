@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * <pre>
  * com.kspo.voc.program.setting.model.VocMgmtPrcdVo
- *  - VocMgmtPrcdVo.java
+ *  - VocMgmtPrcdVo.java1
  * </pre>
  *
  * @ClassName     : VocMgmtPrcdVo
@@ -32,5 +32,7 @@ public class VocMgmtTaskVo extends VocTaskBasVo {
     private String regDt;
     private String amdrId;
     private String amdDt;
+
+    private int actvCnt;
 
 }

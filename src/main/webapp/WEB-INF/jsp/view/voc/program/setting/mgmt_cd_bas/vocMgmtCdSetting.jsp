@@ -89,21 +89,23 @@
     });
 
     function deleteRows(){
-        let rows = mgmtCdGrid.getCheckedJson();
+        let row = mgmtCdGrid.getCheckedJson();
+        let param = JSON.stringify({rows:row});
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify(
-                rows
-            ),
-            success(res, status, jqXHR){
+            // data : JSON.stringify(
+            //     rows
+            // ),
+            data : param,
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
-                    alert(`\${res}건이 삭제되었습니다.`);
+                    alert(res + '건이 삭제되었습니다.');
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status}`);
+                    alert('오류가 발생했습니다.\n(에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log
@@ -112,20 +114,22 @@
 
     function saveRows(){
         let rows = mgmtCdGrid.getJsonRows();
+        let param = JSON.stringify({rows:row});
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data: JSON.stringify({
-                rows
-            }),
-            success(res, status, jqXHR){
+            // data: JSON.stringify({
+            //     rows
+            // }),
+            data : param,
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200){
                     alert('저장되었습니다.');
                     location.reload();
                 } else {
-                    alert(`오류가 발생했습니다.\n(에러코드 : \${jqXHR.status})`);
+                    alert('오류가 발생했습니다.\n(에러코드 : ' + jqXHR.status + ')');
                 }
             },
             error: console.log
@@ -133,7 +137,7 @@
     }
 
     function openRegModal(pageNm, width, height, prntsMgmtCd){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}` + "?prntsMgmtCd=" + prntsMgmtCd;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm + "?prntsMgmtCd=" + prntsMgmtCd;
         Utilities.openModal(url, width, height);
     }
 
@@ -157,7 +161,7 @@
 
     function loadGrid(prntsMgmtCd){
         let param = {
-            prntsMgmtCd,
+            prntsMgmtCd : prntsMgmtCd,
             recordCountPerPage : 10
         };
 
