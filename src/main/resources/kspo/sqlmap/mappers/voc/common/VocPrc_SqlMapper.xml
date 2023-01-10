@@ -298,6 +298,8 @@
             ON TVMTD.TASK_CD = TVTB.TASK_CD
         WHERE
             TVMTD.MGMT_PRCD_CD = #{mgmtPrcdCd}
+        ORDER BY
+            TVMTD.MGMT_TASK_ORDR
     </select>
 
     <select id="selectMgmtActvList" resultType="com.kspo.voc.program.setting.model.VocMgmtActvVo">

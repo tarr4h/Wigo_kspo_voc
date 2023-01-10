@@ -23,7 +23,7 @@ public class VocMgmtTaskVo extends VocTaskBasVo {
     private String mgmtTaskCd;
     private String taskCd;
     private String mgmtPrcdCd;
-    private String mgmtTaskOrdr;
+    private int mgmtTaskOrdr;
     private int ddlnSec;
     private String dutyOrgId;
     private String dutyEmpId;

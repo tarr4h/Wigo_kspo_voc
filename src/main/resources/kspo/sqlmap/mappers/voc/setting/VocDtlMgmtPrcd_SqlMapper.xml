@@ -227,4 +227,18 @@
         WHERE
             MGMT_PRCD_CD = #{mgmtPrcdCd}
     </update>
+
+    <update id="updateMgmtTask">
+        UPDATE TB_VOC_MGMT_TASK_DTL
+        SET
+            MGMT_TASK_ORDR = #{mgmtTaskOrdr},
+            DDLN_SEC = #{ddlnSec},
+            DUTY_ORG_ID = #{dutyOrgId},
+            DUTY_EMP_ID = #{dutyEmpId},
+            DUTY_ROLE_CD = #{dutyRoleCd},
+            AMDR_ID = #{amdrId},
+            AMD_DT = SYSDATE
+        WHERE
+            MGMT_TASK_CD = #{mgmtTaskCd}
+    </update>
 </mapper>
