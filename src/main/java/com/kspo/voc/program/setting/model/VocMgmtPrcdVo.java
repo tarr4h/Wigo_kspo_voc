@@ -18,19 +18,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VocMgmtPrcdVo extends VocPrcdBasVo {
+public class VocMgmtPrcdVo extends VocMgmtBaseVo {
 
     private String mgmtPrcdCd;
     private String prcdCd;
     private int mgmtPrcdOrdr;
-    private int ddlnSec;
-    private String dutyOrgId;
-    private String dutyEmpId;
-    private String dutyRoleCd;
-    private String regrId;
-    private String regDt;
-    private String amdrId;
-    private String amdDt;
+    private String prcdNm;
 
-    private int taskCnt;
+    @Override
+    public String getDutyOrgNm(){
+        return super.getDutyOrgNm();
+    }
+
+    @Override
+    public int getChildCnt() {
+        return super.getChildCnt();
+    }
 }

@@ -1,15 +1,18 @@
 package com.kspo.voc.program.setting.service;
 
 import com.kspo.base.common.model.AbstractTreeVo;
+import com.kspo.base.common.model.BaseVo;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.program.common.service.VocAbstractService;
 import com.kspo.voc.program.common.stnd.CodeGeneration;
 import com.kspo.voc.program.common.stnd.ManageCodeCategory;
+import com.kspo.voc.program.common.util.VocUtils;
 import com.kspo.voc.program.setting.dao.VocDtlMgmtPrcdDao;
 import com.kspo.voc.program.setting.model.*;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -157,6 +160,13 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         List<Map<String, Object>> actvList = (List<Map<String, Object>>) param.get("actvList");
 
         int i = 1;
+        List<VocMgmtActvVo> existActvList = selectMgmtActvList(param);
+        for(VocMgmtActvVo existActv : existActvList){
+            existActv.setMgmtActvOrdr(i);
+            dao.updateMgmtActv(existActv);
+            i++;
+        }
+
         for(Map<String, Object> actv : actvList){
             String maxActvCd = dao.selectMaxMgmtActvCd();
             actv.put("mgmtActvCd", CodeGeneration.generateCode(maxActvCd, CodeGeneration.MGMT_ACTV));
@@ -198,17 +208,6 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return returnList;
     }
 
-    public List<VocActvBasVo> selectAvailableActvBasList(EzMap param) {
-        List<VocActvBasVo> list = selectActvBasList(param);
-
-        List<VocMgmtActvVo> mgmtActvList = selectMgmtActvList(param);
-        for(VocMgmtActvVo mgmtActvVo : mgmtActvList){
-            list.removeIf(value -> value.getActvCd().equals(mgmtActvVo.getActvCd()));
-        }
-
-        return list;
-    }
-
     public List<VocTaskBasVo> selectAvailableTaskBasList(EzMap param) {
         List<VocTaskBasVo> list = selectTaskBasList(param);
 
@@ -220,6 +219,16 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return list;
     }
 
+    public List<VocActvBasVo> selectAvailableActvBasList(EzMap param) {
+        List<VocActvBasVo> list = selectActvBasList(param);
+
+        List<VocMgmtActvVo> mgmtActvList = selectMgmtActvList(param);
+        for(VocMgmtActvVo mgmtActvVo : mgmtActvList){
+            list.removeIf(value -> value.getActvCd().equals(mgmtActvVo.getActvCd()));
+        }
+
+        return list;
+    }
 
     public Object deleteMgmtActvList(Map<String, Object> param) {
         return dao.deleteMgmtActvList(param);
@@ -246,4 +255,38 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         dao.deleteDirPrcd(param);
         return mgmtPrcdDelRslt ;
     }
+
+    public Object updateMgmtList(EzMap param, Class<? extends VocMgmtBaseVo> cls){
+        List<Map<String, Object>> list = (List<Map<String, Object>>) param.get("rows");
+
+        int updateRslt = 0;
+        for(Map<String, Object> map : list){
+            VocMgmtBaseVo mbv = Utilities.mapToBean(map, cls);
+            if(param.get("orgId") != null && !param.get("orgId").equals("")){
+                mbv.setDutyOrgId((String) param.get("orgId"));
+            } else if(param.get("ddln") != null && !param.get("ddln").equals("")){
+                Map<String, Object> ddln = (Map<String, Object>) param.get("ddln");
+                VocUtils.sumUpDeadline(ddln);
+                mbv.setDdlnSec(VocUtils.parseIntObject(ddln.get("ddlnSec")));
+            }
+
+            updateRslt += updateMgmt(mbv);
+        }
+
+        return updateRslt;
+    }
+
+    public int updateMgmt(VocMgmtBaseVo vo){
+        Class<? extends VocMgmtBaseVo> cls = vo.getClass();
+        if(cls.equals(VocMgmtPrcdVo.class)){
+            return dao.updateMgmtPrcd((VocMgmtPrcdVo) vo);
+        } else if(cls.equals(VocMgmtTaskVo.class)){
+            return dao.updateMgmtTask((VocMgmtTaskVo) vo);
+        } else if(cls.equals(VocMgmtActvVo.class)) {
+            return dao.updateMgmtActv((VocMgmtActvVo) vo);
+        } else {
+            return 0;
+        }
+    }
+
 }
