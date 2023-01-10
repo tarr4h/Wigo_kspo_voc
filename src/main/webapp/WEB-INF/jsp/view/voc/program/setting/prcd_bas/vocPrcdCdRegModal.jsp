@@ -14,7 +14,7 @@
 
 <div class="v_modal_header">
     <h3>절차코드 등록모달</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <form id="regPrcdFrm">
@@ -180,9 +180,9 @@
 </form>
 
 <script>
-    $(() => {
+    window.onload = function(){
         selectComnCdList();
-    });
+    }
 
     // evente listener
     $('#close_btn').on('click', function(){
@@ -211,7 +211,7 @@
         $.ajax({
             url: '<c:url value="${urlPrefix}/selectComnCdList${urlSuffix}"/>',
             data: param,
-            success(res){
+            success : function(res){
                 $('select[name="comnCd"]').append(res);
             },
             error: console.log
@@ -231,11 +231,12 @@
         let dutyValidate = $('.duty_validate');
         let chk = 0;
 
-        $.each(dutyValidate, (i, e) => {
-           if($(e).val() === '' || $(e).val() == null){
-               chk++;
-           }
-        });
+        for(let i = 0; i < dutyValidate.length; i++){
+            let val = $(dutyValidate[i]).val();
+            if(val === '' || val == null){
+                chk++;
+            }
+        }
 
         if(chk === dutyValidate.length){
             alert('권한변경 불가인 경우, 담당부서/담당자/적용권한 중 최소 1개는 등록되어야 합니다.');
@@ -247,6 +248,11 @@
     }
 
     function regProcedureCode(){
+        if($('input[name="prcdNm"]').val() === ''){
+            alert('절차명을 입력해 주세요.');
+            return false;
+        }
+
         if(!validateDuty()){
             return false;
         }
@@ -268,9 +274,9 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                formArr
+                formArr : formArr
             }),
-            success(res, status, jqXHR){
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200 && res === 1){
                     alert('등록되었습니다.');
                     Utilities.getOpener().location.reload();
@@ -283,7 +289,7 @@
 
 
     function openComnModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 

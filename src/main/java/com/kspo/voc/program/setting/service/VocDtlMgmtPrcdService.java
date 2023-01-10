@@ -14,6 +14,8 @@ import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,12 +88,19 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return param;
     }
 
-    public Object insertDirPrcd(Map<String, Object> param) throws EgovBizException {
+    public Object insertMgmtPrcd(Map<String, Object> param) throws EgovBizException {
         List<Map<String, Object>> prcdList = (List<Map<String, Object>>) param.get("prcdList");
 
+        List<VocMgmtPrcdVo> existMgmtPrcdList = selectMgmtPrcdList(param);
+
         int i = 1;
+        for(VocMgmtPrcdVo existMgmtPrcd : existMgmtPrcdList){
+            existMgmtPrcd.setMgmtPrcdOrdr(i);
+            dao.updateMgmtPrcd(existMgmtPrcd);
+            i++;
+        }
+
         for(Map<String, Object> prcd : prcdList){
-            log.debug("prcd : {}", prcd);
             String maxMgmtPrcdCd = dao.selectMaxMgmtPrcdCd();
             prcd.put("mgmtPrcdCd", CodeGeneration.generateCode(maxMgmtPrcdCd, CodeGeneration.MGMT_PRCD));
             prcd.put("mgmtPrcdOrdr", i);
@@ -121,6 +130,21 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         return (i-1);
     }
 
+    public Object insertMgmtTask(EzMap param) {
+        List<Map<String, Object>> taskList = (List<Map<String, Object>>) param.get("taskList");
+
+        int i = 1;
+        for(Map<String, Object> task : taskList){
+            String maxTaskCd = dao.selectMaxMgmtTaskCd();
+            task.put("mgmtTaskCd", CodeGeneration.generateCode(maxTaskCd, CodeGeneration.MGMT_TASK));
+            task.put("mgmtPrcdCd", param.get("mgmtPrcdCd"));
+            task.put("mgmtTaskOrdr", i);
+            dao.insertMgmtTask(task);
+            i++;
+        }
+
+        return taskList.size();
+    }
 
     public Object insertMgmtActv(EzMap param) {
         List<Map<String, Object>> actvList = (List<Map<String, Object>>) param.get("actvList");
@@ -141,12 +165,30 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
     public List<VocPrcdBasVo> selectAvailablePrcdBasList(EzMap param) {
         List<VocPrcdBasVo> list = selectPrcdBasList(param);
 
+        // 이미 등록된 절차는 제외처리.
         List<VocMgmtPrcdVo> mgmtPrcdList = selectMgmtPrcdList(param);
         for(VocMgmtPrcdVo mgmtPrcdVo : mgmtPrcdList){
             list.removeIf(value -> value.getPrcdCd().equals(mgmtPrcdVo.getPrcdCd()));
         }
+        
+        // 채널의 VOC 마스터 절차에 등록되지 않은 절차는 제외처리
+        List<VocPrcdBasVo> returnList = new ArrayList<>();
+        param.put("dirCd", param.get("chDirCd"));
+        List<VocMgmtPrcdVo> chMgmtPrcdList = selectMgmtPrcdList(param);
+        for(VocPrcdBasVo prcdBas : list){
+            int cnt = 0;
+            for(VocMgmtPrcdVo chMgmtPrcdVo : chMgmtPrcdList){
+                if(prcdBas.getPrcdCd().equals(chMgmtPrcdVo.getPrcdCd())){
+                    cnt++;
+                }
+            }
 
-        return list;
+            if(cnt != 0){
+                returnList.add(prcdBas);
+            }
+        }
+
+        return returnList;
     }
 
     public List<VocActvBasVo> selectAvailableActvBasList(EzMap param) {
@@ -169,5 +211,32 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
         }
 
         return list;
+    }
+
+
+    public Object deleteMgmtActvList(Map<String, Object> param) {
+        return dao.deleteMgmtActvList(param);
+    }
+
+    public Object deleteMgmtTaskList(Map<String, Object> param) {
+        dao.deleteChildMgmtActvList(param);
+        return dao.deleteMgmtTaskList(param);
+    }
+
+    public Object deleteMgmtPrcdList(Map<String, Object> param) {
+        List<Map<String, Object>> prcdList = (List<Map<String, Object>>) param.get("prcdList");
+        for(Map<String, Object> prcd : prcdList){
+            Map<String, Object> taskParam = new HashMap<>();
+
+            List<VocMgmtTaskVo> taskList = selectMgmtTaskList(prcd);
+            if(taskList.size() != 0){
+                taskParam.put("taskList", taskList);
+                deleteMgmtTaskList(taskParam);
+            }
+        }
+
+        int mgmtPrcdDelRslt = dao.deleteMgmtPrcdList(param);
+        dao.deleteDirPrcd(param);
+        return mgmtPrcdDelRslt ;
     }
 }

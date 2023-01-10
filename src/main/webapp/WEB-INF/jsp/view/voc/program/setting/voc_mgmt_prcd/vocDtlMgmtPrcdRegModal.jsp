@@ -13,7 +13,7 @@
 
 <div class="v_modal_header">
     <h3>상세VOC 관리절차 등록</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="grid_wrapper">
@@ -35,7 +35,8 @@
         let param = {
             recordCountPerPage : 10,
             vocDtlApplyYn : 'Y',
-            dirCd : '${key}'
+            dirCd : '${param.tpDirCd}',
+            chDirCd : '${param.chDirCd}'
         };
         window['prcdBasGrid'].loadUrl('', param);
     }
@@ -44,7 +45,7 @@
         let opnr = Utilities.getOpener();
         let rows = window['prcdBasGrid'].getCheckedJson();
 
-        opnr.insertDirPrcd(rows);
+        opnr.insertMgmtPrcd(rows);
         Utilities.closeModal();
     });
 

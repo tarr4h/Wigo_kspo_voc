@@ -13,7 +13,7 @@
 
 <div class="v_modal_header">
     <h3>상세VOC 수행 등록</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="grid_wrapper">
@@ -36,7 +36,7 @@
         let param = {
             recordCountPerPage : 10,
             useYn : 'Y',
-            mgmtTaskCd : '${key}'
+            mgmtTaskCd : '${param.mgmtTaskCd}'
         };
         window['actvBasGrid'].loadUrl('', param);
     }

@@ -14,7 +14,7 @@
 
 <div class="v_modal_header">
     <h3>TASK코드 등록모달</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <form id="regTaskFrm">
@@ -220,11 +220,18 @@
         let dutyValidate = $('.duty_validate');
         let chk = 0;
 
-        $.each(dutyValidate, (i, e) => {
-            if($(e).val() === '' || $(e).val() == null){
+        // $.each(dutyValidate, (i, e) => {
+        //     if($(e).val() === '' || $(e).val() == null){
+        //         chk++;
+        //     }
+        // });
+
+        for(let i = 0; i < dutyValidate.length; i++){
+            let val = $(dutyValidate[i]).val();
+            if(val === '' || val == null){
                 chk++;
             }
-        });
+        }
 
         if(chk === dutyValidate.length){
             alert('권한변경 불가인 경우, 담당부서/담당자/적용권한 중 최소 1개는 등록되어야 합니다.');
@@ -253,9 +260,9 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                formArr
+                formArr : formArr
             }),
-            success(res, status, jqXHR){
+            success : function(res, status, jqXHR){
                 if(jqXHR.status === 200 && res.result){
                     alert(res.msg);
                     Utilities.getOpener().location.reload();
@@ -308,7 +315,7 @@
      * @param param
      */
     function openModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 
@@ -319,7 +326,7 @@
      * @param height
      */
     function openComnModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 

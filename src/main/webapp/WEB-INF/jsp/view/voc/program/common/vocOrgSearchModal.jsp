@@ -18,23 +18,6 @@
         border: none;
     }
 
-    .header{
-      height: 15px;
-      padding: 13px;
-      background-color: #676767;
-    }
-    .header h3{
-      display: inline;
-      font-weight: 500;
-      color: white;
-    }
-    .header button{
-      float: right;
-      border: none;
-      background-color: inherit;
-      color: white;
-    }
-
     .org_container{
         display: flex;
     }
@@ -100,9 +83,9 @@
     }
 </style>
 
-<div class="header">
+<div class="v_modal_header">
     <h3>부서 조회</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="org_container">
@@ -165,13 +148,13 @@
     // opener에 orgSearchCallback(data)을 만들어 놓기~
 
     // orgTree정보 제거
-    $(() => {
+    window.onload = function(){
         let opnr = Utilities.getOpener();
         let opnrPrgmId = opnr._PROGRAM_ID;
         let strgKey = opnrPrgmId + 'orgTree';
 
         window.localStorage.removeItem(strgKey);
-    });
+    }
 
     // event listener
     $('#close_btn').on('click', function(){
@@ -216,7 +199,7 @@
 
     function loadGrid(keyword){
         let param = {
-            keyword,
+            keyword : keyword,
             recordCountPerPage : 10
         };
 

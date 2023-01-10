@@ -13,7 +13,7 @@
 
 <div class="v_modal_header">
     <h3>상세VOC TASK 등록</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="grid_wrapper">
@@ -36,17 +36,17 @@
         let param = {
             recordCountPerPage : 10,
             useYn : 'Y',
-            mgmtPrcdCd : '${key}'
+            mgmtPrcdCd : '${param.mgmtPrcdCd}'
         };
         window['taskBasGrid'].loadUrl('', param);
     }
 
     $('#regBtn').on('click', function(){
         let opnr = Utilities.getOpener();
-        let rows = window['actvBasGrid'].getCheckedJson();
+        let rows = window['taskBasGrid'].getCheckedJson();
 
-        // opnr.insertMgmtActv(rows);
-        // Utilities.closeModal();
+        opnr.insertMgmtTask(rows);
+        Utilities.closeModal();
     });
 
     /**

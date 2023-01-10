@@ -22,7 +22,7 @@ public class VocMgmtPrcdVo extends VocPrcdBasVo {
 
     private String mgmtPrcdCd;
     private String prcdCd;
-    private String mgmtPrcdOrdr;
+    private int mgmtPrcdOrdr;
     private int ddlnSec;
     private String dutyOrgId;
     private String dutyEmpId;

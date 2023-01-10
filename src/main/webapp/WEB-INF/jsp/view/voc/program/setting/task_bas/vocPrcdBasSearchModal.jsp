@@ -21,7 +21,7 @@
 
 <div class="v_modal_header">
     <h3>자동적용 대상 절차 선택</h3>
-    <button id="close_btn" data-event="close">X</button>
+    <a id="close_btn" data-event="close">X</a>
 </div>
 
 <div class="mBox1">
@@ -32,7 +32,7 @@
              data-grid-id="appliedPrcdGrid"
              data-type="grid"
              data-grid-callback="onGridLoad"
-             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasSearch.xml${urlSuffix}'/>"
+             data-tpl-url="<c:url value='/static/gridTemplate/voc/vocPrcdBasListSearch_dtl.xml${urlSuffix}'/>"
              style="width:100%;height:150px;"
         >
         </div>
@@ -69,12 +69,9 @@
     });
 
     function onGridButtonClicked(gridView, row, col, json) {
-        let prcdNm = json.prcdNm;
-        let prcdCd = json.prcdCd;
-
         let param = {
-            prcdNm,
-            prcdCd
+            prcdNm : json.prcdNm,
+            prcdCd : json.prcdCd
         };
 
         let opnr = Utilities.getOpener();

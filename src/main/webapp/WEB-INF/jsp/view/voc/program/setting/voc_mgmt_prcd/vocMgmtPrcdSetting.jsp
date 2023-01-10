@@ -108,16 +108,27 @@
         };
     })
 
-    async function onTreeSelect(data, node, tree){
-        selectedDirCd = await selectSingleDirCd(data.mgmtCd);
-        $('#boxTitle').text(data.mgmtCdNm);
-        loadGrid(selectedDirCd, window['dirOrgGrid']);
-        loadGrid(selectedDirCd, window['mgmtPrcdGrid']);
+    function onTreeSelect(data, node, tree){
+        $.ajax({
+            url : '<c:url value="${urlPrefix}/selectDirCd${urlSuffix}"/>',
+            data: {
+                chMgmtCd : data.mgmtCd
+            },
+            success : function(res){
+                selectedDirCd = res.dirCd;
+            },
+            error: console.log,
+            complete : function(){
+                $('#boxTitle').text(data.mgmtCdNm);
+                loadGrid(selectedDirCd, window['dirOrgGrid']);
+                loadGrid(selectedDirCd, window['mgmtPrcdGrid']);
+            }
+        });
     }
 
     function loadGrid(dirCd, grid){
         let param = {
-            dirCd,
+            dirCd : dirCd,
             recordCountPerPage : 10
         };
 
@@ -135,10 +146,10 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                mgmtPrcdList,
+                mgmtPrcdList : mgmtPrcdList,
                 dirCd : selectedDirCd
             }),
-            success(res){
+            success : function(res){
                 alert(res.msg);
                 if(res.result){
                     location.reload();
@@ -159,9 +170,9 @@
             contentType : 'application/json',
             data : JSON.stringify({
                 dirCd : selectedDirCd,
-                prcdBasList
+                prcdBasList : prcdBasList
             }),
-            success(res){
+            success : function(res){
                 alert(res.msg);
                 if(res.result){
                     location.reload();
@@ -184,10 +195,10 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                rows,
+                rows : rows,
                 dirCd : selectedDirCd
             }),
-            success(res){
+            success : function(res){
                 alert(res.msg);
                 if(res.result){
                     location.reload();
@@ -210,10 +221,10 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                rows,
+                rows : rows,
                 dirCd : selectedDirCd
             }),
-            success(res, status, jqXHR){
+            success : function(res, status, jqXHR){
                 alert(res.msg);
                 if(res.result){
                     location.reload();
@@ -223,26 +234,6 @@
             },
             error: console.log
         });
-    }
-
-    /**
-     * 경로코드 조회
-     * @param mgmtCd
-     * @return dirCd
-     */
-    function selectSingleDirCd(mgmtCd){
-        return new Promise(function(resolve, reject){
-            $.ajax({
-               url : '<c:url value="${urlPrefix}/selectDirCd${urlSuffix}"/>',
-               data: {
-                   chMgmtCd : mgmtCd
-               },
-               success(res){
-                   resolve(res.dirCd);
-               },
-               error: console.log
-            });
-        })
     }
 
     /**
@@ -256,10 +247,10 @@
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({
-                dirCd,
-                orgId
+                dirCd : dirCd,
+                orgId : orgId
             }),
-            success(res){
+            success: function(res){
                 if(res > 0){
                     alert('부서가 추가되었습니다.');
                     location.reload();
@@ -286,7 +277,7 @@
      * @param height
      */
     function openModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 
@@ -297,7 +288,7 @@
      * @param height
      */
     function openComnModal(pageNm, width, height){
-        let url = `<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/\${pageNm}`;
+        let url = '<c:url value='${urlPrefix}/openComnModal${urlSuffix}'/>/' + pageNm;
         Utilities.openModal(url, width, height);
     }
 

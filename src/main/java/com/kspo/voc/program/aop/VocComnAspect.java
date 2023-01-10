@@ -3,10 +3,12 @@ package com.kspo.voc.program.aop;
 
 import java.util.Map;
 
+import com.kspo.base.common.model.BaseVo;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Signature;
+import org.apache.poi.ss.formula.functions.T;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -30,6 +32,8 @@ public class VocComnAspect {
                 ((EzMap) arg).put("loginUsr", Utilities.getLoginId());
             } else if(arg instanceof Map){
                 ((Map<String, Object>) arg).put("loginUsr", Utilities.getLoginId());
+            } else if(arg instanceof T){
+                ((BaseVo) arg).setAmdrId(Utilities.getLoginId());
             }
         }
     }

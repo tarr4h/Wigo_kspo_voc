@@ -22,7 +22,7 @@
 
 <div class="v_modal_header">
     <h3>처리기한 수정</h3>
-    <button id="close_btn">X</button>
+    <a id="close_btn">X</a>
 </div>
 
 <div class="content_wrapper">
