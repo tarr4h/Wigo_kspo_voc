@@ -46,13 +46,14 @@ public class FileInfoTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		StringBuffer html = new StringBuffer();
-		String idNm = "";
+		StringBuffer idNm = new StringBuffer();
 		if(Utilities.isNotEmpty(id))
-			idNm += " id='"+id+"'";
+			idNm.append(" id='").append(id).append( "'");
 		if(Utilities.isNotEmpty(name))
-			idNm += " name='"+name+"'";
+			idNm.append(" name='").append( name).append( "'");
 		String dataInfo = "data-file-id='"+fileId+"' data-file-seq='"+fileSeq+"' data-file-category='"+fileCategory+"' data-accept-ext='"+acceptExts+"' data-accept-types='"+acceptFileTypes+"' "+idNm;
-		String info = "<span "+dataInfo+" data-file-info='info' >";
+		StringBuffer info = new StringBuffer();
+		info.append("<span " ).append( dataInfo ).append( " data-file-info='info' >");
 		String button = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" type=\"button\" data-click=\"onFileInfo\" data-file-info='button'>첨부</button>";
 		String cancel = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" style='display:none'  type=\"button\" data-click=\"onCancelFileInfo\"  data-file-info='cancel'>취소</button>";
 		String remove = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" style='display:none'  type=\"button\" data-click=\"onRemoveFileInfo\"  data-file-info='remove'>삭제</button>";
@@ -67,21 +68,21 @@ public class FileInfoTag extends TagSupport {
 		try {
 			fileList = service.getList(param);
 			if (Utilities.isEmpty(fileList))
-				info += "첨부없음";
+				info .append( "첨부없음");
 			else {
 				remove = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" type=\"button\" data-click=\"onRemoveFileInfo\"  data-file-info='remove'>삭제</button>";
 				download = "&nbsp;<button "+dataInfo+" class=\"btnInner gray btnSubmit\" data-file-url='"+fileList.get(0).getFileUrl()+"' data-file-nm='"+fileList.get(0).getFileNm()+"' type=\"button\" data-click=\"onDownloadFileInfo\"  data-file-info='download'>받기</button>";
-				info += fileList.get(0).getFileNm();
+				info.append( fileList.get(0).getFileNm());
 				
 				if (fileList.size() > 1)
-					info += "(총 " + fileList.size() + " 파일)";
+					info.append( "(총 " ).append( fileList.size() ).append( " 파일)");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return SKIP_BODY;
 		}
-		info = info + "</span>";
+		info.append(  "</span>");
 		html.append(info);
 		if (!viewMode)
 		{
