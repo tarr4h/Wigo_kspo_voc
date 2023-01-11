@@ -64,7 +64,6 @@ public class VocPrcdCdBasController {
     public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
         log.debug("formMap = {}", param);
         return service.insert(param);
-    //        return service.insert(param);
     }
 
 

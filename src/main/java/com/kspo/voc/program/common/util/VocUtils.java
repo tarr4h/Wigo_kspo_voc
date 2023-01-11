@@ -128,13 +128,10 @@ public class VocUtils extends Utilities {
         Map<String ,Object> returnMap = new HashMap<>();
 
         for(Map<String ,Object> map : list){
-            log.debug("map = {}", map);
             String key = (String) map.get("name");
             Object value = map.get("value");
             returnMap.put(key, value);
         }
-
-        log.debug("returnMap = {}", returnMap);
 
         return returnMap;
     }
@@ -145,7 +142,6 @@ public class VocUtils extends Utilities {
         int minute = VocUtils.parseIntObject(param.get("deadlineMinute"));
 
         int ddlnSec = (date * 24 * 60) + (hour * 60) + minute;
-        log.debug("ddlnSec = {}", ddlnSec);
         param.put("ddlnSec", ddlnSec);
 
         return param;
