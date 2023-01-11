@@ -55,7 +55,7 @@ public class VocActvBasController {
 
     @PostMapping(value = "insert")
     public @ResponseBody Object insert(@RequestBody EzMap param) throws EgovBizException {
-        return service.insertActv(param);
+        return service.insert(param);
     }
 
     @PostMapping(value = "update")

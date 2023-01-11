@@ -39,13 +39,10 @@ public class VocActvBasService extends VocAbstractService {
         return dao;
     }
 
-    public Object insertActv(EzMap param) {
-        List<Map<String, Object>> frmArr = (List<Map<String, Object>>) param.get("frmArr");
-        Map<String, Object> map = VocUtils.formSerializeArrayToMap(frmArr);
-
+    public Object insert(EzMap param) {
         String maxCd = dao.selectMaxCd();
-        map.put("actvCd", CodeGeneration.generateCode(maxCd, CodeGeneration.ACTIVITY_BAS));
+        param.put("actvCd", CodeGeneration.generateCode(maxCd, CodeGeneration.ACTIVITY_BAS));
 
-        return dao.insert(map);
+        return dao.insert(param);
     }
 }

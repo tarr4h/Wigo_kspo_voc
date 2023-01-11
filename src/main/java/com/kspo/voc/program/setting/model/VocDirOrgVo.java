@@ -21,15 +21,6 @@ import lombok.Setter;
 @Setter
 public class VocDirOrgVo extends VocDirCdVo {
 
-    @Override
-    public String getDirCd() {
-        return super.getDirCd();
-    }
-    @Override
-    public void setDirCd(String dirCd) {
-        super.setDirCd(dirCd);
-    }
-
     private String primProcOrgYn;
     private String orgId;
     private String regrId;
@@ -40,4 +31,14 @@ public class VocDirOrgVo extends VocDirCdVo {
     public String getOrgNm(){
         return VocUtils.getOrgNm(this.orgId);
     }
+
+
+//    @Override
+//    public String getDirCd() {
+//        return super.getDirCd();
+//    }
+//    @Override
+//    public void setDirCd(String dirCd) {
+//        super.setDirCd(dirCd);
+//    }
 }

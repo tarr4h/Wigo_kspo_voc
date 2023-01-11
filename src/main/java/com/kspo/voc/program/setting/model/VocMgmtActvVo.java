@@ -28,8 +28,8 @@ public class VocMgmtActvVo extends VocMgmtBaseVo {
     private String actvNm;
 
 
-    @Override
-    public String getDutyOrgNm(){
-        return super.getDutyOrgNm();
-    }
+//    @Override
+//    public String getDutyOrgNm(){
+//        return super.getDutyOrgNm();
+//    }
 }

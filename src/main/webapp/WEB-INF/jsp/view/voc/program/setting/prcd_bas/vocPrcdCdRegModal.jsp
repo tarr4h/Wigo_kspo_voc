@@ -259,22 +259,11 @@
 
         let form = $('#regPrcdFrm');
         let disabled = form.find(':input:disabled').removeAttr('disabled');
-        let formArr = form.serializeArray();
 
-        console.log('form : ', form);
-        console.log('formArr : ', formArr);
-        console.log('formMap : ', form.serialize());
-
-        let topComnCd = {
-            name : 'topComnCd',
-            value : $('select[name="comnCd"]').find('option:selected').data('top-comn-cd')
-        };
-        formArr.push(topComnCd);
+        let formMap = Utilities.formToMap(form);
+        formMap.topComnCd = $('select[name="comnCd"]').find('option:selected').data('top-comn-cd');
 
         disabled.attr('disabled','disabled');
-
-        let formSe = form.serialize();
-        let formMap = Utilities.formToMap(form);
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
@@ -282,7 +271,6 @@
             contentType : 'application/json',
             data : JSON.stringify(
                 formMap
-                // formArr : formArr
             ),
             success : function(res, status, jqXHR){
                 if(jqXHR.status === 200 && res === 1){

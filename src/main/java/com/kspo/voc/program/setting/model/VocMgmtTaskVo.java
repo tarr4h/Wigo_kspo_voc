@@ -27,13 +27,4 @@ public class VocMgmtTaskVo extends VocMgmtBaseVo {
     private int mgmtTaskOrdr;
     private String taskNm;
 
-    @Override
-    public String getDutyOrgNm(){
-        return super.getDutyOrgNm();
-    }
-
-    @Override
-    public int getChildCnt() {
-        return super.getChildCnt();
-    }
 }

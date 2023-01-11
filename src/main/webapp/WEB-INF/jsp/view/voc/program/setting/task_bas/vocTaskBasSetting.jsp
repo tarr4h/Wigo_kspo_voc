@@ -146,7 +146,7 @@
         }
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/saveRows${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/update${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({rows:rows}),
@@ -173,7 +173,7 @@
         }
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/deleteRows${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/delete${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
             data : JSON.stringify({rows:rows}),

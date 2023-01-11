@@ -33,33 +33,13 @@ public class VocPrcdCdBasService extends VocAbstractService {
     }
 
     public int insert(Map<String, Object> param) throws EgovBizException {
-//        param = VocUtils.setCodeSettingParam(param);
-//        String maxCd = dao.selectMaxCd();
-//        param.put("prcdCd", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
+        int ddlnSec = VocUtils.sumUpDeadline(param);
+        param.put("ddlnSec", ddlnSec);
 
-        param = VocUtils.sumUpDeadline(param);
-
-        log.debug("param = {}", param);
+        String maxCd = dao.selectMaxCd();
+        param.put("prcdCd", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
 
         return dao.insert(param);
-    }
-
-    @Override
-    public int update(Object param) throws EgovBizException {
-        return super.update(param);
-    }
-
-    /**
-     * 절차 row 삭제
-     *  - 해당 절차가 task의 자동적용으로 설정되어 있다면, trigger를 통해 update됩니다.
-     *  - 트리거명 : trig_voc_procedure_bas_delete
-     * @param param
-     * @return
-     * @throws EgovBizException
-     */
-    @Override
-    public int delete(Object param) throws EgovBizException {
-        return super.delete(param);
     }
 
     public Object chngPrcdDuty(Map<String, Object> param) {
@@ -68,10 +48,8 @@ public class VocPrcdCdBasService extends VocAbstractService {
 
     public Object updateDeadline(Map<String, Object> param) {
         Map<String, Object> returnMap = new HashMap<>();
-        VocUtils.sumUpDeadline(param);
-
-        int deadline = VocUtils.parseIntObject(param.get("ddlnSec"));
-        log.debug("deadline = {}", deadline);
+        int ddlnSec = VocUtils.sumUpDeadline(param);
+        param.put("ddlnSec", ddlnSec);
 
         dao.updateDeadline(param);
         returnMap.put("msg", "변경되었습니다.");

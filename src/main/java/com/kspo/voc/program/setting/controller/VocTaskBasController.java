@@ -45,19 +45,18 @@ public class VocTaskBasController {
         return Utilities.getGridData(list, page);
     }
 
-    @PostMapping(value = "insertCode")
-    public @ResponseBody Object insertCode(@RequestBody Map<String, Object> param) throws EgovBizException {
-        return service.insertCode(param);
+    @PostMapping(value = "insert")
+    public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
+        return service.insert(param);
     }
 
-    @PostMapping(value = "saveRows")
-    public @ResponseBody Object saveRows(@RequestBody Map<String, Object> param) throws EgovBizException {
-        log.debug("saveRows param = {}", param);
+    @PostMapping(value = "update")
+    public @ResponseBody Object update(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.update(param);
     }
 
-    @PostMapping(value = "deleteRows")
-    public @ResponseBody Object deleteRows(@RequestBody Map<String, Object> param) throws EgovBizException {
+    @PostMapping(value = "delete")
+    public @ResponseBody Object delete(@RequestBody Map<String, Object> param) throws EgovBizException {
         return service.delete(param);
     }
 

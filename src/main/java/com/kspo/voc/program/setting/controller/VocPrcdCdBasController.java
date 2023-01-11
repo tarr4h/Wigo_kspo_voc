@@ -52,17 +52,8 @@ public class VocPrcdCdBasController {
         return VocUtils.selectComnCdOptionList(param);
     }
 
-//    @PostMapping(value = "insert")
-//    public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
-//        Map<String, Object> formMap = (Map<String, Object>) param.get("formMap");
-//        log.debug("formMap = {}", formMap);
-//        log.debug("formArr = {}", param.get("formArr"));
-//        return null;
-////        return service.insert(param);
-//    }
     @PostMapping(value = "insert")
     public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
-        log.debug("formMap = {}", param);
         return service.insert(param);
     }
 

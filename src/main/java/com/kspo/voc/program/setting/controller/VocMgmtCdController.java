@@ -69,12 +69,12 @@ public class VocMgmtCdController {
     }
 
     @PostMapping(value = "update")
-    public @ResponseBody Object update(@RequestBody EzMap param){
+    public @ResponseBody Object update(@RequestBody EzMap param) throws EgovBizException{
         return service.update(param);
     }
 
     @PostMapping(value = "delete")
-    public @ResponseBody Object delete(@RequestBody List<VocMgmtCdVo> list){
+    public @ResponseBody Object delete(@RequestBody List<VocMgmtCdVo> list) throws EgovBizException{
         return service.delete(list);
     }
 
