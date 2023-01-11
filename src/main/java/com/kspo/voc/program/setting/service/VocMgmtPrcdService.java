@@ -1,20 +1,17 @@
 package com.kspo.voc.program.setting.service;
 
-import com.github.mustachejava.Code;
 import com.kspo.base.common.model.AbstractTreeVo;
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.program.common.service.VocAbstractService;
 import com.kspo.voc.program.common.stnd.CodeGeneration;
-import com.kspo.voc.program.common.stnd.ManageCodeCategory;
+import com.kspo.voc.program.common.stnd.MgmtCodeCategory;
 import com.kspo.voc.program.setting.dao.VocMgmtPrcdDao;
-import com.kspo.voc.program.setting.model.VocDirOrgVo;
 import com.kspo.voc.sys.dao.IVocDao;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +42,7 @@ public class VocMgmtPrcdService extends VocAbstractService {
     }
 
     public Object vocMgmtCdTree(EzMap param) {
-        ManageCodeCategory.setComnCdTreeMap(param, ManageCodeCategory.CHANNEL);
+        MgmtCodeCategory.setMgmtCdTreeMap(param, MgmtCodeCategory.CHANNEL);
         return AbstractTreeVo.makeHierarchy(selectVocMgmtCdTree(param));
     }
 

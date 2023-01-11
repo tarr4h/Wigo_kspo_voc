@@ -82,23 +82,18 @@
         </div>
         <div id="avaliableDirCd">
             <div class="v_grid_box">
-                <div class="v_header">
-                    <h3 class="title">관리절차 등록</h3>
-                    <div class="v_guide">
-                        <div class="v_guideDot"></div>
-                        <span>채널별 유형마다 절차를 등록/수정/삭제하고, 하위 업무를 관리합니다.</span>
+                <div class="heading-area">
+                    <div class="subheading">관리절차 등록</div>
+                    <div>
+                        <a class="btn btn-blue func_btn" data-event="prcdOrgChng">처리부서 변경</a>
+                        <a class="btn btn-blue func_btn" data-event="prcdDdlnChng">처리기한 변경</a>
+                        <a href="" class="separ"></a>
+                        <a class="btn func_btn" data-event="prcdAdd">추가</a>
+                        <a class="btn btn-red func_btn" data-event="prcdDel">삭제</a>
                     </div>
                 </div>
-                <div class="v_btn_area">
-                    <div class="v_btn_wrapper_left">
-                        <button class="btn btn-blue func_btn" data-event="prcdOrgChng">처리부서 변경</button>
-                        <button class="btn btn-blue func_btn" data-event="prcdDdlnChng">처리기한 변경</button>
-                    </div>
-                    <div class="v_btn_wrapper">
-                        <button class="btn func_btn" data-event="prcdAdd">추가</button>
-                        <button class="btn btn-red func_btn" data-event="prcdDel">삭제</button>
-                    </div>
-                </div>
+                <div class="heading-text">채널별 유형마다 절차를 등록/수정/삭제하고, 하위 업무를 관리합니다.</div>
+
                 <div class="v_grid_wrapper">
                     <div id="divGrid1"
                          data-get-url="<c:url value='${urlPrefix}/selectMgmtPrcdGrid${urlSuffix}'/>"
@@ -112,23 +107,18 @@
             </div>
             <div class="v_grid_children">
                 <div class="v_grid_box v_grid_box_half">
-                    <div class="v_header">
-                        <h3 class="title">TASK 등록</h3>
-                        <div class="v_guide">
-                            <div class="v_guideDot"></div>
-                            <span>TASk 관리</span>
+                    <div class="heading-area">
+                        <div class="subheading">TASK 등록</div>
+                        <div>
+                            <a class="btn btn-blue func_btn" data-event="taskOrgChng">처리부서 변경</a>
+                            <a class="btn btn-blue func_btn" data-event="taskDdlnChng">처리기한 변경</a>
+                            <a href="" class="separ"></a>
+                            <a class="btn func_btn" data-event="taskAdd">추가</a>
+                            <a class="btn btn-red func_btn" data-event="taskDel">삭제</a>
                         </div>
                     </div>
-                    <div class="v_btn_area">
-                        <div class="v_btn_wrapper_left">
-                            <button class="btn btn-blue func_btn" data-event="taskOrgChng">처리부서 변경</button>
-                            <button class="btn btn-blue func_btn" data-event="taskDdlnChng">처리기한 변경</button>
-                        </div>
-                        <div class="v_btn_wrapper">
-                            <button class="btn func_btn" data-event="taskAdd">추가</button>
-                            <button class="btn btn-red func_btn" data-event="taskDel">삭제</button>
-                        </div>
-                    </div>
+                    <div class="heading-text">TASK 관리</div>
+
                     <div class="v_grid_wrapper">
                         <div id="divGrid2"
                              data-get-url="<c:url value='${urlPrefix}/selectMgmtTaskGrid${urlSuffix}'/>"
@@ -141,22 +131,17 @@
                     </div>
                 </div>
                 <div class="v_grid_box v_grid_box_half">
-                    <div class="v_header">
-                        <h3 class="title">ACTIVITY 등록</h3>
-                        <div class="v_guide">
-                            <div class="v_guideDot"></div>
-                            <span>ACTIVITY 관리</span>
+                    <div class="heading-area">
+                        <div class="subheading">ACTIVITY 등록</div>
+                        <div>
+                            <a class="btn btn-blue func_btn" data-event="actvOrgChng">처리부서 변경</a>
+                            <a href="" class="separ"></a>
+                            <a class="btn func_btn" data-event="actvAdd">추가</a>
+                            <a class="btn btn-red func_btn" data-event="actvDel">삭제</a>
                         </div>
                     </div>
-                    <div class="v_btn_area">
-                        <div class="v_btn_wrapper_left">
-                            <button class="btn btn-blue func_btn" data-event="actvOrgChng">처리부서 변경</button>
-                        </div>
-                        <div class="v_btn_wrapper">
-                            <button class="btn func_btn" data-event="actvAdd">추가</button>
-                            <button class="btn btn-red func_btn" data-event="actvDel">삭제</button>
-                        </div>
-                    </div>
+                    <div class="heading-text">ACTIVITY 관리</div>
+
                     <div class="v_grid_wrapper">
                         <div id="divGrid3"
                              data-get-url="<c:url value='${urlPrefix}/selectMgmtActvGrid${urlSuffix}'/>"

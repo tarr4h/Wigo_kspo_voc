@@ -7,6 +7,7 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.program.common.util.VocUtils;
 import com.kspo.voc.program.setting.model.VocPrcdBasVo;
 import com.kspo.voc.program.setting.service.VocPrcdCdBasService;
+import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 @RequestMapping({"vocPrcdBas", "{menuId}/vocPrcdBas"})
 public class VocPrcdCdBasController {
 
@@ -50,10 +52,21 @@ public class VocPrcdCdBasController {
         return VocUtils.selectComnCdOptionList(param);
     }
 
+//    @PostMapping(value = "insert")
+//    public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
+//        Map<String, Object> formMap = (Map<String, Object>) param.get("formMap");
+//        log.debug("formMap = {}", formMap);
+//        log.debug("formArr = {}", param.get("formArr"));
+//        return null;
+////        return service.insert(param);
+//    }
     @PostMapping(value = "insert")
     public @ResponseBody Object insert(@RequestBody Map<String, Object> param) throws EgovBizException {
+        log.debug("formMap = {}", param);
         return service.insert(param);
+    //        return service.insert(param);
     }
+
 
     @PostMapping(value = "update")
     public @ResponseBody Object update(@RequestBody Map<String, Object> param) throws EgovBizException {
