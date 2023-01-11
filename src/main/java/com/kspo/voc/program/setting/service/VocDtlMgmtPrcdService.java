@@ -264,8 +264,8 @@ public class VocDtlMgmtPrcdService extends VocAbstractService {
                 mbv.setDutyOrgId((String) param.get("orgId"));
             } else if(param.get("ddln") != null && !param.get("ddln").equals("")){
                 Map<String, Object> ddln = (Map<String, Object>) param.get("ddln");
-                VocUtils.sumUpDeadline(ddln);
-                mbv.setDdlnSec(VocUtils.parseIntObject(ddln.get("ddlnSec")));
+                int ddlnSec = VocUtils.sumUpDeadline(ddln);
+                mbv.setDdlnSec(ddlnSec);
             }
 
             updateRslt += updateMgmt(mbv);

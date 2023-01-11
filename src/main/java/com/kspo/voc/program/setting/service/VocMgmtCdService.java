@@ -54,9 +54,9 @@ public class VocMgmtCdService extends VocAbstractService {
             msg = "코드명을 입력해주세요.";
         } else {
             if(param.get("prntsMgmtCd") != null){
-                param = generateInsertCodeParam(param);
+                generateInsertCodeParam(param);
             } else {
-                param = generateInsertGroupParam(param);
+                generateInsertGroupParam(param);
             }
             int insertResult = dao.insert(param);
 
@@ -64,7 +64,7 @@ public class VocMgmtCdService extends VocAbstractService {
                 msg = "등록되었습니다.";
                 result = true;
             } else {
-//                 exception Throw
+                msg = "등록된 건이 없습니다.";
             }
         }
 
@@ -73,15 +73,15 @@ public class VocMgmtCdService extends VocAbstractService {
         return returnMap;
     }
 
-    public Object update(EzMap param) {
-        return dao.update(param);
-    }
+//    public Object update(EzMap param) {
+//        return dao.update(param);
+//    }
+//
+//    public Object delete(List<VocMgmtCdVo> list) {
+//        return dao.delete(list);
+//    }
 
-    public Object delete(List<VocMgmtCdVo> list) {
-        return dao.delete(list);
-    }
-
-    public EzMap generateInsertGroupParam(EzMap param){
+    public void generateInsertGroupParam(EzMap param){
         StringBuilder mgmtCd = new StringBuilder();
         mgmtCd.append("MC");
 
@@ -101,7 +101,7 @@ public class VocMgmtCdService extends VocAbstractService {
             mgmtCd.append("0").append(addNum);
         } else {
             mgmtCd.append(addNum);
-        };
+        }
 
         for(int i = 0; i < 13; i++){
             mgmtCd.append("0");
@@ -111,12 +111,9 @@ public class VocMgmtCdService extends VocAbstractService {
         param.put("topMgmtCd", mgmtCd.toString());
         param.put("mgmtCdOrdr", addNum);
         param.put("mgmtCdLvlNo", 1);
-
-        log.debug("grp param = {}", param);
-        return param;
     }
 
-    public EzMap generateInsertCodeParam(EzMap param){
+    public void generateInsertCodeParam(EzMap param){
         // 17자리(코드값 2 + 분류값15(2/3/3/3/4))
         VocMgmtCdVo prntsRow = selectMgmtCd(param);
         log.debug("prntsRow = {}", prntsRow.getMgmtCdNm());
@@ -187,7 +184,6 @@ public class VocMgmtCdService extends VocAbstractService {
         param.put("topMgmtCd", topMgmtCd);
 
         param.put("mgmtCd", mgmtCd.toString());
-        return param;
     }
 
 

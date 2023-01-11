@@ -54,7 +54,7 @@ public enum CodeGeneration {
         } else {
             for(int i = 0; i < codeType.digit - prefixDigit - 1; i++){
                 sb.append("0");
-            };
+            }
             sb.append("1");
         }
 

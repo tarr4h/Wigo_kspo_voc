@@ -94,13 +94,14 @@
      * 수행코드 등록
      */
     $('#register_btn').on('click', function(){
-        let frmArr = $('#actvFrm').serializeArray();
+        let form = $('#actvFrm');
+        let formMap = Utilities.formToMap(form);
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({frmArr:frmArr}),
+            data : JSON.stringify(formMap),
             success : function(res){
                 if(res > 0){
                     alert('등록되었습니다.');

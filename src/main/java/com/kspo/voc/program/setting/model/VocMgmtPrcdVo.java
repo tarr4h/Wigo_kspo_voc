@@ -25,13 +25,4 @@ public class VocMgmtPrcdVo extends VocMgmtBaseVo {
     private int mgmtPrcdOrdr;
     private String prcdNm;
 
-    @Override
-    public String getDutyOrgNm(){
-        return super.getDutyOrgNm();
-    }
-
-    @Override
-    public int getChildCnt() {
-        return super.getChildCnt();
-    }
 }

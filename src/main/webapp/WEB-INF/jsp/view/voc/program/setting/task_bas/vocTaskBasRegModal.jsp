@@ -252,16 +252,15 @@
 
         let form = $('#regTaskFrm');
         let disabled = form.find('input:disabled').removeAttr('disabled');
-        let formArr = form.serializeArray();
+
+        let formMap = Utilities.formToMap(form);
         disabled.attr('disabled','disabled');
 
         $.ajax({
-            url : '<c:url value="${urlPrefix}/insertCode${urlSuffix}"/>',
+            url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
             method : 'POST',
             contentType : 'application/json',
-            data : JSON.stringify({
-                formArr : formArr
-            }),
+            data : JSON.stringify(formMap),
             success : function(res, status, jqXHR){
                 if(jqXHR.status === 200 && res.result){
                     alert(res.msg);

@@ -41,6 +41,7 @@ public class VocUtils extends Utilities {
         try {
 			super.init();
 		} catch (KeyManagementException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
 		}
         comnService = this.cmService;
     }
@@ -115,36 +116,14 @@ public class VocUtils extends Utilities {
         return sb;
     };
 
-    public static Map<String, Object> setCodeSettingParam(Object obj){
-        Map<String, Object> param = (Map<String, Object>) obj;
-        List<Map<String, Object>> formArr = (List<Map<String, Object>>) param.get("formArr");
-        param = VocUtils.formSerializeArrayToMap(formArr);
-        param = VocUtils.sumUpDeadline(param);
-
-        return param;
-    }
-
-    public static Map<String, Object> formSerializeArrayToMap(List<Map<String, Object>> list){
-        Map<String ,Object> returnMap = new HashMap<>();
-
-        for(Map<String ,Object> map : list){
-            String key = (String) map.get("name");
-            Object value = map.get("value");
-            returnMap.put(key, value);
-        }
-
-        return returnMap;
-    }
-
-    public static Map<String, Object> sumUpDeadline(Map<String, Object> param){
+    public static int sumUpDeadline(Map<String, Object> param){
         int date = VocUtils.parseIntObject(param.get("deadlineDate"));
         int hour = VocUtils.parseIntObject(param.get("deadlineHour"));
         int minute = VocUtils.parseIntObject(param.get("deadlineMinute"));
 
         int ddlnSec = (date * 24 * 60) + (hour * 60) + minute;
-        param.put("ddlnSec", ddlnSec);
 
-        return param;
+        return ddlnSec;
     }
 
     public static String convertDeadline(int deadline){

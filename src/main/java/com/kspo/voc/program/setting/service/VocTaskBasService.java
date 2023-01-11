@@ -32,17 +32,17 @@ public class VocTaskBasService extends AbstractVocService {
         return dao.selectList(param);
     }
 
-    @SuppressWarnings("unchecked")
-    public Map<String, Object> insertCode(Object param) throws EgovBizException {
-        param = VocUtils.setCodeSettingParam(param);
+    public Map<String, Object> insert(Map<String, Object> param) throws EgovBizException {
+        int ddlnSec = VocUtils.sumUpDeadline(param);
+        param.put("ddlnSec", ddlnSec);
 
-        Map<String, Object> returnMap = validateAutoApply((Map<String, Object>) param);
+        Map<String, Object> returnMap = validateAutoApply(param);
         if(!(boolean) returnMap.get("result")){
             return returnMap;
         }
 
         String maxCd = dao.selectMaxCd();
-        ((Map<String, Object>) param).put("taskCd", CodeGeneration.generateCode(maxCd, CodeGeneration.TASK_BAS));
+        param.put("taskCd", CodeGeneration.generateCode(maxCd, CodeGeneration.TASK_BAS));
         int result = dao.insert(param);
         returnMap.put("msg", result + "건이 등록되었습니다.");
         return returnMap;
@@ -116,16 +116,6 @@ public class VocTaskBasService extends AbstractVocService {
 
         returnMap.put("result", true);
         return returnMap;
-    }
-
-    @Override
-    public int update(Object param) throws EgovBizException {
-        return super.update(param);
-    }
-
-    @Override
-    public int delete(Object param) throws EgovBizException {
-        return super.delete(param);
     }
 
     public Object chngTaskDuty(Map<String, Object> param) {

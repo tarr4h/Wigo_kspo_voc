@@ -98,7 +98,6 @@ public class VocMgmtPrcdService extends VocAbstractService {
 
     public Object deleteDirOrg(EzMap param) {
         List<Map<String, Object>> rows = (List<Map<String, Object>>) param.get("rows");
-        String dirCd = (String) param.get("dirCd");
 
         int cnt = 0;
         for(Map<String, Object> dirOrg : rows){
