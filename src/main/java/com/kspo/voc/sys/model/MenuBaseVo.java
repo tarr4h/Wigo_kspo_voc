@@ -15,31 +15,7 @@ public class MenuBaseVo extends AbstractTreeVo {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MenuBaseVo() {
-
-	}
-
-	public MenuBaseVo(Map<String, Object> param) {
-		super(param);
-	}
-	@Override
-	public String getId() {
-		return getMenuId();
-	}
-
-	@Override
-	public String getText() {
-		return getMenuNm();
-	}
-
-	@Override
-	public String getParentId() {
-		return getPrntsMenuId();
-	}
-	@Override
-	public int getLevel() {
-		return getMenuLvlNo();
-	}
+	
 	/**
 	 * <p>
 	 * 메뉴코드
@@ -137,4 +113,33 @@ public class MenuBaseVo extends AbstractTreeVo {
 	 */
 	private String useYn;
 	
+	
+	
+	
+	
+	public MenuBaseVo() {
+
+	}
+
+	public MenuBaseVo(Map<String, Object> param) {
+		super(param);
+	}
+	@Override
+	public String getId() {
+		return getMenuId();
+	}
+
+	@Override
+	public String getText() {
+		return getMenuNm();
+	}
+
+	@Override
+	public String getParentId() {
+		return getPrntsMenuId();
+	}
+	@Override
+	public int getLevel() {
+		return getMenuLvlNo();
+	}
 }

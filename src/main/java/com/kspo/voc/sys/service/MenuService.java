@@ -1,6 +1,5 @@
 package com.kspo.voc.sys.service;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class MenuService extends AbstractVocService {
 		int parentLevel = parent.getMenuLvlNo();
 		int offset = parentLevel * 2;
 //		int menuSeq = Utilities.parseInt(menuId.substring(offset, offset + 2)) + 1;
-		menuId = menuId.substring(0, offset) + Utilities.padLeft(seq+"", 2, '0') + menuId.substring(offset + 2);
+		menuId = menuId.substring(0, offset) + Utilities.padLeft(seq + "", 2, '0') + menuId.substring(offset + 2);
 		MenuVo menu = new MenuVo();
 		menu.setMenuId(menuId);
 		menu.setMenuLvlNo(parentLevel + 1);
@@ -134,30 +133,31 @@ public class MenuService extends AbstractVocService {
 	 * @return
 	 */
 	public List<ITreeVo> getUserMenuTree(LoginUserVo param, EzMap itemMap, boolean force) throws EgovBizException {
-		if (itemMap == null)
-			itemMap = new EzMap();
+		EzMap iMap = itemMap;
+		if (iMap == null)
+			iMap = new EzMap();
 		EzMap map = force ? null : SessionUtil.getUserMenuMap();
 		List<ITreeVo> tree = force ? null : SessionUtil.getUserMenuList();
 		if (tree != null && map != null) {
-			itemMap.putAll(map);
+			iMap.putAll(map);
 			return tree;
 		}
-		List<ITreeVo> list = Utilities.makeHierarchy(getUserMenuList(param), itemMap);
+		List<ITreeVo> list = Utilities.makeHierarchy(getUserMenuList(param), iMap);
 		List<String> removeList = new ArrayList<String>();
-		for (String key : itemMap.keySet()) {
-			MenuVo menu = (MenuVo) itemMap.get(key);
+		for (String key : iMap.keySet()) {
+			MenuVo menu = (MenuVo) iMap.get(key);
 			if (!menu.hasLinkedMenu()) {
 				removeList.add(menu.getId());
 			}
 		}
 		for (int i = 0; i < removeList.size(); i++) {
-			MenuVo menu = (MenuVo) itemMap.remove(removeList.get(i));
+			MenuVo menu = (MenuVo) iMap.remove(removeList.get(i));
 			ITreeVo parant = menu.parent();
 			if (parant != null)
 				parant.getChildren().remove(menu);
 		}
 		if (!force) {
-			SessionUtil.setUserMenuMap(itemMap);
+			SessionUtil.setUserMenuMap(iMap);
 			SessionUtil.setUserMenuList(list);
 		}
 

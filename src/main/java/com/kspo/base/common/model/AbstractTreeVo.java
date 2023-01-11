@@ -1,7 +1,5 @@
 package com.kspo.base.common.model;
 
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +9,16 @@ import com.kspo.voc.comn.util.Utilities;
 
 /**
  * 
-* <pre>
-* com.kspo.base.common.model
-*	- AbstractTreeVo.java
-* </pre>
-*
-* @ClassName	: AbstractTreeVo 
-* @Description	: Tree 설정
-* @author 		: 김성태
-* @date 		: 2021. 1. 5.
-* @Version 		: 1.0 
-* @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
+ * <pre>
+ * com.kspo.base.common.model - AbstractTreeVo.java
+ * </pre>
+ *
+ * @ClassName : AbstractTreeVo
+ * @Description : Tree 설정
+ * @author : 김성태
+ * @date : 2021. 1. 5.
+ * @Version : 1.0
+ * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
 public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
@@ -47,7 +44,8 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 		setLeafIcon("fas fa-file");
 		setFolderIcon("far fa-folder");
 	}
-	public AbstractTreeVo(Map<String,Object> param) {
+
+	public AbstractTreeVo(Map<String, Object> param) {
 		super(param);
 		setLeafIcon("fas fa-file");
 		setFolderIcon("far fa-folder");
@@ -104,12 +102,14 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 			this.opened = opened;
 		}
 	}
-	public static List<ITreeVo> makeHierarchy(List<? extends ITreeVo> list,EzMap itemMap){
+
+	public static List<ITreeVo> makeHierarchy(List<? extends ITreeVo> list, EzMap mp) {
 		List<ITreeVo> ret = new ArrayList<ITreeVo>();
 
 		if (Utilities.isEmpty(list))
 			return ret;
-		if(itemMap == null)
+		EzMap itemMap = mp;
+		if (itemMap == null)
 			itemMap = new EzMap(false);
 		for (int i = 0; i < list.size(); i++) {
 			ITreeVo vo = list.get(i);
@@ -118,18 +118,15 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 			itemMap.put(vo.getId(), vo);
 		}
 		for (int i = 0; i < list.size(); i++) {
-			
+
 			ITreeVo vo = list.get(i);
-			
-			
+
 			int level = vo.getLevel();
-			if(level == 1)
-			{
+			if (level == 1) {
 				ret.add(vo);
 				continue;
-			}	
-			if (!itemMap.containsKey(vo.getParentId()))
-			{
+			}
+			if (!itemMap.containsKey(vo.getParentId())) {
 				ret.add(vo);
 				continue;
 			}
@@ -140,11 +137,12 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 		}
 		return ret;
 	}
+
 	public static List<ITreeVo> makeHierarchy(List<? extends ITreeVo> list) {
-		
+
 		EzMap itemMap = new EzMap(false);
-		return makeHierarchy(list,itemMap);
-		
+		return makeHierarchy(list, itemMap);
+
 	}
 
 	public void addChild(ITreeVo vo) {
@@ -168,15 +166,17 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 	public List<ITreeVo> getChildren() {
 		return nodes;
 	}
+
 	@Override
 	public boolean isNode(String id) {
-		if(this.getId().equals(id))
+		if (this.getId().equals(id))
 			return true;
-		if(parent!=null)
+		if (parent != null)
 			return parent.isNode(id);
 		else
 			return false;
 	}
+
 	public void setNodes(List<ITreeVo> nodes) {
 		this.nodes = nodes;
 	}
@@ -216,7 +216,6 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 	public String getHref() {
 		return href;
 	}
-	
 
 	public void setHref(String href) {
 		this.href = href;
@@ -301,5 +300,5 @@ public abstract class AbstractTreeVo extends BaseVo implements ITreeVo {
 //	public List<ITreeVo> getChildren() {
 //		return getChildren();
 //	}
-	
+
 }

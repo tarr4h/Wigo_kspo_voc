@@ -66,20 +66,17 @@ public class BtnGroupTag extends TagSupport {
 				gridIdHtml = " data-grid-id=\""+gridId+"\"  data-disp-name=\""+dispName+"\"";
 			}
 			if(hasSort&&(forceSave || "Y".equals(menu.getMenuAmdAuthYn())))
-//				html.append(" <a type=\"button\" "+gridIdHtml+" data-click=\"sort"+name+"\" id=\"btnSort"+name+"\" class=\"btn_whites\">순서변경</a>");
-				//<a href="#" class="mBtn1 m lWhite">수정</a>
-				html.append(" <a href=\"#\"  "+gridIdHtml+" data-click=\"sort"+name+"\" id=\"btnSort"+name+"\" class=\"mBtn1 m lWhite\">"+seqName+"</a>");
-//				html.append(" <button type=\"button\" "+gridIdHtml+" data-click=\"sort"+name+"\" id=\"btnSort"+name+"\" class=\"btn_whites\">순서변경</button>");
+				html.append(" <a href=\"#\"  ").append(gridIdHtml).append(" data-click=\"sort").append(name).append("\" id=\"btnSort").append(name).append("\" class=\"mBtn1 m lWhite\">").append(seqName).append("</a>");
 			if(hasCancel)
-				html.append(" <a href=\"#\" "+gridIdHtml+" data-click=\"cancel"+name+"\" id=\"btnCancel"+name+"\" class=\"mBtn1 m lWhite\">"+cancelName+"</a>");
+				html.append(" <a href=\"#\" ").append(gridIdHtml).append(" data-click=\"cancel").append(name).append("\" id=\"btnCancel").append(name).append("\" class=\"mBtn1 m lWhite\">").append(cancelName).append("</a>");
 			if(!hideExcel && Utilities.isNotEmpty(gridId))  
-				html.append(" <a href=\"#\" "+gridIdHtml+" data-name=\""+name+"\" data-click=\"excelDownload\" id=\"btnExcel"+name+"\" class=\"mBtn1 m lWhite\">"+excelName+"</a>");
+				html.append(" <a href=\"#\" ").append(gridIdHtml).append(" data-name=\"").append(name).append("\" data-click=\"excelDownload\" id=\"btnExcel").append(name).append("\" class=\"mBtn1 m lWhite\">").append(excelName).append("</a>");
 			if(!hideDelete&&( forceDelete || "Y".equals(menu.getMenuDelAuthYn())))
-				html.append(" <a href=\"#\" "+gridIdHtml+" data-click=\"remove"+name+"\" id=\"btnRemove"+name+"\" class=\"mBtn1 m\">"+deleteName+"</a>");
+				html.append(" <a href=\"#\" ").append(gridIdHtml).append(" data-click=\"remove").append(name).append("\" id=\"btnRemove").append(name).append("\" class=\"mBtn1 m\">").append(deleteName).append("</a>");
 			if(!hideInsert&&(forceInsert || "Y".equals(menu.getMenuRegAuthYn())))
-				html.append(" <a href=\"#\" "+gridIdHtml+" data-click=\"new"+name+"\" id=\"btnNew"+name+"\" class=\"mBtn1 m lWhite\">"+insertName+"</a>");
+				html.append(" <a href=\"#\" ").append(gridIdHtml).append(" data-click=\"new").append(name).append("\" id=\"btnNew").append(name).append("\" class=\"mBtn1 m lWhite\">").append(insertName).append("</a>");
 			if(!hideSave&&(forceSave || "Y".equals(menu.getMenuAmdAuthYn())))
-				html.append(" <a href=\"#\" "+gridIdHtml+" data-click=\"save"+name+"\" id=\"btnSave"+name+"\" class=\"mBtn1 m lWhite\">"+saveName+"</a>");
+				html.append(" <a href=\"#\" ").append(gridIdHtml).append(" data-click=\"save").append(name).append("\" id=\"btnSave").append(name).append("\" class=\"mBtn1 m lWhite\">").append(saveName).append("</a>");
 			try {
 				pageContext.getOut().print(html.toString());
 			} catch (IOException e) {

@@ -6,6 +6,14 @@ import java.util.List;
 import com.kspo.voc.comn.util.Utilities;
 
 public class ChangeLogElemement {
+
+	private String className;
+	private String methodName;
+	private Object parameters;
+	private Object results;
+	private final ChangeLogElemement parent;
+	private List<ChangeLogElemement> children = null;
+
 	protected ChangeLogElemement(String fullName, Object[] params, ChangeLogElemement parent) {
 		parameters = params;
 		this.parent = parent;
@@ -13,13 +21,6 @@ public class ChangeLogElemement {
 			this.parent.addChild(this);
 		init(fullName);
 	}
-
-	private String className;
-	private String methodName;
-	private Object parameters;
-	private Object results;
-	private ChangeLogElemement parent;
-	private List<ChangeLogElemement> children = null;
 
 	private void init(String fullName) {
 		if (Utilities.isEmpty(fullName))

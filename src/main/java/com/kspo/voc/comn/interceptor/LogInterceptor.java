@@ -19,7 +19,7 @@ public class LogInterceptor implements HandlerInterceptor {
         sb.append("\n ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         sb.append("\n -- requestURI : ").append(request.getRequestURI());
         sb.append("\n -- requestURL : ").append(request.getRequestURL());
-        sb.append("\n -- method     : ").append(request.getMethod().toString());
+        sb.append("\n -- method     : ").append(request.getMethod());
         sb.append("\n -- remote ip  : ").append(request.getRemoteAddr());
         sb.append("\n -- userAgent  : ").append(request.getHeader("User-Agent"));
         sb.append("\n ---------------------------------------------------------------------------------------");

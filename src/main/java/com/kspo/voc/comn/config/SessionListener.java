@@ -14,6 +14,6 @@ public class SessionListener implements HttpSessionListener {
         se.getSession().setMaxInactiveInterval(sessionTime);
     }
  
-    public void sessionDestroyed(HttpSessionEvent se) {
-    }
+//    public void sessionDestroyed(HttpSessionEvent se) {
+//    }
 }

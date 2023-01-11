@@ -3,6 +3,7 @@ package com.kspo.base.common.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 
 import com.kspo.voc.comn.util.Utilities;
@@ -36,8 +37,8 @@ public class BaseVo implements Serializable {
 	private String regDt;
 	private String amdrId;
 	private String amdDt;
-	private static final SimpleDateFormat _DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private static final SimpleDateFormat _DATE_FORMAT2 = new SimpleDateFormat("yyyyMMdd");
+	private static final SimpleDateFormat _DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" ,Locale.KOREA);
+	private static final SimpleDateFormat _DATE_FORMAT2 = new SimpleDateFormat("yyyyMMdd" ,Locale.KOREA);
 	public BaseVo() {
 	}
 

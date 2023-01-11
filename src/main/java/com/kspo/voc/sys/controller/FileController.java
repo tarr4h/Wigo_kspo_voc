@@ -28,6 +28,8 @@ import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.model.FileVo;
 import com.kspo.voc.sys.service.FileService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * <pre>
@@ -41,7 +43,7 @@ import com.kspo.voc.sys.service.FileService;
  * @Version : 1.0
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
-
+@Slf4j
 @Controller
 @RequestMapping(value = { "file", "{menuId}/file" })
 public class FileController {
@@ -71,7 +73,7 @@ public class FileController {
 			else
 				return Utilities.getProperty("tiles.voc.blank") + "sys/filePopup";
 		} catch (Exception e) {
-			throw new EgovBizException(e.getMessage(),e);
+			throw new EgovBizException(e.getMessage(), e);
 		}
 	}
 
@@ -154,6 +156,7 @@ public class FileController {
 				try {
 					in.close();
 				} catch (IOException e) {
+					log.warn(e.getMessage());
 				}
 		}
 	}

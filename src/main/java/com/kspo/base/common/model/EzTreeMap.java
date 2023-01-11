@@ -45,7 +45,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 //	private boolean selectable = true;
 //	private State state = new State();
 //	private List<String> tags;
-
+	private ITreeVo parent = null;
 	public EzTreeMap() {
 //		setLeafIcon("fas fa-book");
 //		setFolderIcon("far fa-folder");
@@ -58,7 +58,7 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 //		setState(new State());
 //		put("tags", new ArrayList<String>());
 	}
-	private ITreeVo parent = null;
+
 //	public class State implements Serializable {
 //		/**
 //		 * 
@@ -106,10 +106,10 @@ public class EzTreeMap extends EzMap implements ITreeVo {
 	@Override
 	public Object put(String key, Object value) {
 		Object ret =  super.put(key, value);
-		key = Utilities.convert2CamelCase(key);
-//		if("lvl".equals(key))
+//		String ky = Utilities.convert2CamelCase(key);
+//		if("lvl".equals(ky))
 //			setInt("level",value);
-//		if("icon".equals(key)) 
+//		if("icon".equals(ky)) 
 //		{
 //			setString("selectedIcon",value);
 //			setString("expandIcon",value);

@@ -21,7 +21,7 @@ import com.kspo.voc.comn.util.Utilities;
 
 public class CryptoDataSource extends DriverManagerDataSource {
 	@Override
-    public synchronized void setUrl(String url) {
+    public void setUrl(String url) {
         try {
 			super.setUrl(Utilities.decrypt(url));
 		} catch (Exception e) {

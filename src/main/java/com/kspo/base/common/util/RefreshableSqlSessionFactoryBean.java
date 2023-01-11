@@ -26,6 +26,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import com.kspo.base.common.model.EzException;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -52,6 +54,14 @@ public class RefreshableSqlSessionFactoryBean extends SqlSessionFactoryBean impl
 	private Resource configLocation;
 	private Resource[] mapperLocations;
 	private Properties configurationProperties;
+	/**
+	 * 
+	 * 파일 감시 쓰레드가 실행중인지 여부.
+	 */
+	private boolean running = false;
+	private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+	private final Lock r = rwl.readLock();
+	private final Lock w = rwl.writeLock();
 
 	/**
 	 * 
@@ -67,15 +77,6 @@ public class RefreshableSqlSessionFactoryBean extends SqlSessionFactoryBean impl
 		super.setConfigurationProperties(sqlSessionFactoryProperties);
 		this.configurationProperties = sqlSessionFactoryProperties;
 	}
-
-	/**
-	 * 
-	 * 파일 감시 쓰레드가 실행중인지 여부.
-	 */
-	private boolean running = false;
-	private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-	private final Lock r = rwl.readLock();
-	private final Lock w = rwl.writeLock();
 
 	public void setConfigLocation(Resource configLocation) {
 		super.setConfigLocation(configLocation);
@@ -191,7 +192,7 @@ public class RefreshableSqlSessionFactoryBean extends SqlSessionFactoryBean impl
 								}
 							}
 						} catch (Exception ex) {
-							throw new RuntimeException("Failed to parse config resource: " + configLocation, ex);
+							throw new EzException("Failed to parse config resource: " + configLocation, ex);
 						} finally {
 							ErrorContext.instance().reset();
 						}
@@ -223,10 +224,8 @@ public class RefreshableSqlSessionFactoryBean extends SqlSessionFactoryBean impl
 					log.error("caught exception", e);
 				}
 
-				if (retVal) {
-					if (log.isInfoEnabled()) {
-						log.info("modified files : " + modifiedResources);
-					}
+				if (retVal && log.isInfoEnabled()) {
+					log.info("modified files : " + modifiedResources);
 				}
 
 				return retVal;
