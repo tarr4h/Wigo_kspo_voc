@@ -2,7 +2,7 @@ package com.kspo.voc.program.setting.controller;
 
 import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
-import com.kspo.voc.program.common.stnd.ManageCodeCategory;
+import com.kspo.voc.program.common.stnd.MgmtCodeCategory;
 import com.kspo.voc.program.setting.service.VocMgmtCdMappService;
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,9 @@ public class VocMgmtCdMappController {
 
 	@PostMapping(value = { "vocMgmtCdTree" })
 	public @ResponseBody Object vocMgmtCdTree(@RequestBody EzMap param) throws EgovBizException {
-		ManageCodeCategory.setComnCdListTreeMap(param,
-				Arrays.asList(ManageCodeCategory.CHANNEL, ManageCodeCategory.TYPE,
-						ManageCodeCategory.TARGET));
+		MgmtCodeCategory.setMgmtCdListTreeMap(param,
+				Arrays.asList(MgmtCodeCategory.CHANNEL, MgmtCodeCategory.TYPE,
+						MgmtCodeCategory.TARGET));
 		return service.vocMgmtCdTree(param);
 	}
 
