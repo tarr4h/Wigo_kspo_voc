@@ -1,9 +1,9 @@
 package com.kspo.base.common.util;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -38,23 +38,23 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.base.common.model.IExcelVo;
 import com.kspo.voc.comn.util.Utilities;
 
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
-* <pre>
-* com.kspo.base.common.util
-*	- ExcelUtil.java
-* </pre>
-*
-* @ClassName	: ExcelUtil 
-* @Description	: 엑셀 유틸리티 
-* @author 		: 김성태
-* @date 		: 2021. 1. 5.
-* @Version 		: 1.0 
-* @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
+ * <pre>
+ * com.kspo.base.common.util - ExcelUtil.java
+ * </pre>
+ *
+ * @ClassName : ExcelUtil
+ * @Description : 엑셀 유틸리티
+ * @author : 김성태
+ * @date : 2021. 1. 5.
+ * @Version : 1.0
+ * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
-
-public abstract class ExcelUtil {
+@Slf4j
+public class ExcelUtil {
 	private static final int _TITLE_SIZE = 20;
 	private static final int _BODY_SIZE = 12;
 
@@ -63,24 +63,29 @@ public abstract class ExcelUtil {
 		if (response == null)
 			return false;
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		response.setHeader("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
 		String ext = Utilities.getFileExtension(fileName);
 		if ("xls".equalsIgnoreCase(ext))
 			return createWorkbookH(vo, response.getOutputStream());
 		else
 			return createWorkbookX(vo, response.getOutputStream());
 	}
-	public static boolean downloadExcel(List<IExcelVo> list, String fileName, HttpServletResponse response) throws Exception {
+
+	public static boolean downloadExcel(List<IExcelVo> list, String fileName, HttpServletResponse response)
+			throws Exception {
 		if (response == null)
 			return false;
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-		response.setHeader("Content-Disposition", "attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
 		String ext = Utilities.getFileExtension(fileName);
 		if ("xls".equalsIgnoreCase(ext))
 			return createWorkbookH(list, response.getOutputStream());
 		else
 			return createWorkbookX(list, response.getOutputStream());
 	}
+
 	public static boolean createWorkbook(IExcelVo vo, String fileName) {
 		if (vo == null || Utilities.isEmpty(fileName))
 			return false;
@@ -91,6 +96,7 @@ public abstract class ExcelUtil {
 		else
 			return createWorkbookX(vo, fileName);
 	}
+
 	public static boolean createWorkbookH(List<IExcelVo> list, String fileName) {
 		File file = new File(fileName);
 		if (!file.isFile())
@@ -107,7 +113,7 @@ public abstract class ExcelUtil {
 				if (fos != null)
 					fos.close();
 			} catch (Exception ex) {
-
+				log.warn(ex.getMessage());
 			}
 		}
 	}
@@ -128,11 +134,12 @@ public abstract class ExcelUtil {
 			try {
 				if (fos != null)
 					fos.close();
-			} catch (Exception ex) {
-
+			} catch (IOException ex) {
+				log.warn(ex.getMessage());
 			}
 		}
 	}
+
 	public static boolean createWorkbookH(IExcelVo vo, String fileName) {
 		File file = new File(fileName);
 		if (!file.isFile())
@@ -148,8 +155,8 @@ public abstract class ExcelUtil {
 			try {
 				if (fos != null)
 					fos.close();
-			} catch (Exception ex) {
-
+			} catch (IOException ex) {
+				log.warn(ex.getMessage());
 			}
 		}
 	}
@@ -170,20 +177,20 @@ public abstract class ExcelUtil {
 			try {
 				if (fos != null)
 					fos.close();
-			} catch (Exception ex) {
-
+			} catch (IOException ex) {
+				log.warn(ex.getMessage());
 			}
 		}
 	}
+
 	public static boolean createWorkbookH(List<IExcelVo> list, OutputStream os) {
 		HSSFWorkbook workbook = null;
 
 		try {
 			workbook = new HSSFWorkbook();
-			for(int i=0;i<list.size();i++)
-			{
+			for (int i = 0; i < list.size(); i++) {
 				if (!createWorkbookH(list.get(i), workbook))
-					return false;	
+					return false;
 			}
 			workbook.write(os);
 			return true;
@@ -193,8 +200,8 @@ public abstract class ExcelUtil {
 			try {
 				if (workbook != null)
 					workbook.close();
-			} catch (Exception ex) {
-
+			} catch (IOException ex) {
+				log.warn(ex.getMessage());
 			}
 
 		}
@@ -205,10 +212,9 @@ public abstract class ExcelUtil {
 		try {
 			workbook = new XSSFWorkbook();
 
-			for(int i=0;i<list.size();i++)
-			{
+			for (int i = 0; i < list.size(); i++) {
 				if (!createWorkbookX(list.get(i), workbook))
-					return false;	
+					return false;
 			}
 			workbook.write(os);
 			return true;
@@ -242,8 +248,8 @@ public abstract class ExcelUtil {
 			try {
 				if (workbook != null)
 					workbook.close();
-			} catch (Exception ex) {
-
+			} catch (IOException ex) {
+				log.warn(ex.getMessage());
 			}
 
 		}
@@ -526,18 +532,19 @@ public abstract class ExcelUtil {
 	public static List<List<Object>> excelToList(File file) throws Exception {
 		return excelToList(file, 0);
 	}
-	public static List<EzMap> excelToList(File file,List<String> header) throws Exception {
-		return excelToList(file,header, 0);
+
+	public static List<EzMap> excelToList(File file, List<String> header) throws Exception {
+		return excelToList(file, header, 0);
 	}
 
-	public static List<EzMap> excelToList(File file, List<String> header, int sheetIndex) throws Exception{
+	public static List<EzMap> excelToList(File file, List<String> header, int sheetIndex) throws Exception {
 		if (file == null || !file.isFile())
 			return null;
 		String ext = Utilities.getFileExtension(file.getAbsolutePath());
 		if ("xls".equalsIgnoreCase(ext))
-			return excelToListH(file,header, sheetIndex);
+			return excelToListH(file, header, sheetIndex);
 		else
-			return excelToListX(file,header, sheetIndex);
+			return excelToListX(file, header, sheetIndex);
 	}
 
 	public static List<EzMap> excelToListX(File file, List<String> header, int sheetIndex) throws Exception {
@@ -546,97 +553,87 @@ public abstract class ExcelUtil {
 		try {
 			workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-			if(sheet == null)
+			if (sheet == null)
 				return null;
 			int empRow = 0;
 			int index = 0;
-			while(empRow<5) {
+			while (empRow < 5) {
 				XSSFRow row = sheet.getRow(index++);
-				if(row == null)
-				{
+				if (row == null) {
 					empRow++;
 					continue;
-				}
-				else
+				} else
 					empRow = 0;
 				EzMap map = new EzMap();
 				boolean emptyCell = true;
 				int cIndex = 0;
 				int headerIndex = 0;
-				while(headerIndex<header.size()) {
+				while (headerIndex < header.size()) {
 					XSSFCell cell = row.getCell(cIndex++);
-					if(!emptyCell&&cell==null)
+					if (!emptyCell && cell == null)
 						break;
-					emptyCell = false;	
-					if(emptyCell && cIndex>10)
+					emptyCell = false;
+					if (emptyCell && cIndex > 10)
 						break;
-					
+
 					map.put(header.get(headerIndex++), getCellValue(cell));
-					
+
 				}
 				list.add(map);
-				
+
 			}
 			return list;
-		}
-		catch(Exception ex)
-		{
+		} catch (Exception ex) {
 			Utilities.trace(ex);
-		}
-		finally {
-			if(workbook!=null)
+		} finally {
+			if (workbook != null)
 				workbook.close();
 		}
 		return null;
 	}
 
-	public static List<EzMap> excelToListH(File file, List<String> header, int sheetIndex) throws Exception{
+	public static List<EzMap> excelToListH(File file, List<String> header, int sheetIndex) throws Exception {
 		HSSFWorkbook workbook = null;
 		List<EzMap> list = new ArrayList<EzMap>();
 		InputStream is = new FileInputStream(file);
 		try {
 			workbook = new HSSFWorkbook(is);
 			HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-			if(sheet == null)
+			if (sheet == null)
 				return null;
 			int empRow = 0;
 			int index = 0;
-			while(empRow<5) {
+			while (empRow < 5) {
 				HSSFRow row = sheet.getRow(index++);
-				if(row == null)
-				{
+				if (row == null) {
 					empRow++;
 					continue;
-				}
-				else
+				} else
 					empRow = 0;
 				EzMap map = new EzMap();
 				boolean emptyCell = true;
 				int cIndex = 0;
 				int headerIndex = 0;
-				while(headerIndex<header.size()) {
+				while (headerIndex < header.size()) {
 					HSSFCell cell = row.getCell(cIndex++);
-					if(!emptyCell&&cell==null)
+					if (!emptyCell && cell == null)
 						break;
-					emptyCell = false;	
-					if(emptyCell && cIndex>10)
+					emptyCell = false;
+					if (emptyCell && cIndex > 10)
 						break;
 					map.put(header.get(headerIndex++), getCellValue(cell));
-					
+
 				}
 				list.add(map);
-				
+
 			}
 			return list;
-		}
-		catch(Exception ex)
-		{
-			
-		}
-		finally {
-			if(is != null)
+		} catch (Exception ex) {
+			log.warn(ex.getMessage());
+		} finally {
+			if (is != null)
 				is.close();
-			if(workbook!=null)
+			if (workbook != null)
 				workbook.close();
 		}
 		return null;
@@ -658,49 +655,42 @@ public abstract class ExcelUtil {
 		try {
 			workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-			if(sheet == null)
+			if (sheet == null)
 				return null;
 			int empRow = 0;
 			int index = 0;
-			while(empRow<5) {
+			while (empRow < 5) {
 				XSSFRow row = sheet.getRow(index++);
-				if(row == null)
-				{
+				if (row == null) {
 					empRow++;
 					continue;
-				}
-				else
+				} else
 					empRow = 0;
-				List<Object> rlist= new ArrayList<Object>();
+				List<Object> rlist = new ArrayList<Object>();
 				boolean emptyCell = true;
 				int cIndex = 0;
-				while(true) {
+				while (true) {
 					XSSFCell cell = row.getCell(cIndex++);
-					if(!emptyCell&&cell==null)
+					if (!emptyCell && cell == null)
 						break;
-					emptyCell = false;	
-					if(emptyCell && cIndex>10)
+					emptyCell = false;
+					if (emptyCell && cIndex > 10)
 						break;
-					
+
 					rlist.add(getCellValue(cell));
 				}
 				list.add(rlist);
-				
+
 			}
 			return list;
-		}
-		catch(Exception ex)
-		{
-			
-		}
-		finally {
-			if(workbook!=null)
+		} catch (Exception ex) {
+			log.warn(ex.getMessage());
+		} finally {
+			if (workbook != null)
 				workbook.close();
 		}
 		return null;
 	}
-
-	
 
 	public static List<List<Object>> excelToListH(File file, int sheetIndex) throws Exception {
 		HSSFWorkbook workbook = null;
@@ -709,51 +699,47 @@ public abstract class ExcelUtil {
 		try {
 			workbook = new HSSFWorkbook(is);
 			HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
-			if(sheet == null)
+			if (sheet == null)
 				return null;
 			int empRow = 0;
 			int index = 0;
-			while(empRow<5) {
+			while (empRow < 5) {
 				HSSFRow row = sheet.getRow(index++);
-				if(row == null)
-				{
+				if (row == null) {
 					empRow++;
 					continue;
-				}
-				else
+				} else
 					empRow = 0;
-				List<Object> rlist= new ArrayList<Object>();
+				List<Object> rlist = new ArrayList<Object>();
 				boolean emptyCell = true;
 				int cIndex = 0;
-				while(true) {
+				while (true) {
 					HSSFCell cell = row.getCell(cIndex++);
-					if(!emptyCell&&cell==null)
+					if (!emptyCell && cell == null)
 						break;
-					emptyCell = false;	
-					if(emptyCell && cIndex>10)
+					emptyCell = false;
+					if (emptyCell && cIndex > 10)
 						break;
 					rlist.add(getCellValue(cell));
 				}
 				list.add(rlist);
-				
+
 			}
 			return list;
-		}
-		catch(Exception ex)
-		{
-			
-		}
-		finally {
-			if(is != null)
+		} catch (Exception ex) {
+			log.warn(ex.getMessage());
+		} finally {
+			if (is != null)
 				is.close();
-			if(workbook!=null)
+			if (workbook != null)
 				workbook.close();
 		}
 		return null;
 	}
+
 	private static Object getCellValue(HSSFCell cell) {
 		CellType type = cell.getCellType();
-		Object value=null;
+		Object value = null;
 		if (type == CellType.NUMERIC)
 			value = cell.getNumericCellValue();
 		else if (type == CellType.FORMULA) {
@@ -765,6 +751,7 @@ public abstract class ExcelUtil {
 					if (Utilities.isNotEmpty(value))
 						value = value.toString().trim();
 				} catch (Exception ex) {
+					log.warn(ex.getMessage());
 				}
 			}
 		} else {
@@ -776,29 +763,25 @@ public abstract class ExcelUtil {
 	}
 
 	private static Object getCellValue(XSSFCell cell) {
-		if(cell==null)
+		if (cell == null)
 			return null;
 //		cell.setCellType(CellType.STRING);
 		CellType type = cell.getCellType();
-		Object value=null;
-		if (type == CellType.NUMERIC)
-		{
-			if( DateUtil.isCellDateFormatted(cell)) {
+		Object value = null;
+		if (type == CellType.NUMERIC) {
+			if (DateUtil.isCellDateFormatted(cell)) {
 				Date date = cell.getDateCellValue();
 				value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).format(date);
-			}
-			else 
+			} else
 				value = cell.getNumericCellValue();
 
-		}
-		else if (type == CellType.FORMULA) {
+		} else if (type == CellType.FORMULA) {
 			try {
-				
-				if( DateUtil.isCellDateFormatted(cell)) {
+
+				if (DateUtil.isCellDateFormatted(cell)) {
 					Date date = cell.getDateCellValue();
 					value = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).format(date);
-				}
-				else 
+				} else
 					value = cell.getNumericCellValue();
 
 			} catch (Exception e) {
@@ -807,6 +790,7 @@ public abstract class ExcelUtil {
 					if (Utilities.isNotEmpty(value))
 						value = value.toString().trim();
 				} catch (Exception ex) {
+					log.warn(ex.getMessage());
 				}
 			}
 		} else {

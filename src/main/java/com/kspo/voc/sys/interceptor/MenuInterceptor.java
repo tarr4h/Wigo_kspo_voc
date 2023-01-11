@@ -157,29 +157,21 @@ public class MenuInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		try {
-
-			if (!(handler instanceof HandlerMethod))
-				return true;
-			if (HandlerUtils.isInstance(handler, ErrorController.class))
-				return true;
-
-			if (HandlerUtils.isInstance(handler, MainController.class)) {
-				if (!SessionUtil.isAjaxRequest()) {
-					if (request.getRequestURI().equals("/") || request.getRequestURI().equals("")) {
-						SessionUtil.setUserMenuMap(null);
-						SessionUtil.setUserMenuList(null);
-
-					}
-				}
-			}
-			setMenuId(request);
-			if (SessionUtil.isAjaxRequest())
-				return true;
+		if (!(handler instanceof HandlerMethod))
 			return true;
-		} finally {
+		if (HandlerUtils.isInstance(handler, ErrorController.class))
+			return true;
+
+		if (HandlerUtils.isInstance(handler, MainController.class) && !SessionUtil.isAjaxRequest()
+				&& (request.getRequestURI().equals("/") || request.getRequestURI().equals(""))) {
+			SessionUtil.setUserMenuMap(null);
+			SessionUtil.setUserMenuList(null);
 
 		}
+		setMenuId(request);
+		if (SessionUtil.isAjaxRequest())
+			return true;
+		return true;
 	}
 
 }

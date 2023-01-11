@@ -1,30 +1,27 @@
 package com.kspo.base.common.util.security;
 
-import java.io.PrintStream;
 import java.security.InvalidKeyException;
-import java.util.Date;
 
 /**
  * 
-* <pre>
-* com.kspo.base.common.util.security
-*	- ARIA.java
-* </pre>
-*
-* @ClassName	: ARIA 
-* @Description	: ARIA 
-* @author 		: 김성태
-* @date 		: 2021. 1. 5.
-* @Version 		: 1.0 
-* @Company 		: Copyright ⓒ wigo.ai. All Right Reserved
+ * <pre>
+ * com.kspo.base.common.util.security - ARIA.java
+ * </pre>
+ *
+ * @ClassName : ARIA
+ * @Description : ARIA
+ * @author : 김성태
+ * @date : 2021. 1. 5.
+ * @Version : 1.0
+ * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
-
-public class ARIA {
+public class AriaEncrypt {
 //	private static final String _ARIA_MASTER_KEY = "cspi-0262695679";
 
-	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+//	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd','e', 'f' };
 
-	private static final int[][] KRK = { { 0x517cc1b7, 0x27220a94, 0xfe13abe8, 0xfa9a6ee0 }, { 0x6db14acc, 0x9e21c820, 0xff28b1d5, 0xef5de2b0 }, { 0xdb92371d, 0x2126e970, 0x03249775, 0x04e8c90e } };
+	private static final int[][] KRK = { { 0x517cc1b7, 0x27220a94, 0xfe13abe8, 0xfa9a6ee0 },
+			{ 0x6db14acc, 0x9e21c820, 0xff28b1d5, 0xef5de2b0 }, { 0xdb92371d, 0x2126e970, 0x03249775, 0x04e8c90e } };
 
 	private static final byte[] S1 = new byte[256];
 	private static final byte[] S2 = new byte[256];
@@ -43,23 +40,31 @@ public class ARIA {
 		exp[0] = 1;
 		for (int i = 1; i < 256; i++) {
 			int j = (exp[i - 1] << 1) ^ exp[i - 1];
-			if ((j & 0x100) != 0) j ^= 0x11b;
+			if ((j & 0x100) != 0)
+				j ^= 0x11b;
 			exp[i] = j;
 		}
 		for (int i = 1; i < 255; i++)
 			log[exp[i]] = i;
 
-		int[][] A = { { 1, 0, 0, 0, 1, 1, 1, 1 }, { 1, 1, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 0, 0, 0, 1, 1 }, { 1, 1, 1, 1, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 1, 1, 1, 1, 1, 0, 0 }, { 0, 0, 1, 1, 1, 1, 1, 0 }, { 0, 0, 0, 1, 1, 1, 1, 1 } };
-		int[][] B = { { 0, 1, 0, 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0, 1, 1, 1 }, { 1, 0, 0, 1, 1, 1, 0, 1 }, { 0, 0, 1, 0, 1, 1, 0, 0 }, { 1, 0, 0, 0, 0, 0, 0, 1 }, { 0, 1, 0, 1, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0, 0, 1, 1 } };
+		int[][] arrA = { { 1, 0, 0, 0, 1, 1, 1, 1 }, { 1, 1, 0, 0, 0, 1, 1, 1 }, { 1, 1, 1, 0, 0, 0, 1, 1 },
+				{ 1, 1, 1, 1, 0, 0, 0, 1 }, { 1, 1, 1, 1, 1, 0, 0, 0 }, { 0, 1, 1, 1, 1, 1, 0, 0 },
+				{ 0, 0, 1, 1, 1, 1, 1, 0 }, { 0, 0, 0, 1, 1, 1, 1, 1 } };
+		int[][] arrB = { { 0, 1, 0, 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0, 1, 1, 1 },
+				{ 1, 0, 0, 1, 1, 1, 0, 1 }, { 0, 0, 1, 0, 1, 1, 0, 0 }, { 1, 0, 0, 0, 0, 0, 0, 1 },
+				{ 0, 1, 0, 1, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0, 0, 1, 1 } };
 
 		for (int i = 0; i < 256; i++) {
 			int t = 0, p;
-			if (i == 0) p = 0;
-			else p = exp[255 - log[i]];
+			if (i == 0)
+				p = 0;
+			else
+				p = exp[255 - log[i]];
 			for (int j = 0; j < 8; j++) {
 				int s = 0;
 				for (int k = 0; k < 8; k++) {
-					if (((p >>> (7 - k)) & 0x01) != 0) s ^= A[k][j];
+					if (((p >>> (7 - k)) & 0x01) != 0)
+						s ^= arrA[k][j];
 				}
 				t = (t << 1) ^ s;
 			}
@@ -69,12 +74,15 @@ public class ARIA {
 		}
 		for (int i = 0; i < 256; i++) {
 			int t = 0, p;
-			if (i == 0) p = 0;
-			else p = exp[(247 * log[i]) % 255];
+			if (i == 0)
+				p = 0;
+			else
+				p = exp[(247 * log[i]) % 255];
 			for (int j = 0; j < 8; j++) {
 				int s = 0;
 				for (int k = 0; k < 8; k++) {
-					if (((p >>> k) & 0x01) != 0) s ^= B[7 - j][k];
+					if (((p >>> k) & 0x01) != 0)
+						s ^= arrB[7 - j][k];
 				}
 				t = (t << 1) ^ s;
 			}
@@ -96,7 +104,7 @@ public class ARIA {
 	private byte[] masterKey = null;
 	private int[] encRoundKeys = null, decRoundKeys = null;
 
-	public ARIA(int keySize) throws InvalidKeyException {
+	public AriaEncrypt(int keySize) throws InvalidKeyException {
 
 		setKeySize(keySize);
 	}
@@ -121,23 +129,27 @@ public class ARIA {
 	void setKeySize(int keySize) throws InvalidKeyException {
 
 		this.reset();
-		if (keySize != 128 && keySize != 192 && keySize != 256) throw new InvalidKeyException("keySize=" + keySize);
+		if (keySize != 128 && keySize != 192 && keySize != 256)
+			throw new InvalidKeyException("keySize=" + keySize);
 		this.keySize = keySize;
 		switch (keySize) {
-			case 128:
-				this.numberOfRounds = 12;
-				break;
-			case 192:
-				this.numberOfRounds = 14;
-				break;
-			case 256:
-				this.numberOfRounds = 16;
+		case 128:
+			this.numberOfRounds = 12;
+			break;
+		case 192:
+			this.numberOfRounds = 14;
+			break;
+		case 256:
+			this.numberOfRounds = 16;
+		default:
+			break;
 		}
 	}
 
 	void setKey(byte[] masterKey) throws InvalidKeyException {
 
-		if (masterKey.length * 8 < keySize) throw new InvalidKeyException("masterKey size=" + masterKey.length);
+		if (masterKey.length * 8 < keySize)
+			throw new InvalidKeyException("masterKey size=" + masterKey.length);
 		this.decRoundKeys = null;
 		this.encRoundKeys = null;
 		this.masterKey = (byte[]) masterKey.clone();
@@ -145,20 +157,27 @@ public class ARIA {
 
 	void setupEncRoundKeys() throws InvalidKeyException {
 
-		if (this.keySize == 0) throw new InvalidKeyException("keySize");
-		if (this.masterKey == null) throw new InvalidKeyException("masterKey");
-		if (this.encRoundKeys == null) this.encRoundKeys = new int[4 * (this.numberOfRounds + 1)];
+		if (this.keySize == 0)
+			throw new InvalidKeyException("keySize");
+		if (this.masterKey == null)
+			throw new InvalidKeyException("masterKey");
+		if (this.encRoundKeys == null)
+			this.encRoundKeys = new int[4 * (this.numberOfRounds + 1)];
 		this.decRoundKeys = null;
 		doEncKeySetup(this.masterKey, this.encRoundKeys, this.keySize);
 	}
 
 	void setupDecRoundKeys() throws InvalidKeyException {
 
-		if (this.keySize == 0) throw new InvalidKeyException("keySize");
-		if (this.encRoundKeys == null) if (this.masterKey == null) throw new InvalidKeyException("masterKey");
-		else setupEncRoundKeys();
+		if (this.keySize == 0)
+			throw new InvalidKeyException("keySize");
+		if (this.encRoundKeys == null)
+			if (this.masterKey == null)
+				throw new InvalidKeyException("masterKey");
+			else
+				setupEncRoundKeys();
 		this.decRoundKeys = (int[]) encRoundKeys.clone();
-		doDecKeySetup(this.masterKey, this.decRoundKeys, this.keySize);
+		doDecKeySetup(this.decRoundKeys, this.keySize);
 	}
 
 	void setupRoundKeys() throws InvalidKeyException {
@@ -272,9 +291,13 @@ public class ARIA {
 
 	void encrypt(byte[] i, int ioffset, byte[] o, int ooffset) throws InvalidKeyException {
 
-		if (this.keySize == 0) throw new InvalidKeyException("keySize");
-		if (this.encRoundKeys == null) if (this.masterKey == null) throw new InvalidKeyException("masterKey");
-		else setupEncRoundKeys();
+		if (this.keySize == 0)
+			throw new InvalidKeyException("keySize");
+		if (this.encRoundKeys == null)
+			if (this.masterKey == null)
+				throw new InvalidKeyException("masterKey");
+			else
+				setupEncRoundKeys();
 		doCrypt(i, ioffset, this.encRoundKeys, this.numberOfRounds, o, ooffset);
 	}
 
@@ -287,9 +310,13 @@ public class ARIA {
 
 	void decrypt(byte[] i, int ioffset, byte[] o, int ooffset) throws InvalidKeyException {
 
-		if (this.keySize == 0) throw new InvalidKeyException("keySize");
-		if (this.decRoundKeys == null) if (this.masterKey == null) throw new InvalidKeyException("masterKey");
-		else setupDecRoundKeys();
+		if (this.keySize == 0)
+			throw new InvalidKeyException("keySize");
+		if (this.decRoundKeys == null)
+			if (this.masterKey == null)
+				throw new InvalidKeyException("masterKey");
+			else
+				setupDecRoundKeys();
 		doCrypt(i, ioffset, this.decRoundKeys, this.numberOfRounds, o, ooffset);
 	}
 
@@ -344,12 +371,10 @@ public class ARIA {
 			if (keyBits > 192) {
 				w1[2] = toInt(mk[24], mk[25], mk[26], mk[27]);
 				w1[3] = toInt(mk[28], mk[29], mk[30], mk[31]);
-			}
-			else {
+			} else {
 				w1[2] = w1[3] = 0;
 			}
-		}
-		else {
+		} else {
 			w1[0] = w1[1] = w1[2] = w1[3] = 0;
 		}
 		w1[0] ^= t0;
@@ -463,16 +488,17 @@ public class ARIA {
 	}
 
 	/**
-	 * Main bulk of the decryption key setup method. Here we assume that the int array rk already contains the encryption round keys.
-	 * @param mk
-	 *        the master key
-	 * @param rk
-	 *        the array which contains the encryption round keys at the beginning of the method execution. At the end of method execution this will hold the decryption round keys.
-	 * @param keyBits
-	 *        the length of the master key
+	 * Main bulk of the decryption key setup method. Here we assume that the int
+	 * array rk already contains the encryption round keys.
+	 * 
+	 * @param mk      the master key
+	 * @param rk      the array which contains the encryption round keys at the
+	 *                beginning of the method execution. At the end of method
+	 *                execution this will hold the decryption round keys.
+	 * @param keyBits the length of the master key
 	 * @return
 	 */
-	private static void doDecKeySetup(byte[] mk, int[] rk, int keyBits) {
+	private static void doDecKeySetup(int[] rk, int keyBits) {
 
 		int a = 0, z;
 		int[] t = new int[4];
@@ -506,7 +532,8 @@ public class ARIA {
 
 	private static int m(int t) {
 
-		return 0x00010101 * ((t >>> 24) & 0xff) ^ 0x01000101 * ((t >>> 16) & 0xff) ^ 0x01010001 * ((t >>> 8) & 0xff) ^ 0x01010100 * (t & 0xff);
+		return 0x00010101 * ((t >>> 24) & 0xff) ^ 0x01000101 * ((t >>> 16) & 0xff) ^ 0x01010001 * ((t >>> 8) & 0xff)
+				^ 0x01010100 * (t & 0xff);
 	}
 
 	// private static final int ms(int t) {
@@ -515,22 +542,22 @@ public class ARIA {
 	// private static final int mx(int t) {
 	// return TX1[(t>>>24)&0xff]^TX2[(t>>>16)&0xff]^TS1[(t>>>8)&0xff]^TS2[t&0xff];
 	// }
-	private static final int badc(int t) {
+	private static int badc(int t) {
 
 		return ((t << 8) & 0xff00ff00) ^ ((t >>> 8) & 0x00ff00ff);
 	}
 
-	private static final int cdab(int t) {
+	private static int cdab(int t) {
 
 		return ((t << 16) & 0xffff0000) ^ ((t >>> 16) & 0x0000ffff);
 	}
 
-	private static final int dcba(int t) {
+	private static int dcba(int t) {
 
 		return (t & 0x000000ff) << 24 ^ (t & 0x0000ff00) << 8 ^ (t & 0x00ff0000) >>> 8 ^ (t & 0xff000000) >>> 24;
 	}
 
-	private static final void gsrk(int[] x, int[] y, int rot, int[] rk, int offset) {
+	private static void gsrk(int[] x, int[] y, int rot, int[] rk, int offset) {
 
 		int q = 4 - (rot / 32), r = rot % 32, s = 32 - r;
 
@@ -540,7 +567,7 @@ public class ARIA {
 		rk[offset + 3] = x[3] ^ y[(q + 3) % 4] >>> r ^ y[(q + 2) % 4] << s;
 	}
 
-	private static final void diff(int[] i, int offset1, int[] o, int offset2) {
+	private static void diff(int[] i, int offset1, int[] o, int offset2) {
 
 		int t0, t1, t2, t3;
 
@@ -569,7 +596,7 @@ public class ARIA {
 		o[offset2 + 3] = t3;
 	}
 
-	private static final void swapBlocks(int[] arr, int offset1, int offset2) {
+	private static void swapBlocks(int[] arr, int offset1, int offset2) {
 
 		int t;
 
@@ -580,7 +607,7 @@ public class ARIA {
 		}
 	}
 
-	private static final void swapAndDiffuse(int[] arr, int offset1, int offset2, int[] tmp) {
+	private static void swapAndDiffuse(int[] arr, int offset1, int offset2, int[] tmp) {
 
 		diff(arr, offset1, tmp, 0);
 		diff(arr, offset2, arr, offset1);
@@ -590,164 +617,4 @@ public class ARIA {
 		arr[offset2 + 3] = tmp[3];
 	}
 
-	private static void printBlock(PrintStream out, byte[] b) {
-
-		for (int i = 0; i < 4; i++)
-			byteToHex(out, b[i]);
-		out.print(" ");
-		for (int i = 4; i < 8; i++)
-			byteToHex(out, b[i]);
-		out.print(" ");
-		for (int i = 8; i < 12; i++)
-			byteToHex(out, b[i]);
-		out.print(" ");
-		for (int i = 12; i < 16; i++)
-			byteToHex(out, b[i]);
-	}
-
-//	private static void printSBox(PrintStream out, byte[] box) {
-//
-//		for (int i = 0; i < 16; i++) {
-//			for (int j = 0; j < 16; j++) {
-//				byteToHex(out, box[16 * i + j]);
-//				out.print(" ");
-//			}
-//			out.println();
-//		}
-//	}
-
-	private static void byteToHex(PrintStream out, byte b) {
-
-		char[] buf = { HEX_DIGITS[(b >>> 4) & 0x0F], HEX_DIGITS[b & 0x0F] };
-		out.print(new String(buf));
-	}
-
-//	private static void intToHex(PrintStream out, int i) {
-//
-//		byte[] b = new byte[4];
-//		toByteArray(i, b, 0);
-//		byteToHex(out, b[0]);
-//		byteToHex(out, b[1]);
-//		byteToHex(out, b[2]);
-//		byteToHex(out, b[3]);
-//	}
-
-//	private static void printRoundKeys(PrintStream out, int[] roundKeys) {
-//
-//		for (int i = 0; i < roundKeys.length;) {
-//			out.print("* ");
-//			intToHex(out, roundKeys[i++]);
-//			out.print(" ");
-//			intToHex(out, roundKeys[i++]);
-//			out.print(" ");
-//			intToHex(out, roundKeys[i++]);
-//			out.print(" ");
-//			intToHex(out, roundKeys[i++]);
-//			out.print(" \n");
-//		}
-//	}
-
-	public static void ARIA_test() throws InvalidKeyException {
-
-		byte[] p = new byte[16];
-		byte[] c = new byte[16];
-		byte[] mk = new byte[32];
-
-		boolean flag = false;
-		PrintStream out = System.out;
-		ARIA instance = new ARIA(256);
-
-		for (int i = 0; i < 32; i++)
-			mk[i] = 0;
-		for (int i = 0; i < 16; i++)
-			p[i] = 0;
-
-		out.println("BEGIN testing the roundtrip...");
-		out.println("For key size of 256 bits, starting with " + "the zero plaintext and the zero key, let's see if " + "we may recover the plaintext by decrypting the " + "encrypted ciphertext.");
-		instance.setKey(mk);
-		instance.setupRoundKeys();
-
-		out.print("plaintext : ");
-		printBlock(out, p);
-		out.println();
-		instance.encrypt(p, 0, c, 0);
-		out.print("ciphertext: ");
-		printBlock(out, c);
-		out.println();
-		instance.decrypt(c, 0, p, 0);
-		out.print("decrypted : ");
-		printBlock(out, p);
-		out.println();
-		flag = false;
-		for (int i = 0; i < 16; i++)
-			if (p[i] != 0) flag = true;
-		if (flag) out.println("The result is incorrect!");
-		else out.println("Okay.  The result is correct.");
-		out.println("END   testing the roundtrip.\n");
-
-		int TEST_NUM = 0x800000;
-		out.println("BEGIN speed measurement...");
-
-		for (int i = 0; i < 16; i++)
-			mk[i] = (byte) i;
-		out.println("  First, EncKeySetup():");
-		out.print("  masterkey: ");
-		printBlock(out, mk);
-		out.println();
-		instance.reset();
-		instance.setKeySize(128);
-		instance.setKey(mk);
-		for (int i = 0; i < 1000; i++)
-			instance.setupEncRoundKeys();  // allow the CPU to settle down
-		Date start = new Date();
-		for (int i = 0; i < TEST_NUM; i++)
-			instance.setupEncRoundKeys();
-		Date fin = new Date();
-		float lapse = (float) (fin.getTime() - start.getTime()) / 1000;
-		out.print("  time lapsed: ");
-		out.print(lapse);
-		out.println(" sec.");
-		out.print("  speed      : ");
-		out.print(TEST_NUM * 128 / (lapse * 1024 * 1024));
-		out.println(" megabits/sec.\n");
-
-		out.println("  Next, Crypt():");
-		for (int i = 0; i < 16; i++)
-			p[i] = (byte) ((i << 4) ^ i);
-		out.print("  plaintext : ");
-		printBlock(out, p);
-		out.println();
-		for (int i = 0; i < 1000; i++)
-			instance.encrypt(p, 0, c, 0);
-		start = new Date();
-		for (int i = 0; i < TEST_NUM; i++)
-			instance.encrypt(p, 0, c, 0);
-		fin = new Date();
-		out.print("  ciphertext: ");
-		printBlock(out, c);
-		out.println();
-		lapse = (float) (fin.getTime() - start.getTime()) / 1000;
-		out.print("  time lapsed: ");
-		out.print(lapse);
-		out.println(" sec.");
-		out.print("  speed      : ");
-		out.print(TEST_NUM * 128 / (lapse * 1024 * 1024));
-		out.println(" megabits/sec.\n");
-
-		out.println("  Finally, DecKeySetup():");
-		for (int i = 0; i < 1000; i++)
-			instance.setupDecRoundKeys();  // allow the CPU to settle down
-		start = new Date();
-		for (int i = 0; i < TEST_NUM; i++)
-			instance.setupDecRoundKeys();
-		fin = new Date();
-		lapse = (float) (fin.getTime() - start.getTime()) / 1000;
-		out.print("  time lapsed: ");
-		out.print(lapse);
-		out.println(" sec.");
-		out.print("  speed      : ");
-		out.print(TEST_NUM * 128 / (lapse * 1024 * 1024));
-		out.println(" megabits/sec.");
-		out.println("END   speed measurement.");
-	}
 }

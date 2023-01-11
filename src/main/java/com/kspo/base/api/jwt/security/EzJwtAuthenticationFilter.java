@@ -40,7 +40,7 @@ public class EzJwtAuthenticationFilter extends GenericFilterBean {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		if(!req.getRequestURI().toString().startsWith(Constants._API_URL+"/"))
+		if(!req.getRequestURI().startsWith(Constants._API_URL+"/"))
 		{
 			chain.doFilter(request, response);
 			return;

@@ -9,7 +9,9 @@ import com.kspo.voc.sys.model.ChngHstVo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Setter
 public class ChangeLogVo extends ChngHstVo {
@@ -54,11 +56,11 @@ public class ChangeLogVo extends ChngHstVo {
 			setChngRsltTxn(Utilities.getJsonString(callStack.getResults()));
 			setChngParamTxn(Utilities.getJsonString(callStack.getParameters()));
 			List<ChangeLogElemement> list = new ArrayList<ChangeLogElemement>();
-			if(callStack !=null)
+			if (callStack != null)
 				callStack.addStacks(list);
 			setChngCallTxn(Utilities.getJsonString(list));
 		} catch (Exception e) {
-
+			log.warn(e.getMessage());
 		}
 	}
 

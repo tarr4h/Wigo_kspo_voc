@@ -30,8 +30,8 @@ import io.jsonwebtoken.SignatureException;
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
-public abstract class JwtUtility {
-	final static String key = "1qaz@WSX";
+public class JwtUtility {
+	final static String _KEY = "1qaz@WSX";
 //	final static String key = "!234";
 
 	public static String createToken(String userId, String systemCd, long hours) {
@@ -56,7 +56,7 @@ public abstract class JwtUtility {
 				.setClaims(payloads) // Claims 설정
 				.setSubject("user") // 토큰 용도
 				.setExpiration(ext) // 토큰 만료 시간 설정
-				.signWith(SignatureAlgorithm.HS256, key.getBytes()) // HS256과 Key로 Sign
+				.signWith(SignatureAlgorithm.HS256, _KEY.getBytes()) // HS256과 Key로 Sign
 				.compact(); // 토큰 생성
 
 		return jwt;
@@ -92,7 +92,7 @@ public abstract class JwtUtility {
 				.setClaims(payloads) // Claims 설정
 				.setSubject("user") // 토큰 용도
 				.setExpiration(ext) // 토큰 만료 시간 설정
-				.signWith(SignatureAlgorithm.HS256, key.getBytes()) // HS256과 Key로 Sign
+				.signWith(SignatureAlgorithm.HS256, _KEY.getBytes()) // HS256과 Key로 Sign
 				.compact(); // 토큰 생성
 
 		return jwt;
@@ -109,7 +109,7 @@ public abstract class JwtUtility {
 			return null;
 		Map<String, Object> claimMap = null;
 		try {
-			Claims claims = Jwts.parser().setSigningKey(key.getBytes("UTF-8")) // Set Key
+			Claims claims = Jwts.parser().setSigningKey(_KEY.getBytes("UTF-8")) // Set Key
 					.parseClaimsJws(jwt) // 파싱 및 검증, 실패 시 에러
 					.getBody();
 

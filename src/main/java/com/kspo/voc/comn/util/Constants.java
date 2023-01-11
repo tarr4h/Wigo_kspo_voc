@@ -32,12 +32,12 @@ public class Constants {
 	public final static SimpleDateFormat _DATETIME_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREAN);
 	public final static SimpleDateFormat _DATE_FORMAT = new SimpleDateFormat("yyyyMMdd", Locale.KOREAN);
 	public final static String _DB_ENCODING = "UTF-8";
-	public static int _ERROR_NEED_LOGIN = 462;
-	public static int _ERROR_HAS_NO_RIGHT = 463;
-	public static int _ERROR_BAN_LOGIN = 464;
-	public static int _ERROR_KEY_DUPLICATE = 486;
-	public static int _ERROR_USER = 487;
-	public static int _ERROR_UNKNOWN = 488;
+	public static final int _ERROR_NEED_LOGIN = 462;
+	public static final int _ERROR_HAS_NO_RIGHT = 463;
+	public static final int _ERROR_BAN_LOGIN = 464;
+	public static final int _ERROR_KEY_DUPLICATE = 486;
+	public static final int _ERROR_USER = 487;
+	public static final int _ERROR_UNKNOWN = 488;
 
 	public static final int _PASSWORD_CHANGE_MONTH = 1;
 	public static final String _META_TYPE_CATEGORY = "01000000000000000000";

@@ -95,7 +95,7 @@ class WebMVCConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/")
 				.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 		registry.addResourceHandler("/favicon.ico").addResourceLocations("/")
-		.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
+				.setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 //        registry.addResourceHandler("/swagger-ui.html")
 //		.addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/");
@@ -108,19 +108,16 @@ class WebMVCConfig implements WebMvcConfigurer {
 
 		registry.addInterceptor(basicInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
 				.excludePathPatterns(docUrl + "/**").excludePathPatterns(swaggerUrl + "/**");
-		;
 
 		registry.addInterceptor(menuInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
 				.excludePathPatterns("/login/**").excludePathPatterns("/commCode/**").excludePathPatterns("/api/**")
 				.excludePathPatterns(docUrl + "/**").excludePathPatterns(swaggerUrl + "/**");
-		;
 
 		registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**")
 				.excludePathPatterns("/login/**").excludePathPatterns("/genGrid/**").excludePathPatterns("/error/**")
 				.excludePathPatterns("/commCode/**").excludePathPatterns("/api/**").excludePathPatterns("/tutor/**")
 				.excludePathPatterns("/util/**").excludePathPatterns("/example/**").excludePathPatterns(docUrl + "/**")
-				.excludePathPatterns(swaggerUrl + "/**")
-				;
+				.excludePathPatterns(swaggerUrl + "/**");
 
 	}
 

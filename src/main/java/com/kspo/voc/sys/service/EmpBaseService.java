@@ -19,13 +19,9 @@ public class EmpBaseService extends AbstractVocService {
 	@Autowired
 	UserBaseDao userDao;
 
-
 	@Override
 	public IVocDao getDao() {
 		return dao;
-	}
-
-	public void saveSyncEmp() throws EgovBizException {
 	}
 
 	@Override

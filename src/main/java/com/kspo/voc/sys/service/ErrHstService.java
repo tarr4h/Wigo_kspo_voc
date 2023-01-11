@@ -15,6 +15,9 @@ import com.kspo.voc.sys.dao.IVocDao;
 import com.kspo.voc.sys.model.ErrHstVo;
 import com.kspo.voc.sys.model.MenuBaseVo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ErrHstService extends AbstractVocService {
 	@Autowired
@@ -45,7 +48,7 @@ public class ErrHstService extends AbstractVocService {
 			vo.setMenuUrl(request.getRequestURI());
 			dao.insert(vo);
 		} catch (Exception e) {
-
+			log.warn(e.getMessage());
 		}
 	}
 }

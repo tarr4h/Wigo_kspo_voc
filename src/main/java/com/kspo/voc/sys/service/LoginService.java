@@ -31,7 +31,7 @@ public class LoginService extends AbstractVocService {
 //	private String authUrl;
 
 //	@Value("${spring.sso.logout-url}")
-	private String logoutUrl = "/";
+	private static final String logoutUrl = "/";
 
 //	@Value("${spring.sso.profile-url}")
 //	private String profileUrl;

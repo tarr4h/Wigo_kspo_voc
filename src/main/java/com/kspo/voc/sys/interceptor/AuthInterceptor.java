@@ -3,8 +3,6 @@ package com.kspo.voc.sys.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springdoc.webmvc.api.OpenApiWebMvcResource;
 import org.springdoc.webmvc.ui.SwaggerWelcomeWebMvc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,8 @@ import com.kspo.voc.comn.util.SessionUtil;
 import com.kspo.voc.sys.controller.MainController;
 import com.kspo.voc.sys.service.LoginService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * <pre>
@@ -38,12 +38,11 @@ import com.kspo.voc.sys.service.LoginService;
 
 // public class AuthCheckInterceptor extends HandlerInterceptorAdapter {
 @Component("authInterceptor")
+@Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
-	private Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
-
 	@Autowired
-    LoginService loginService;
+	LoginService loginService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -60,7 +59,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 //	return true;
 		String targetURI = request.getServletPath();
 
-		if (logger.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			StringBuilder sb = new StringBuilder();
 
 			// request 정보
@@ -70,7 +69,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			sb.append("\n#reqUrl     : ").append(request.getRequestURL().toString());
 			sb.append("\n#userAgent  : ").append(request.getHeader("User-Agent"));
 			sb.append("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-			logger.debug(sb.toString());
+			log.debug(sb.toString());
 		}
 
 		// if ( HandlerUtils.isInstance( handler, ErrorController.class ) ) return true;

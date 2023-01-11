@@ -18,7 +18,7 @@ public class TransactionAspect {
 //	private static final String AOP_TRANSACTION_METHOD_NAME = "*";
 	private static final String AOP_TRANSCTION_EXPRESSION = "execution(* com.kspo..service.*Impl.*(..))";
 	private static final String VOC_AOP_TRANSCTION_EXPRESSION = "execution(* com.kspo.voc..*Service.*(..))";
-	private static int TX_TIMEOUT = 600;
+	private static final int TX_TIMEOUT = 600;
 	@Resource(name = "txManager")
 	private TransactionManager txManager;
 

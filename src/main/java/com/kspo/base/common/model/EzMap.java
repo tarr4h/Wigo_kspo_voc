@@ -53,15 +53,16 @@ public class EzMap extends LinkedHashMap<String, Object> {
 		this(Utilities.beanToMap(object));
 	}
 	
-	@Override
-	public void putAll(Map<? extends String, ? extends Object> m) {
-		super.putAll(m);
-	}
+//	@Override
+//	public void putAll(Map<? extends String, ? extends Object> m) {
+//		super.putAll(m);
+//	}
 	@Override
 	public Object put(String key, Object value) {
+		String ky = key;
 		if(camel)
-			key = Utilities.convert2CamelCase(key);
-		return super.put(key, value);
+			ky = Utilities.convert2CamelCase(key);
+		return super.put(ky, value);
 	}
 
 	public String getString(String key) {

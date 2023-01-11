@@ -11,6 +11,8 @@ import com.kspo.base.common.model.EzMap;
 import com.kspo.voc.comn.util.Utilities;
 import com.kspo.voc.sys.service.MenuService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * <pre>
@@ -24,7 +26,7 @@ import com.kspo.voc.sys.service.MenuService;
  * @Version : 1.0
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
-
+@Slf4j
 public class MenuNameTag extends TagSupport {
 
 	/**
@@ -33,7 +35,7 @@ public class MenuNameTag extends TagSupport {
 	private static final long serialVersionUID = 6129581713388769101L;
 	private String menuId;
 
-	private MenuService service = Utilities.getBean("menuService");
+	private final MenuService service = Utilities.getBean("menuService");
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -45,6 +47,7 @@ public class MenuNameTag extends TagSupport {
 			if (menu != null)
 				pageContext.getOut().print(menu.getString("menuNm"));
 		} catch (EgovBizException | IOException e) {
+			log.warn(e.getMessage());
 		}
 		return SKIP_BODY;
 	}

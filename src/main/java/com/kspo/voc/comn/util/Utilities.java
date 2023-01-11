@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -72,7 +73,6 @@ import com.kspo.base.common.model.EzPropertyServiceImpl;
 import com.kspo.base.common.model.EzTreeMap;
 import com.kspo.base.common.model.ITreeVo;
 import com.kspo.base.common.util.ExcelUtil;
-import com.kspo.base.common.util.HttpUtil;
 import com.kspo.base.common.util.MailUtil;
 import com.kspo.base.common.util.PKZip;
 import com.kspo.base.common.util.security.KisaSeed256;
@@ -100,6 +100,10 @@ import lombok.extern.slf4j.Slf4j;
 public class Utilities {
 
 	private static final String _ENC_LANG = "UTF-8";
+
+	private static final String _LOCAL_IP = "0:0:0:0:0:0:0:1";
+	private static final String _LOCAL_HOST_IP = "127.0.0.1";
+
 	private static ConfigurableApplicationContext context;
 	private static ObjectMapper objectMapper;
 	private static ServletContext servletContext;
@@ -141,9 +145,11 @@ public class Utilities {
 			}
 
 			public void checkClientTrusted(X509Certificate[] certs, String authType) {
+				log.debug(authType);
 			}
 
 			public void checkServerTrusted(X509Certificate[] certs, String authType) {
+				log.debug(authType);
 			}
 		} };
 
@@ -181,13 +187,13 @@ public class Utilities {
 	public static String getArrayString(String[] arr, String strSpliter) {
 		if (arr == null || arr.length == 0)
 			return "";
-		String strRet = "";
+		StringBuffer strRet = new StringBuffer();
 		for (int i = 0; i < arr.length; i++) {
 			if (strRet.length() > 0)
-				strRet += strSpliter;
-			strRet += arr[i];
+				strRet.append(strSpliter);
+			strRet.append(arr[i]);
 		}
-		return strRet;
+		return strRet.toString();
 	}
 
 	/**
@@ -230,7 +236,7 @@ public class Utilities {
 	 * @param fDirectory 경로
 	 */
 	static public void deleteDirectory(File fDirectory) {
-		if (fDirectory == null || fDirectory.isDirectory() == false)
+		if (fDirectory == null || !fDirectory.isDirectory())
 			return;
 		deleteFile(fDirectory);
 	}
@@ -340,7 +346,8 @@ public class Utilities {
 	 * @param spliter 구분자
 	 * @return
 	 */
-	public static String getDateFormat(String strDate, String spliter) {
+	public static String getDateFormat(String date, String spliter) {
+		String strDate = date;
 		if (Utilities.isEmpty(strDate))
 			return null;
 		strDate = Utilities.getOnlyNumberString(strDate);
@@ -366,7 +373,8 @@ public class Utilities {
 	 * @param spliter 구분자
 	 * @return
 	 */
-	public static String getTimeFormat(String strDate, String spliter) {
+	public static String getTimeFormat(String date, String spliter) {
+		String strDate = date;
 		if (Utilities.isEmpty(strDate))
 			return null;
 		strDate = Utilities.getOnlyNumberString(strDate);
@@ -393,9 +401,10 @@ public class Utilities {
 	 * @param spliterT    시간 구분자
 	 * @return
 	 */
-	public static String getDateTimeFormat(String strDateTime, String spliterD, String spliterT) {
-		if (Utilities.isEmpty(strDateTime))
+	public static String getDateTimeFormat(String datetime, String spliterD, String spliterT) {
+		if (Utilities.isEmpty(datetime))
 			return null;
+		String strDateTime = datetime;
 		strDateTime = Utilities.getOnlyNumberString(strDateTime);
 
 		if (strDateTime.length() < 14)
@@ -505,16 +514,17 @@ public class Utilities {
 		if (fullPath == null) {
 			return null;
 		}
-		fullPath = fullPath.replace('\\', '/');
-		int index = fullPath.lastIndexOf("/");
+		String fPath = fullPath;
+		fPath = fPath.replace('\\', '/');
+		int index = fPath.lastIndexOf("/");
 		if (index == -1) {
-			index = fullPath.lastIndexOf("\\");
+			index = fPath.lastIndexOf("\\");
 			if (index > -1) {
-				return fullPath.substring(0, index);
+				return fPath.substring(0, index);
 			}
 		}
 
-		return fullPath.substring(0, index);
+		return fPath.substring(0, index);
 	}
 
 	/**
@@ -564,7 +574,8 @@ public class Utilities {
 	 * @param strTrim
 	 * @return
 	 */
-	public static String trimStart(String strSource, String strTrim) {
+	public static String trimStart(String source, String strTrim) {
+		String strSource = source;
 		if (strTrim == null || strTrim.length() == 0)
 			return strSource;
 		while (strSource.startsWith(strTrim)) {
@@ -577,20 +588,21 @@ public class Utilities {
 	/**
 	 * 문자열 뒷부분 trim
 	 * 
-	 * @param strSource
+	 * @param source
 	 * @param strTrim
 	 * @return
 	 */
 	public static String trimEnd(String strSource, String strTrim) {
+		String source = strSource;
 		if (strTrim == null || strTrim.length() == 0)
-			return strSource;
-		if (strSource == null || strSource.length() == 0)
+			return source;
+		if (source == null || source.length() == 0)
 			return "";
-		while (strSource.endsWith(strTrim)) {
-			int nIndex = strSource.length() - strTrim.length();
-			strSource = strSource.substring(0, nIndex);
+		while (source.endsWith(strTrim)) {
+			int nIndex = source.length() - strTrim.length();
+			source = source.substring(0, nIndex);
 		}
-		return strSource;
+		return source;
 
 	}
 
@@ -608,11 +620,12 @@ public class Utilities {
 		int nCnt = nSize - strSource.length();
 		if (nCnt < 1)
 			return strSource;
+		StringBuffer bf = new StringBuffer(strSource);
 		for (int i = 0; i < nCnt; i++) {
-			strSource = szPad + strSource;
-
+//			strSource = szPad + strSource;
+			bf.insert(0, szPad);
 		}
-		return strSource;
+		return bf.toString();
 	}
 
 	/**
@@ -629,10 +642,11 @@ public class Utilities {
 		int nCnt = nSize - strSource.length();
 		if (nCnt < 1)
 			return strSource;
+		StringBuffer bf = new StringBuffer(strSource);
 		for (int i = 0; i < nCnt; i++) {
-			strSource = strSource + szPad;
+			bf.append(szPad);
 		}
-		return strSource;
+		return bf.toString();
 	}
 
 	/**
@@ -1123,9 +1137,10 @@ public class Utilities {
 	 * @param strText
 	 * @return
 	 */
-	public static String getDecodeText(String strText) {
-		if (strText == null || strText.length() == 0)
+	public static String getDecodeText(String text) {
+		if (text == null || text.length() == 0)
 			return "";
+		String strText = text;
 		String strRet = "";
 		try {
 			strText = strText.replace("_amp_", "&");
@@ -1247,15 +1262,15 @@ public class Utilities {
 	 * @return
 	 */
 	public static String convert2CamelCaseToData(String key) {
-		String ret = "data-";
+		StringBuffer ret = new StringBuffer("data-");
 		for (int i = 0; i < key.length(); i++) {
 			char sz = key.charAt(i);
 			if (sz >= 'A' && sz <= 'Z')
-				ret += ("-" + sz).toLowerCase();
+				ret.append(("-" + sz).toLowerCase());
 			else
-				ret += sz;
+				ret.append(sz);
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	/**
@@ -1326,9 +1341,9 @@ public class Utilities {
 	}
 
 	public static String wget(String strUri, String strPost, String token, boolean json, String method, EzMap header) {
-		InputStreamReader isr = null;
+		String httpMethod = method;
 		OutputStreamWriter osw = null;
-
+		BufferedReader br = null;
 		try {
 			URL url = new URL(strUri);
 
@@ -1339,22 +1354,22 @@ public class Utilities {
 			conn.setConnectTimeout(2000);
 			conn.setUseCaches(false);
 			if (strPost != null) {
-				if (Utilities.isEmpty(method))
-					method = "POST";
+				if (Utilities.isEmpty(httpMethod))
+					httpMethod = "POST";
 
 				if (json)
 					conn.setRequestProperty("Content-Type", "application/json;charset=" + _ENC_LANG);
 				else
 					conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + _ENC_LANG);
 			} else {
-				if (Utilities.isEmpty(method))
-					method = "GET";
+				if (Utilities.isEmpty(httpMethod))
+					httpMethod = "GET";
 				if (json)
 					conn.setRequestProperty("Content-Type", "application/json;charset=" + _ENC_LANG);
 				else
 					conn.setRequestProperty("Content-Type", "text/plain");
 			}
-			conn.setRequestMethod(method);
+			conn.setRequestMethod(httpMethod);
 			if (Utilities.isNotEmpty(token)) {
 				conn.setRequestProperty("Authorization", "bearer " + token);
 			}
@@ -1374,8 +1389,7 @@ public class Utilities {
 			if (responseCode != HttpURLConnection.HTTP_OK)
 				return "";
 
-			isr = new InputStreamReader(conn.getInputStream(), _ENC_LANG);
-			BufferedReader br = new BufferedReader(isr);
+			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), _ENC_LANG));
 
 			char[] buffer = new char[1024];
 			StringBuffer sb = new StringBuffer();
@@ -1394,14 +1408,16 @@ public class Utilities {
 			return "";
 		} finally {
 			try {
-				if (isr != null)
-					isr.close();
+				if (br != null)
+					br.close();
 			} catch (Exception ex) {
+				log.warn(ex.getMessage());
 			}
 			try {
 				if (osw != null)
 					osw.close();
 			} catch (Exception ex) {
+				log.warn(ex.getMessage());
 			}
 
 		}
@@ -1476,7 +1492,7 @@ public class Utilities {
 				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 			}
 			if (ip == null) {
-				ip = request.getRemoteAddr().replaceAll("0:0:0:0:0:0:0:1", "127.0.0.1");
+				ip = request.getRemoteAddr().replaceAll(_LOCAL_IP, _LOCAL_HOST_IP);
 			}
 
 			return ip;
@@ -1589,20 +1605,22 @@ public class Utilities {
 	 * @param nNumber
 	 * @return
 	 */
-	public static String getNumberString(long nNumber) {
-		String strMoney = "";
+	public static String getNumberString(long number) {
+		long nNumber = number;
+		StringBuffer strMoney = new StringBuffer();
 		while (nNumber > 0) {
 			if (strMoney.length() > 0)
-				strMoney = "," + strMoney;
-			strMoney = getNumberString(nNumber % 1000, 3) + strMoney;
+				strMoney.insert(0, ",");
+			strMoney.insert(0, getNumberString(nNumber % 1000, 3));
+
 			nNumber /= 1000;
 			if (nNumber < 1)
 				break;
 		}
-		strMoney = trimStart(strMoney, "0");
-		if (strMoney.length() == 0)
-			strMoney = "0";
-		return strMoney;
+		String money = trimStart(strMoney.toString(), "0");
+		if (money.length() == 0)
+			money = "0";
+		return money;
 	}
 
 	/**
@@ -1624,10 +1642,9 @@ public class Utilities {
 		if (nIndex > -1)
 			dbVal = format.substring(nIndex + 1);
 
-		String zero = "";
-		;
+		StringBuffer zero = new StringBuffer();
 		for (int i = 0; i < num; i++) {
-			zero += "0";
+			zero.append("0");
 		}
 		String db = dbVal + zero;
 		db = db.substring(0, num);
@@ -1663,6 +1680,7 @@ public class Utilities {
 	public static boolean DownloadFile(HttpServletResponse response, String strFileName, String strDisplayName,
 			long start, long end, String contentsType) {
 
+		String contType = contentsType;
 		if (response == null)
 			return false;
 		File fDownload = new File(strFileName);
@@ -1670,10 +1688,10 @@ public class Utilities {
 			return false;
 		int nLength = (int) (end - start + 1);
 		response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-		if (Utilities.isEmpty(contentsType))
-			contentsType = "application/octet-stream";
+		if (Utilities.isEmpty(contType))
+			contType = "application/octet-stream";
 		try {
-			response.setContentType(contentsType);
+			response.setContentType(contType);
 			response.setHeader("Content-Disposition",
 					"attachment;filename=\"" + URLEncoder.encode(strDisplayName, _ENC_LANG) + "\";");
 			response.setContentLength(nLength);
@@ -1713,12 +1731,12 @@ public class Utilities {
 	 * @param response
 	 * @param strFileName
 	 * @param strDisplayName
-	 * @param contentsType
+	 * @param cType
 	 * @return
 	 */
 	public static boolean DownloadFile(HttpServletResponse response, String strFileName, String strDisplayName,
 			String contentsType) {
-
+		String cType = contentsType;
 		if (response == null)
 			return false;
 		File fDownload = new File(strFileName);
@@ -1726,10 +1744,10 @@ public class Utilities {
 		if (!fDownload.isFile())
 			return false;
 		int nLength = (int) fDownload.length();
-		if (Utilities.isEmpty(contentsType))
-			contentsType = "application/octet-stream";
+		if (Utilities.isEmpty(cType))
+			cType = "application/octet-stream";
 		try {
-			response.setContentType(contentsType);
+			response.setContentType(cType);
 			response.setHeader("Content-Disposition",
 					"attachment;filename=\"" + URLEncoder.encode(strDisplayName, _ENC_LANG) + "\";");
 			response.setContentLength(nLength);
@@ -1806,7 +1824,7 @@ public class Utilities {
 					outs.close();
 
 			} catch (Exception e) {
-
+				log.warn(e.getMessage());
 			}
 		}
 	}
@@ -1866,8 +1884,11 @@ public class Utilities {
 		BufferedOutputStream outs = null;
 		try {
 			fin = new BufferedInputStream(is);
-			if (start > 0)
-				fin.skip(start);
+			if (start > 0) {
+				long skipped = fin.skip(start);
+				if (skipped == 0)
+					throw new EOFException();
+			}
 			outs = new BufferedOutputStream(out);
 			byte[] buffer = new byte[4096];
 			try {
@@ -1892,14 +1913,14 @@ public class Utilities {
 					fin.close();
 
 			} catch (Exception e) {
-
+				log.warn(e.getMessage());
 			}
 			try {
 				if (outs != null)
 					outs.close();
 
 			} catch (Exception e) {
-
+				log.warn(e.getMessage());
 			}
 		}
 	}
@@ -1941,14 +1962,14 @@ public class Utilities {
 					fin.close();
 
 			} catch (Exception e) {
-
+				log.warn(e.getMessage());
 			}
 			try {
 				if (outs != null)
 					outs.close();
 
 			} catch (Exception e) {
-
+				log.warn(e.getMessage());
 			}
 		}
 	}
@@ -1961,8 +1982,16 @@ public class Utilities {
 	 * @throws Exception
 	 */
 	public static String readText(File file) throws Exception {
-		FileReader reader = new FileReader(file);
-		return FileCopyUtils.copyToString(reader);
+		FileReader reader = null;
+
+		try {
+			reader = new FileReader(file);
+			return FileCopyUtils.copyToString(reader);
+		} finally {
+			if (reader != null)
+				reader.close();
+		}
+
 	}
 
 	/**
@@ -2065,9 +2094,9 @@ public class Utilities {
 
 	}
 
-	static public String getRequestBody() {
-		return HttpUtil.getBodyDataByRequest(getRequest());
-	}
+//	static public String getRequestBody() {
+//		return HttpUtil.getBodyDataByRequest(getRequest());
+//	}
 
 	/**
 	 * 이미지 크기
@@ -2158,8 +2187,8 @@ public class Utilities {
 	 */
 	public static void setCookie(String name, String value) {
 		HttpServletResponse response = getResponse();
-		value = value == null ? null : value.replace("\n", "").replace("\r", "");
-		Cookie cookie = new Cookie(name, value);
+		String cValue = value == null ? null : value.replace("\n", "").replace("\r", "");
+		Cookie cookie = new Cookie(name, cValue);
 //		cookie.setSecure(true);
 		cookie.setPath("/");
 
@@ -2281,12 +2310,9 @@ public class Utilities {
 	 * @throws Exception
 	 */
 	public static void writeFile(String fileName, String content) throws Exception {
-		FileOutputStream fileOutputStream = null;
 		BufferedWriter out = null;
 		try {
-			fileOutputStream = new FileOutputStream(fileName);
-			OutputStreamWriter OutputStreamWriter = new OutputStreamWriter(fileOutputStream, "EUC-KR");
-			out = new BufferedWriter(OutputStreamWriter);
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "EUC-KR"));
 			if (Utilities.isNotEmpty(content))
 				out.write(content);
 
@@ -2310,7 +2336,8 @@ public class Utilities {
 	 * @param map
 	 * @return
 	 */
-	public static String makeParamText(String contents, Map<String, String> map) {
+	public static String makeParamText(String content, Map<String, String> map) {
+		String contents = content;
 		if (map == null)
 			return contents;
 		if (isEmpty(contents))
@@ -2524,15 +2551,17 @@ public class Utilities {
 		return encodeBase64(value.getBytes());
 	}
 
-	static public String decodeBase64(String value) {
+	static public String decodeBase64(String val) {
+//		String value = val;
+		StringBuffer value = new StringBuffer(val);
 		try {
 			int offset = value.length() % 4;
-			String off = "";
+			StringBuffer off = new StringBuffer();
 			for (int i = 0; i < offset; i++) {
-				off += "=";
+				off.append("=");
 			}
-			value += off;
-			return new String(Base64.decode(value), "UTF-8");
+			value.append(off);
+			return new String(Base64.decode(value.toString()), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
@@ -2907,9 +2936,8 @@ public class Utilities {
 			return true;
 		String[] arr = area.split("\\.");
 		for (int i = 0; i < arr.length && i < 4; i++) {
-			if (i == arr.length - 1) {
-				if ("*".equals(arr[i]))
-					return true;
+			if (i == arr.length - 1 && "*".equals(arr[i])) {
+				return true;
 			}
 			if (!arr[i].equals(ips[i]))
 				return false;

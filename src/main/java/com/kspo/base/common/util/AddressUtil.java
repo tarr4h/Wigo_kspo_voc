@@ -1,7 +1,5 @@
 package com.kspo.base.common.util;
 
-
-
 import java.net.URLEncoder;
 
 import com.kspo.base.common.model.EzAjaxException;
@@ -24,14 +22,14 @@ import com.kspo.voc.comn.util.Utilities;
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
-public abstract class AddressUtil {
+public class AddressUtil {
 
 	private static final String _KEY_KO = "devU01TX0FVVEgyMDIyMTIxNTEzNTQyMjExMzM0MjI=";
 	private static final String _KEY_EN = "devU01TX0FVVEgyMDIyMTIxNTEzNTUyNTExMzM0MjM=";
 	private static final String _API_URL_KO = "https://www.juso.go.kr/addrlink/addrLinkApi.do";
 	private static final String _API_URL_EN = "https://www.juso.go.kr/addrlink/addrEngApi.do";
 	private static final int _COUNT_PER_PAGE = 100;
-	
+
 	private AddressUtil() {
 
 	}
@@ -45,7 +43,7 @@ public abstract class AddressUtil {
 	}
 
 	public static String getKey(String lang) {
-		
+
 		if ("KO".equals(lang))
 			return _KEY_KO;
 		else
@@ -68,30 +66,32 @@ public abstract class AddressUtil {
 
 	}
 
-	public static EzAdressResultVo searchAddr(EzAddressSo so)
-			throws Exception {
-		return searchAddr(so.getKeyword(),so.getCurrentPage(),so.getCountPerPage(),so.getLanguage());
+	public static EzAdressResultVo searchAddr(EzAddressSo so) throws Exception {
+		return searchAddr(so.getKeyword(), so.getCurrentPage(), so.getCountPerPage(), so.getLanguage());
 
 	}
-	public static EzAdressResultVo searchAddr(String keyword, int page, int recordCountPerPage, String language)
-			throws Exception {
+
+	public static EzAdressResultVo searchAddr(String keyword, int pg, int perPage, String lang) throws Exception {
+		int page = pg;
+		int recordCountPerPage = perPage;
+		String language = lang;
 		if (Utilities.isEmpty(language))
 			language = "KO";
 		if (Utilities.isEmpty(keyword))
 			return null;
-		if(recordCountPerPage < 1)
+		if (recordCountPerPage < 1)
 			recordCountPerPage = _COUNT_PER_PAGE;
-		if(page < 1)
+		if (page < 1)
 			page = 1;
-		String url = getUrl(language) + "?countPerPage="+ recordCountPerPage + "&currentPage=" + page + "&resultType=json&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&confmKey=" + getKey(language)   
-				 ;
+		String url = getUrl(language) + "?countPerPage=" + recordCountPerPage + "&currentPage=" + page
+				+ "&resultType=json&keyword=" + URLEncoder.encode(keyword, "UTF-8") + "&confmKey=" + getKey(language);
 		EzAddressResult result = Utilities.wgetJson(url, EzAddressResult.class);
 		if (result == null)
 			return null;
 		EzAdressResultVo vo = result.getResults();
-		if(vo.getCommon().getTotalCount() > 9000)
+		if (vo.getCommon().getTotalCount() > 9000)
 			vo.getCommon().setTotalCount(9000);
-		if(!vo.getCommon().getErrorCode().equals("0"))
+		if (!vo.getCommon().getErrorCode().equals("0"))
 			throw new EzAjaxException(vo.getCommon().getErrorMessage());
 		return result.getResults();
 

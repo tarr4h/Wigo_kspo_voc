@@ -80,7 +80,6 @@ public class FileService extends AbstractVocService {
 			fileInfo.setFileExtNm(".txt");
 			fileInfo.setFileSize(uploadfile.getSize());
 			fileInfo.setMimeTypeNm(uploadfile.getContentType());
-			;
 		}
 
 		String ctgryCd = fileInfo.getFileCtgryCd();

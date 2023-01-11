@@ -18,20 +18,20 @@ import org.apache.commons.lang3.StringUtils;
  * @Company : Copyright ⓒ wigo.ai. All Right Reserved
  */
 
-public class ARIAProvider {
+public class AriaProvider {
 	private byte[][] plainTextBlock = null;
 	private byte[][] cipherTextBlock = null;
 	private byte[] masterKey;
 	private int keySize = 256;
-	private ARIA aria;
+	private final AriaEncrypt aria;
 
-	private static char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
-			'f' };
+	private static final char[] _HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+			'e', 'f' };
 
-	public ARIAProvider(int keySize) throws InvalidKeyException {
+	public AriaProvider(int keySize) throws InvalidKeyException {
 
 		this.keySize = keySize;
-		this.aria = new ARIA(this.keySize);
+		this.aria = new AriaEncrypt(this.keySize);
 	}
 
 	public void createMasterKey(String key) {
@@ -73,7 +73,7 @@ public class ARIAProvider {
 		return sb.toString().replace(" ", "");
 	}
 
-	public String decryptFromString(String inputString) throws  InvalidKeyException {
+	public String decryptFromString(String inputString) throws InvalidKeyException {
 
 		byte[] dest = new byte[inputString.length() / 2];
 
@@ -202,7 +202,7 @@ public class ARIAProvider {
 
 	private void byteToHex(StringBuilder sb, byte b) {
 
-		char[] buf = { HEX_DIGITS[(b >>> 4) & 0x0F], HEX_DIGITS[b & 0x0F] };
+		char[] buf = { _HEX_DIGITS[(b >>> 4) & 0x0F], _HEX_DIGITS[b & 0x0F] };
 		sb.append(new String(buf));
 	}
 }

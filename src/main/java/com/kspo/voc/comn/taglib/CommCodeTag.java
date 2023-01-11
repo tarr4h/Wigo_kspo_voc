@@ -1,6 +1,5 @@
 package com.kspo.voc.comn.taglib;
 
-
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
@@ -43,7 +42,7 @@ public class CommCodeTag extends TagSupport {
 	private String className = "select";
 	private boolean multiple = false;
 	private boolean select2 = false;
-	
+
 	private String upCombo = "";
 	private String useYn1;
 	private String useYn2;
@@ -63,7 +62,7 @@ public class CommCodeTag extends TagSupport {
 	private String refCd7;
 	private String refCd8;
 	private String refCd9;
-	private ComnCdService codeService = Utilities.getBean(ComnCdService.class);
+	private final ComnCdService codeService = Utilities.getBean(ComnCdService.class);
 
 	public String getCodeCd() {
 		return codeCd;
@@ -283,7 +282,7 @@ public class CommCodeTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		String options = "";
+		StringBuffer options = new StringBuffer();
 
 		EzMap param = new EzMap();
 		param.put("codeCd", getCodeCd());
@@ -315,7 +314,8 @@ public class CommCodeTag extends TagSupport {
 				prefixLabel = Utilities.nullCheck(prefixLabel);
 				if (Utilities.isEmpty(prefixLabel))
 					prefixLabel = prefixValue;
-				options += "<option value=\"" + prefixValue + "\">" + prefixLabel + "</options>";
+				options.append("<option value=\"").append(prefixValue).append("\">").append(prefixLabel)
+						.append("</options>");
 			}
 			for (int i = 0; i < list.size(); i++) {
 				ComnCdBaseVo code = list.get(i);
@@ -323,18 +323,18 @@ public class CommCodeTag extends TagSupport {
 				if (code.getComnCd().equals(selectedValue)) {
 					selected = " selected ";
 				}
-				String data = "";
-				EzMap map =new EzMap( Utilities.beanToMap(code),false);
+				StringBuffer data = new StringBuffer();
+				EzMap map = new EzMap(Utilities.beanToMap(code), false);
 				map.put("codeCd", code.getComnCd());
 				map.put("codeNm", code.getComnCdNm());
 				for (String key : map.keySet()) {
 					String value = (String) map.getString(key);
 					String dataKey = Utilities.convert2CamelCaseToData(key);
-					data += dataKey + "=\"" + value + "\" ";
+					data.append(dataKey).append("=\"").append(value).append("\" ");
 				}
 
-				options += "<option " + selected + " value=\"" + code.getComnCd() + "\" " + data + ">"
-						+ code.getComnCdNm()+ "</option>";
+				options.append("<option ").append(selected).append(" value=\"").append(code.getComnCd() ).append( "\" ")
+						.append(data.toString()).append(">").append(code.getComnCdNm()).append("</option>");
 			}
 			StringBuffer sel = new StringBuffer();
 			if (hasSelectTag) {
@@ -345,19 +345,19 @@ public class CommCodeTag extends TagSupport {
 				else if (isSelect2())
 					sel.append("data-type=\"select2\" ");
 				if (Utilities.isNotEmpty(id))
-					sel.append("id=\"" + id + "\" ");
+					sel.append("id=\"").append(id).append("\" ");
 				if (Utilities.isNotEmpty(name))
-					sel.append("name=\"" + name + "\" ");
+					sel.append("name=\"").append(name).append("\" ");
 				if (Utilities.isNotEmpty(className))
-					sel.append("class=\"" + className + "\" ");
+					sel.append("class=\"").append(className).append("\" ");
 				if (Utilities.isNotEmpty(change))
-					sel.append("data-change=\"" + change + "\" ");
+					sel.append("data-change=\"").append(change).append("\" ");
 				if (Utilities.isNotEmpty(upCombo))
-					sel.append("data-up-combo=\"" + upCombo + "\" ");
+					sel.append("data-up-combo=\"").append(upCombo).append("\" ");
 				if (Utilities.isNotEmpty(prefixLabel))
-					sel.append("data-label=\"" + prefixLabel + "\" ");
+					sel.append("data-label=\"").append(prefixLabel).append("\" ");
 				if (Utilities.isNotEmpty(prefixValue))
-					sel.append("data-label-value=\"" + prefixValue + "\" ");
+					sel.append("data-label-value=\"").append(prefixValue).append("\" ");
 
 				if (Utilities.isNotEmpty(others))
 					sel.append(others);
