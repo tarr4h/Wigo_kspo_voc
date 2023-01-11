@@ -1,133 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<project name="kspo_voc_web" default="banner" basedir=".">
+<?xml version="1.0" encoding="utf-8"?>
+<project name="kspo_voc_web" default="banner" basedir="C:/kspo/deploy">
 
-  <!-- 0. set global properties for this build -->
-<!--   <property file="../build.properties"/> -->
+    <!-- 0. set global properties for this build -->
+    <!--   <property file="../build.properties"/> -->
 
-  <property environment="env"/>
-<!--   <property name="jeus.home" value="${env.JEUS_HOME}"/> -->
-  <property name="jeus.home" value="C:\dev\apache-tomcat-8.5.84"/>
-  <property name="java.home" value="${env.JAVA_HOME}"/>
-  
-  <property name="source-root" value="C:\kspo\deploy"/>
-  <property name="repository.URL" value="https://127.0.0.1/svn/kspo/${ant.project.name}"/>            
-  <property name="svn.user" value="stkim"/> 
-  <property name="svn.pw" value="12341234"/>
-  
-  <property name="projDir" value="${source-root}\${ant.project.name}" />
+    <property environment="env" />
+    <!--   <property name="jeus.home" value="${env.JEUS_HOME}"/> -->
+    <property name="jeus.home" value="C:/dev/apache-tomcat-8.5.84" />
+    <property name="java.home" value="${env.JAVA_HOME}" />
 
-  <target name="banner">
-    <echo>+--------------------------------------------------+</echo>
-    <echo>+   Building kspo webpages by wigo.ai</echo>
-    <echo>+   deploying to  ${ant.project.name} </echo>
-    <echo>+--------------------------------------------------+</echo>
-    <echo message="BuildName: ${ant.project.name}"/>
-    <echo message="BuildHome: ${basedir}"/>
-    <echo message="BuildFile: ${ant.file}"/>
-    <echo message="BuildJVM:  ${ant.java.version}"/>
-    <echo message="JAVA_HOME: ${java.home}"/>
-    <echo message="JEUS_HOME: ${jeus.home}"/>
-  </target>
-
-  <!--compile path-->
-  <path id="common.classpath">
-    <fileset dir="${projDir}\WebContent\WEB-INF\lib">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${jeus.home}/lib" includes="*.jar"/>
-  </path>
+    <property name="repository.URL" value="https://127.0.0.1/svn/kspo/${ant.project.name}" />
+    <property name="svn.user" value="stkim" />
+    <property name="svn.pw" value="12341234" />
 
 
-  <!-- path to the svnant libraries. Usually they will be located in ANT_HOME/lib -->
-  <path id="svnant.classpath">
-    <fileset dir="C:\kspo\jsvn_lib">
-        <include name="**/*.jar" />
-    </fileset>
-  </path>
+    <target name="banner">
+        <echo>+------------- ANT BUILD ----------------+</echo>
+        <echo>+   Building kspo webpages by wigo.ai</echo>
+        <echo>+   deploying to  ${ant.project.name} </echo>
+        <echo>+--------------------------------------------------+</echo>
+        <echo message="BuildName: ${ant.project.name}" />
+        <echo message="BuildHome: ${basedir}" />
+        <echo message="BuildFile: ${ant.file}" />
+        <echo message="BuildJVM:  ${ant.java.version}" />
+        <echo message="JAVA_HOME: ${java.home}" />
+        <echo message="JEUS_HOME: ${jeus.home}" />
+    </target>
 
-  <target name="init" depends="banner">
-   <tstamp/>
-    <mkdir dir="${source-root}"/>
-    
-  </target>
-
-
-  <target name="checkout" depends="">
-    <java classname="org.tmatesoft.svn.cli.SVN" dir="${source-root}" fork="true">
-        <arg value="co"/>
-        <arg value="${repository.URL}"/>
-        <arg value="--username"/>
-        <arg value="${svn.user}"/>
-        <arg value="--password"/>
-        <arg value="${svn.pw}"/>
-        <classpath refid="svnant.classpath"/>
-    </java>
-  </target>
-     <target name="get_project" depends="init,checkout">
-     </target>
-  <target name="compile" depends="get_project">
-    
-    <copy todir="C:\kspo\deploy\jeus\kspo_voc_web/WEB-INF"> 
-        <fileset dir="${projDir}/src/main/resources">
-            <exclude name="**/*.java"/>
+    <!--compile path-->
+    <path id="common.classpath">
+        <fileset dir="${ant.project.name}/WebContent/WEB-INF/lib">
+            <include name="*.jar" />
         </fileset>
-    </copy>
-    <mkdir dir="C:\kspo\deploy\jeus\kspo_voc_web/WEB-INF/classes"/>
-    <javac srcdir="${projDir}/src" 
-    destdir="C:\kspo\deploy\jeus\kspo_voc_web/WEB-INF/classes" 
-    includes="**/*.java"  debug="on" verbose="on" encoding="UTF-8" includeAntRuntime="flase">
-      <classpath refid="common.classpath"/>
-        <include name="**/*.xml"/>
-        <include name="**/*.yml"/>
-        <include name="**/*.properties"/>
-    </javac>
-    
-  </target>
+        <fileset dir="${jeus.home}/lib" includes="*.jar" />
+    </path>
+
+
+    <!-- path to the svnant libraries. Usually they will be located in ANT_HOME/lib -->
+    <path id="svnant.classpath">
+        <fileset dir="C:/kspo/jsvn_lib">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+    <target name="init" depends="banner">
+        <tstamp />
+        <mkdir dir="${basedir}" />
+
+    </target>
+
+
+    <target name="checkout" depends="">
+        <java classname="org.tmatesoft.svn.cli.SVN" dir="./" fork="true">
+            <arg value="co" />
+            <arg value="${repository.URL}" />
+            <arg value="--username" />
+            <arg value="${svn.user}" />
+            <arg value="--password" />
+            <arg value="${svn.pw}" />
+            <classpath refid="svnant.classpath" />
+        </java>
+    </target>
+    <target name="get_project" depends="init,checkout">
+    </target>
+    <target name="compile" depends="get_project">
+        <delete dir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT/WEB-INF/classes" />
+        <mkdir dir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT/WEB-INF/classes" />
+        <copy todir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT/WEB-INF/classes">
+            <fileset dir="${ant.project.name}/src/main/resources">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+
+        <javac srcdir="${ant.project.name}/src" destdir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT/WEB-INF/classes" compiler="javac1.8" source="1.8" target="1.8" includes="**/*.java" debug="on" verbose="on" encoding="UTF-8" includeAntRuntime="flase">
+            <classpath refid="common.classpath" />
+            <include name="**/*.xml" />
+            <include name="**/*.yml" />
+            <include name="**/*.properties" />
+        </javac>
+
+    </target>
 
 
     <target name="deploy" depends="clean,compile" description="voc.kspo.or.kr deploy">
-        <mkdir dir="C:\kspo\deploy\webtob\kspo_voc_web"/>
-        
-    <copy todir="C:\kspo\deploy\webtob\kspo_voc_web"> 
-      <fileset dir="${projDir}/WebContent">
-        <exclude name="**/WEB-INF/**"/>
-        <exclude name="**/META-INF/**"/>
-        <exclude name="**/web*.xml"/>
-      </fileset>
-    </copy>
-    
-        <copy todir="C:\kspo\deploy\jeus\kspo_voc_web/WEB-INF"> 
-              <fileset dir="${projDir}/WebContent/WEB-INF">
-                <include name="**/*.*"/>
-              </fileset>
-            </copy>
+
+
+        <copy todir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT">
+            <fileset dir="${ant.project.name}/WebContent">
+                <exclude name="**/WEB-INF/**" />
+                <exclude name="**/META-INF/**" />
+                <exclude name="**/web*.xml" />
+            </fileset>
+        </copy>
+
+        <copy todir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT/WEB-INF">
+            <fileset dir="${ant.project.name}/WebContent/WEB-INF">
+                <include name="**/*.*" />
+            </fileset>
+        </copy>
 
     </target>
 
 
     <target name="log">
-        <java classname="org.tmatesoft.svn.cli.SVN" dir="${source-root}" fork="true">
-            <arg value="log"/>
-            <arg value="-l"/>
-            <arg value="10"/>
-            <arg value="${repository.URL}"/>
-            <arg value="--username"/>
-            <arg value="${svn.user}"/>
-            <arg value="--password"/>
-            <arg value="${svn.pw}"/>
-            <classpath refid="svnant.classpath"/>
+        <java classname="org.tmatesoft.svn.cli.SVN" dir="./" fork="true">
+            <arg value="log" />
+            <arg value="-l" />
+            <arg value="10" />
+            <arg value="${repository.URL}" />
+            <arg value="--username" />
+            <arg value="${svn.user}" />
+            <arg value="--password" />
+            <arg value="${svn.pw}" />
+            <classpath refid="svnant.classpath" />
         </java>
-    </target>   
+    </target>
 
     <!--clear-->
     <target name="clean" depends="banner">
-        <delete dir="${source-root}"/>
-<!--        <delete dir="C:\kspo\deploy\webtob\kspo_voc_web"/>-->
-<!--        <delete dir="C:\kspo\deploy\jeus\kspo_voc_web/WEB-INF"/>-->
+<!--        <delete dir="${basedir}" />-->
+        <delete dir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT" />
+        <mkdir dir="C:/dev/apache-tomcat-8.5.84/webapps/ROOT" />
     </target>
- 
-</project>
 
+</project>
 
 
 
