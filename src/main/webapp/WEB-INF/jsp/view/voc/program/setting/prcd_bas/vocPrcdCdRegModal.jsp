@@ -275,7 +275,6 @@
 
         let formSe = form.serialize();
         let formMap = Utilities.formToMap(form);
-        form.add
 
         $.ajax({
             url : '<c:url value="${urlPrefix}/insert${urlSuffix}"/>',
