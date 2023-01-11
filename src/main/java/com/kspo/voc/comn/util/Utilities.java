@@ -236,7 +236,7 @@ public class Utilities {
 	 * @param fDirectory 경로
 	 */
 	static public void deleteDirectory(File fDirectory) {
-		if (fDirectory == null || fDirectory.isDirectory() == false)
+		if (fDirectory == null || !fDirectory.isDirectory())
 			return;
 		deleteFile(fDirectory);
 	}
@@ -2936,9 +2936,8 @@ public class Utilities {
 			return true;
 		String[] arr = area.split("\\.");
 		for (int i = 0; i < arr.length && i < 4; i++) {
-			if (i == arr.length - 1) {
-				if ("*".equals(arr[i]))
-					return true;
+			if (i == arr.length - 1 && "*".equals(arr[i])) {
+				return true;
 			}
 			if (!arr[i].equals(ips[i]))
 				return false;

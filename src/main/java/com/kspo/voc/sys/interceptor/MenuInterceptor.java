@@ -162,14 +162,11 @@ public class MenuInterceptor implements HandlerInterceptor {
 		if (HandlerUtils.isInstance(handler, ErrorController.class))
 			return true;
 
-		if (HandlerUtils.isInstance(handler, MainController.class)) {
-			if (!SessionUtil.isAjaxRequest()) {
-				if (request.getRequestURI().equals("/") || request.getRequestURI().equals("")) {
-					SessionUtil.setUserMenuMap(null);
-					SessionUtil.setUserMenuList(null);
+		if (HandlerUtils.isInstance(handler, MainController.class) && !SessionUtil.isAjaxRequest()
+				&& (request.getRequestURI().equals("/") || request.getRequestURI().equals(""))) {
+			SessionUtil.setUserMenuMap(null);
+			SessionUtil.setUserMenuList(null);
 
-				}
-			}
 		}
 		setMenuId(request);
 		if (SessionUtil.isAjaxRequest())
