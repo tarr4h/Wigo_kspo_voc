@@ -32,12 +32,16 @@ public class VocPrcdCdBasService extends VocAbstractService {
         return dao.selectList(param);
     }
 
-    @Override
-    public int insert(Object param) throws EgovBizException {
-        param = VocUtils.setCodeSettingParam(param);
-        String maxCd = dao.selectMaxCd();
-        ((Map<String, Object>) param).put("prcdCd", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
-        return super.insert(param);
+    public int insert(Map<String, Object> param) throws EgovBizException {
+//        param = VocUtils.setCodeSettingParam(param);
+//        String maxCd = dao.selectMaxCd();
+//        param.put("prcdCd", CodeGeneration.generateCode(maxCd, CodeGeneration.PROCEDURE_BAS));
+
+        param = VocUtils.sumUpDeadline(param);
+
+        log.debug("param = {}", param);
+
+        return dao.insert(param);
     }
 
     @Override
