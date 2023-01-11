@@ -90,7 +90,7 @@
 <script src="<c:url value='/static/js/ez-attachfile.js?reqrend=${reqrend}'/>"></script>
 
 <%-- voc --%>
- <link rel="stylesheet" href="<c:url value='/static/css/voc/voc.css'/>" />
+ <link rel="stylesheet" href="<c:url value='/static/kspo/css/voc.css'/>" />
 
 
 <script type="text/javascript">

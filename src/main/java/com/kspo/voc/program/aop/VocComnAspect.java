@@ -4,6 +4,7 @@ package com.kspo.voc.program.aop;
 import java.util.Map;
 
 import com.kspo.base.common.model.BaseVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Intercepts;
@@ -19,6 +20,7 @@ import com.kspo.voc.comn.util.Utilities;
 
 @Intercepts({@Signature(type = Executor.class, method="", args= {MappedStatement.class, Object.class})})
 @Aspect
+@Slf4j
 @Component("VocComnAspect")
 public class VocComnAspect {
 
@@ -29,11 +31,11 @@ public class VocComnAspect {
         Object[] args = jp.getArgs();
         for(Object arg : args){
             if(arg instanceof EzMap){
-                ((EzMap) arg).put("loginUsr", Utilities.getLoginId());
+                ((EzMap) arg).put("loginUsr", Utilities.getUserId());
             } else if(arg instanceof Map){
-                ((Map<String, Object>) arg).put("loginUsr", Utilities.getLoginId());
-            } else if(arg instanceof T){
-                ((BaseVo) arg).setAmdrId(Utilities.getLoginId());
+                ((Map<String, Object>) arg).put("loginUsr", Utilities.getUserId());
+            } else if(arg instanceof BaseVo){
+                ((BaseVo) arg).setAmdrId(Utilities.getUserId());
             }
         }
     }
